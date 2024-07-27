@@ -1,8 +1,8 @@
 import { App } from "@slack/bolt";
-import sampleViewCallback from "./sample-view";
+import historyViewCallback, { HISTORY_VIEW_CALLBACK_ID } from "./history-view";
 
 const register = (app: App) => {
-  app.view("sample_view_id", sampleViewCallback);
+  app.view(HISTORY_VIEW_CALLBACK_ID, historyViewCallback);
 };
 
 export default { register };

@@ -3,7 +3,8 @@ import {
   BlockAction,
   SlackActionMiddlewareArgs,
 } from "@slack/bolt";
-import { blocks } from "../blocks";
+import { HISTORY_VIEW_CALLBACK_ID } from "../views/history-view";
+import { getModalBlocks } from "../../blocks/modal-blocks";
 
 const openModalCallback = async ({
   ack,
@@ -11,19 +12,17 @@ const openModalCallback = async ({
   body,
 }: AllMiddlewareArgs & SlackActionMiddlewareArgs<BlockAction>) => {
   try {
-    const { trigger_id } = body;
-
     await ack();
     await client.views.open({
-      trigger_id,
+      trigger_id: body.trigger_id,
       view: {
         type: "modal",
-        callback_id: "sample_view_id",
+        callback_id: HISTORY_VIEW_CALLBACK_ID,
         title: {
           type: "plain_text",
           text: "Echo",
         },
-        blocks: blocks.modal,
+        blocks: getModalBlocks(),
         submit: {
           type: "plain_text",
           text: "Submit",
