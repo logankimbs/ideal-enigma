@@ -1,6 +1,6 @@
-import { App, LogLevel } from '@slack/bolt';
-import { config } from 'dotenv';
-import registerListeners from './listeners';
+import { App, LogLevel } from "@slack/bolt";
+import { config } from "dotenv";
+import registerListeners from "./listeners";
 
 config();
 
@@ -12,12 +12,15 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
-  stateSecret: 'my-state-secret',
-  scopes: ['channels:history', 'chat:write', 'commands'],
+  stateSecret: "my-state-secret",
+  scopes: ["channels:history", "chat:write", "commands"],
   installationStore: {
     storeInstallation: async (installation) => {
       // Org-wide installation
-      if (installation.isEnterpriseInstall && installation.enterprise !== undefined) {
+      if (
+        installation.isEnterpriseInstall &&
+        installation.enterprise !== undefined
+      ) {
         tempDB.set(installation.enterprise.id, installation);
         return;
       }
@@ -26,22 +29,28 @@ const app = new App({
         tempDB.set(installation.team.id, installation);
         return;
       }
-      throw new Error('Failed saving installation data to installationStore');
+      throw new Error("Failed saving installation data to installationStore");
     },
     fetchInstallation: async (installQuery) => {
       // Org-wide installation lookup
-      if (installQuery.isEnterpriseInstall && installQuery.enterpriseId !== undefined) {
+      if (
+        installQuery.isEnterpriseInstall &&
+        installQuery.enterpriseId !== undefined
+      ) {
         return tempDB.get(installQuery.enterpriseId);
       }
       // Single team installation lookup
       if (installQuery.teamId !== undefined) {
         return tempDB.get(installQuery.teamId);
       }
-      throw new Error('Failed fetching installation');
+      throw new Error("Failed fetching installation");
     },
     deleteInstallation: async (installQuery) => {
       // Org-wide installation deletion
-      if (installQuery.isEnterpriseInstall && installQuery.enterpriseId !== undefined) {
+      if (
+        installQuery.isEnterpriseInstall &&
+        installQuery.enterpriseId !== undefined
+      ) {
         tempDB.delete(installQuery.enterpriseId);
         return;
       }
@@ -50,7 +59,7 @@ const app = new App({
         tempDB.delete(installQuery.teamId);
         return;
       }
-      throw new Error('Failed to delete installation');
+      throw new Error("Failed to delete installation");
     },
   },
   installerOptions: {
@@ -67,8 +76,8 @@ registerListeners(app);
 (async () => {
   try {
     await app.start(process.env.PORT || 3000);
-    console.log('⚡️ Bolt app is running! ⚡️');
+    console.log("⚡️ Bolt app is running! ⚡️");
   } catch (error) {
-    console.error('Unable to start App', error);
+    console.error("Unable to start App", error);
   }
 })();

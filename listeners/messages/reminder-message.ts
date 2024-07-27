@@ -1,12 +1,15 @@
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from '@slack/bolt';
-import { blocks } from '../blocks';
+import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
+import { blocks } from "../blocks";
 
-const reminderMessageCallback = async ({ client, event }: AllMiddlewareArgs & SlackEventMiddlewareArgs<'message'>) => {
+const reminderMessageCallback = async ({
+  client,
+  event,
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"message">) => {
   try {
     await client.chat.postMessage({
-        channel: event.channel,
-        blocks: blocks.reminder
-    })
+      channel: event.channel,
+      blocks: blocks.reminder,
+    });
   } catch (error) {
     console.error(error);
   }

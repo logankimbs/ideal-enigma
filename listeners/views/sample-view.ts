@@ -1,14 +1,18 @@
-import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from '@slack/bolt';
+import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
 
-const sampleViewCallback = async ({ ack, view, body, client }:
-  AllMiddlewareArgs & SlackViewMiddlewareArgs) => {
+const sampleViewCallback = async ({
+  ack,
+  view,
+  body,
+  client,
+}: AllMiddlewareArgs & SlackViewMiddlewareArgs) => {
   await ack();
 
   try {
     const { input_block_id } = view.state.values;
     const sampleInputValue = input_block_id.sample_input_id.value;
-    const sampleConvoValue = 'C07E4JV2C91';
-    
+    const sampleConvoValue = "C07E4JV2C91";
+
     client.chat.postMessage({
       channel: sampleConvoValue || body.user.id,
       text: `<@${body.user.id}> submitted the following :sparkles: hopes and dreams :sparkles:: \n\n ${sampleInputValue}`,
