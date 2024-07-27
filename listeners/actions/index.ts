@@ -1,8 +1,8 @@
 import { App } from "@slack/bolt";
-import openModalCallback from "./open-modal";
+import openModalCallback, { OPEN_MODAL_ACTION_ID } from "./open-modal";
 
 const register = (app: App) => {
-  app.action("open_modal", openModalCallback);
+  app.action(OPEN_MODAL_ACTION_ID, openModalCallback);
 };
 
 export default { register };

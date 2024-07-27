@@ -6,6 +6,8 @@ import {
 import { HISTORY_VIEW_CALLBACK_ID } from "../views/history-view";
 import { getModalBlocks } from "../../blocks/modal-blocks";
 
+export const OPEN_MODAL_ACTION_ID = "open_modal_action";
+
 const openModalCallback = async ({
   ack,
   client,

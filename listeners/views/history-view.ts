@@ -1,6 +1,6 @@
 import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
 
-export const HISTORY_VIEW_CALLBACK_ID = "history_view_callback_id";
+export const HISTORY_VIEW_CALLBACK_ID = "history_view_callback";
 
 const historyViewCallback = async ({
   ack,

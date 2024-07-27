@@ -1,4 +1,5 @@
 import { AppHomeOpenedEvent } from "@slack/bolt";
+import { OPEN_MODAL_ACTION_ID } from "../listeners/actions/open-modal";
 
 export const getHomeBlocks = (event: AppHomeOpenedEvent) => {
   const blockOne = {
@@ -21,7 +22,7 @@ export const getHomeBlocks = (event: AppHomeOpenedEvent) => {
         },
         style: "primary",
         value: "click_me_123",
-        action_id: "open_modal",
+        action_id: OPEN_MODAL_ACTION_ID,
       },
     ],
   };
