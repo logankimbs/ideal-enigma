@@ -1,5 +1,5 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
-import { getHomeBlocks } from "../../blocks/home-tab";
+import { getHomeBlocks } from "../../blocks/home-blocks";
 
 const appHomeOpenedCallback = async ({
   client,

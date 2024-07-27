@@ -11,11 +11,10 @@ const sampleViewCallback = async ({
   try {
     const { input_block_id } = view.state.values;
     const sampleInputValue = input_block_id.sample_input_id.value;
-    const sampleConvoValue = "C07E4JV2C91";
 
     client.chat.postMessage({
-      channel: sampleConvoValue || body.user.id,
-      text: `<@${body.user.id}> submitted the following :sparkles: hopes and dreams :sparkles:: \n\n ${sampleInputValue}`,
+      channel: body.user.id,
+      text: `${sampleInputValue}`,
     });
   } catch (error) {
     console.error(error);

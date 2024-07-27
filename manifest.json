@@ -9,7 +9,7 @@
   "features": {
     "app_home": {
       "home_tab_enabled": true,
-      "messages_tab_enabled": false,
+      "messages_tab_enabled": true,
       "messages_tab_read_only_enabled": true
     },
     "bot_user": {
@@ -34,7 +34,7 @@
   },
   "oauth_config": {
     "scopes": {
-      "bot": ["channels:history", "chat:write", "commands"]
+      "bot": ["im:write", "channels:history", "chat:write", "commands"]
     }
   },
   "settings": {
