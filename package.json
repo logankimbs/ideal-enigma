@@ -1,26 +1,15 @@
 {
-  "name": "bolt-ts-starter-template",
+  "name": "ideal-enigma",
   "version": "1.0.0",
-  "description": "A scaffold template for Slack apps",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "tsc && node ./dist/app.js",
     "lint": "eslint . --ext .ts"
   },
-  "author": "Slack Technologies, LLC",
-  "license": "MIT",
-  "keywords": [
-    "slack",
-    "bolt",
-    "slackapi",
-    "typescript"
-  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/slack-samples/bolt-ts-starter-template.git"
-  },
-  "bugs": {
-    "url": "https://github.com/slack-samples/bolt-ts-starter-template/issues"
+    "url": "https://github.com/logankimbs/ideal-enigma.git"
   },
   "dependencies": {
     "@slack/bolt": "^4.0.0-rc.1",
