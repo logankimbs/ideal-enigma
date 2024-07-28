@@ -31,19 +31,5 @@ export const getModalBlocks = () => {
     ],
   };
 
-  const blockFour = {
-    block_id: "select_channel_block_id",
-    type: "input",
-    label: {
-      type: "plain_text",
-      text: "Select a channel to message the result to",
-    },
-    element: {
-      type: "conversations_select",
-      action_id: "sample_dropdown_id",
-      response_url_enabled: true,
-    },
-  };
-
-  return [blockOne, blockTwo, blockThree, blockFour];
+  return [blockOne, blockTwo, blockThree];
 };
