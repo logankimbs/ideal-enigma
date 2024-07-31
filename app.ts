@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { App, LogLevel } from "@slack/bolt";
 import * as dotenv from "dotenv";
 import registerListeners from "./src/listeners";
