@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "tsc && node ./dist/app.js",
+    "seed": "tsc && node ./dist/src/database/seed.js",
     "lint": "eslint . --ext .ts"
   },
   "repository": {

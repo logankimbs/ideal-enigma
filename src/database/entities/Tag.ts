@@ -8,20 +8,16 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
-import { User } from "./User";
 import { Company } from "./Company";
 import { InsightTag } from "./InsightTag";
 
-@Entity()
-export class Insight {
+@Entity("tags")
+export class Tag {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column()
   text!: string;
-
-  @Column()
-  source!: "slack" | "teams";
 
   @CreateDateColumn()
   created_at!: Date;
@@ -32,12 +28,9 @@ export class Insight {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @ManyToOne(() => User, (user) => user.insights)
-  user!: User;
-
-  @ManyToOne(() => Company, (company) => company.insights)
+  @ManyToOne(() => Company, (company) => company.tags)
   company!: Company;
 
-  @OneToMany(() => InsightTag, (insightTag) => insightTag.insight)
+  @OneToMany(() => InsightTag, (insightTag) => insightTag.tag)
   insightTags!: InsightTag[];
 }
