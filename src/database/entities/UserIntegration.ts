@@ -26,9 +26,9 @@ export class UserIntegration {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @ManyToOne(() => User, (user) => user.userIntegrations)
-  user!: User;
+  // @ManyToOne(() => User, (user) => user.userIntegrations)
+  // user!: User;
 
-  @ManyToOne(() => Integration, (integration) => integration.userIntegrations)
-  integration!: Integration;
+  // @ManyToOne(() => Integration, (integration) => integration.userIntegrations)
+  // integration!: Integration;
 }

@@ -10,13 +10,21 @@ import {
 import { CompanyIntegration } from "./CompanyIntegration";
 import { UserIntegration } from "./UserIntegration";
 
+export enum IntegrationPlatform {
+  SLACK = "slack",
+}
+
 @Entity("integrations")
 export class Integration {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-  @Column()
-  integration_type!: string;
+  @Column({
+    type: "enum",
+    enum: IntegrationPlatform,
+    default: IntegrationPlatform.SLACK,
+  })
+  platform!: string;
 
   @CreateDateColumn()
   created_at!: Date;
@@ -27,15 +35,15 @@ export class Integration {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @OneToMany(
-    () => CompanyIntegration,
-    (companyIntegration) => companyIntegration.integration,
-  )
-  companyIntegrations!: CompanyIntegration[];
+  // @OneToMany(
+  //   () => CompanyIntegration,
+  //   (companyIntegration) => companyIntegration.integration,
+  // )
+  // companyIntegrations!: CompanyIntegration[];
 
-  @OneToMany(
-    () => UserIntegration,
-    (userIntegration) => userIntegration.integration,
-  )
-  userIntegrations!: UserIntegration[];
+  // @OneToMany(
+  //   () => UserIntegration,
+  //   (userIntegration) => userIntegration.integration,
+  // )
+  // userIntegrations!: UserIntegration[];
 }

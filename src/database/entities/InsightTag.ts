@@ -13,9 +13,9 @@ export class InsightTag {
   @CreateDateColumn()
   created_at!: Date;
 
-  @ManyToOne(() => Insight, (insight) => insight.insightTags)
-  insight!: Insight;
+  // @ManyToOne(() => Insight, (insight) => insight.insightTags)
+  // insight!: Insight;
 
-  @ManyToOne(() => Tag, (tag) => tag.insightTags)
-  tag!: Tag;
+  // @ManyToOne(() => Tag, (tag) => tag.insightTags)
+  // tag!: Tag;
 }

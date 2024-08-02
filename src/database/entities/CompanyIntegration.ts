@@ -26,12 +26,12 @@ export class CompanyIntegration {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @ManyToOne(() => Company, (company) => company.companyIntegrations)
-  company!: Company;
+  // @ManyToOne(() => Company, (company) => company.companyIntegrations)
+  // company!: Company;
 
-  @ManyToOne(
-    () => Integration,
-    (integration) => integration.companyIntegrations,
-  )
-  integration!: Integration;
+  // @ManyToOne(
+  //   () => Integration,
+  //   (integration) => integration.companyIntegrations,
+  // )
+  // integration!: Integration;
 }
