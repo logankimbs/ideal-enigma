@@ -3,17 +3,19 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Company } from "./Company";
+import { Insight } from "./Insight";
 
 @Entity("tags")
 export class Tag {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
-
-  @Column()
-  company_id!: string;
 
   @Column()
   text!: string;
@@ -26,6 +28,13 @@ export class Tag {
 
   @DeleteDateColumn({ type: "timestamptz" })
   deleted_at!: Date;
+
+  @ManyToOne(() => Company, (company) => company.tags)
+  @JoinColumn({ name: "company_id" })
+  company!: Company;
+
+  @ManyToMany(() => Insight, (insight) => insight.tags)
+  insights!: Insight[];
 }
 
 // Many-to-One with company (Each tag belongs to one company)

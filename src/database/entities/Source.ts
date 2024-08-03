@@ -3,9 +3,14 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Company } from "./Company";
+import { Insight } from "./Insight";
+import { User } from "./User";
 
 @Entity("sources")
 export class Source {
@@ -23,6 +28,15 @@ export class Source {
 
   @DeleteDateColumn({ type: "timestamptz" })
   deleted_at!: Date;
+
+  @ManyToMany(() => Company, (company) => company.sources)
+  companies!: Company[];
+
+  @ManyToMany(() => User, (user) => user.sources)
+  users!: User[];
+
+  @OneToMany(() => Insight, (insight) => insight.source)
+  insights!: Insight[];
 }
 
 // Many-to-Many with company through company_source (Each source can be used by multiple companies)
