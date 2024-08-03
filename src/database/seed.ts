@@ -6,6 +6,7 @@ async function seed() {
   // create companies
   // create users
   // create sources
+  // create insights
   console.log("Seeding complete.");
   await AppDataSource.destroy();
 }
