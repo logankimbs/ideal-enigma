@@ -7,16 +7,22 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity("companies")
-export class Company {
+@Entity("users")
+export class User {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Column()
+  company_id!: string;
 
   @Column()
   name!: string;
 
   @Column()
-  domain!: string;
+  email!: string;
+
+  @Column()
+  is_active!: boolean;
 
   @CreateDateColumn({ type: "timestamptz" })
   created_at!: Date;
@@ -28,7 +34,6 @@ export class Company {
   deleted_at!: Date;
 }
 
-// One-to-Many with user (Each company can have multiple users)
-// Many-to-Many with source thought campany_source (Each company can use multiple sources)
-// One-to-Many with tag (Each company can have multiple tags)
-// One-to-Many with insight (Each company can have multiple insights)
+// Many-to-One with company (Each user belongs to one company)
+// One-to-Many with insight (Each user can submit multiple insights)
+// Many-to-Many with source through user_source (Each user can use multiple sources)

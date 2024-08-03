@@ -4,6 +4,7 @@ import { AppDataSource } from "./data-source";
 async function seed() {
   await AppDataSource.initialize();
   // create companies
+  // create users
   console.log("Seeding complete.");
   await AppDataSource.destroy();
 }
