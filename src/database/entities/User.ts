@@ -53,7 +53,3 @@ export class User {
   @OneToMany(() => Insight, (insight) => insight.user)
   insights!: Insight[];
 }
-
-// Many-to-One with company (Each user belongs to one company)
-// One-to-Many with insight (Each user can submit multiple insights)
-// Many-to-Many with source through user_source (Each user can use multiple sources)
