@@ -27,3 +27,8 @@ export class Insight extends BaseEntity {
   })
   tags!: Tag[];
 }
+
+// Many-to-One with user (Each insight is submitted by one user)
+// Many-to-One with source (Each insight is linked to one source)
+// Many-to-One with company (Each insight is associated with one one company)
+// Many-to-Many with tag through insight_tag (Each insight can have multiple tags)

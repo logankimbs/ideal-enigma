@@ -36,3 +36,6 @@ export class Tag {
   @ManyToMany(() => Insight, (insight) => insight.tags)
   insights!: Insight[];
 }
+
+// Many-to-One with company (Each tag belongs to one company)
+// Many-to-Many with insight though insight_tag (Each tag can be used by multiple insights)

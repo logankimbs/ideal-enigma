@@ -40,3 +40,7 @@ export class Company extends BaseEntity {
   @OneToMany(() => Tag, (tag) => tag.company)
   tags!: Tag[];
 }
+
+// Many-to-Many with source thought campany_source (Each company can use multiple sources)
+// One-to-Many with tag (Each company can have multiple tags)
+// One-to-Many with insight (Each company can have multiple insights)
