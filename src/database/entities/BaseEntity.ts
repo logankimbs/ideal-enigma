@@ -9,23 +9,12 @@ export abstract class BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-<<<<<<< HEAD
-  @CreateDateColumn({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
-  createdAt!: Date;
-
-  @UpdateDateColumn({
-    type: "timestamptz",
-    nullable: true,
-    onUpdate: "CURRENT_TIMESTAMP",
-  })
-=======
   @CreateDateColumn({ type: "timestamptz" })
-  createdAt!: Date;
+  created_at!: Date;
 
   @UpdateDateColumn({ type: "timestamptz" })
->>>>>>> d1bc996 (nice)
-  updatedAt!: Date;
+  updated_at!: Date;
 
   @DeleteDateColumn({ type: "timestamptz", nullable: true })
-  deletedAt!: Date;
+  deleted_at!: Date;
 }

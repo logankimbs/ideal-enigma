@@ -1,25 +1,44 @@
-import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { User } from "./User";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from "typeorm";
 import { Company } from "./Company";
 import { Source } from "./Source";
 import { Tag } from "./Tag";
+import { User } from "./User";
 import { BaseEntity } from "./BaseEntity";
 
 @Entity("insights")
 export class Insight extends BaseEntity {
+  @Column()
+  user_id!: string;
+
+  @Column()
+  company_id!: string;
+
+  @Column()
+  source_id!: string;
+
+  @Column()
+  text!: string;
+
   @ManyToOne(() => User, (user) => user.insights)
+  @JoinColumn({ name: "user_id" })
   user!: User;
 
   @ManyToOne(() => Company, (company) => company.insights)
+  @JoinColumn({ name: "company_id" })
   company!: Company;
 
   @ManyToOne(() => Source, (source) => source.insights)
+  @JoinColumn({ name: "source_id" })
   source!: Source;
 
-  @Column("text")
-  text!: string;
-
-  @ManyToMany(() => Tag, (tag) => tag.insights)
+  @ManyToMany(() => Tag)
   @JoinTable({
     name: "insight_tags",
     joinColumn: { name: "insight_id", referencedColumnName: "id" },
@@ -27,8 +46,3 @@ export class Insight extends BaseEntity {
   })
   tags!: Tag[];
 }
-
-// Many-to-One with user (Each insight is submitted by one user)
-// Many-to-One with source (Each insight is linked to one source)
-// Many-to-One with company (Each insight is associated with one one company)
-// Many-to-Many with tag through insight_tag (Each insight can have multiple tags)
