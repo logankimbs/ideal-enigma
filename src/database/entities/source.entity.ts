@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
-import { Company } from "./Company";
-import { Insight } from "./Insight";
-import { User } from "./User";
-import { BaseEntity } from "./BaseEntity";
+import { Company } from "./company.entity";
+import { Insight } from "./insight.entity";
+import { User } from "./user.entity";
+import { BaseEntity } from "./base.entity";
 
 @Entity("sources")
 export class Source extends BaseEntity {

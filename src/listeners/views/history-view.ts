@@ -1,5 +1,5 @@
 import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
-import { Insight } from "../../database/entities/Insight";
+import { Insight } from "../../database/entities/insight.entity";
 import { AppDataSource } from "../../database/data-source";
 
 export const HISTORY_VIEW_CALLBACK_ID = "history_view_callback";

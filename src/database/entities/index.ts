@@ -1,7 +1,5 @@
-import { Company } from "./Company";
-import { User } from "./User";
-import { Source } from "./Source";
-import { Insight } from "./Insight";
-import { Tag } from "./Tag";
-
-export { Company, User, Source, Insight, Tag };
+export * from "./company.entity";
+export * from "./insight.entity";
+export * from "./source.entity";
+export * from "./tag.entity";
+export * from "./user.entity";

@@ -1,9 +1,9 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
-import { User } from "./User";
-import { Insight } from "./Insight";
-import { Source } from "./Source";
-import { Tag } from "./Tag";
-import { BaseEntity } from "./BaseEntity";
+import { User } from "./user.entity";
+import { Insight } from "./insight.entity";
+import { Source } from "./source.entity";
+import { Tag } from "./tag.entity";
+import { BaseEntity } from "./base.entity";
 
 @Entity("companies")
 export class Company extends BaseEntity {

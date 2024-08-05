@@ -6,23 +6,14 @@ import {
   ManyToMany,
   ManyToOne,
 } from "typeorm";
-import { Company } from "./Company";
-import { Source } from "./Source";
-import { Tag } from "./Tag";
-import { User } from "./User";
-import { BaseEntity } from "./BaseEntity";
+import { Company } from "./company.entity";
+import { Source } from "./source.entity";
+import { Tag } from "./tag.entity";
+import { User } from "./user.entity";
+import { BaseEntity } from "./base.entity";
 
 @Entity("insights")
 export class Insight extends BaseEntity {
-  @Column()
-  user_id!: string;
-
-  @Column()
-  company_id!: string;
-
-  @Column()
-  source_id!: string;
-
   @Column()
   text!: string;
 

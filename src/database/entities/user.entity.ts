@@ -7,10 +7,10 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm";
-import { Company } from "./Company";
-import { Insight } from "./Insight";
-import { Source } from "./Source";
-import { BaseEntity } from "./BaseEntity";
+import { Company } from "./company.entity";
+import { Insight } from "./insight.entity";
+import { Source } from "./source.entity";
+import { BaseEntity } from "./base.entity";
 
 @Entity("users")
 export class User extends BaseEntity {
