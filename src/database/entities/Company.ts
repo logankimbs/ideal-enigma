@@ -13,26 +13,15 @@ import { User } from "./User";
 import { Insight } from "./Insight";
 import { Source } from "./Source";
 import { Tag } from "./Tag";
+import { BaseEntity } from "./BaseEntity";
 
 @Entity("companies")
-export class Company {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
+export class Company extends BaseEntity {
   @Column()
   name!: string;
 
   @Column()
   domain!: string;
-
-  @CreateDateColumn({ type: "timestamptz" })
-  created_at!: Date;
-
-  @UpdateDateColumn({ type: "timestamptz" })
-  updated_at!: Date;
-
-  @DeleteDateColumn({ type: "timestamptz" })
-  deleted_at!: Date;
 
   @ManyToMany(() => Source, (source) => source.companies)
   @JoinTable({
