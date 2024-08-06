@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { App, LogLevel } from "@slack/bolt";
 import * as dotenv from "dotenv";
-import registerListeners from "./src/listeners";
-import { AppDataSource } from "./src/database/data-source";
+import registerListeners from "./listeners";
+import { AppDataSource } from "./database/data-source";
 
 dotenv.config();
 
