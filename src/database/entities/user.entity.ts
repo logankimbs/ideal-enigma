@@ -15,17 +15,17 @@ import { BaseEntity } from "./base.entity";
 @Entity("users")
 export class User extends BaseEntity {
   @Column()
-  name!: string;
+  name: string;
 
   @Column()
-  email!: string;
+  email: string;
 
   @Column()
-  is_active!: boolean;
+  is_active: boolean;
 
   @ManyToOne(() => Company, (company) => company.users)
   @JoinColumn({ name: "company_id" })
-  company!: Company;
+  company: Company;
 
   @ManyToMany(() => Source, (source) => source.users)
   @JoinTable({
@@ -33,8 +33,8 @@ export class User extends BaseEntity {
     joinColumn: { name: "user_id", referencedColumnName: "id" },
     inverseJoinColumn: { name: "source_id", referencedColumnName: "id" },
   })
-  sources!: Source[];
+  sources: Source[];
 
   @OneToMany(() => Insight, (insight) => insight.user)
-  insights!: Insight[];
+  insights: Insight[];
 }

@@ -6,12 +6,12 @@ import { BaseEntity } from "./base.entity";
 @Entity("tags")
 export class Tag extends BaseEntity {
   @Column()
-  text!: string;
+  text: string;
 
   @ManyToOne(() => Company, (company) => company.tags)
   @JoinColumn({ name: "company_id" })
-  company!: Company;
+  company: Company;
 
   @ManyToMany(() => Insight, (insight) => insight.tags)
-  insights!: Insight[];
+  insights: Insight[];
 }

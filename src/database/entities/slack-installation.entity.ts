@@ -27,29 +27,29 @@ type Bot = {
 @Entity("slack_installations")
 export class SlackInstallation extends BaseEntity {
   @Column("simple-json", { nullable: true })
-  team!: Team | undefined;
+  team: Team | undefined;
 
   @Column("simple-json", { nullable: true })
-  enterprise!: Enterprise | undefined;
+  enterprise: Enterprise | undefined;
 
   @Column("simple-json")
-  user!: User;
+  user: User;
 
   @Column()
-  token_type!: string;
+  token_type: string;
 
   @Column()
-  is_enterprise_install!: boolean;
+  is_enterprise_install: boolean;
 
   @Column()
-  app_id!: string;
+  app_id: string;
 
   @Column()
-  auth_version!: string;
+  auth_version: string;
 
   @Column("simple-json")
-  bot!: Bot;
+  bot: Bot;
 
   @Column()
-  enterprise_url!: string;
+  enterprise_url: string;
 }

@@ -8,10 +8,10 @@ import { BaseEntity } from "./base.entity";
 @Entity("companies")
 export class Company extends BaseEntity {
   @Column()
-  name!: string;
+  name: string;
 
   @Column({ nullable: true })
-  domain!: string;
+  domain: string;
 
   @ManyToMany(() => Source, (source) => source.companies)
   @JoinTable({
@@ -19,14 +19,14 @@ export class Company extends BaseEntity {
     joinColumn: { name: "company_id", referencedColumnName: "id" },
     inverseJoinColumn: { name: "source_id", referencedColumnName: "id" },
   })
-  sources!: Source[];
+  sources: Source[];
 
   @OneToMany(() => User, (user) => user.company)
-  users!: User[];
+  users: User[];
 
   @OneToMany(() => Insight, (insight) => insight.company)
-  insights!: Insight[];
+  insights: Insight[];
 
   @OneToMany(() => Tag, (tag) => tag.company)
-  tags!: Tag[];
+  tags: Tag[];
 }

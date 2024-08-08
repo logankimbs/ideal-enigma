@@ -15,19 +15,19 @@ import { BaseEntity } from "./base.entity";
 @Entity("insights")
 export class Insight extends BaseEntity {
   @Column()
-  text!: string;
+  text: string;
 
   @ManyToOne(() => User, (user) => user.insights)
   @JoinColumn({ name: "user_id" })
-  user!: User;
+  user: User;
 
   @ManyToOne(() => Company, (company) => company.insights)
   @JoinColumn({ name: "company_id" })
-  company!: Company;
+  company: Company;
 
   @ManyToOne(() => Source, (source) => source.insights)
   @JoinColumn({ name: "source_id" })
-  source!: Source;
+  source: Source;
 
   @ManyToMany(() => Tag)
   @JoinTable({
@@ -35,5 +35,5 @@ export class Insight extends BaseEntity {
     joinColumn: { name: "insight_id", referencedColumnName: "id" },
     inverseJoinColumn: { name: "tag_id", referencedColumnName: "id" },
   })
-  tags!: Tag[];
+  tags: Tag[];
 }

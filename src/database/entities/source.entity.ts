@@ -7,14 +7,14 @@ import { BaseEntity } from "./base.entity";
 @Entity("sources")
 export class Source extends BaseEntity {
   @Column()
-  name!: string;
+  name: string;
 
   @ManyToMany(() => Company, (company) => company.sources)
-  companies!: Company[];
+  companies: Company[];
 
   @ManyToMany(() => User, (user) => user.sources)
-  users!: User[];
+  users: User[];
 
   @OneToMany(() => Insight, (insight) => insight.source)
-  insights!: Insight[];
+  insights: Insight[];
 }
