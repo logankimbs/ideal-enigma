@@ -10,7 +10,7 @@ export class Company extends BaseEntity {
   @Column()
   name!: string;
 
-  @Column()
+  @Column({ nullable: true })
   domain!: string;
 
   @ManyToMany(() => Source, (source) => source.companies)

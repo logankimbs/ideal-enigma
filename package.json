@@ -2,10 +2,10 @@
   "name": "ideal-enigma",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "app-oauth.js",
   "scripts": {
-    "start": "tsc && node ./dist/app.js",
-    "seed": "tsc && node ./dist/src/database/seed.js",
+    "start": "tsc && node ./dist/app-oauth.js",
+    "seed": "tsc && node ./dist/database/seed.js",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
