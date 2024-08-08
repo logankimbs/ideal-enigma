@@ -31,47 +31,7 @@ const storeInstallation: InstallationStore["storeInstallation"] = async (
     const savedCompany = await CompanyRepository.save(company);
     console.log("Company", savedCompany);
 
-    // Create a new SlackInstallation entity
-    const newInstallation = new SlackInstallation();
-    if (installation.team) {
-      newInstallation.team = {
-        id: installation.team.id,
-        name: installation.team.name || "", // Ensure name is a string
-      };
-    } else {
-      newInstallation.team = undefined;
-    }
-
-    if (installation.enterprise) {
-      newInstallation.enterprise = {
-        id: installation.enterprise.id,
-        name: installation.enterprise.name || "", // Ensure name is a string
-      };
-    } else {
-      newInstallation.enterprise = undefined;
-    }
-
-    newInstallation.user = installation.user;
-    newInstallation.token_type = installation.tokenType || "";
-    newInstallation.is_enterprise_install =
-      installation.isEnterpriseInstall || false;
-    newInstallation.app_id = installation.appId || "";
-    newInstallation.auth_version = installation.authVersion || "";
-    if (installation.bot) {
-      newInstallation.bot = {
-        scopes: installation.bot.scopes,
-        token: installation.bot.token,
-        user_id: installation.bot.userId,
-        id: installation.bot.id,
-      };
-    }
-    newInstallation.enterprise_url = installation.enterpriseUrl || "";
-
-    // Save installation
-    const savedInstallation =
-      await SlackInstallationRepository.save(newInstallation);
-    console.log("Slack Installation", savedInstallation);
-    return;
+    SlackInstallationRepository.saveInstallation(installation);
   }
   // Single team installation
   if (installation.team !== undefined) {
