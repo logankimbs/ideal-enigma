@@ -2,9 +2,9 @@
   "name": "ideal-enigma",
   "version": "1.0.0",
   "description": "",
-  "main": "app-oauth.js",
+  "main": "app.js",
   "scripts": {
-    "start": "tsc && node ./dist/app-oauth.js",
+    "start": "tsc && node ./dist/app.js",
     "seed": "tsc && node ./dist/database/seed.js",
     "lint": "eslint . --ext .ts"
   },

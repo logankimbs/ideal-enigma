@@ -15,7 +15,7 @@ const appHomeOpenedCallback = async ({
       user_id: event.user,
       view: {
         type: "home",
-        blocks: getHomeBlocks(event),
+        blocks: getHomeBlocks(),
       },
     });
   } catch (error) {
