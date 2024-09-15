@@ -1,6 +1,6 @@
 import { OPEN_MODAL } from "../listeners/actions/open-modal";
 
-const createHeaderBlock = (text: string): any => ({
+const createHeaderBlock = (text: string): unknown => ({
   type: "header",
   text: {
     type: "plain_text",
@@ -9,7 +9,7 @@ const createHeaderBlock = (text: string): any => ({
   },
 });
 
-const createSectionBlock = (text: string, button?: any): any => ({
+const createSectionBlock = (text: string, button?: unknown): unknown => ({
   type: "section",
   text: {
     type: "mrkdwn",
@@ -18,7 +18,7 @@ const createSectionBlock = (text: string, button?: any): any => ({
   accessory: button,
 });
 
-const createButton = (text: string, actionId: string): any => ({
+const createButton = (text: string, actionId: string): unknown => ({
   type: "button",
   text: {
     type: "plain_text",
@@ -28,16 +28,16 @@ const createButton = (text: string, actionId: string): any => ({
   action_id: actionId,
 });
 
-const createDividerBlock = (): any => ({
+const createDividerBlock = (): unknown => ({
   type: "divider",
 });
 
-const createRichTextBlock = (elements: any[]): any => ({
+const createRichTextBlock = (elements: unknown[]): unknown => ({
   type: "rich_text",
   elements: elements,
 });
 
-const createRichTextSection = (text: string): any => ({
+const createRichTextSection = (text: string): unknown => ({
   type: "rich_text_section",
   elements: [
     {
@@ -47,7 +47,7 @@ const createRichTextSection = (text: string): any => ({
   ],
 });
 
-const createRichTextList = (elements: any[]): any => ({
+const createRichTextList = (elements: unknown[]): unknown => ({
   type: "rich_text_list",
   style: "bullet",
   elements: elements,
@@ -91,7 +91,7 @@ export const getHomeBlocks = () => {
       createRichTextSection("3. Relevant and Timely\n"),
       createRichTextList([
         createRichTextSection(
-          "Aligned with Business Goals: Insights should be relevant to the company’s strategic objectives, helping to drive key metrics like user retention, revenue growth, or operational efficiency.",
+          "Aligned with Business Goals: Insights should be relevant to the compunknown’s strategic objectives, helping to drive key metrics like user retention, revenue growth, or operational efficiency.",
         ),
         createRichTextSection(
           "Near Real-Time: The faster an insight can be derived and acted upon, the more valuable it is. Timely insights can help in quickly adapting to changing conditions or user feedback.",

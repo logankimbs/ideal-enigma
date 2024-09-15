@@ -40,8 +40,6 @@ export class OpenAIService {
    * @returns The summary as a Summary object.
    */
   public async summarizeInsights(insights: InsightEntity[]): Promise<Summary> {
-    const MAX_TOKENS = 2000;
-
     try {
       const origins = insights.map((insight) => ({
         userId: insight.user.id,

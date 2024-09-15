@@ -106,22 +106,6 @@ const enterpriseInstall: Installation<"v1" | "v2", boolean> = {
   },
 };
 
-const enterpriseTeamInstall: Installation<"v1" | "v2", boolean> = {
-  team: { id: "T0000000001", name: "experimental-sandbox" },
-  enterprise: { id: "E0000000001", name: "laboratories" },
-  user: { token: undefined, scopes: undefined, id: "U0000000001" },
-  tokenType: "bot",
-  isEnterpriseInstall: false,
-  appId: "A0000000001",
-  authVersion: "v2",
-  bot: {
-    scopes: ["chat:write"],
-    token: "xoxb-000001-00*********-********************",
-    userId: "U0000000002",
-    id: "B0000000001",
-  },
-};
-
 const teamInstall: Installation<"v1" | "v2", boolean> = {
   team: { id: "T0000000001", name: "experimental-sandbox" },
   enterprise: undefined,
