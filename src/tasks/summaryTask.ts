@@ -15,6 +15,7 @@ import { message } from "../messages";
 export const summaryTask = async () => {
   try {
     logger.info("Starting summary task...");
+    
 
     const openAI = new OpenAIService();
     const installations = await installationRepo.find();
