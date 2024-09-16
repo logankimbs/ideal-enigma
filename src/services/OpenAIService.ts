@@ -52,7 +52,10 @@ export class OpenAIService {
         model: "gpt-4o-2024-08-06",
         messages: [
           { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: "Please summarize the following insights." },
+          {
+            role: "user",
+            content: "Please summarize the following insights.",
+          },
           { role: "user", content: JSON.stringify(summaryRequest) },
         ],
         response_format: zodResponseFormat(SummaryResponseSchema, "summary"),

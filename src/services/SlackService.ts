@@ -104,14 +104,18 @@ export class SlackService {
 
       if (!response.ok) {
         throw new Error(
-          `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${response.error}`,
+          `Slack API error during ${method} with parameters ${JSON.stringify(
+            params,
+          )}: ${response.error}`,
         );
       }
 
       return response;
     } catch (error) {
       logger.error(
-        `API call to ${method} with parameters ${JSON.stringify(params)} failed: ${error}`,
+        `API call to ${method} with parameters ${JSON.stringify(
+          params,
+        )} failed: ${error}`,
       );
       throw error;
     }

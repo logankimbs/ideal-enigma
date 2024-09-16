@@ -29,7 +29,10 @@ describe("SlackService", () => {
   describe("getUserInfo", () => {
     it("should return user information from api if call is successful", async () => {
       const user = { id: "U0000000001" };
-      (webClient.apiCall as jest.Mock).mockResolvedValue({ ok: true, user });
+      (webClient.apiCall as jest.Mock).mockResolvedValue({
+        ok: true,
+        user,
+      });
 
       const result = await slackService.getUserInfo(user.id);
 
@@ -50,7 +53,9 @@ describe("SlackService", () => {
       (webClient.apiCall as jest.Mock).mockResolvedValue(mockResponse);
 
       await expect(slackService.getUserInfo(user.id)).rejects.toThrow(
-        `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${mockResponse.error}`,
+        `Slack API error during ${method} with parameters ${JSON.stringify(
+          params,
+        )}: ${mockResponse.error}`,
       );
     });
   });
@@ -62,7 +67,10 @@ describe("SlackService", () => {
         { id: "U0000000002", is_bot: true },
         { id: "USLACKBOT", is_bot: false },
       ];
-      (webClient.apiCall as jest.Mock).mockResolvedValue({ ok: true, members });
+      (webClient.apiCall as jest.Mock).mockResolvedValue({
+        ok: true,
+        members,
+      });
 
       const result = await slackService.getUsersList("T12345");
 
@@ -83,7 +91,9 @@ describe("SlackService", () => {
       (webClient.apiCall as jest.Mock).mockResolvedValue(mockResponse);
 
       await expect(slackService.getUsersList(teamId)).rejects.toThrow(
-        `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${mockResponse.error}`,
+        `Slack API error during ${method} with parameters ${JSON.stringify(
+          params,
+        )}: ${mockResponse.error}`,
       );
     });
   });
@@ -91,7 +101,10 @@ describe("SlackService", () => {
   describe("getTeamInfo", () => {
     it("should return team information from api if call is successful", async () => {
       const team = { id: "T12345", name: "Test Team" };
-      (webClient.apiCall as jest.Mock).mockResolvedValue({ ok: true, team });
+      (webClient.apiCall as jest.Mock).mockResolvedValue({
+        ok: true,
+        team,
+      });
 
       const result = await slackService.getTeamInfo(team.id);
 
@@ -112,7 +125,9 @@ describe("SlackService", () => {
       (webClient.apiCall as jest.Mock).mockResolvedValue(mockResponse);
 
       await expect(slackService.getTeamInfo(teamId)).rejects.toThrow(
-        `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${mockResponse.error}`,
+        `Slack API error during ${method} with parameters ${JSON.stringify(
+          params,
+        )}: ${mockResponse.error}`,
       );
     });
   });
@@ -147,7 +162,9 @@ describe("SlackService", () => {
       await expect(
         slackService.postMessage(channelId, params.text),
       ).rejects.toThrow(
-        `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${mockResponse.error}`,
+        `Slack API error during ${method} with parameters ${JSON.stringify(
+          params,
+        )}: ${mockResponse.error}`,
       );
     });
   });
@@ -194,7 +211,9 @@ describe("SlackService", () => {
           params.blocks,
         ),
       ).rejects.toThrow(
-        `Slack API error during ${method} with parameters ${JSON.stringify(params)}: ${mockResponse.error}`,
+        `Slack API error during ${method} with parameters ${JSON.stringify(
+          params,
+        )}: ${mockResponse.error}`,
       );
     });
   });
