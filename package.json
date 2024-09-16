@@ -14,8 +14,7 @@
   "lint-staged": {
     "**/*": [
       "prettier --write --ignore-unknown",
-      "eslint",
-      "jest --passWithNoTests"
+      "eslint"
     ]
   },
   "repository": {
