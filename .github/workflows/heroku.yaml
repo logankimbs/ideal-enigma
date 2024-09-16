@@ -24,10 +24,9 @@ jobs:
       run: npm run build
 
     - name: Deploy to Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-      run: |
-        npx heroku git:remote --app $HEROKU_APP_NAME
-        git push heroku main
+      uses: akhileshns/heroku-deploy@v3.13.15
+      with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: dist
