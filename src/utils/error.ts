@@ -5,15 +5,15 @@ export class OpenAIServiceError extends Error {
     message: string,
     public context?: unknown,
   ) {
-    super(message)
-    this.name = "OpenAIServiceError"
+    super(message);
+    this.name = "OpenAIServiceError";
   }
 }
 
 export function isOpenAIServiceError(
   error: unknown,
 ): error is OpenAIServiceError {
-  return error instanceof OpenAIServiceError
+  return error instanceof OpenAIServiceError;
 }
 
 export class OpenAIApiError extends OpenAIServiceError {
@@ -23,11 +23,11 @@ export class OpenAIApiError extends OpenAIServiceError {
     public endpoint?: string,
     context?: unknown,
   ) {
-    super(`Error ${statusCode} at ${endpoint}: ${message}`, context)
-    this.name = "OpenAIApiError"
+    super(`Error ${statusCode} at ${endpoint}: ${message}`, context);
+    this.name = "OpenAIApiError";
   }
 }
 
 export function isOpenAIApiError(error: unknown): error is OpenAIApiError {
-  return error instanceof OpenAIApiError
+  return error instanceof OpenAIApiError;
 }

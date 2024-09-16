@@ -1,28 +1,28 @@
-import { Installation } from "@slack/bolt"
-import { Entity, PrimaryColumn, Column } from "typeorm"
-import { TimestampEntity } from "./TimestampEntity"
+import { Installation } from "@slack/bolt";
+import { Entity, PrimaryColumn, Column } from "typeorm";
+import { TimestampEntity } from "./TimestampEntity";
 
 @Entity("installations")
 export class InstallationEntity extends TimestampEntity {
   @PrimaryColumn()
-  id: string
+  id: string;
 
   @Column()
-  token: string
+  token: string;
 
   @Column({ type: "jsonb" })
-  data: Installation
+  data: Installation;
 
   static createInstallationEntity(
     installation: Installation,
     id: string,
   ): InstallationEntity {
-    const installationEntity = new InstallationEntity()
+    const installationEntity = new InstallationEntity();
 
-    installationEntity.id = id
-    installationEntity.token = installation.bot?.token ?? ""
-    installationEntity.data = installation
+    installationEntity.id = id;
+    installationEntity.token = installation.bot?.token ?? "";
+    installationEntity.data = installation;
 
-    return installationEntity
+    return installationEntity;
   }
 }

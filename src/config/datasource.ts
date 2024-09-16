@@ -1,11 +1,11 @@
-import { DataSource, DataSourceOptions } from "typeorm"
+import { DataSource, DataSourceOptions } from "typeorm";
 import {
   TeamEntity,
   InstallationEntity,
   UserEntity,
   InsightEntity,
-} from "../entities"
-import logger from "../utils/logger"
+} from "../entities";
+import logger from "../utils/logger";
 
 const baseDatasource: DataSourceOptions = {
   type: "postgres",
@@ -16,26 +16,26 @@ const baseDatasource: DataSourceOptions = {
   entities: [TeamEntity, InstallationEntity, UserEntity, InsightEntity],
   migrations: [],
   subscribers: [],
-}
+};
 
-let datasourceInstance: DataSource | null = null
+let datasourceInstance: DataSource | null = null;
 
 const getDatasource = (): DataSource => {
   if (!datasourceInstance) {
-    logger.info("Initializing database")
+    logger.info("Initializing database");
 
-    const isDev = process.env.NODE_ENV === "development"
+    const isDev = process.env.NODE_ENV === "development";
     const specDatasource = isDev
       ? { synchronize: true }
-      : { ssl: { rejectUnauthorized: false } }
+      : { ssl: { rejectUnauthorized: false } };
 
     datasourceInstance = new DataSource({
       ...baseDatasource,
       ...specDatasource,
-    })
+    });
   }
 
-  return datasourceInstance
-}
+  return datasourceInstance;
+};
 
-export const datasource = getDatasource()
+export const datasource = getDatasource();

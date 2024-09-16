@@ -1,4 +1,4 @@
-import { OPEN_MODAL } from "../listeners/actions/open-modal"
+import { OPEN_MODAL } from "../listeners/actions/open-modal";
 
 const createHeaderBlock = (text: string): unknown => ({
   type: "header",
@@ -7,7 +7,7 @@ const createHeaderBlock = (text: string): unknown => ({
     text: text,
     emoji: true,
   },
-})
+});
 
 const createSectionBlock = (text: string, button?: unknown): unknown => ({
   type: "section",
@@ -16,7 +16,7 @@ const createSectionBlock = (text: string, button?: unknown): unknown => ({
     text: text,
   },
   accessory: button,
-})
+});
 
 const createButton = (text: string, actionId: string): unknown => ({
   type: "button",
@@ -26,16 +26,16 @@ const createButton = (text: string, actionId: string): unknown => ({
     emoji: true,
   },
   action_id: actionId,
-})
+});
 
 const createDividerBlock = (): unknown => ({
   type: "divider",
-})
+});
 
 const createRichTextBlock = (elements: unknown[]): unknown => ({
   type: "rich_text",
   elements: elements,
-})
+});
 
 const createRichTextSection = (text: string): unknown => ({
   type: "rich_text_section",
@@ -45,13 +45,13 @@ const createRichTextSection = (text: string): unknown => ({
       text: text,
     },
   ],
-})
+});
 
 const createRichTextList = (elements: unknown[]): unknown => ({
   type: "rich_text_list",
   style: "bullet",
   elements: elements,
-})
+});
 
 export const getHomeBlocks = () => {
   return [
@@ -137,5 +137,5 @@ export const getHomeBlocks = () => {
       "🔥 *My History*\nView your past submissions and streaks.",
       createButton("History and Streaks", "start_donut_channel"),
     ),
-  ]
-}
+  ];
+};

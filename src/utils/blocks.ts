@@ -1,4 +1,9 @@
-import { HeaderBlock, KnownBlock, SectionBlock, TextObject } from "@slack/types"
+import {
+  HeaderBlock,
+  KnownBlock,
+  SectionBlock,
+  TextObject,
+} from "@slack/types";
 
 export const createTextSection = (text: string): KnownBlock => ({
   type: "section",
@@ -6,7 +11,7 @@ export const createTextSection = (text: string): KnownBlock => ({
     type: "mrkdwn",
     text,
   },
-})
+});
 
 export const createSectionBlock = (
   type: TextObject["type"],
@@ -17,7 +22,7 @@ export const createSectionBlock = (
     type,
     text,
   },
-})
+});
 
 export const createHeaderBlock = (text: string): HeaderBlock => ({
   type: "header",
@@ -26,7 +31,7 @@ export const createHeaderBlock = (text: string): HeaderBlock => ({
     text,
     emoji: true,
   },
-})
+});
 
 export const createHeaderSection = (text: string): KnownBlock => ({
   type: "header",
@@ -34,7 +39,7 @@ export const createHeaderSection = (text: string): KnownBlock => ({
     type: "plain_text",
     text,
   },
-})
+});
 
 export const createButton = (
   text: string,
@@ -54,4 +59,4 @@ export const createButton = (
       action_id: actionId,
     },
   ],
-})
+});

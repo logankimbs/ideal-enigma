@@ -1,5 +1,5 @@
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt"
-import { OPEN_MODAL } from "../actions/open-modal"
+import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
+import { OPEN_MODAL } from "../actions/open-modal";
 
 const createSectionWithButton = (
   text: string,
@@ -21,7 +21,7 @@ const createSectionWithButton = (
     value: buttonValue,
     action_id: buttonValue, // Set action_id to match the button value for easy handling
   },
-})
+});
 
 // Function to create a rich text section
 const createRichTextSection = (header: string, body: string) => ({
@@ -44,7 +44,7 @@ const createRichTextSection = (header: string, body: string) => ({
       ],
     },
   ],
-})
+});
 
 // Function to create the home view blocks
 const createHomeViewBlocks = () => [
@@ -111,13 +111,13 @@ const createHomeViewBlocks = () => [
     "History and Streaks",
     "view_history",
   ),
-]
+];
 
 const appHomeOpened = async ({
   client,
   event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
-  if (event.tab !== "home") return
+  if (event.tab !== "home") return;
 
   try {
     await client.views.publish({
@@ -126,10 +126,10 @@ const appHomeOpened = async ({
         type: "home",
         blocks: createHomeViewBlocks(),
       },
-    })
+    });
   } catch (error) {
-    console.error("Error publishing home view:", error)
+    console.error("Error publishing home view:", error);
   }
-}
+};
 
-export default appHomeOpened
+export default appHomeOpened;
