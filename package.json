@@ -12,7 +12,10 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*": "npm run lint"
+    "**/*": [
+      "npm run lint",
+      "prettier --write --ignore-unknown"
+    ]
   },
   "repository": {
     "type": "git",
