@@ -1,0 +1,33 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.3
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm build
+
+    - name: Deploy to Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      run: |
+        npx heroku git:remote --app $HEROKU_APP_NAME
+        git push heroku main
