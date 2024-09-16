@@ -23,7 +23,7 @@ let datasourceInstance: DataSource | null = null;
 const getDatasource = (): DataSource => {
   if (!datasourceInstance) {
     logger.info("Initializing database");
-    
+
     const isDev = process.env.NODE_ENV === "development";
     const specDatasource = isDev
       ? { synchronize: true }

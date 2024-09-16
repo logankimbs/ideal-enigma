@@ -8,7 +8,8 @@
     "dev": "ts-node src/app.ts",
     "start": "node dist/app.js",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,11 @@
     "@types/luxon": "^3.4.2",
     "@types/node-cron": "^3.0.11",
     "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "3.3.3",
     "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
