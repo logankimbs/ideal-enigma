@@ -13,6 +13,7 @@
   },
   "lint-staged": {
     "**/*": [
+      "npm run lint",
       "prettier --write --ignore-unknown"
     ]
   },
