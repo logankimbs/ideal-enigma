@@ -17,8 +17,8 @@ export const reminderTask = async () => {
   logger.info(`Starting reminder task...`);
 
   try {
-    const wedReminder = message.getReminderMessage({ day: "Wednesday" });
-    const friReminder = message.getReminderMessage({ day: "Wednesday" });
+    // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
+    const friReminder = message.getReminderMessage({ day: "Friday" });
     const installations = await installationRepo.find();
 
     for (const installation of installations) {
@@ -28,17 +28,17 @@ export const reminderTask = async () => {
 
       if (team?.users !== undefined) {
         for (const user of team.users) {
-          const wednesday = getNextOccurrence(3, 15);
-          const wedTimestamp = getUnixTimestamp(wednesday, user.data.tz);
+          // const wednesday = getNextOccurrence(3, 15);
+          // const wedTimestamp = getUnixTimestamp(wednesday, user.data.tz);
           const friday = getNextOccurrence(5, 10);
           const friTimestamp = getUnixTimestamp(friday, user.data.tz);
 
-          await slackService.scheduleMessage(
-            user.id,
-            wedReminder.text,
-            wedTimestamp,
-            wedReminder.blocks,
-          );
+          // await slackService.scheduleMessage(
+          //   user.id,
+          //   wedReminder.text,
+          //   wedTimestamp,
+          //   wedReminder.blocks,
+          // );
 
           await slackService.scheduleMessage(
             user.id,

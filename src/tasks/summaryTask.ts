@@ -55,7 +55,7 @@ export const summaryTask = async () => {
           });
 
           const schedulePromises = team.users.map(async (user) => {
-            const monday = getNextOccurrence(3, 15);
+            const monday = getNextOccurrence(2, 10);
             const monTimestamp = getUnixTimestamp(monday, user.data.tz);
 
             return slackService.scheduleMessage(
@@ -71,7 +71,7 @@ export const summaryTask = async () => {
           await insightRepo.markInsightsAsSummarized(insights);
         } else {
           const schedulePromises = team.users.map(async (user) => {
-            const monday = getNextOccurrence(3, 15);
+            const monday = getNextOccurrence(2, 10);
             const monTimestamp = getUnixTimestamp(monday, user.data.tz);
 
             return slackService.scheduleMessage(
