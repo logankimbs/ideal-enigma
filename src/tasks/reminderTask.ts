@@ -14,45 +14,45 @@ import { message } from "../messages"
  * @todo Consider optimizing for large teams by parallelizing or batching the scheduling process.
  */
 export const reminderTask = async () => {
-    logger.info(`Starting reminder task...`)
+  logger.info(`Starting reminder task...`)
 
-    try {
-        // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
-        const friReminder = message.getReminderMessage({ day: "Friday" })
-        const installations = await installationRepo.find()
+  try {
+    // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
+    const friReminder = message.getReminderMessage({ day: "Friday" })
+    const installations = await installationRepo.find()
 
-        for (const installation of installations) {
-            const webClient = new WebClient(installation.token)
-            const slackService = new SlackService(webClient)
-            const team = await teamRepo.getTeamWithUsers(installation.id)
+    for (const installation of installations) {
+      const webClient = new WebClient(installation.token)
+      const slackService = new SlackService(webClient)
+      const team = await teamRepo.getTeamWithUsers(installation.id)
 
-            if (team?.users !== undefined) {
-                for (const user of team.users) {
-                    // const wednesday = getNextOccurrence(3, 15);
-                    // const wedTimestamp = getUnixTimestamp(wednesday, user.data.tz);
-                    const friday = getNextOccurrence(5, 10)
-                    const friTimestamp = getUnixTimestamp(friday, user.data.tz)
+      if (team?.users !== undefined) {
+        for (const user of team.users) {
+          // const wednesday = getNextOccurrence(3, 15);
+          // const wedTimestamp = getUnixTimestamp(wednesday, user.data.tz);
+          const friday = getNextOccurrence(5, 10)
+          const friTimestamp = getUnixTimestamp(friday, user.data.tz)
 
-                    // await slackService.scheduleMessage(
-                    //   user.id,
-                    //   wedReminder.text,
-                    //   wedTimestamp,
-                    //   wedReminder.blocks,
-                    // );
+          // await slackService.scheduleMessage(
+          //   user.id,
+          //   wedReminder.text,
+          //   wedTimestamp,
+          //   wedReminder.blocks,
+          // );
 
-                    await slackService.scheduleMessage(
-                        user.id,
-                        friReminder.text,
-                        friTimestamp,
-                        friReminder.blocks,
-                    )
-                }
-            }
+          await slackService.scheduleMessage(
+            user.id,
+            friReminder.text,
+            friTimestamp,
+            friReminder.blocks,
+          )
         }
-    } catch (error) {
-        logger.error(`Failed to complete reminder task: ${error}`)
-        return
+      }
     }
+  } catch (error) {
+    logger.error(`Failed to complete reminder task: ${error}`)
+    return
+  }
 
-    logger.info("Reminder task completed successfully")
+  logger.info("Reminder task completed successfully")
 }

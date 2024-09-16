@@ -1,53 +1,53 @@
 {
-    "name": "ideal-enigma",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/app.js",
-    "scripts": {
-        "build": "tsc",
-        "dev": "ts-node src/app.ts",
-        "start": "node dist/app.js",
-        "lint": "eslint",
-        "test": "jest",
-        "prepare": "husky"
-    },
-    "lint-staged": {
-        "**/*": [
-            "prettier --write --ignore-unknown"
-        ]
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/logankimbs/ideal-enigma.git"
-    },
-    "dependencies": {
-        "@slack/bolt": "^4.0.0-rc.1",
-        "@slack/web-api": "^7.3.4",
-        "dotenv": "~16.4.5",
-        "luxon": "^3.5.0",
-        "node-cron": "^3.0.3",
-        "openai": "^4.57.2",
-        "pg": "^8.12.0",
-        "reflect-metadata": "^0.2.2",
-        "typeorm": "^0.3.20",
-        "winston": "^3.14.1",
-        "zod": "^3.23.8"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.10.0",
-        "@slack/types": "^2.13.0",
-        "@types/jest": "^29.5.13",
-        "@types/luxon": "^3.4.2",
-        "@types/node-cron": "^3.0.11",
-        "eslint": "^9.10.0",
-        "eslint-config-prettier": "^9.1.0",
-        "globals": "^15.9.0",
-        "husky": "^9.1.6",
-        "lint-staged": "^15.2.10",
-        "prettier": "3.3.3",
-        "ts-jest": "^29.2.4",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.3.3",
-        "typescript-eslint": "^8.5.0"
-    }
+  "name": "ideal-enigma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/app.ts",
+    "start": "node dist/app.js",
+    "lint": "eslint",
+    "test": "jest",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/logankimbs/ideal-enigma.git"
+  },
+  "dependencies": {
+    "@slack/bolt": "^4.0.0-rc.1",
+    "@slack/web-api": "^7.3.4",
+    "dotenv": "~16.4.5",
+    "luxon": "^3.5.0",
+    "node-cron": "^3.0.3",
+    "openai": "^4.57.2",
+    "pg": "^8.12.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "winston": "^3.14.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@slack/types": "^2.13.0",
+    "@types/jest": "^29.5.13",
+    "@types/luxon": "^3.4.2",
+    "@types/node-cron": "^3.0.11",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "3.3.3",
+    "ts-jest": "^29.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.5.0"
+  }
 }

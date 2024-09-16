@@ -13,92 +13,83 @@ import { message } from "../messages"
  * The summaries are scheduled based on the user's timezone.
  */
 export const summaryTask = async () => {
-    try {
-        logger.info("Starting summary task...")
+  try {
+    logger.info("Starting summary task...")
 
-        const openAI = new OpenAIService()
-        const installations = await installationRepo.find()
-        const reminder = message.getReminderMessage({ day: "Friday" })
+    const openAI = new OpenAIService()
+    const installations = await installationRepo.find()
+    const reminder = message.getReminderMessage({ day: "Friday" })
 
-        for (const installation of installations) {
-            if (!installation.token) {
-                logger.warn(
-                    `Skipping installation ${installation.id}: Missing token`,
-                )
+    for (const installation of installations) {
+      if (!installation.token) {
+        logger.warn(`Skipping installation ${installation.id}: Missing token`)
 
-                continue
-            }
+        continue
+      }
 
-            const webClient = new WebClient(installation.token)
-            const slackService = new SlackService(webClient)
-            const team = await teamRepo.getTeamWithUsers(installation.id)
+      const webClient = new WebClient(installation.token)
+      const slackService = new SlackService(webClient)
+      const team = await teamRepo.getTeamWithUsers(installation.id)
 
-            if (team?.users !== undefined) {
-                const insights =
-                    await insightRepo.getRecentUnsummarizedInsightsForTeam(
-                        team.id,
-                    )
+      if (team?.users !== undefined) {
+        const insights = await insightRepo.getRecentUnsummarizedInsightsForTeam(
+          team.id,
+        )
 
-                if (insights.length >= 10) {
-                    let summary
+        if (insights.length >= 10) {
+          let summary
 
-                    try {
-                        summary = await openAI.summarizeInsights(insights)
-                    } catch (error) {
-                        logger.error(
-                            `Failed to generate summary for installation ${installation.id}: ${error}`,
-                        )
+          try {
+            summary = await openAI.summarizeInsights(insights)
+          } catch (error) {
+            logger.error(
+              `Failed to generate summary for installation ${installation.id}: ${error}`,
+            )
 
-                        continue
-                    }
+            continue
+          }
 
-                    const summaryMessage = message.getSummaryMessage({
-                        summary,
-                        count: insights.length,
-                    })
+          const summaryMessage = message.getSummaryMessage({
+            summary,
+            count: insights.length,
+          })
 
-                    const schedulePromises = team.users.map(async (user) => {
-                        const monday = getNextOccurrence(2, 10)
-                        const monTimestamp = getUnixTimestamp(
-                            monday,
-                            user.data.tz,
-                        )
+          const schedulePromises = team.users.map(async (user) => {
+            const monday = getNextOccurrence(2, 10)
+            const monTimestamp = getUnixTimestamp(monday, user.data.tz)
 
-                        return slackService.scheduleMessage(
-                            user.id,
-                            summaryMessage.text,
-                            monTimestamp,
-                            summaryMessage.blocks,
-                        )
-                    })
+            return slackService.scheduleMessage(
+              user.id,
+              summaryMessage.text,
+              monTimestamp,
+              summaryMessage.blocks,
+            )
+          })
 
-                    await Promise.all(schedulePromises)
+          await Promise.all(schedulePromises)
 
-                    await insightRepo.markInsightsAsSummarized(insights)
-                } else {
-                    const schedulePromises = team.users.map(async (user) => {
-                        const monday = getNextOccurrence(2, 10)
-                        const monTimestamp = getUnixTimestamp(
-                            monday,
-                            user.data.tz,
-                        )
+          await insightRepo.markInsightsAsSummarized(insights)
+        } else {
+          const schedulePromises = team.users.map(async (user) => {
+            const monday = getNextOccurrence(2, 10)
+            const monTimestamp = getUnixTimestamp(monday, user.data.tz)
 
-                        return slackService.scheduleMessage(
-                            user.id,
-                            reminder.text,
-                            monTimestamp,
-                            reminder.blocks,
-                        )
-                    })
+            return slackService.scheduleMessage(
+              user.id,
+              reminder.text,
+              monTimestamp,
+              reminder.blocks,
+            )
+          })
 
-                    await Promise.all(schedulePromises)
-                }
-            }
+          await Promise.all(schedulePromises)
         }
-    } catch (error) {
-        logger.error(`Failed to complete summary task: ${error}`)
-        return
+      }
     }
+  } catch (error) {
+    logger.error(`Failed to complete summary task: ${error}`)
+    return
+  }
 
-    logger.info("Summary task completed successfully")
+  logger.info("Summary task completed successfully")
 }

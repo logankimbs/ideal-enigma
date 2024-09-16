@@ -4,25 +4,25 @@ import { TimestampEntity } from "./TimestampEntity"
 
 @Entity("installations")
 export class InstallationEntity extends TimestampEntity {
-    @PrimaryColumn()
-    id: string
+  @PrimaryColumn()
+  id: string
 
-    @Column()
-    token: string
+  @Column()
+  token: string
 
-    @Column({ type: "jsonb" })
-    data: Installation
+  @Column({ type: "jsonb" })
+  data: Installation
 
-    static createInstallationEntity(
-        installation: Installation,
-        id: string,
-    ): InstallationEntity {
-        const installationEntity = new InstallationEntity()
+  static createInstallationEntity(
+    installation: Installation,
+    id: string,
+  ): InstallationEntity {
+    const installationEntity = new InstallationEntity()
 
-        installationEntity.id = id
-        installationEntity.token = installation.bot?.token ?? ""
-        installationEntity.data = installation
+    installationEntity.id = id
+    installationEntity.token = installation.bot?.token ?? ""
+    installationEntity.data = installation
 
-        return installationEntity
-    }
+    return installationEntity
+  }
 }
