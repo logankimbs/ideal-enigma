@@ -7,15 +7,15 @@ import chalk from "chalk";
 
 dotenv.config();
 
-// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 (async function () {
   console.log("Digging tunnel...");
-  // await delay(900);
+  await delay(900);
 
   const url = await ngrok.connect(process.env.PORT);
   console.log("Tunnel opened at:", chalk.underline(url));
-  // await delay(900);
+  await delay(900);
 
   console.log("Starting Echo...");
   const startDev = exec("ts-node src/app.ts");
