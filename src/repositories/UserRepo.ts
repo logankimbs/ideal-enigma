@@ -1,4 +1,4 @@
-import { datasource } from "../config/datasource";
+import datasource from "../datasource";
 import { UserEntity } from "../entities";
 
 export const userRepo = datasource.getRepository(UserEntity).extend({

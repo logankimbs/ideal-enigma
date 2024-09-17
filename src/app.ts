@@ -1,46 +1,18 @@
-import "reflect-metadata";
-import { App, ExpressReceiver, LogLevel } from "@slack/bolt";
-import { config } from "./config";
-import { datasource } from "./config/datasource";
-import registerListeners from "./listeners";
-import logger from "./utils/logger";
-import { installationService } from "./services/InstallationService";
-import tasks from "./tasks";
+import { App, LogLevel } from "@slack/bolt";
+import config from "./config";
+import receiver from "./receiver";
 
-const receiver = new ExpressReceiver({
-  signingSecret: config.slackSigningSecret,
-  clientId: config.slackClientId,
-  clientSecret: config.slackClientSecret,
-  stateSecret: config.stateSecret,
-  scopes: config.scopes,
-  installationStore: installationService,
-  installerOptions: {
-    // Render "Add to Slack" button
-    directInstall: false,
-  },
-  endpoints: {
-    events: "/slack/events",
-    actions: "/slack/actions",
-  },
-});
+let appInstance: App | null = null;
 
-const app = new App({
-  logLevel: LogLevel.DEBUG,
-  receiver: receiver,
-  processBeforeResponse: true,
-});
-
-registerListeners(app);
-
-const startApp = async () => {
-  try {
-    tasks.schedule();
-    await datasource.initialize();
-    await app.start(config.port);
-    logger.info("Echo is running");
-  } catch (error) {
-    logger.error("Echo was unable to start", error);
+const getApp = (): App => {
+  if (!appInstance) {
+    appInstance = new App({
+      logLevel: config.isDev ? LogLevel.DEBUG : LogLevel.INFO,
+      receiver,
+    });
   }
+
+  return appInstance;
 };
 
-startApp();
+export default getApp();

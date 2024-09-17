@@ -1,4 +1,4 @@
-import { datasource } from "../config/datasource";
+import datasource from "../datasource";
 import { InstallationEntity } from "../entities";
 
 export const installationRepo = datasource
