@@ -12,5 +12,5 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true
   },
-  "exclude": ["**/__tests__/**"]
+  "exclude": ["**/tests/**"]
 }

@@ -17,11 +17,11 @@ This Slack app is designed to help teams capture and share insights. Built with 
 Before you begin, ensure you have met the following requirements:
 
 - **Node.js**: Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
-- **npm or Yarn**: This project uses npm (Node Package Manager). npm comes bundled with Node.js.
+- **npm**: This project uses npm (Node Package Manager). npm comes bundled with Node.js.
 - **Slack Developer Program**: You need to sign up for the Slack Developer Program and create a Slack app. Details are provided in the [Slack Setup](#slack-setup) section.
-- **ngrok**: You'll need ngrok installed to tunnel your local environment to the public web. You can download it from [ngrok.com](https://ngrok.com/).
+- **ngrok**: You'll need ngrok installed to tunnel your local environment to the web. You can download it from [ngrok.com](https://ngrok.com/).
 
-Check the installed versions by running:
+Check the installed versions on node by running:
 
 ```bash
 node -v
@@ -37,8 +37,6 @@ node -v
    ```
 
 2. **Install dependencies**:
-
-   If you're using npm:
 
    ```bash
    npm install
@@ -114,7 +112,7 @@ After starting the application, you'll need to expose your local server to the i
 
 2. **Start ngrok**:
 
-   Run the following command to start an HTTP tunnel to your local server. Replace `3000` with the port number your application is running on, if different.
+   Run the following command to start an HTTP tunnel to your local server.
 
    ```bash
    ngrok http 3000
@@ -126,7 +124,7 @@ After starting the application, you'll need to expose your local server to the i
 
 4. **Update your Slack app settings**:
 
-   Go back to your Slack app settings and update any URLs that require public access with the ngrok URL. For example, under "Event Subscriptions" or "OAuth & Permissions," replace `http://localhost:3000` with your ngrok URL.
+   Go back to your Slack app settings and update any URLs that require public access with the ngrok URL. For example, under "Event Subscriptions", "OAuth & Permissions", and "Interactivity & Shortcuts" replace `http://localhost:3000` with your ngrok URL.
 
    Example:
 

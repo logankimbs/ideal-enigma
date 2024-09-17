@@ -1,6 +1,7 @@
 import {
   HeaderBlock,
   KnownBlock,
+  RichTextBlock,
   SectionBlock,
   TextObject,
 } from "@slack/types";
@@ -57,6 +58,53 @@ export const createButton = (
       },
       value: value,
       action_id: actionId,
+    },
+  ],
+});
+
+export const createSectionWithButton = (
+  text: string,
+  buttonText: string,
+  buttonValue: string,
+) => ({
+  type: "section",
+  text: {
+    type: "mrkdwn",
+    text,
+  },
+  accessory: {
+    type: "button",
+    text: {
+      type: "plain_text",
+      text: buttonText,
+      emoji: true,
+    },
+    value: buttonValue,
+    action_id: buttonValue,
+  },
+});
+
+export const createRichTextBlock = (
+  header: string,
+  body: string,
+): RichTextBlock => ({
+  type: "rich_text",
+  elements: [
+    {
+      type: "rich_text_section",
+      elements: [
+        {
+          type: "text",
+          text: header,
+          style: {
+            bold: true,
+          },
+        },
+        {
+          type: "text",
+          text: body,
+        },
+      ],
     },
   ],
 });
