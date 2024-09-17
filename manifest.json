@@ -28,7 +28,7 @@
   "settings": {
     "event_subscriptions": {
       "request_url": "http://localhost:3000/slack/events",
-      "bot_events": ["app_home_opened"]
+      "bot_events": ["app_home_opened", "user_profile_changed", "team_join"]
     },
     "interactivity": {
       "is_enabled": true,
