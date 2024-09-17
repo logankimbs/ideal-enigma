@@ -20,21 +20,19 @@
     }
   },
   "oauth_config": {
-    "redirect_urls": [
-      "https://2f24-2600-8802-450f-bc00-396e-ea90-62e4-f341.ngrok-free.app/slack/oauth_redirect"
-    ],
+    "redirect_urls": ["http://localhost:3000/slack/oauth_redirect"],
     "scopes": {
       "bot": ["chat:write", "users:read", "users:read.email", "team:read"]
     }
   },
   "settings": {
     "event_subscriptions": {
-      "request_url": "https://2f24-2600-8802-450f-bc00-396e-ea90-62e4-f341.ngrok-free.app/slack/events",
+      "request_url": "http://localhost:3000/slack/events",
       "bot_events": ["app_home_opened"]
     },
     "interactivity": {
       "is_enabled": true,
-      "request_url": "https://2f24-2600-8802-450f-bc00-396e-ea90-62e4-f341.ngrok-free.app/slack/actions"
+      "request_url": "http://localhost:3000/slack/actions"
     },
     "org_deploy_enabled": false,
     "socket_mode_enabled": false,
