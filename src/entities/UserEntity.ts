@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryColumn, OneToMany } from "typeorm";
 import { TeamEntity } from "./TeamEntity";
-import { InsightEntity } from "./InsightEntity";
+import InsightEntity from "./InsightEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import { UserData } from "../types";
 
