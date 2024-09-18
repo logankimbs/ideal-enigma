@@ -1,4 +1,4 @@
-import { datasource } from "../config/datasource";
+import datasource from "../datasource";
 import { TeamEntity } from "../entities";
 
 export const teamRepo = datasource.getRepository(TeamEntity).extend({

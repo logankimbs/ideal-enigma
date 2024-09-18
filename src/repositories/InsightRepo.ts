@@ -1,4 +1,4 @@
-import { datasource } from "../config/datasource";
+import datasource from "../datasource";
 import { InsightEntity } from "../entities";
 
 export const insightRepo = datasource.getRepository(InsightEntity).extend({
