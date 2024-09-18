@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { UserEntity } from "./UserEntity";
+import UserEntity from "./UserEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import { TeamData } from "../types";
 

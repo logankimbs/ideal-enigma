@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { UserEntity } from "./UserEntity";
+import UserEntity from "./UserEntity";
 import { TimestampEntity } from "./TimestampEntity";
 
 @Entity("insights")
