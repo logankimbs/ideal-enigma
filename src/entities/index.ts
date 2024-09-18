@@ -1,4 +1,4 @@
-export * from "./InsightEntity";
-export * from "./InstallationEntity";
-export * from "./TeamEntity";
-export * from "./UserEntity";
+export { default as InsightEntity } from "./InsightEntity";
+export { default as InstallationEntity } from "./InstallationEntity";
+export { default as TeamEntity } from "./TeamEntity";
+export { default as UserEntity } from "./UserEntity";

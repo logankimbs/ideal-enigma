@@ -1,11 +1,11 @@
 import { Entity, Column, ManyToOne, PrimaryColumn, OneToMany } from "typeorm";
-import { TeamEntity } from "./TeamEntity";
-import { InsightEntity } from "./InsightEntity";
+import TeamEntity from "./TeamEntity";
+import InsightEntity from "./InsightEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import { UserData } from "../types";
 
 @Entity("users")
-export class UserEntity extends TimestampEntity {
+class UserEntity extends TimestampEntity {
   @PrimaryColumn()
   id: string;
 
@@ -18,3 +18,5 @@ export class UserEntity extends TimestampEntity {
   @OneToMany(() => InsightEntity, (insight) => insight.user)
   insights: InsightEntity[];
 }
+
+export default UserEntity;

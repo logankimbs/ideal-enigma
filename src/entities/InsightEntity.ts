@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { UserEntity } from "./UserEntity";
+import UserEntity from "./UserEntity";
 import { TimestampEntity } from "./TimestampEntity";
 
 @Entity("insights")
-export class InsightEntity extends TimestampEntity {
+class InsightEntity extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -16,3 +16,5 @@ export class InsightEntity extends TimestampEntity {
   @ManyToOne(() => UserEntity, (user) => user.insights)
   user: UserEntity;
 }
+
+export default InsightEntity;

@@ -3,7 +3,7 @@ import { Entity, PrimaryColumn, Column } from "typeorm";
 import { TimestampEntity } from "./TimestampEntity";
 
 @Entity("installations")
-export class InstallationEntity extends TimestampEntity {
+class InstallationEntity extends TimestampEntity {
   @PrimaryColumn()
   id: string;
 
@@ -13,6 +13,7 @@ export class InstallationEntity extends TimestampEntity {
   @Column({ type: "jsonb" })
   data: Installation;
 
+  // TODO: Remove this crap
   static createInstallationEntity(
     installation: Installation,
     id: string,
@@ -26,3 +27,5 @@ export class InstallationEntity extends TimestampEntity {
     return installationEntity;
   }
 }
+
+export default InstallationEntity;

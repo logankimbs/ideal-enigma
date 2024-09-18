@@ -1,6 +1,5 @@
 import { Member } from "@slack/web-api/dist/types/response/UsersListResponse";
-import { TeamEntity } from "../entities/TeamEntity";
-import { UserEntity } from "../entities/UserEntity";
+import { TeamEntity, UserEntity } from "../entities";
 import { userRepo } from "../repositories";
 
 export class UserService {

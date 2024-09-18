@@ -1,5 +1,5 @@
 import { TeamInfoResponse } from "@slack/web-api";
-import { TeamEntity } from "../entities/TeamEntity";
+import { TeamEntity } from "../entities";
 import { teamRepo } from "../repositories";
 
 export class TeamService {
