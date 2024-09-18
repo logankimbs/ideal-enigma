@@ -1,5 +1,7 @@
 import {
+  ContextBlock,
   HeaderBlock,
+  InputBlock,
   KnownBlock,
   RichTextBlock,
   SectionBlock,
@@ -107,4 +109,23 @@ export const createRichTextBlock = (
       ],
     },
   ],
+});
+
+export const createInputBlock = (labelText: string): InputBlock => ({
+  type: "input",
+  block_id: "input_block_id",
+  label: {
+    type: "plain_text",
+    text: labelText,
+  },
+  element: {
+    type: "plain_text_input",
+    action_id: "sample_input_id",
+    multiline: true,
+  },
+});
+
+export const createContextBlock = (text: string): ContextBlock => ({
+  type: "context",
+  elements: [{ type: "mrkdwn", text }],
 });
