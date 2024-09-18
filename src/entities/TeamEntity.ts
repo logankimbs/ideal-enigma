@@ -4,7 +4,7 @@ import { TimestampEntity } from "./TimestampEntity";
 import { TeamData } from "../types";
 
 @Entity("teams")
-export class TeamEntity extends TimestampEntity {
+class TeamEntity extends TimestampEntity {
   @PrimaryColumn()
   id: string;
 
@@ -14,3 +14,5 @@ export class TeamEntity extends TimestampEntity {
   @OneToMany(() => UserEntity, (user) => user.team)
   users: UserEntity[];
 }
+
+export default TeamEntity;
