@@ -1,10 +1,8 @@
 import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
-import logger from "../../utils/logger";
 import { insightService } from "../../services/InsightService";
+import logger from "../../utils/logger";
 
-export const HISTORY_VIEW_CALLBACK_ID = "history_view_callback";
-
-const historyViewCallback = async ({
+const submitInsight = async ({
   ack,
   view,
   body,
@@ -28,4 +26,4 @@ const historyViewCallback = async ({
   }
 };
 
-export default historyViewCallback;
+export default submitInsight;

@@ -3,12 +3,12 @@ import {
   BlockAction,
   SlackActionMiddlewareArgs,
 } from "@slack/bolt";
-import { HISTORY_VIEW_CALLBACK_ID } from "../views/history-view";
 import {
   createContextBlock,
   createInputBlock,
   createSectionBlock,
 } from "../../utils/blocks";
+import { SUBMIT_INSIGHT } from "../../constants";
 
 export const OPEN_MODAL = "open_modal";
 
@@ -34,7 +34,7 @@ const openModal = async ({
       trigger_id: body.trigger_id,
       view: {
         type: "modal",
-        callback_id: HISTORY_VIEW_CALLBACK_ID,
+        callback_id: SUBMIT_INSIGHT,
         title: {
           type: "plain_text",
           text: "Echo",
