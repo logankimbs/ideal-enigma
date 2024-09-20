@@ -1,6 +1,6 @@
 import { App } from "@slack/bolt";
 import { SUBMIT_INSIGHT } from "../../constants";
-import submitInsight from "./submitInsight";
+import submitInsight from "./insightModal";
 
 const register = (app: App) => {
   app.view(SUBMIT_INSIGHT, submitInsight);

@@ -44,11 +44,7 @@ export const createHeaderSection = (text: string): KnownBlock => ({
   },
 });
 
-export const createButton = (
-  text: string,
-  actionId: string,
-  value: string,
-): KnownBlock => ({
+export const createButton = (text: string, value: string): KnownBlock => ({
   type: "actions",
   elements: [
     {
@@ -58,8 +54,8 @@ export const createButton = (
         text,
         emoji: true,
       },
-      value: value,
-      action_id: actionId,
+      value,
+      action_id: value,
     },
   ],
 });
