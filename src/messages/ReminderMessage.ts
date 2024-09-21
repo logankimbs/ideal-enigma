@@ -7,7 +7,6 @@ import {
   MessageText,
   ReminderMessageOptions,
 } from "../types";
-import { OPEN_INSIGHT_MODAL } from "../constants";
 
 class ReminderMessage implements IMessage {
   public getMessage({ day }: ReminderMessageOptions): Message {
@@ -17,7 +16,7 @@ class ReminderMessage implements IMessage {
       createTextSection(greeting),
       createTextSection(body),
       ...(actionHeader ? [createTextSection(actionHeader)] : []),
-      createButton("🚀 Submit an Insight", OPEN_INSIGHT_MODAL),
+      createButton("🚀 Submit an Insight", "open_modal", "open_modal"),
       // TODO: Route button to blog
       // createButton("🔍 Impactful Insights", "open_modal", "open_modal"),
     ];
