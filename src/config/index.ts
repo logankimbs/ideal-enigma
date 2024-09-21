@@ -12,7 +12,7 @@ const envSchema = z.object({
   SLACK_CLIENT_SECRET: z.string().optional(),
   SLACK_APP_TOKEN: z.string().optional(),
   SLACK_BOT_TOKEN: z.string().min(1, "SLACK_BOT_TOKEN is required"),
-  SLACK_STATE_SECRET: z.string().default("three-friends"),
+  SLACK_STATE_SECRET: z.string().default("default-state-secret"),
   DATABASE_HOST: z.string().min(1, "DATABASE_HOST is required"),
   DATABASE_NAME: z.string().min(1, "DATABASE_NAME is required"),
   DATABASE_USERNAME: z.string().min(1, "DATABASE_USERNAME is required"),
