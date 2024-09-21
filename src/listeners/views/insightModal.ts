@@ -98,8 +98,8 @@ const submitInsight = async ({
     const insight = view.state.values.insight.input.value!; // Required
     const tags = view.state.values.tags.input.value || undefined; // Optional
 
-    const saveTags = await tagService.parseAndSaveTags(tags);
-    await insightService.saveInsight(body.user.id, insight, saveTags);
+    const savedTags = await tagService.parseAndSaveTags(tags);
+    await insightService.saveInsight(body.user.id, insight, savedTags);
 
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
