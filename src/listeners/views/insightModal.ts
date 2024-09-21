@@ -71,7 +71,7 @@ const getModalBlocks = () => [
   },
 ];
 
-export const insightModalView: ModalView = {
+export const insightModal: ModalView = {
   type: "modal",
   callback_id: SUBMIT_INSIGHT,
   title: {

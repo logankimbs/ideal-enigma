@@ -3,9 +3,9 @@ import {
   BlockAction,
   SlackActionMiddlewareArgs,
 } from "@slack/bolt";
-import { insightModalView } from "../views/insightModal";
+import { insightModal } from "../views/insightModal";
 
-const openModal = async ({
+const openInsightModal = async ({
   ack,
   client,
   body,
@@ -15,11 +15,11 @@ const openModal = async ({
 
     await client.views.open({
       trigger_id: body.trigger_id,
-      view: insightModalView,
+      view: insightModal,
     });
   } catch (error) {
     console.error(error);
   }
 };
 
-export default openModal;
+export default openInsightModal;
