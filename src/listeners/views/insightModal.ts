@@ -17,11 +17,11 @@ const getModalBlocks = () => [
   },
   {
     type: "input",
-    block_id: "insight_block",
+    block_id: "insight",
     element: {
       type: "plain_text_input",
       multiline: true,
-      action_id: "insight_input",
+      action_id: "input",
       placeholder: {
         type: "plain_text",
         text: INSIGHT_MODAL_TEXTS.PLACEHOLDER,
@@ -45,10 +45,10 @@ const getModalBlocks = () => [
   {
     type: "input",
     optional: true,
-    block_id: "tags_block",
+    block_id: "tags",
     element: {
       type: "plain_text_input",
-      action_id: "tags_input",
+      action_id: "input",
       placeholder: {
         type: "plain_text",
         text: INSIGHT_MODAL_TEXTS.TAGS_PLACEHOLDER,
@@ -94,14 +94,18 @@ const submitInsight = async ({
   await ack();
 
   try {
-    const insight =
-      view.state.values["insight_block"]["insight_input"].value || "";
-    const tags = view.state.values["tags_block"]["tags_input"].value || ""; // Optional
+    const insight = view.state.values.insight.input.value!;
+    const tag = view.state.values.tags.input.value;
 
-    console.log(insight);
-    console.log(tags);
+    const tags = tag
+      ? tag
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag)
+      : [];
 
     await insightService.saveInsight(body.user.id, insight);
+    console.log(tags); // TODO: Save tags
 
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
