@@ -1,6 +1,7 @@
 import { Block, KnownBlock } from "@slack/types";
 import { createButton, createTextSection } from "../utils/blocks";
 import { IMessage, Message, WelcomeMessageOptions } from "../types";
+import { OPEN_INSIGHT_MODAL } from "../constants";
 
 class WelcomeMessage implements IMessage {
   getMessage({ userId }: WelcomeMessageOptions): Message {
@@ -13,11 +14,7 @@ class WelcomeMessage implements IMessage {
       createTextSection(greeting),
       createTextSection(text),
       createTextSection("Here are some ways to get started:"),
-      createButton(
-        "🚀 Submit an Insight",
-        "open_insight_modal",
-        "open_insight_modal",
-      ),
+      createButton("🚀 Submit an Insight", OPEN_INSIGHT_MODAL),
       // TODO: Route button to blog
       // createButton("🔍 Impactful Insights", "open_modal", "open_modal"),
     ];
