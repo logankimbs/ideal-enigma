@@ -3,7 +3,7 @@ import UserEntity from "./UserEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import { TeamData } from "../types";
 
-@Entity("teams")
+@Entity("team")
 class TeamEntity extends TimestampEntity {
   @PrimaryColumn()
   id: string;

@@ -4,7 +4,7 @@ import InsightEntity from "./InsightEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import { UserData } from "../types";
 
-@Entity("users")
+@Entity("user")
 class UserEntity extends TimestampEntity {
   @PrimaryColumn()
   id: string;

@@ -6,6 +6,7 @@ import {
 import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from "../../constants";
 import { insightService } from "../../services/InsightService";
 import logger from "../../utils/logger";
+import tagService from "../../services/TagService";
 
 const getModalBlocks = () => [
   {
@@ -94,18 +95,11 @@ const submitInsight = async ({
   await ack();
 
   try {
-    const insight = view.state.values.insight.input.value!;
-    const tag = view.state.values.tags.input.value;
+    const insight = view.state.values.insight.input.value!; // Required
+    const tags = view.state.values.tags.input.value || undefined; // Optional
 
-    const tags = tag
-      ? tag
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag)
-      : [];
-
-    await insightService.saveInsight(body.user.id, insight);
-    console.log(tags); // TODO: Save tags
+    const saveTags = await tagService.parseAndSaveTags(tags);
+    await insightService.saveInsight(body.user.id, insight, saveTags);
 
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
