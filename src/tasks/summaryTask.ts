@@ -18,7 +18,7 @@ export const summaryTask = async () => {
 
     const openAI = new OpenAIService();
     const installations = await installationRepo.find();
-    const reminder = message.getReminderMessage({ day: "Friday" });
+    const reminder = message.getReminderMessage({ day: "Monday" });
 
     for (const installation of installations) {
       if (!installation.token) {
@@ -71,7 +71,7 @@ export const summaryTask = async () => {
           await insightRepo.markInsightsAsSummarized(insights);
         } else {
           const schedulePromises = team.users.map(async (user) => {
-            const monday = getNextOccurrence(2, 10);
+            const monday = getNextOccurrence(1, 10);
             const monTimestamp = getUnixTimestamp(monday, user.data.tz);
 
             return slackService.scheduleMessage(
