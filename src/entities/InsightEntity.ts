@@ -27,6 +27,9 @@ class InsightEntity extends TimestampEntity {
   @ManyToMany(() => TagEntity, (tag) => tag.insights)
   @JoinTable({ name: "insight_tag" })
   tags: TagEntity[];
+
+  @Column({ nullable: true })
+  link: string;
 }
 
 export default InsightEntity;

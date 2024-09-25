@@ -70,6 +70,24 @@ const getModalBlocks = () => [
       },
     ],
   },
+  {
+    type: "input",
+    optional: true,
+    block_id: "link",
+    element: {
+      type: "plain_text_input",
+      action_id: "input",
+      placeholder: {
+        type: "plain_text",
+        text: INSIGHT_MODAL_TEXTS.LINKS_PLACEHOLDER,
+      },
+    },
+    label: {
+      type: "plain_text",
+      text: "Attach a link",
+      emoji: true,
+    },
+  },
 ];
 
 export const insightModal: ModalView = {
@@ -97,9 +115,10 @@ const submitInsight = async ({
   try {
     const insight = view.state.values.insight.input.value!; // Required
     const tags = view.state.values.tags.input.value || undefined; // Optional
+    const link = view.state.values.link.input.value || undefined; // Optional
 
     const savedTags = await tagService.parseAndSaveTags(tags);
-    await insightService.saveInsight(body.user.id, insight, savedTags);
+    await insightService.saveInsight(body.user.id, insight, savedTags, link);
 
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
