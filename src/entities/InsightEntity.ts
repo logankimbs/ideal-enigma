@@ -10,7 +10,7 @@ import UserEntity from "./UserEntity";
 import { TimestampEntity } from "./TimestampEntity";
 import TagEntity from "./TagEntity";
 
-@Entity("insight")
+@Entity("insights")
 class InsightEntity extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;

@@ -1,8 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { TimestampEntity } from "./TimestampEntity";
 import InsightEntity from "./InsightEntity";
 
-@Entity("tag")
+@Entity("tags")
 class TagEntity extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -11,6 +17,7 @@ class TagEntity extends TimestampEntity {
   text: string;
 
   @ManyToMany(() => InsightEntity, (insight) => insight.tags)
+  @JoinTable({ name: "insight_tag" })
   insights: InsightEntity[];
 }
 
