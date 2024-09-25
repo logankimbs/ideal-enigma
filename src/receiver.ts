@@ -1,22 +1,13 @@
 import { ExpressReceiver } from "@slack/bolt";
-import { installationService } from "./services/InstallationService";
 import config from "./config";
+import installationService from "./services/InstallationService";
 
 const receiver = new ExpressReceiver({
-  signingSecret: config.slack.signingSecret,
-  clientId: config.slack.clientId,
-  clientSecret: config.slack.clientSecret,
-  stateSecret: config.slack.stateSecret,
-  scopes: config.slack.scopes,
+  ...config.receiver,
   installationStore: installationService,
-  installerOptions: {
-    // Render "Add to Slack" button
-    directInstall: false,
-  },
-  endpoints: {
-    events: "/slack/events",
-    actions: "/slack/actions",
-  },
+  installerOptions: { directInstall: true },
+  scopes: ["chat:write", "users:read", "users:read.email", "team:read"], // Make const?
+  endpoints: { events: "/slack/events", actions: "/slack/actions" }, // Make router?
 });
 
 export default receiver;

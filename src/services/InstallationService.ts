@@ -12,7 +12,7 @@ import { userService } from "./UserService";
 import { InstallationEntity } from "../entities";
 import { message } from "../messages";
 
-export const installationService: InstallationStore = {
+const installationService: InstallationStore = {
   storeInstallation: async function <AuthVersion extends "v1" | "v2">(
     installation: Installation<AuthVersion, boolean>,
   ): Promise<void> {
@@ -111,8 +111,8 @@ async function saveInstallation(id: string, installation: Installation) {
       id,
     );
     return await installationRepo.save(installationEntity);
-  } catch (error) {
-    throw new Error(`Failed to save installation: ${installation}`);
+  } catch (error: unknown) {
+    throw new Error(`Failed to save installation: ${error}`);
   }
 }
 
@@ -121,3 +121,5 @@ function getInstallationId(
 ): string | undefined {
   return query.isEnterpriseInstall ? query.enterpriseId : query.teamId;
 }
+
+export default installationService;
