@@ -1,10 +1,10 @@
 import { WebClient } from "@slack/web-api";
 import { installationRepo, insightRepo, teamRepo } from "../repositories";
-import logger from "../utils/logger";
 import { SlackService } from "../services/SlackService";
-import { getNextOccurrence, getUnixTimestamp } from "../utils/date";
 import { OpenAIService } from "../services/OpenAIService";
 import { message } from "../messages";
+import getNextOccurrence from "../utils/date";
+import logger from "../utils/logger";
 
 /**
  * Runs every Sunday at midnight (12:00 AM)
@@ -55,13 +55,14 @@ export const summaryTask = async () => {
           });
 
           const schedulePromises = team.users.map(async (user) => {
-            const monday = getNextOccurrence(2, 10);
-            const monTimestamp = getUnixTimestamp(monday, user.data.tz);
+            if (user.data.deleted) return;
+
+            const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
             return slackService.scheduleMessage(
               user.id,
               summaryMessage.text,
-              monTimestamp,
+              timestamp,
               summaryMessage.blocks,
             );
           });
@@ -71,13 +72,16 @@ export const summaryTask = async () => {
           await insightRepo.markInsightsAsSummarized(insights);
         } else {
           const schedulePromises = team.users.map(async (user) => {
-            const monday = getNextOccurrence(1, 10);
-            const monTimestamp = getUnixTimestamp(monday, user.data.tz);
+            if (user.data.deleted) return;
+
+            logger.info(`Scheduling default summary message for ${user.id}`);
+
+            const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
             return slackService.scheduleMessage(
               user.id,
               reminder.text,
-              monTimestamp,
+              timestamp,
               reminder.blocks,
             );
           });

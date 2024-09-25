@@ -1,9 +1,9 @@
 import { WebClient } from "@slack/web-api";
 import { installationRepo, teamRepo } from "../repositories";
 import { SlackService } from "../services/SlackService";
-import logger from "../utils/logger";
-import { getNextOccurrence, getUnixTimestamp } from "../utils/date";
 import { message } from "../messages";
+import logger from "../utils/logger";
+import getNextOccurrence from "../utils/date";
 
 /**
  * Runs every Monday at midnight (12:00 AM)
@@ -28,10 +28,8 @@ export const reminderTask = async () => {
 
       if (team?.users !== undefined) {
         for (const user of team.users) {
-          // const wednesday = getNextOccurrence(3, 15);
-          // const wedTimestamp = getUnixTimestamp(wednesday, user.data.tz);
-          const friday = getNextOccurrence(5, 10);
-          const friTimestamp = getUnixTimestamp(friday, user.data.tz);
+          // const wedTimestamp = getNextOccurrence(user.data.tz, 3, 15, 0);
+          const friTimestamp = getNextOccurrence(user.data.tz, 5, 10, 0);
 
           // await slackService.scheduleMessage(
           //   user.id,
