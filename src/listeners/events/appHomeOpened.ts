@@ -1,10 +1,10 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
-import { OPEN_MODAL } from "../actions/open-modal";
 import {
   createHeaderBlock,
   createRichTextBlock,
   createSectionWithButton,
 } from "../../utils/blocks";
+import { OPEN_INSIGHT_MODAL } from "../../constants";
 
 const getHomeViewBlocks = () => [
   createHeaderBlock("👋 Meet Echo"),
@@ -44,7 +44,7 @@ const getHomeViewBlocks = () => [
   createSectionWithButton(
     "📄 *Submit a Quick Insight*\nCreate an Intros, Watercooler, or Celebrations channel.",
     "Submit an Insight",
-    OPEN_MODAL,
+    OPEN_INSIGHT_MODAL,
   ),
 ];
 
