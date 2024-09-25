@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "lint": "eslint",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "task": "ts-node scripts/run-task.ts"
   },
   "lint-staged": {
     "**/*": [
