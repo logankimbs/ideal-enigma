@@ -10,6 +10,7 @@ const envSchema = z.object({
   SLACK_SIGNING_SECRET: z.string().min(1, "SLACK_SIGNING_SECRET is required"),
   SLACK_CLIENT_ID: z.string().optional(),
   SLACK_CLIENT_SECRET: z.string().optional(),
+  SLACK_STATE_SECRET: z.string().default("default-state-secret"),
   SLACK_APP_TOKEN: z.string().optional(),
   SLACK_BOT_TOKEN: z.string().min(1, "SLACK_BOT_TOKEN is required"),
   DATABASE_HOST: z.string().min(1, "DATABASE_HOST is required"),
@@ -29,6 +30,7 @@ type Config = {
     clientSecret?: string;
     appToken?: string;
     botToken: string;
+    stateSecret: string;
     scopes: string[];
   };
   database: {
@@ -61,6 +63,7 @@ const getConfig = () => {
         clientSecret: env.SLACK_CLIENT_SECRET,
         appToken: env.SLACK_APP_TOKEN,
         botToken: env.SLACK_BOT_TOKEN,
+        stateSecret: env.SLACK_STATE_SECRET,
         scopes: ["chat:write", "users:read", "users:read.email", "team:read"],
       },
       database: {
