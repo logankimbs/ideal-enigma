@@ -1,35 +1,22 @@
+import { DataSource } from "typeorm";
+import { join } from "path";
 import config from "./config";
-import { DataSource, DataSourceOptions } from "typeorm";
-import {
-  TeamEntity,
-  InstallationEntity,
-  UserEntity,
-  InsightEntity,
-} from "./entities";
 
-const baseDatasource: DataSourceOptions = {
-  type: "postgres",
-  ...config.database,
-  entities: [TeamEntity, InstallationEntity, UserEntity, InsightEntity],
-  migrations: [],
-  subscribers: [],
-};
-
-let datasourceInstance: DataSource | null = null;
+let datasource: DataSource | null = null;
 
 const getDatasource = (): DataSource => {
-  if (!datasourceInstance) {
-    const specDatasource = config.isDev
-      ? { synchronize: true }
-      : { ssl: { rejectUnauthorized: false } };
+  if (datasource) return datasource;
 
-    datasourceInstance = new DataSource({
-      ...baseDatasource,
-      ...specDatasource,
-    });
-  }
+  datasource = new DataSource({
+    type: "postgres",
+    synchronize: config.isDev,
+    ssl: config.isDev ? false : { rejectUnauthorized: false },
+    entities: [join(__dirname, "entities", "*.{ts,js}")],
+    migrations: [join(__dirname, "migrations", "*.{ts,js}")],
+    ...config.datasource,
+  });
 
-  return datasourceInstance;
+  return datasource;
 };
 
 export default getDatasource();
