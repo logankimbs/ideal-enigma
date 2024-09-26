@@ -139,3 +139,11 @@ To run tests, use:
 ```bash
 npm test
 ```
+
+## Running Migrations
+
+To run migrations, use:
+
+```bash
+npm run typeorm -- migration:generate -d src/datasource.ts src/migrations/test2
+```
