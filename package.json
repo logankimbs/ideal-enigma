@@ -7,8 +7,13 @@
     "shared/*"
   ],
   "scripts": {
-    "build": "npm run build -ws",
-    "start:slack-app": "npm run dev --workspace=packages/slack-app",
+    "build": "npm run build:data-source && npm run build:slack-app",
+    "build:data-source": "npm run build --workspace=shared/data-source",
+    "build:slack-app": "npm run build --workspace=packages/slack-app",
+
+    "start": "npm run start:slack-app",
+    "start:slack-app": "npm start --workspace=packages/slack-app",
+
     "lint": "eslint",
     "test": "jest"
   },

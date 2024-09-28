@@ -2,7 +2,6 @@ import { Block, KnownBlock } from "@slack/types";
 import { ExpressReceiverOptions } from "@slack/bolt";
 import { User } from "@slack/web-api/dist/types/response/UsersInfoResponse";
 import { Team } from "@slack/web-api/dist/types/response/TeamInfoResponse";
-import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 import { ClientOptions } from "openai";
 
 export interface TeamData extends Omit<Team, "id"> {
@@ -87,13 +86,10 @@ export interface Insight {
   interpretation: string;
 }
 
-type DatasourceConfig = Omit<PostgresConnectionOptions, "type">;
-
 export type Config = {
   nodeEnv: string;
   isDev: boolean;
   port: string;
   receiver: ExpressReceiverOptions;
-  datasource: DatasourceConfig;
   openAI: ClientOptions;
 };

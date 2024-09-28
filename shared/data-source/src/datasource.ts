@@ -12,8 +12,6 @@ const getDatasource = (): DataSource => {
 
   if (datasource) return datasource;
 
-  console.log(process.env.DATABASE_HOST,process.env.DATABASE_NAME,process.env.DATABASE_USERNAME,process.env.DATABASE_PASSWORD)
-
   datasource = new DataSource({
     type: "postgres",
     synchronize: dev,
