@@ -1,9 +1,8 @@
-import "reflect-metadata";
+import {datasource} from "data-source";
 import config from "./config";
 import app from "./app";
 import tasks from "./tasks";
 import registerListeners from "./listeners";
-import datasource from "./datasource";
 import logger from "./utils/logger";
 
 registerListeners(app);

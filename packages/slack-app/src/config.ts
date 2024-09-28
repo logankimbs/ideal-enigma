@@ -27,8 +27,6 @@ const getConfig = () => {
     openAI: { apiKey: process.env.OPENAI_API_KEY },
   };
 
-  console.log(config.datasource)
-
   return config;
 };
 

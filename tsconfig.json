@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*", "packages/*", "shared/*"]
+        }
+    }
+}
+  
