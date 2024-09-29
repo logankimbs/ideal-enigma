@@ -9,7 +9,6 @@
   },
   "include": [],
   "references": [
-    { "path": "packages/orm" },
     { "path": "packages/datasource" },
     { "path": "packages/slack" }
   ]

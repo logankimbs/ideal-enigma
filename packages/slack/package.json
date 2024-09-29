@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@idealgma/datasource": "^1.0.0",
-    "@idealgma/orm": "^1.0.0",
     "@slack/bolt": "^4.0.0-rc.1",
     "@slack/web-api": "^7.3.4",
     "dotenv": "~16.4.5",
