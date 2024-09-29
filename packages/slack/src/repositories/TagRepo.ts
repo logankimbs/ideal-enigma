@@ -1,4 +1,4 @@
-import datasource from "../datasource";
+import datasource from "@idealgma/datasource";
 import { TagEntity } from "../entities";
 
 export const tagRepo = datasource.getRepository(TagEntity).extend({

@@ -1,4 +1,4 @@
-import datasource from "../datasource";
+import datasource from "@idealgma/datasource";
 import { InstallationEntity } from "../entities";
 
 export const installationRepo = datasource

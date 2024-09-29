@@ -87,13 +87,10 @@ export interface Insight {
   interpretation: string;
 }
 
-type DatasourceConfig = Omit<PostgresConnectionOptions, "type">;
-
 export type Config = {
   nodeEnv: string;
   isDev: boolean;
   port: string;
   receiver: ExpressReceiverOptions;
-  datasource: DatasourceConfig;
   openAI: ClientOptions;
 };

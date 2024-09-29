@@ -1,1 +1,3 @@
-export * from "./datasource"
+import "reflect-metadata";
+import datasource from "./datasource";
+export default datasource;

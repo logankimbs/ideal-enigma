@@ -1,4 +1,4 @@
-import datasource from "../datasource";
+import datasource from "@idealgma/datasource";
 import { InsightEntity } from "../entities";
 
 export const insightRepo = datasource.getRepository(InsightEntity).extend({

@@ -1,4 +1,4 @@
-import datasource from "../datasource";
+import datasource from "@idealgma/datasource";
 import { UserEntity } from "../entities";
 
 export const userRepo = datasource.getRepository(UserEntity).extend({

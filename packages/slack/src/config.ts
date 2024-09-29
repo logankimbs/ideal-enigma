@@ -18,12 +18,6 @@ const getConfig = () => {
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       stateSecret: process.env.SLACK_STATE_SECRET,
     },
-    datasource: {
-      host: process.env.DATABASE_HOST,
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-    },
     openAI: { apiKey: process.env.OPENAI_API_KEY },
   };
 
