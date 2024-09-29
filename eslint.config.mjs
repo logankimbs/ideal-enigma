@@ -7,6 +7,7 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
+      parserOptions: { projectService: true, allow },
       globals: {
         ...globals.browser,
         ...globals.node,

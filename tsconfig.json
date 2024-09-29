@@ -4,11 +4,11 @@
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    // "composite": true // Does this go here?
-    "paths": {"@idealgma/*": ["packages/*/src/index.ts"]}
+    "paths": { "@idealgma/*": ["packages/*/src/index.ts"] }
   },
+  "include": ["./eslint.config.mjs"],
   "references": [
-    {"path": "packages/datasource"},
-    {"path": "packages/slack"}
+    { "path": "packages/datasource" },
+    { "path": "packages/slack" }
   ]
 }
