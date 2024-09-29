@@ -2,12 +2,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
+    "allowJs": true,
     "strict": true,
     "skipLibCheck": true,
     "paths": { "@idealgma/*": ["packages/*/src/index.ts"] }
   },
-  "include": ["./eslint.config.mjs"],
+  "include": [],
   "references": [
+    { "path": "packages/orm" },
     { "path": "packages/datasource" },
     { "path": "packages/slack" }
   ]

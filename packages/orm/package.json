@@ -1,14 +1,12 @@
 {
-  "name": "@idealgma/slack",
+  "name": "@idealgma/orm",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "ts-node src/index.ts"
+    "build": "tsc"
   },
   "dependencies": {
     "@idealgma/datasource": "^1.0.0",
-    "@idealgma/orm": "^1.0.0",
     "@slack/bolt": "^4.0.0-rc.1",
     "@slack/web-api": "^7.3.4",
     "dotenv": "~16.4.5",
