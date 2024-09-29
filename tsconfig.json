@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "commonjs",
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // "composite": true // Does this go here?
+    "paths": {"@idealgma/*": ["packages/*/src/index.ts"]}
   },
-  "exclude": ["**/tests/**"]
+  "references": [
+    {"path": "packages/datasource"},
+    {"path": "packages/slack"}
+  ]
 }
