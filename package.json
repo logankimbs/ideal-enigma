@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "packages/slack",
-    "packages/datasource"
+    "packages/datasource",
+    "packages/slack"
   ],
   "scripts": {
     "build": "npm run build -ws",
-    "start:slack": "npm start --workspace=packages/slack",
+    "build:slack": "npm run build --workspace=@idealgma/datasource && npm run build --workspace=@idealgma/slack",
+    "start:slack": "npm run build:slack && npm start --workspace=@idealgma/slack",
     "lint": "eslint",
     "test": "jest"
   },
