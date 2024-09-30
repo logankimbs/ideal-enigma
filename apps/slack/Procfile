@@ -1,1 +1,1 @@
-web: npm start:slack
+web: npm run start:slack
