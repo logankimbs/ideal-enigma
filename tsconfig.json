@@ -5,11 +5,16 @@
     "allowJs": true,
     "strict": true,
     "skipLibCheck": true,
-    "paths": { "@idealgma/*": ["packages/*/src/index.ts"] }
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "composite": true,
+    "paths": {
+      "@idealgma/*": ["packages/*/src", "apps/*/src"]
+    }
   },
-  "include": [],
-  "references": [
-    { "path": "packages/datasource" },
-    { "path": "packages/slack" }
-  ]
+  "references": [{ "path": "packages/datasource" }, { "path": "apps/slack" }]
 }
