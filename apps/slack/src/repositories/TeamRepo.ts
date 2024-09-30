@@ -1,5 +1,7 @@
-import datasource from "@idealgma/datasource";
+import { getDatasource } from "@idealgma/datasource";
 import { TeamEntity } from "../entities";
+
+const datasource = getDatasource();
 
 export const teamRepo = datasource.getRepository(TeamEntity).extend({
   async getTeamWithUsers(teamId: string): Promise<TeamEntity | null> {

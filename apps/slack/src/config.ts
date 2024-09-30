@@ -1,7 +1,7 @@
 import { Config } from "./types";
 import dotenv from "dotenv";
 
-dotenv.config({path: "../../.env"});
+dotenv.config();
 
 let config: Config | null = null;
 

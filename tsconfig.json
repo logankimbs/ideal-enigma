@@ -16,5 +16,9 @@
       "@idealgma/*": ["packages/*/src", "apps/*/src"]
     }
   },
-  "references": [{ "path": "packages/datasource" }, { "path": "apps/slack" }]
+  "references": [
+    { "path": "packages/datasource" },
+    { "path": "apps/slack" },
+    { "path": "apps/api" }
+  ]
 }

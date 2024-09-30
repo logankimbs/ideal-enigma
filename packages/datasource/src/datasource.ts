@@ -4,8 +4,9 @@ import { join } from "path";
 let datasource: DataSource | null = null;
 
 const getDatasource = (): DataSource => {
-  const dev = process.env.NODE_ENV === "development";
-  if (datasource) return datasource;
+  if (datasource) return datasource
+
+  const isDev = process.env.NODE_ENV === "development";
 
   datasource = new DataSource({
     type: "postgres",
@@ -13,8 +14,8 @@ const getDatasource = (): DataSource => {
     database: process.env.DATABASE_NAME,
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
-    synchronize: dev,
-    ssl: dev ? false : { rejectUnauthorized: false },
+    synchronize: isDev,
+    ssl: !isDev ? { rejectUnauthorized: false } : false,
     entities: [join(__dirname, "entities", "*.{ts,js}")],
     migrations: [join(__dirname, "migrations", "*.{ts,js}")],
   });
@@ -22,4 +23,4 @@ const getDatasource = (): DataSource => {
   return datasource;
 };
 
-export default getDatasource();
+export default getDatasource;

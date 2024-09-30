@@ -1,3 +1,3 @@
 import "reflect-metadata";
-import datasource from "./datasource";
-export default datasource;
+export { default as getDatasource } from "./datasource";
+export * from "./entities";

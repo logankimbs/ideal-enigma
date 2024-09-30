@@ -1,5 +1,7 @@
-import datasource from "@idealgma/datasource";
+import { getDatasource } from "@idealgma/datasource";
 import { TagEntity } from "../entities";
+
+const datasource = getDatasource();
 
 export const tagRepo = datasource.getRepository(TagEntity).extend({
   async getTagsForTeam(teamId: string) {
