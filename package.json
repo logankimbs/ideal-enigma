@@ -7,20 +7,18 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build -ws",
+    "build": "npm run build --workspaces",
     "start:slack": "npm run build -workspace=@idealgma/slack && npm run start -workspace=@idealgma/slack",
     "start:api": "npm run build -workspace=@idealgma/api && npm run start -workspace=@idealgma/api",
-    "start:all": "npm run build && concurrently \"npm start -workspace=@idealgma/slack\" \"npm start -workspace=@idealgma/api\"",
     "lint": "eslint",
     "test": "jest"
   },
-  "dependencies": {
+  "devDependencies": {
     "@eslint/js": "^9.10.0",
     "@slack/types": "^2.13.0",
     "@types/jest": "^29.5.13",
     "@types/luxon": "^3.4.2",
     "@types/node-cron": "^3.0.11",
-    "concurrently": "^9.0.1",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
