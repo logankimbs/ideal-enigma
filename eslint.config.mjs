@@ -7,12 +7,14 @@ export default [
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
+      parserOptions: { projectService: true },
       globals: {
         ...globals.browser,
         ...globals.node,
       },
     },
   },
+  { ignores: ["**/node_modules/**", "**/dist/**"] },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   eslintConfigPrettier,

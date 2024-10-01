@@ -1,0 +1,15 @@
+{
+  "name": "@idealgma/api",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@idealgma/datasource": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  }
+}
