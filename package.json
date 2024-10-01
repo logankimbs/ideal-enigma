@@ -7,6 +7,7 @@
     "apps/*"
   ],
   "scripts": {
+    "heroku-postbuild": "npm install nx",
     "build": "npx nx run-many -t build",
     "build:slack": "npx nx run @idealgma/slack:build",
     "start:slack": "npx nx run @idealgma/slack:build && nx run @idealgma/slack:start",
