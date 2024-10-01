@@ -1,12 +1,12 @@
-import { getDatasource } from "@idealgma/datasource";
+import { Repository } from "typeorm";
 import { UserEntity } from "../entities";
 
-const datasource = getDatasource();
-
-export const userRepo = datasource.getRepository(UserEntity).extend({
+export class UserRepository extends Repository<UserEntity> {
   async findByTeamId(teamId: string): Promise<UserEntity[]> {
-    return this.createQueryBuilder("users")
+    const user = await this.createQueryBuilder("users")
       .where("users.teamId = :teamId", { teamId })
       .getMany();
-  },
-});
+    
+    return user;
+  }
+}

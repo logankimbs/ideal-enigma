@@ -1,3 +1,4 @@
+import { getDatasource, InstallationEntity } from "@idealgma/datasource";
 import {
   Installation,
   InstallationQuery,
@@ -5,12 +6,13 @@ import {
 } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
 import logger from "../utils/logger";
-import { installationRepo } from "../repositories";
 import { SlackService } from "./SlackService";
 import { teamService } from "./TeamService";
 import { userService } from "./UserService";
-import { InstallationEntity } from "../entities";
 import { message } from "../messages";
+
+const datasource = getDatasource();
+const installationRepository = datasource.getRepository(InstallationEntity);
 
 const installationService: InstallationStore = {
   storeInstallation: async function <AuthVersion extends "v1" | "v2">(
@@ -38,7 +40,7 @@ const installationService: InstallationStore = {
     query: InstallationQuery<boolean>,
   ): Promise<Installation<"v1" | "v2", boolean>> {
     const id = getInstallationId(query);
-    const installation = await installationRepo.findOneBy({ id });
+    const installation = await installationRepository.findOneBy({ id });
 
     if (!installation) {
       throw new Error("Installation was not found.");
@@ -53,7 +55,7 @@ const installationService: InstallationStore = {
     const id = getInstallationId(query);
 
     try {
-      await installationRepo.softDelete({ id });
+      await installationRepository.softDelete({ id });
     } catch (error) {
       logger.error("Error deleting installation:", error);
     }
@@ -110,7 +112,7 @@ async function saveInstallation(id: string, installation: Installation) {
       installation,
       id,
     );
-    return await installationRepo.save(installationEntity);
+    return await installationRepository.save(installationEntity);
   } catch (error: unknown) {
     throw new Error(`Failed to save installation: ${error}`);
   }

@@ -1,10 +1,15 @@
 import { WebClient } from "@slack/web-api";
-import { installationRepo, insightRepo, teamRepo } from "../repositories";
 import { SlackService } from "../services/SlackService";
 import { OpenAIService } from "../services/OpenAIService";
 import { message } from "../messages";
 import getNextOccurrence from "../utils/date";
 import logger from "../utils/logger";
+import { getDatasource, InstallationEntity } from "@idealgma/datasource";
+
+const datasource = getDatasource();
+const installationRepository = datasource.getRepository(InstallationEntity);
+const teamRepository = datasource.getTeamRepository();
+const insightRepository = datasource.getInsightRepository();
 
 /**
  * Runs every Sunday at midnight (12:00 AM)
@@ -17,7 +22,7 @@ export const summaryTask = async () => {
     logger.info("Starting summary task...");
 
     const openAI = new OpenAIService();
-    const installations = await installationRepo.find();
+    const installations = await installationRepository.find();
     const reminder = message.getReminderMessage({ day: "Monday" });
 
     for (const installation of installations) {
@@ -29,10 +34,10 @@ export const summaryTask = async () => {
 
       const webClient = new WebClient(installation.token);
       const slackService = new SlackService(webClient);
-      const team = await teamRepo.getTeamWithUsers(installation.id);
+      const team = await teamRepository.getTeamWithUsers(installation.id);
 
       if (team?.users !== undefined) {
-        const insights = await insightRepo.getRecentUnsummarizedInsightsForTeam(
+        const insights = await insightRepository.getRecentUnsummarizedInsightsForTeam(
           team.id,
         );
 
@@ -69,7 +74,7 @@ export const summaryTask = async () => {
 
           await Promise.all(schedulePromises);
 
-          await insightRepo.markInsightsAsSummarized(insights);
+          await insightRepository.markInsightsAsSummarized(insights);
         } else {
           const schedulePromises = team.users.map(async (user) => {
             if (user.data.deleted) return;

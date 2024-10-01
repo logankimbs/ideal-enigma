@@ -1,15 +1,15 @@
-import { getDatasource } from "@idealgma/datasource";
+import { Repository } from "typeorm";
 import { TagEntity } from "../entities";
 
-const datasource = getDatasource();
-
-export const tagRepo = datasource.getRepository(TagEntity).extend({
+export class TagRepository extends Repository<TagEntity> {
   async getTagsForTeam(teamId: string) {
-    return await this.createQueryBuilder("tag")
+    const teamTags = await this.createQueryBuilder("tag")
       .innerJoin("tag.insights", "insight")
       .innerJoin("insight.user", "user")
       .innerJoin("user.team", "team")
       .where("team.id = :teamId", { teamId })
       .getMany();
-  },
-});
+
+    return teamTags;
+  }
+}

@@ -1,24 +1,23 @@
-import { getDatasource } from "@idealgma/datasource";
+import { Repository } from "typeorm";
 import { InsightEntity } from "../entities";
 
-const datasource = getDatasource();
-
-export const insightRepo = datasource.getRepository(InsightEntity).extend({
-  // TODO: This function will need to be optimized
+export class InsightRepository extends Repository<InsightEntity> {
   async getRecentUnsummarizedInsightsForTeam(
     teamId: string,
   ): Promise<InsightEntity[]> {
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    return this.createQueryBuilder("insights")
+    const insights = await this.createQueryBuilder("insights")
       .leftJoinAndSelect("insights.user", "users")
       .leftJoinAndSelect("users.team", "teams")
       .where("teams.id = :teamId", { teamId })
       .andWhere("insights.isSummarized = false")
       .andWhere("insights.createdAt > :oneMonthAgo", { oneMonthAgo })
       .getMany();
-  },
+
+      return insights;
+  };
 
   async markInsightsAsSummarized(insights: InsightEntity[]): Promise<void> {
     insights.forEach((insight) => {
@@ -26,5 +25,5 @@ export const insightRepo = datasource.getRepository(InsightEntity).extend({
     });
 
     await this.save(insights);
-  },
-});
+  };
+}

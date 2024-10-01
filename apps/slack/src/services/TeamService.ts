@@ -1,6 +1,8 @@
+import { getDatasource, TeamEntity } from "@idealgma/datasource";
 import { TeamInfoResponse } from "@slack/web-api";
-import { TeamEntity } from "../entities";
-import { teamRepo } from "../repositories";
+
+const datasource = getDatasource();
+const teamRepository = datasource.getRepository(TeamEntity);
 
 export class TeamService {
   public async saveTeam(team: TeamInfoResponse["team"]): Promise<TeamEntity> {
@@ -8,7 +10,7 @@ export class TeamService {
       this.validateTeam(team);
       const teamEntity = this.mapToTeamEntity(team);
 
-      return await teamRepo.save(teamEntity);
+      return await teamRepository.save(teamEntity);
     } catch (error) {
       console.error(`Failed to save team with ID: ${team?.id}`, error);
       throw new Error(`Failed to save team: ${team?.id}`);

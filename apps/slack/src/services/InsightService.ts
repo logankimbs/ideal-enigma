@@ -1,5 +1,4 @@
-import { InsightEntity, TagEntity } from "../entities";
-import { insightRepo, userRepo } from "../repositories";
+import { getDatasource, InsightEntity, TagEntity, UserEntity } from "@idealgma/datasource";
 
 export const insightService = {
   async saveInsight(
@@ -8,10 +7,13 @@ export const insightService = {
     tags: TagEntity[],
     link: string | undefined,
   ): Promise<InsightEntity> {
-    const user = await userRepo.findOne({ where: { id: userId } });
+    const datasource = getDatasource();
+    const insightRepository = datasource.getRepository(InsightEntity);
+    const userRepository = datasource.getRepository(UserEntity);
+    const user = await userRepository.findOne({ where: { id: userId } });
 
     if (user) {
-      return await insightRepo.save({
+      return await insightRepository.save({
         text,
         user,
         isSummarized: false,

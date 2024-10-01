@@ -1,9 +1,13 @@
+import { getDatasource, InstallationEntity } from "@idealgma/datasource";
 import { WebClient } from "@slack/web-api";
-import { installationRepo, teamRepo } from "../repositories";
 import { SlackService } from "../services/SlackService";
 import { message } from "../messages";
 import logger from "../utils/logger";
 import getNextOccurrence from "../utils/date";
+
+const datasource = getDatasource();
+const installationRepository = datasource.getRepository(InstallationEntity);
+const teamRepository = datasource.getTeamRepository();
 
 /**
  * Runs every Monday at midnight (12:00 AM)
@@ -19,12 +23,12 @@ export const reminderTask = async () => {
   try {
     // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
     const friReminder = message.getReminderMessage({ day: "Friday" });
-    const installations = await installationRepo.find();
+    const installations = await installationRepository.find();
 
     for (const installation of installations) {
       const webClient = new WebClient(installation.token);
       const slackService = new SlackService(webClient);
-      const team = await teamRepo.getTeamWithUsers(installation.id);
+      const team = await teamRepository.getTeamWithUsers(installation.id);
 
       if (team?.users !== undefined) {
         for (const user of team.users) {

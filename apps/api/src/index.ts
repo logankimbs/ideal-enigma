@@ -9,7 +9,6 @@ const app = express()
 
 datasource.initialize();
 
-
 app.get('/', async function (req, res) {
     const repo = datasource.getRepository(UserEntity);
     const users = await repo.find();

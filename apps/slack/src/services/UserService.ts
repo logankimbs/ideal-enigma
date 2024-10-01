@@ -1,6 +1,8 @@
+import { getDatasource, TeamEntity, UserEntity } from "@idealgma/datasource";
 import { Member } from "@slack/web-api/dist/types/response/UsersListResponse";
-import { TeamEntity, UserEntity } from "../entities";
-import { userRepo } from "../repositories";
+
+const datasource = getDatasource();
+const userRepository = datasource.getRepository(UserEntity);
 
 export class UserService {
   public async saveUser(
@@ -11,7 +13,7 @@ export class UserService {
       this.validateUser(user);
       const userEntity = this.mapToUserEntity(user, teamEntity);
 
-      return await userRepo.save(userEntity);
+      return await userRepository.save(userEntity);
     } catch (error) {
       console.error(`Failed to save user with ID: ${user?.id}`, error);
       throw new Error(`Failed to save user: ${user?.id}`);
