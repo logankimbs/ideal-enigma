@@ -98,6 +98,8 @@ export class SlackService {
   private async callApi(
     method: SlackApiMethod,
     params: Record<string, unknown>,
+    // TODO: Update this function
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     try {
       const response = await this.webClient.apiCall(method, params);
