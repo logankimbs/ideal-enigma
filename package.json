@@ -12,7 +12,7 @@
     "build:slack": "nx run @idealgma/slack:build",
     "start:slack": "nx run @idealgma/slack:build && nx run @idealgma/slack:start",
     "build:api": "nx run @idealgma/api:build",
-    "start:api": "nx run @idealgma/api:build && nx run @idealgma/api:start",
+    "start:api": "nx run @idealgma/api:build && nx run @idealgma/api:start:dev",
     "format": "prettier --write .",
     "lint": "nx run-many -t lint",
     "test": "jest"
