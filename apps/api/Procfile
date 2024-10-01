@@ -1,1 +1,1 @@
-web: npx nx run @idealgma/api:build && npx nx run @idealgma/api:start
+web: npm run start:api
