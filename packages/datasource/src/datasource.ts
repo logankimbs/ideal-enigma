@@ -4,7 +4,7 @@ import { join } from "path";
 let datasource: CustomDataSource | null = null;
 
 const getDatasource = (): CustomDataSource => {
-  if (datasource) return datasource
+  if (datasource) return datasource;
 
   const isDev = process.env.NODE_ENV === "development";
 

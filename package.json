@@ -7,9 +7,12 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "start:slack": "npm run build -workspace=@idealgma/slack && npm run start -workspace=@idealgma/slack",
-    "start:api": "npm run build -workspace=@idealgma/api && npm run start -workspace=@idealgma/api",
+    "build": "nx run-many -t build",
+    "build:slack": "nx run @idealgma/slack:build",
+    "start:slack": "nx run @idealgma/slack:build && nx run @idealgma/slack:start",
+    "build:api": "nx run @idealgma/api:build",
+    "start:api": "nx run @idealgma/api:build && nx run @idealgma/api:start",
+    "format": "prettier --write .",
     "lint": "eslint",
     "test": "jest"
   },

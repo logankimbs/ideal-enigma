@@ -6,7 +6,7 @@ export class UserRepository extends Repository<UserEntity> {
     const user = await this.createQueryBuilder("users")
       .where("users.teamId = :teamId", { teamId })
       .getMany();
-    
+
     return user;
   }
 }

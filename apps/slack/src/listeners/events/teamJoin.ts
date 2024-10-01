@@ -7,9 +7,9 @@ const teamJoin = async ({
   event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"team_join">) => {
   logger.info(`Adding new user to team ${event.user.team_id}`);
-  
+
   const datasource = getDatasource();
-  const teamRepository = datasource.getRepository(TeamEntity)
+  const teamRepository = datasource.getRepository(TeamEntity);
   const userRepository = datasource.getRepository(UserEntity);
 
   try {

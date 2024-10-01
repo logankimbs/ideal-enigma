@@ -16,8 +16,8 @@ export class InsightRepository extends Repository<InsightEntity> {
       .andWhere("insights.createdAt > :oneMonthAgo", { oneMonthAgo })
       .getMany();
 
-      return insights;
-  };
+    return insights;
+  }
 
   async markInsightsAsSummarized(insights: InsightEntity[]): Promise<void> {
     insights.forEach((insight) => {
@@ -25,5 +25,5 @@ export class InsightRepository extends Repository<InsightEntity> {
     });
 
     await this.save(insights);
-  };
+  }
 }

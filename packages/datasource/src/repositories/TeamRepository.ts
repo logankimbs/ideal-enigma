@@ -5,7 +5,7 @@ export class TeamRepository extends Repository<TeamEntity> {
   constructor(manager: EntityManager) {
     super(TeamEntity, manager);
   }
-  
+
   async getTeamWithUsers(teamId: string): Promise<TeamEntity | null> {
     const teamWithUsers = await this.findOne({
       where: { id: teamId },

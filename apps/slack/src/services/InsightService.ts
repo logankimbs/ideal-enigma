@@ -1,4 +1,9 @@
-import { getDatasource, InsightEntity, TagEntity, UserEntity } from "@idealgma/datasource";
+import {
+  getDatasource,
+  InsightEntity,
+  TagEntity,
+  UserEntity,
+} from "@idealgma/datasource";
 
 export const insightService = {
   async saveInsight(

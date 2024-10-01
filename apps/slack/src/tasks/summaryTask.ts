@@ -37,9 +37,8 @@ export const summaryTask = async () => {
       const team = await teamRepository.getTeamWithUsers(installation.id);
 
       if (team?.users !== undefined) {
-        const insights = await insightRepository.getRecentUnsummarizedInsightsForTeam(
-          team.id,
-        );
+        const insights =
+          await insightRepository.getRecentUnsummarizedInsightsForTeam(team.id);
 
         if (insights.length >= 10) {
           let summary;
