@@ -7,13 +7,13 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "nx run-many -t build",
-    "build:slack": "nx run @idealgma/slack:build",
-    "start:slack": "nx run @idealgma/slack:build && nx run @idealgma/slack:start",
-    "build:api": "nx run @idealgma/api:build",
-    "start:api": "nx run @idealgma/api:build && nx run @idealgma/api:start",
+    "build": "npx nx run-many -t build",
+    "build:slack": "npx nx run @idealgma/slack:build",
+    "start:slack": "npx nx run @idealgma/slack:build && nx run @idealgma/slack:start",
+    "build:api": "npx nx run @idealgma/api:build",
+    "start:api": "npx nx run @idealgma/api:build && nx run @idealgma/api:start",
     "format": "prettier --write .",
-    "lint": "nx run-many -t lint",
+    "lint": "npx nx run-many -t lint",
     "test": "jest"
   },
   "devDependencies": {
