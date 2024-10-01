@@ -4,9 +4,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const datasource = getDatasource();
 const app = express();
-
+const datasource = getDatasource();
 datasource.initialize();
 
 app.get("/", async function (req, res) {
