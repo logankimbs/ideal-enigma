@@ -1,9 +1,9 @@
-import { Installation } from "@slack/bolt";
+import { Installation as SlackInstallation } from "@slack/bolt";
 import { Entity, PrimaryColumn, Column } from "typeorm";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 
 @Entity("installations")
-class InstallationEntity extends TimestampEntity {
+export class Installation extends TimestampEntity {
   @PrimaryColumn()
   id: string;
 
@@ -11,14 +11,14 @@ class InstallationEntity extends TimestampEntity {
   token: string;
 
   @Column({ type: "jsonb" })
-  data: Installation;
+  data: SlackInstallation;
 
   // TODO: Remove this crap
   static createInstallationEntity(
-    installation: Installation,
+    installation: SlackInstallation,
     id: string,
-  ): InstallationEntity {
-    const installationEntity = new InstallationEntity();
+  ): Installation {
+    const installationEntity = new Installation();
 
     installationEntity.id = id;
     installationEntity.token = installation.bot?.token ?? "";
@@ -27,5 +27,3 @@ class InstallationEntity extends TimestampEntity {
     return installationEntity;
   }
 }
-
-export default InstallationEntity;
