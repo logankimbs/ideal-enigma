@@ -1,20 +1,24 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { TlsOptions } from "tls";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: process.env.DATABASE_HOST,
-      port: 5432,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [__dirname + "/../**/*.entity.js"],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: "postgres",
+        port: configService.get<number>("database.port"),
+        host: configService.get<string>("database.host"),
+        database: configService.get<string>("database.name"),
+        username: configService.get<string>("database.username"),
+        password: configService.get<string>("database.password"),
+        synchronize: configService.get<boolean>("database.synchronize"),
+        ssl: configService.get<boolean | TlsOptions>("database.ssl"),
+        entities: [__dirname + "/../**/*.entity.js"],
+      }),
+      inject: [ConfigService],
     }),
   ],
 })
