@@ -6,9 +6,10 @@ import { DataSource } from "typeorm";
 import { DatabaseModule } from "./database/database.module";
 import { ConfigModule } from "@nestjs/config";
 import { TeamModule } from "./modules/team/team.module";
+import { TagModule } from "./modules/tag/tag.module";
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule, TeamModule],
+  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule, TeamModule, TagModule],
   controllers: [AppController],
   providers: [AppService],
 })

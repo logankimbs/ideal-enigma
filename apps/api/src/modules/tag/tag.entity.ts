@@ -9,7 +9,7 @@ import InsightEntity from "../insights/insight.entity";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 
 @Entity("tags")
-class TagEntity extends TimestampEntity {
+export class Tag extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -20,5 +20,3 @@ class TagEntity extends TimestampEntity {
   @JoinTable({ name: "insight_tag" })
   insights: InsightEntity[];
 }
-
-export default TagEntity;

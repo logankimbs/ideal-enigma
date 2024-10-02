@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { User } from "../users/user.entity";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import TagEntity from "../tags/tags.entity";
+import { Tag } from "../tag/tag.entity";
 
 @Entity("insights")
 class InsightEntity extends TimestampEntity {
@@ -24,9 +24,9 @@ class InsightEntity extends TimestampEntity {
   @ManyToOne(() => User, (user) => user.insights)
   user: User;
 
-  @ManyToMany(() => TagEntity, (tag) => tag.insights)
+  @ManyToMany(() => Tag, (tag) => tag.insights)
   @JoinTable({ name: "insight_tag" })
-  tags: TagEntity[];
+  tags: Tag[];
 
   @Column({ nullable: true })
   link: string;
