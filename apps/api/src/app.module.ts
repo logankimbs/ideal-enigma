@@ -8,6 +8,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TeamModule } from "./modules/team/team.module";
 import { TagModule } from "./modules/tag/tag.module";
 import { InstallationModule } from "./modules/installation/installation.module";
+import { InsightModule } from "./modules/insight/insight.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { InstallationModule } from "./modules/installation/installation.module";
     TeamModule,
     TagModule,
     InstallationModule,
+    InsightModule,
   ],
   controllers: [AppController],
   providers: [AppService],

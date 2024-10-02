@@ -11,7 +11,7 @@ import { TimestampEntity } from "../../common/classes/timestamp.entity";
 import { Tag } from "../tag/tag.entity";
 
 @Entity("insights")
-class InsightEntity extends TimestampEntity {
+export class Insight extends TimestampEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -31,5 +31,3 @@ class InsightEntity extends TimestampEntity {
   @Column({ nullable: true })
   link: string;
 }
-
-export default InsightEntity;

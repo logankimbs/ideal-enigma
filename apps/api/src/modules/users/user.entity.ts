@@ -1,6 +1,6 @@
 import { User as SlackUser } from "@slack/web-api/dist/types/response/UsersInfoResponse";
 import { Entity, Column, ManyToOne, PrimaryColumn, OneToMany } from "typeorm";
-import InsightEntity from "../insights/insight.entity";
+import { Insight } from "../insight/insight.entity";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 import { Team } from "../team/team.entity";
 
@@ -20,6 +20,6 @@ export class User extends TimestampEntity {
   @ManyToOne(() => Team, (team) => team.users)
   team: Team;
 
-  @OneToMany(() => InsightEntity, (insight) => insight.user)
-  insights: InsightEntity[];
+  @OneToMany(() => Insight, (insight) => insight.user)
+  insights: Insight[];
 }

@@ -5,7 +5,7 @@ import {
   ManyToMany,
   JoinTable,
 } from "typeorm";
-import InsightEntity from "../insights/insight.entity";
+import { Insight } from "../insight/insight.entity";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 
 @Entity("tags")
@@ -16,7 +16,7 @@ export class Tag extends TimestampEntity {
   @Column()
   text: string;
 
-  @ManyToMany(() => InsightEntity, (insight) => insight.tags)
+  @ManyToMany(() => Insight, (insight) => insight.tags)
   @JoinTable({ name: "insight_tag" })
-  insights: InsightEntity[];
+  insights: Insight[];
 }
