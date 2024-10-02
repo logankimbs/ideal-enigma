@@ -5,9 +5,10 @@ import { UsersModule } from "./modules/users/users.module";
 import { DataSource } from "typeorm";
 import { DatabaseModule } from "./database/database.module";
 import { ConfigModule } from "@nestjs/config";
+import { TeamModule } from "./modules/team/team.module";
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule],
+  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule, TeamModule],
   controllers: [AppController],
   providers: [AppService],
 })
