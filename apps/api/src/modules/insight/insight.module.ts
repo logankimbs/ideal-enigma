@@ -8,6 +8,5 @@ import { InsightController } from "./insight.controller";
   imports: [TypeOrmModule.forFeature([Insight])],
   controllers: [InsightController],
   providers: [InsightService],
-  exports: [TypeOrmModule],
 })
 export class InsightModule {}
