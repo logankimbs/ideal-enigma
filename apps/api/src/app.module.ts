@@ -1,29 +1,7 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { UserModule } from "./modules/user/user.module";
-import { DatabaseModule } from "./database/database.module";
-import { TeamModule } from "./modules/team/team.module";
-import { TagModule } from "./modules/tag/tag.module";
-import { InstallationModule } from "./modules/installation/installation.module";
-import { InsightModule } from "./modules/insight/insight.module";
-import configuration from "./config/configuration";
+import { Config } from "./config/config.module.";
+import { Modules } from "./modules";
+import { Database } from "./database/database.module";
 
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-    }),
-    DatabaseModule,
-    UserModule,
-    TeamModule,
-    TagModule,
-    InstallationModule,
-    InsightModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
+@Module({ imports: [Config, Database, ...Modules] })
 export class AppModule {}

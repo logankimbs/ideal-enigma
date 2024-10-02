@@ -1,5 +1,7 @@
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { UserService } from "./user.service";
+import { User } from "./user.entity";
+import { CreateUserDto } from "./dto/create-user.dto";
 
 @Controller("user")
 export class UserController {
@@ -7,7 +9,20 @@ export class UserController {
 
   @Get()
   async findAll() {
-    const users = await this.usersService.findAll();
-    return users;
+    return await this.usersService.findAll();
+  }
+
+  @Get(":id")
+  async findOne(@Param() params: { id: string }): Promise<User> {
+    try {
+      return await this.usersService.findOne(params.id);
+    } catch (error: unknown) {
+      throw Error(`User does not exist. ${error}`);
+    }
+  }
+
+  @Post()
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(createUserDto);
   }
 }

@@ -1,4 +1,7 @@
-export default () => {
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
+const config = () => {
   const isDev = process.env.NODE_ENV === "development";
 
   return {
@@ -14,3 +17,13 @@ export default () => {
     },
   };
 };
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
+  ],
+})
+export class Config {}
