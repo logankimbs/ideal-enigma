@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { UsersModule } from "./modules/users/users.module";
+import { UserModule } from "./modules/user/user.module";
 import { DatabaseModule } from "./database/database.module";
 import { TeamModule } from "./modules/team/team.module";
 import { TagModule } from "./modules/tag/tag.module";
@@ -17,7 +17,7 @@ import configuration from "./config/configuration";
       load: [configuration],
     }),
     DatabaseModule,
-    UsersModule,
+    UserModule,
     TeamModule,
     TagModule,
     InstallationModule,

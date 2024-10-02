@@ -6,7 +6,7 @@ import {
   ManyToMany,
   JoinTable,
 } from "typeorm";
-import { User } from "../users/user.entity";
+import { User } from "../user/user.entity";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 import { Tag } from "../tag/tag.entity";
 
