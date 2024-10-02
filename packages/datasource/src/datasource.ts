@@ -8,6 +8,13 @@ const getDatasource = (): CustomDataSource => {
 
   const isDev = process.env.NODE_ENV === "development";
 
+  console.log(
+    process.env.DATABASE_HOST,
+    process.env.DATABASE_NAME,
+    process.env.DATABASE_USERNAME,
+    process.env.DATABASE_PASSWORD,
+  );
+
   datasource = new CustomDataSource({
     type: "postgres",
     host: process.env.DATABASE_HOST,

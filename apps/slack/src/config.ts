@@ -9,6 +9,7 @@ const getConfig = () => {
   if (config) return config;
 
   config = {
+    apiUrl: process.env.API_URL || "http://localhost:3001/",
     nodeEnv: process.env.NODE_ENV || "development",
     isDev: process.env.NODE_ENV === "development",
     port: process.env.PORT || "3000",

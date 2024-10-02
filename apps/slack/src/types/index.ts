@@ -87,6 +87,7 @@ export interface Insight {
 }
 
 export type Config = {
+  apiUrl: string;
   nodeEnv: string;
   isDev: boolean;
   port: string;

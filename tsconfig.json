@@ -20,6 +20,7 @@
   "references": [
     { "path": "packages/datasource" },
     { "path": "apps/slack" },
-    { "path": "apps/api" }
+    { "path": "apps/api" },
+    { "path": "apps/shared" }
   ]
 }
