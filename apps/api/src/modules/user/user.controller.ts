@@ -24,7 +24,11 @@ export class UserController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.create(createUserDto);
+    try {
+      return await this.usersService.create(createUserDto);
+    } catch (error: unknown) {
+      return `Unable to create user. ${error}`;
+    }
   }
 
   @Put()

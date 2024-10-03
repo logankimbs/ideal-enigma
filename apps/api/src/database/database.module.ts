@@ -21,4 +21,4 @@ import { TlsOptions } from "tls";
     }),
   ],
 })
-export class Database {}
+export class DatabaseModule {}
