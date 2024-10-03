@@ -9,7 +9,10 @@
     "noFallthroughCasesInSwitch": true,
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
-  "references": [{ "path": "../../packages/datasource" }],
+  "references": [
+    { "path": "../../packages/datasource" },
+    { "path": "../common" }
+  ],
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
   "include": ["src"]
 }

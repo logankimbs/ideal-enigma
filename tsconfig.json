@@ -14,12 +14,15 @@
     "declaration": true,
     "composite": true,
     "paths": {
+      "@idealgma/common": ["./apps/common"],
+      "@idealgma/common/*": ["./apps/common/*"],
       "@idealgma/*": ["packages/*/src", "apps/*/src"]
     }
   },
   "references": [
     { "path": "packages/datasource" },
     { "path": "apps/slack" },
-    { "path": "apps/api" }
+    { "path": "apps/api" },
+    { "path": "apps/common" }
   ]
 }

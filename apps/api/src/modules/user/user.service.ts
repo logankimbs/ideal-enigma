@@ -24,13 +24,9 @@ export class UserService {
   }
 
   async update(updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.userRepository.save({
+    return await this.userRepository.save({
       id: updateUserDto.id,
       data: updateUserDto,
     });
-
-    console.log("User was updated!", user);
-
-    return user;
   }
 }
