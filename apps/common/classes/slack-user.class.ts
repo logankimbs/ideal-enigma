@@ -1,4 +1,4 @@
-interface StatusEmojiDisplayInfo {
+class StatusEmojiDisplayInfo {
   emoji_name?: string;
   display_alias?: string;
   display_url?: string;
