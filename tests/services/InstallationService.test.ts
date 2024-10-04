@@ -1,6 +1,6 @@
 import { Installation, InstallationQuery } from "@slack/bolt";
-import { installationService } from "../../src/services/InstallationService";
 import { installationRepo } from "../../src/repositories";
+import { installationService } from "../../src/services/InstallationService";
 import logger from "../../src/utils/logger";
 
 jest.mock("../../src/repositories");

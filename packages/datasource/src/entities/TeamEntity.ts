@@ -1,7 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import UserEntity from "./UserEntity";
-import { TimestampEntity } from "./TimestampEntity";
 import { Team } from "@slack/web-api/dist/types/response/TeamInfoResponse";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { TimestampEntity } from "./TimestampEntity";
+import UserEntity from "./UserEntity";
 
 export interface TeamData extends Omit<Team, "id"> {
   id: string;

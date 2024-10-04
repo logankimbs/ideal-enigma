@@ -1,9 +1,9 @@
-import OpenAI from "openai";
-import { z } from "zod";
-import { zodResponseFormat } from "openai/helpers/zod";
-import logger from "../utils/logger";
-import { Summary } from "../types";
 import { InsightEntity } from "@idealgma/datasource";
+import OpenAI from "openai";
+import { zodResponseFormat } from "openai/helpers/zod";
+import { z } from "zod";
+import { Summary } from "../types";
+import logger from "../utils/logger";
 
 const InsightSchema = z.object({
   origin: z.object({

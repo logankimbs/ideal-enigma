@@ -1,9 +1,9 @@
 import { getDatasource, InstallationEntity } from "@idealgma/datasource";
 import { WebClient } from "@slack/web-api";
-import { SlackService } from "../services/SlackService";
 import { message } from "../messages";
-import logger from "../utils/logger";
+import { SlackService } from "../services/SlackService";
 import getNextOccurrence from "../utils/date";
+import logger from "../utils/logger";
 
 const datasource = getDatasource();
 const installationRepository = datasource.getRepository(InstallationEntity);

@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
-import { TeamService } from "./team.service";
 import { Team } from "./team.entity";
+import { TeamService } from "./team.service";
 
 @Controller("team")
 export class TeamController {

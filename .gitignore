@@ -5,6 +5,7 @@ dist
 .vscode/
 .nx/cache
 .nx/workspace-data
+.next
 
 # compiled output
 /dist

@@ -1,5 +1,5 @@
 import { Installation as SlackInstallation } from "@slack/bolt";
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 
 @Entity("installations")

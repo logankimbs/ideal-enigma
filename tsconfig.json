@@ -23,6 +23,7 @@
     { "path": "packages/datasource" },
     { "path": "apps/slack" },
     { "path": "apps/api" },
-    { "path": "apps/common" }
+    { "path": "apps/common" },
+    { "path": "apps/frontend" }
   ]
 }

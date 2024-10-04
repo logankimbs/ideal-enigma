@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { InsightController } from "./insight.controller";
 import { Insight } from "./insight.entity";
 import { InsightService } from "./insight.service";
-import { InsightController } from "./insight.controller";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Insight])],

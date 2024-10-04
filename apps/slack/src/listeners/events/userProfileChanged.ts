@@ -1,7 +1,7 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
+import config from "../../config";
 import { apiRequest } from "../../utils/apiRequest";
 import logger from "../../utils/logger";
-import config from "../../config";
 
 const userProfileChanged = async ({
   event,
