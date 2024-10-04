@@ -1,8 +1,5 @@
-import {
-  AllMiddlewareArgs,
-  ModalView,
-  SlackViewMiddlewareArgs,
-} from "@slack/bolt";
+import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
+import { ModalView } from "@slack/types";
 import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from "../../constants";
 import { insightService } from "../../services/InsightService";
 import logger from "../../utils/logger";

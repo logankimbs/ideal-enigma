@@ -1,22 +1,21 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
-import { getDatasource, UserEntity } from "@idealgma/datasource";
-import { UserData } from "../../types";
+import { apiRequest } from "../../utils/apiRequest";
 import logger from "../../utils/logger";
+import config from "../../config";
 
 const userProfileChanged = async ({
   event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"user_profile_changed">) => {
-  const datasource = getDatasource();
-  const userRepository = datasource.getRepository(UserEntity);
-
   try {
-    const data = event.user as UserData;
+    await apiRequest({
+      method: "put",
+      url: config.apiUrl + "/user",
+      data: event.user,
+    });
 
-    await userRepository.save({ id: data.id, data });
-
-    logger.info(`User ${data.id} successfully updated`);
+    logger.info("User updated");
   } catch (error) {
-    console.error("Error updating user profile:", error);
+    logger.error(`Error updating user: ${error}`);
   }
 };
 
