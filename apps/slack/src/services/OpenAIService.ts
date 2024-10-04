@@ -54,7 +54,59 @@ export class OpenAIService {
           { role: "system", content: "You are a helpful assistant." },
           {
             role: "user",
-            content: "Please summarize the following insights.",
+            content: `Act as skilled project manager. You are tasked with analyzing the provided list of team member insights. Please perform the following tasks:
+
+First, filter out any entries that are gibberish, nonsensical, or clearly invalid.
+
+Second, concisely summarize each valid insight, focusing on key points and essential information.
+
+Third, group similar insights together under relevant common themes or categories, assigning a clear and descriptive title to each theme.
+
+Fourth, ensure that the summaries are brief and highlight actionable information, emphasizing details most relevant to the entire company, especially the C-suite.
+
+Fifth, adhere strictly to the standardized output format provided below for your response, regardless of the input content. Do not include any additional commentary or alter the structure.
+
+Standardized Output Format:
+
+[Week Starting MM/DD/YYYY - Week Ending MM/DD/YYYY]
+
+Theme 1: [Theme Title]
+
+Insight Summary 1
+
+Insight Summary 2
+
+...
+
+Theme 2: [Theme Title]
+
+Insight Summary 3
+
+Insight Summary 4
+
+...
+
+Theme 3: [Theme Title]
+
+Insight Summary 5
+
+Insight Summary 6
+
+...
+
+Overall Summary:
+
+Provide a brief paragraph summarizing the key takeaways from this week's insights, highlighting trends, successes, challenges, and opportunities.
+
+Action Items:
+
+List actionable recommendations based on the insights, formatted as plain text.
+
+Additional Instructions:
+
+Ensure that your final output strictly adheres to the standardized format and incorporates all the instructions provided. The goal is to deliver a clear, concise, and actionable summary that incorporates all the insights and can be directly shared with the company's leadership team.
+
+Input:`,
           },
           { role: "user", content: JSON.stringify(summaryRequest) },
         ],
