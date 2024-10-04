@@ -1,8 +1,11 @@
-import { Stat } from "@/app/page";
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
-import { Heading, Subheading } from "@/components/heading";
-import { Link } from "@/components/link";
+import { ChevronLeftIcon } from "@heroicons/react/16/solid";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Stat } from "../../../app/page";
+import { Badge } from "../../../components/badge";
+import { Button } from "../../../components/button";
+import { Heading, Subheading } from "../../../components/heading";
+import { Link } from "../../../components/link";
 import {
   Table,
   TableBody,
@@ -10,18 +13,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { getEvent, getEventOrders } from "@/data";
-import { ChevronLeftIcon } from "@heroicons/react/16/solid";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+} from "../../../components/table";
+import { getEvent, getEventOrders } from "../../../data";
 
 export async function generateMetadata({
   params,
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  let event = await getEvent(params.id);
+  const event = await getEvent(params.id);
 
   return {
     title: event?.name,
@@ -29,8 +29,8 @@ export async function generateMetadata({
 }
 
 export default async function Event({ params }: { params: { id: string } }) {
-  let event = await getEvent(params.id);
-  let orders = await getEventOrders(params.id);
+  const event = await getEvent(params.id);
+  const orders = await getEventOrders(params.id);
 
   if (!event) {
     notFound();

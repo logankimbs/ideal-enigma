@@ -1,15 +1,3 @@
-import { Avatar } from "@/components/avatar";
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionTerm,
-} from "@/components/description-list";
-import { Divider } from "@/components/divider";
-import { Heading, Subheading } from "@/components/heading";
-import { Link } from "@/components/link";
-import { getOrder } from "@/data";
 import {
   BanknotesIcon,
   CalendarIcon,
@@ -18,6 +6,18 @@ import {
 } from "@heroicons/react/16/solid";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Avatar } from "../../../components/avatar";
+import { Badge } from "../../../components/badge";
+import { Button } from "../../../components/button";
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionTerm,
+} from "../../../components/description-list";
+import { Divider } from "../../../components/divider";
+import { Heading, Subheading } from "../../../components/heading";
+import { Link } from "../../../components/link";
+import { getOrder } from "../../../data";
 import { RefundOrder } from "./refund";
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  let order = await getOrder(params.id);
+  const order = await getOrder(params.id);
 
   return {
     title: order && `Order #${order.id}`,
@@ -33,7 +33,7 @@ export async function generateMetadata({
 }
 
 export default async function Order({ params }: { params: { id: string } }) {
-  let order = await getOrder(params.id);
+  const order = await getOrder(params.id);
 
   if (!order) {
     notFound();
