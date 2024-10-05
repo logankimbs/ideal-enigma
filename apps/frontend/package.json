@@ -7,6 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@idealgma/api": "^1.0.0",
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.3",
     "clsx": "^2.1.1",

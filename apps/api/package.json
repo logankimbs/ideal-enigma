@@ -2,6 +2,7 @@
   "name": "@idealgma/api",
   "version": "1.0.0",
   "main": "dist/main.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",

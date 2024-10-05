@@ -22,7 +22,7 @@
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
     "noEmit": true
   },
-  "references": [{ "path": "../common" }],
+  "references": [{ "path": "../common" }, { "path": "../api" }],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
