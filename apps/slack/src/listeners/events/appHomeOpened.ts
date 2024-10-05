@@ -1,10 +1,10 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
+import { OPEN_INSIGHT_MODAL } from "../../constants";
 import {
   createHeaderBlock,
   createRichTextBlock,
   createSectionWithButton,
 } from "../../utils/blocks";
-import { OPEN_INSIGHT_MODAL } from "../../constants";
 
 const getHomeViewBlocks = () => [
   createHeaderBlock("👋 Meet Echo"),

@@ -1,7 +1,7 @@
 import { Block, KnownBlock } from "@slack/types";
-import { createButton, createTextSection } from "../utils/blocks";
-import { IMessage, Message, WelcomeMessageOptions } from "../types";
 import { OPEN_INSIGHT_MODAL } from "../constants";
+import { IMessage, Message, WelcomeMessageOptions } from "../types";
+import { createButton, createTextSection } from "../utils/blocks";
 
 class WelcomeMessage implements IMessage {
   getMessage({ userId }: WelcomeMessageOptions): Message {

@@ -2,6 +2,7 @@
   "references": [
     { "path": "./common/tsconfig.json" },
     { "path": "./slack/tsconfig.json" },
-    { "path": "./api/tsconfig.json" }
+    { "path": "./api/tsconfig.json" },
+    { "path": "./frontend/tsconfig.build.json" }
   ]
 }

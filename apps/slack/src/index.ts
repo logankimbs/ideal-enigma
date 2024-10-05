@@ -1,8 +1,8 @@
 import { getDatasource } from "@idealgma/datasource";
-import config from "./config";
 import app from "./app";
-import tasks from "./tasks";
+import config from "./config";
 import registerListeners from "./listeners";
+import tasks from "./tasks";
 import logger from "./utils/logger";
 
 const datasource = getDatasource();

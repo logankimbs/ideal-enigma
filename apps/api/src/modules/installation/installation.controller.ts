@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
-import { InstallationService } from "./installation.service";
 import { Installation } from "./installation.entity";
+import { InstallationService } from "./installation.service";
 
 @Controller("installation")
 export class InstallationController {

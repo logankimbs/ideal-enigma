@@ -5,11 +5,11 @@ import {
   InstallationStore,
 } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
+import { message } from "../messages";
 import logger from "../utils/logger";
 import { SlackService } from "./SlackService";
 import { teamService } from "./TeamService";
 import { userService } from "./UserService";
-import { message } from "../messages";
 
 const datasource = getDatasource();
 const installationRepository = datasource.getRepository(InstallationEntity);

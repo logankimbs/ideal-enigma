@@ -1,19 +1,19 @@
 import {
+  Block,
   ChatPostMessageResponse,
   ChatScheduleMessageResponse,
+  KnownBlock,
   TeamInfoResponse,
   UsersListResponse,
   WebClient,
-  KnownBlock,
-  Block,
 } from "@slack/web-api";
 import {
-  UsersInfoResponse,
   User as SlackUser,
+  UsersInfoResponse,
 } from "@slack/web-api/dist/types/response/UsersInfoResponse";
+import { SlackApiMethod } from "../types";
 import logger from "../utils/logger";
 import { mapMemberToUser } from "../utils/mapper";
-import { SlackApiMethod } from "../types";
 
 export class SlackService {
   private webClient: WebClient;

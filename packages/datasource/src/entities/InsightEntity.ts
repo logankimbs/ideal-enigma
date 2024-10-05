@@ -1,14 +1,14 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  ManyToMany,
+  Entity,
   JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import UserEntity from "./UserEntity";
-import { TimestampEntity } from "./TimestampEntity";
 import TagEntity from "./TagEntity";
+import { TimestampEntity } from "./TimestampEntity";
+import UserEntity from "./UserEntity";
 
 @Entity("insights")
 class InsightEntity extends TimestampEntity {
