@@ -20,10 +20,10 @@
     }
   },
   "references": [
-    { "path": "packages/datasource" },
-    { "path": "apps/slack" },
-    { "path": "apps/api" },
-    { "path": "apps/common" },
-    { "path": "apps/frontend" }
+    { "path": "./packages/datasource/tsconfig.json" },
+    { "path": "./apps/slack/tsconfig.json" },
+    { "path": "./apps/api/tsconfig.json" },
+    { "path": "./apps/common/tsconfig.json" },
+    { "path": "./apps/frontend/tsconfig.build.json" }
   ]
 }
