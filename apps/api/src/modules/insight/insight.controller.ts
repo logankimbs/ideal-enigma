@@ -1,5 +1,5 @@
+import { Insight } from "@idealgma/common";
 import { Controller, Get } from "@nestjs/common";
-import { Insight } from "./insight.entity";
 import { InsightService } from "./insight.service";
 
 @Controller("insight")
@@ -8,7 +8,6 @@ export class InsightController {
 
   @Get()
   async findAll(): Promise<Insight[]> {
-    const insights = await this.insightService.findAll();
-    return insights;
+    return await this.insightService.findAll();
   }
 }

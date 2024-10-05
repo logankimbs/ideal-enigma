@@ -1,5 +1,5 @@
+import { Team } from "@idealgma/common";
 import { Controller, Get } from "@nestjs/common";
-import { Team } from "./team.entity";
 import { TeamService } from "./team.service";
 
 @Controller("team")

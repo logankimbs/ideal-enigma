@@ -1,5 +1,5 @@
+import { Installation } from "@idealgma/common";
 import { Controller, Get } from "@nestjs/common";
-import { Installation } from "./installation.entity";
 import { InstallationService } from "./installation.service";
 
 @Controller("installation")
@@ -8,7 +8,6 @@ export class InstallationController {
 
   @Get()
   async findAll(): Promise<Installation[]> {
-    const installations = await this.installationService.findAll();
-    return installations;
+    return await this.installationService.findAll();
   }
 }

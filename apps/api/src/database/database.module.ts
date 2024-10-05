@@ -1,3 +1,4 @@
+import { entities } from "@idealgma/common";
 import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -15,7 +16,7 @@ import { TlsOptions } from "tls";
         password: configService.get<string>("database.password"),
         synchronize: configService.get<boolean>("database.synchronize"),
         ssl: configService.get<boolean | TlsOptions>("database.ssl"),
-        entities: [__dirname + "/../**/*.entity.js"],
+        entities,
       }),
       inject: [ConfigService],
     }),

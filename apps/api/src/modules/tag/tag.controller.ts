@@ -1,5 +1,5 @@
+import { Tag } from "@idealgma/common";
 import { Controller, Get } from "@nestjs/common";
-import { Tag } from "./tag.entity";
 import { TagService } from "./tag.service";
 
 @Controller("tag")
