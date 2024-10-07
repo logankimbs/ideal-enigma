@@ -2,9 +2,9 @@
   "name": "@idealgma/frontend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "nx next:dev",
+    "build": "nx next:build",
+    "start": "nx next:start"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",

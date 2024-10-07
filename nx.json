@@ -3,10 +3,36 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/.next"],
+      "cache": true
+    },
+    "lint": {
       "cache": true
     }
   },
   "defaultBase": "main",
-  "nxCloudId": "66fad5df175f7c6817c96a8b"
+  "nxCloudId": "67043fa3a8759c68e8947d86",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/next/plugin",
+      "options": {
+        "startTargetName": "next:start",
+        "buildTargetName": "next:build",
+        "devTargetName": "next:dev",
+        "serveStaticTargetName": "serve-static"
+      }
+    }
+  ]
 }
