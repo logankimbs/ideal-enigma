@@ -3,15 +3,18 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist", "{projectRoot}/.next"],
+      "outputs": ["{projectRoot}/dist"],
       "cache": true
     },
     "lint": {
       "cache": true
+    },
+    "test": {
+      "cache": true
     }
   },
   "defaultBase": "main",
-  "nxCloudId": "67043fa3a8759c68e8947d86",
+  "nxCloudId": "67045baa673af465bb6c1d00",
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",

@@ -1,21 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "rootDir": "src",
-//     "outDir": "dist",
-//     "target": "ES2021",
-//     "sourceMap": true,
-//     "incremental": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
-//   },
-//   "references": [
-//     { "path": "../../packages/datasource" },
-//     { "path": "../common" }
-//   ],
-//   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
-//   "include": ["src"]
-// }
-
 {
   "compilerOptions": {
     "module": "commonjs",
@@ -35,7 +17,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     }
-  },
+  }
 }
