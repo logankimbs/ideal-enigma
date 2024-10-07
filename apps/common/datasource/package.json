@@ -1,13 +1,9 @@
 {
   "name": "@idealgma/datasource",
   "version": "1.0.0",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
-  },
-  "dependencies": {
-    "pg": "^8.12.0",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
   }
 }
