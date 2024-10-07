@@ -1,11 +1,7 @@
-import { Team as SlackTeam } from "@slack/web-api/dist/types/response/TeamInfoResponse";
+import { SlackTeam } from "@idealgma/types";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 import { User } from "../user/user.entity";
-
-interface TeamData extends Omit<SlackTeam, "id"> {
-  id: string;
-}
 
 @Entity("teams")
 export class Team extends TimestampEntity {
@@ -13,7 +9,7 @@ export class Team extends TimestampEntity {
   id: string;
 
   @Column({ type: "jsonb" })
-  data: TeamData; // Modified slack team object
+  data: SlackTeam;
 
   @OneToMany(() => User, (user) => user.team)
   users: User[];

@@ -1,7 +1,7 @@
 {
-  "name": "@idealgma/common",
+  "name": "@idealgma/types",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"

@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "packages/*/**",
+    "apps/*/**"
   ],
   "scripts": {
     "heroku-postbuild": "npm add -g nx && npm run build",
