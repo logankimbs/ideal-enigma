@@ -2,9 +2,10 @@
   "name": "@idealgma/frontend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nx next:dev",
-    "build": "nx next:build",
-    "start": "nx next:start"
+    "build": "next build",
+    "start:dev": "next dev",
+    "start:prod": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",
@@ -15,6 +16,8 @@
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.5",
-    "tailwindcss": "^3.4.13"
+    "tailwindcss": "^3.4.13",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.14"
   }
 }

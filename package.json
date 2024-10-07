@@ -13,9 +13,10 @@
     "start:slack": "nx run @idealgma/slack:build && nx run @idealgma/slack:start",
     "build:api": "nx run @idealgma/api:build",
     "start:api": "nx run @idealgma/api:build && nx run @idealgma/api:start:dev",
-    "build:frontend": "nx run @idealgma/frontend:build",
-    "start:frontend": "nx run @idealgma/frontend:build && nx run @idealgma/frontend:dev",
-    "start:all": "npm run build && nx run-many -t start",
+    "build:frontend": "npm --workspace @idealgma/frontend run build",
+    "start:dev:frontend": "npm --workspace @idealgma/frontend run start:dev",
+    "start:prod:frontend": "npm --workspace @idealgma/frontend run start:prod",
+    "dev": "concurrently -r \"npm run start:dev:frontend\" \"npm run dev:backend\" \"npm run dev:slack\"",
     "format": "prettier --write .",
     "lint": "nx run-many -t lint",
     "test": "jest"
