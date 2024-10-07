@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": "./",
     "declaration": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     "esModuleInterop": true, // I'm importing Slack Installation type
     "strict": true,
     "strictPropertyInitialization": false
