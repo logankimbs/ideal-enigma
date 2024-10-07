@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { Input } from "../../components/input";
 import { Listbox, ListboxLabel, ListboxOption } from "../../components/listbox";
 import { getCountries } from "../../data";
-import { useState } from "react";
 
 export function Address() {
   const countries = getCountries();
