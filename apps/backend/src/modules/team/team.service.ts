@@ -6,11 +6,17 @@ import { Team } from "./team.entity";
 @Injectable()
 export class TeamService {
   constructor(
-    @InjectRepository(Team)
-    private teamRepository: Repository<Team>,
+    @InjectRepository(Team) private teamRepository: Repository<Team>,
   ) {}
 
   findAll(): Promise<Team[]> {
     return this.teamRepository.find();
+  }
+
+  async find(id: string): Promise<Team> {
+    return await this.teamRepository.findOneOrFail({
+      where: { id },
+      relations: ["users"],
+    });
   }
 }

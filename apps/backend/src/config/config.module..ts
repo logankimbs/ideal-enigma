@@ -5,7 +5,11 @@ const config = () => {
   const isDev = process.env.NODE_ENV === "development";
 
   return {
-    port: parseInt(process.env.PORT || "3001", 10),
+    port: parseInt(process.env.PORT || "4000", 10),
+    origin: {
+      frontend: process.env.FRONTEND_URL || "http://localhost:3000",
+      slack: process.env.SLACK_URL || "http://localhost:8080",
+    },
     database: {
       port: parseInt(process.env.DATABASE_PORT || "5432", 10),
       host: process.env.DATABASE_HOST,

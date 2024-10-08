@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param } from "@nestjs/common";
 import { Team } from "./team.entity";
 import { TeamService } from "./team.service";
 
@@ -9,5 +9,10 @@ export class TeamController {
   @Get()
   findAll(): Promise<Team[]> {
     return this.teamService.findAll();
+  }
+
+  @Get(":id")
+  find(@Param() params: { id: string }): Promise<Team> {
+    return this.teamService.find(params.id);
   }
 }

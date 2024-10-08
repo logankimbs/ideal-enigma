@@ -1,0 +1,9 @@
+{
+  "name": "@idealgma/utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  }
+}

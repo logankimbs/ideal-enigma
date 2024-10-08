@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import logger from "./logger";
 
 /**
  * Calculates the Unix timestamp for the next occurrence of a specific day and time.
@@ -43,8 +42,6 @@ const getNextOccurrence = (
     second: 0,
     millisecond: 0,
   });
-
-  logger.info(`time for ${timezone} = ${targetDateTime}`);
 
   // Convert to Unix timestamp (seconds since epoch)
   return Math.floor(targetDateTime.toSeconds());
