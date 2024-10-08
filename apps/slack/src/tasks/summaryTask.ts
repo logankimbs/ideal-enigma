@@ -40,14 +40,14 @@ export const summaryTask = async () => {
       const slackService = new SlackService(webClient);
 
       logger.info(`Grabbing team ${installation.id}...`);
-      const team: TeamEntity = await await apiRequest({
+      const team: TeamEntity = await apiRequest({
         method: "get",
         url: `${config.apiUrl}/team/${installation.id}`,
       });
 
       if (team?.users !== undefined) {
         logger.info(`Grabbing insights for team ${team.id}...`);
-        const insights: InsightEntity[] = await await apiRequest({
+        const insights: InsightEntity[] = await apiRequest({
           method: "get",
           url: `${config.apiUrl}/insight/${team.id}`,
         });
