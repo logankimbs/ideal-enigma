@@ -14,7 +14,7 @@
     }
   },
   "defaultBase": "main",
-  "nxCloudId": "67046c064003f9515ff1ae92",
+  "nxCloudId": "66fad5df175f7c6817c96a8b",
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
