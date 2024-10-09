@@ -2,7 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Team } from "../team";
-import { CreateUserDto } from "./dto/create-user.dto";
+import {
+  CreateUserDto,
+  CreateUsersListDto,
+  CreateUsersListQueryDto,
+} from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./user.entity";
 
@@ -32,6 +36,27 @@ export class UserService {
     user.team = team;
 
     return this.userRepository.save(user);
+  }
+
+  async createBatch(
+    createUsersListQueryDto: CreateUsersListQueryDto,
+    createUsersListDto: CreateUsersListDto,
+  ): Promise<User[]> {
+    // Assuming each user in the batch has the same team id
+    const team = await this.teamRepository.findOneOrFail({
+      where: { id: createUsersListQueryDto.teamId },
+    });
+
+    const users = createUsersListDto.users.map((newUser) => {
+      const user = new User();
+      user.id = newUser.id;
+      user.data = newUser;
+      user.team = team;
+
+      return user;
+    });
+
+    return this.userRepository.save(users);
   }
 
   async update(updateUserDto: UpdateUserDto): Promise<User> {

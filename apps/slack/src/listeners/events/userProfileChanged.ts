@@ -6,16 +6,16 @@ import logger from "../../utils/logger";
 const userProfileChanged = async ({
   event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"user_profile_changed">) => {
+  logger.info(`Updating user ${event.user.id}`);
+
   try {
     await apiRequest({
       method: "put",
-      url: config.apiUrl + "/user",
+      url: config.apiUrl + "/users",
       data: event.user,
     });
-
-    logger.info("User updated");
   } catch (error) {
-    logger.error(`Error updating user: ${error}`);
+    logger.error(`Error updating user ${event.user}: ${error}`);
   }
 };
 

@@ -4,7 +4,7 @@ import { MarkInsightSummarized } from "./dto/insight-summarized.dto";
 import { Insight } from "./insight.entity";
 import { InsightService } from "./insight.service";
 
-@Controller("insight")
+@Controller("insights")
 export class InsightController {
   constructor(private readonly insightService: InsightService) {}
 

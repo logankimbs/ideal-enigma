@@ -1,4 +1,4 @@
-interface Icon {
+class Icon {
   image_102?: string;
   image_132?: string;
   image_230?: string;
@@ -10,7 +10,7 @@ interface Icon {
   image_original?: string;
 }
 
-export interface SlackTeam {
+export class SlackTeam {
   id: string;
   name?: string;
   url?: string;

@@ -24,7 +24,7 @@ export const reminderTask = async () => {
     logger.info("Grabbing installations...");
     const installations: InstallationEntity[] = await apiRequest({
       method: "get",
-      url: `${config.apiUrl}/installation`,
+      url: `${config.apiUrl}/installations`,
     });
 
     for (const installation of installations) {
@@ -34,7 +34,7 @@ export const reminderTask = async () => {
       logger.info(`Grabbing team ${installation.id}...`);
       const team: TeamEntity = await apiRequest({
         method: "get",
-        url: `${config.apiUrl}/team/${installation.id}`,
+        url: `${config.apiUrl}/teams/${installation.id}`,
       });
 
       if (team?.users !== undefined) {

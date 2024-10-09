@@ -1,18 +1,19 @@
-import { getDatasource, InstallationEntity } from "@idealgma/datasource";
+import {
+  InstallationEntity,
+  TeamEntity,
+  UserEntity,
+} from "@idealgma/datasource";
 import {
   Installation,
   InstallationQuery,
   InstallationStore,
 } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
+import config from "../config";
 import { message } from "../messages";
+import { apiRequest } from "../utils/apiRequest";
 import logger from "../utils/logger";
 import { SlackService } from "./SlackService";
-import { teamService } from "./TeamService";
-import { userService } from "./UserService";
-
-const datasource = getDatasource();
-const installationRepository = datasource.getRepository(InstallationEntity);
 
 const installationService: InstallationStore = {
   storeInstallation: async function <AuthVersion extends "v1" | "v2">(
@@ -40,13 +41,17 @@ const installationService: InstallationStore = {
     query: InstallationQuery<boolean>,
   ): Promise<Installation<"v1" | "v2", boolean>> {
     const id = getInstallationId(query);
-    const installation = await installationRepository.findOneBy({ id });
+    logger.info(`Fetching installation for ${id}`);
+    const installationEntity: InstallationEntity = await apiRequest({
+      method: "get",
+      url: `${config.apiUrl}/installations/${id}`,
+    });
 
-    if (!installation) {
+    if (!installationEntity) {
       throw new Error("Installation was not found.");
     }
 
-    return installation.data as Installation;
+    return installationEntity.data as Installation;
   },
 
   deleteInstallation: async function (
@@ -55,9 +60,12 @@ const installationService: InstallationStore = {
     const id = getInstallationId(query);
 
     try {
-      await installationRepository.softDelete({ id });
+      await apiRequest({
+        method: "delete",
+        url: `${config.apiUrl}/installations/${id}`,
+      });
     } catch (error) {
-      logger.error("Error deleting installation:", error);
+      logger.error(`Error deleting installation ${id}: ${error}`);
     }
   },
 };
@@ -77,20 +85,33 @@ async function handleSingleTeamInstallation(
     const slackService = new SlackService(webClient);
     const slackTeam = await slackService.getTeamInfo(installation.team!.id);
     const slackUsers = await slackService.getUsersList(installation.team!.id);
-    const teamEntity = await teamService.saveTeam(slackTeam);
+
+    logger.info(`Saving team ${slackTeam?.id}`);
+    const teamEntity: TeamEntity = await apiRequest({
+      method: "post",
+      url: `${config.apiUrl}/teams`,
+      data: slackTeam,
+    });
 
     if (slackUsers) {
+      logger.info(`Saving a batch of users for team ${teamEntity.id}`);
+      const userEntities: UserEntity[] = await apiRequest({
+        method: "post",
+        url: `${config.apiUrl}/users/batch?teamId=${teamEntity.id}`,
+        data: { users: slackUsers },
+      });
+
       await Promise.all(
-        slackUsers.map(async (user) => {
+        userEntities.map(async (user: UserEntity) => {
           // Schedules the message for 1 minute and 30 seconds later
           const postAt = Math.floor(Date.now() / 1000) + 90;
-          const slackUser = await userService.saveUser(user, teamEntity);
           const welcomeMessage = message.getWelcomeMessage({
-            userId: slackUser.id,
+            userId: user.id,
           });
 
+          logger.info(`Scheduling welcome message for user ${user.id}`);
           await slackService.scheduleMessage(
-            slackUser.id,
+            user.id,
             welcomeMessage.text,
             postAt,
             welcomeMessage.blocks,
@@ -106,15 +127,28 @@ async function handleSingleTeamInstallation(
   }
 }
 
-async function saveInstallation(id: string, installation: Installation) {
+async function saveInstallation(
+  id: string,
+  installation: Installation,
+): Promise<InstallationEntity> {
+  logger.info(`Saving installation for ${id}`);
+
   try {
-    const installationEntity = InstallationEntity.createInstallationEntity(
-      installation,
-      id,
-    );
-    return await installationRepository.save(installationEntity);
+    const installationEntity: InstallationEntity = await apiRequest({
+      method: "post",
+      url: `${config.apiUrl}/installations`,
+      data: {
+        id,
+        installation,
+        token: installation.bot?.token,
+      },
+    });
+
+    console.log(installationEntity);
+
+    return installationEntity;
   } catch (error: unknown) {
-    throw new Error(`Failed to save installation: ${error}`);
+    throw new Error(`Failed to save installation for ${id}: ${error}`);
   }
 }
 

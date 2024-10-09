@@ -121,7 +121,7 @@ const submitInsight = async ({
     logger.info(`Saving insight for user ${body.user.id}`);
     await apiRequest({
       method: "post",
-      url: `${config.apiUrl}/insight`,
+      url: `${config.apiUrl}/insights`,
       data: {
         userId: body.user.id,
         text: insight,
@@ -130,14 +130,14 @@ const submitInsight = async ({
       },
     });
 
-    logger.info(`Posting message: ${insight}`);
+    logger.info(`Posting users ${body.user.id} insight: ${insight}`);
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
       channel: body.user.id,
       text: `${insight}`,
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error submiting insight for user ${body.user.id}: ${error}`);
   }
 };
 

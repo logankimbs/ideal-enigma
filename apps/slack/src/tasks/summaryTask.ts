@@ -26,7 +26,7 @@ export const summaryTask = async () => {
     logger.info("Grabbing installations...");
     const installations: InstallationEntity[] = await apiRequest({
       method: "get",
-      url: `${config.apiUrl}/installation`,
+      url: `${config.apiUrl}/installations`,
     });
     const reminder = message.getReminderMessage({ day: "Monday" });
 
@@ -42,14 +42,14 @@ export const summaryTask = async () => {
       logger.info(`Grabbing team ${installation.id}...`);
       const team: TeamEntity = await apiRequest({
         method: "get",
-        url: `${config.apiUrl}/team/${installation.id}`,
+        url: `${config.apiUrl}/teams/${installation.id}`,
       });
 
       if (team?.users !== undefined) {
         logger.info(`Grabbing insights for team ${team.id}...`);
         const insights: InsightEntity[] = await apiRequest({
           method: "get",
-          url: `${config.apiUrl}/insight/${team.id}`,
+          url: `${config.apiUrl}/insights/${team.id}`,
         });
 
         if (insights.length >= 10) {
@@ -91,7 +91,7 @@ export const summaryTask = async () => {
           console.log("Marking insights as summarized...");
           await apiRequest({
             method: "put",
-            url: `${config.apiUrl}/insight`,
+            url: `${config.apiUrl}/insights`,
             data: { insights },
           });
         } else {
