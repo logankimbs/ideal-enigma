@@ -1,4 +1,4 @@
-import { SlackUser } from "@idealgma/types";
+import { SlackUser } from "@idealgma/common";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { TimestampEntity } from "../../common/classes/timestamp.entity";
 import { Insight } from "../insight/insight.entity";

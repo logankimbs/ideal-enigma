@@ -1,4 +1,4 @@
-import { SlackUser } from "@idealgma/types";
+import { SlackUser } from "@idealgma/common";
 import { IsNotEmpty } from "class-validator";
 
 export class UpdateUserDto extends SlackUser {

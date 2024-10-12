@@ -1,4 +1,4 @@
-import { SlackTeam } from "@idealgma/types";
+import { SlackTeam } from "@idealgma/common";
 import { IsNotEmpty } from "class-validator";
 
 export class CreateTeamDto extends SlackTeam {

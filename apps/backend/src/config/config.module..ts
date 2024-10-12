@@ -6,6 +6,7 @@ const config = () => {
 
   return {
     port: parseInt(process.env.PORT || "4000", 10),
+    jwtSecret: process.env.JWT_SECRET || "jwt_secret",
     origin: {
       frontend: process.env.FRONTEND_URL || "http://localhost:3000",
       slack: process.env.SLACK_URL || "http://localhost:8080",
