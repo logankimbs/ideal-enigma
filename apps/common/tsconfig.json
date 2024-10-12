@@ -12,8 +12,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
-    "declaration": true,
-    "composite": true
+    "declaration": true
   },
   "include": ["src"]
 }

@@ -1,4 +1,4 @@
-import { SlackTeam } from "./slack-team";
+import { SlackTeam } from "./slack/slack-team";
 import { Timestamp } from "./timestamp";
 import { User } from "./user";
 

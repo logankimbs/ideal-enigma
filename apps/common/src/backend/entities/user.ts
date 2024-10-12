@@ -1,5 +1,5 @@
 import { Insight } from "./insight";
-import { SlackUser } from "./slack-user";
+import { SlackUser } from "./slack/slack-user";
 import { Team } from "./team";
 import { Timestamp } from "./timestamp";
 

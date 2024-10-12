@@ -1,5 +1,5 @@
 {
-  "name": "@idealgma/datasource",
+  "name": "@idealgma/common",
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
