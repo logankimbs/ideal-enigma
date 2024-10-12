@@ -1,4 +1,4 @@
-import { InstallationEntity, TeamEntity } from "@idealgma/datasource";
+import { Installation, Team } from "@idealgma/common";
 import { WebClient } from "@slack/web-api";
 import config from "../config";
 import { message } from "../messages";
@@ -22,7 +22,7 @@ export const reminderTask = async () => {
     // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
     const friReminder = message.getReminderMessage({ day: "Friday" });
     logger.info("Grabbing installations...");
-    const installations: InstallationEntity[] = await apiRequest({
+    const installations: Installation[] = await apiRequest({
       method: "get",
       url: `${config.apiUrl}/installations`,
     });
@@ -32,7 +32,7 @@ export const reminderTask = async () => {
       const slackService = new SlackService(webClient);
 
       logger.info(`Grabbing team ${installation.id}...`);
-      const team: TeamEntity = await apiRequest({
+      const team: Team = await apiRequest({
         method: "get",
         url: `${config.apiUrl}/teams/${installation.id}`,
       });

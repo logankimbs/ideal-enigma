@@ -1,12 +1,8 @@
+import { Installation, Team, User } from "@idealgma/common";
 import {
-  InstallationEntity,
-  TeamEntity,
-  UserEntity,
-} from "@idealgma/datasource";
-import {
-  Installation,
   InstallationQuery,
   InstallationStore,
+  Installation as SlackInstallation,
 } from "@slack/bolt";
 import { WebClient } from "@slack/web-api";
 import config from "../config";
@@ -17,7 +13,7 @@ import { SlackService } from "./SlackService";
 
 const installationService: InstallationStore = {
   storeInstallation: async function <AuthVersion extends "v1" | "v2">(
-    installation: Installation<AuthVersion, boolean>,
+    installation: SlackInstallation<AuthVersion, boolean>,
   ): Promise<void> {
     try {
       if (installation.isEnterpriseInstall && installation.enterprise) {
@@ -39,10 +35,10 @@ const installationService: InstallationStore = {
 
   fetchInstallation: async function (
     query: InstallationQuery<boolean>,
-  ): Promise<Installation<"v1" | "v2", boolean>> {
+  ): Promise<SlackInstallation<"v1" | "v2", boolean>> {
     const id = getInstallationId(query);
     logger.info(`Fetching installation for ${id}`);
-    const installationEntity: InstallationEntity = await apiRequest({
+    const installationEntity: Installation = await apiRequest({
       method: "get",
       url: `${config.apiUrl}/installations/${id}`,
     });
@@ -51,7 +47,7 @@ const installationService: InstallationStore = {
       throw new Error("Installation was not found.");
     }
 
-    return installationEntity.data as Installation;
+    return installationEntity.data as SlackInstallation;
   },
 
   deleteInstallation: async function (
@@ -73,7 +69,7 @@ const installationService: InstallationStore = {
 /*********************/
 /* Helper Functions */
 async function handleSingleTeamInstallation(
-  installation: Installation,
+  installation: SlackInstallation,
 ): Promise<void> {
   try {
     const slackInstallation = await saveInstallation(
@@ -87,7 +83,7 @@ async function handleSingleTeamInstallation(
     const slackUsers = await slackService.getUsersList(installation.team!.id);
 
     logger.info(`Saving team ${slackTeam?.id}`);
-    const teamEntity: TeamEntity = await apiRequest({
+    const teamEntity: Team = await apiRequest({
       method: "post",
       url: `${config.apiUrl}/teams`,
       data: slackTeam,
@@ -95,14 +91,14 @@ async function handleSingleTeamInstallation(
 
     if (slackUsers) {
       logger.info(`Saving a batch of users for team ${teamEntity.id}`);
-      const userEntities: UserEntity[] = await apiRequest({
+      const userEntities: User[] = await apiRequest({
         method: "post",
         url: `${config.apiUrl}/users/batch?teamId=${teamEntity.id}`,
         data: { users: slackUsers },
       });
 
       await Promise.all(
-        userEntities.map(async (user: UserEntity) => {
+        userEntities.map(async (user: User) => {
           // Schedules the message for 1 minute and 30 seconds later
           const postAt = Math.floor(Date.now() / 1000) + 90;
           const welcomeMessage = message.getWelcomeMessage({
@@ -129,12 +125,12 @@ async function handleSingleTeamInstallation(
 
 async function saveInstallation(
   id: string,
-  installation: Installation,
-): Promise<InstallationEntity> {
+  installation: SlackInstallation,
+): Promise<Installation> {
   logger.info(`Saving installation for ${id}`);
 
   try {
-    const installationEntity: InstallationEntity = await apiRequest({
+    const installationEntity: Installation = await apiRequest({
       method: "post",
       url: `${config.apiUrl}/installations`,
       data: {

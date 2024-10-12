@@ -9,8 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@idealgma/utils": "^1.0.0",
-    "@idealgma/datasource": "^1.0.0",
+    "@idealgma/common": "^1.0.0",
     "@slack/bolt": "^4.0.0-rc.1",
     "@slack/web-api": "^7.3.4",
     "axios": "^1.7.7",
