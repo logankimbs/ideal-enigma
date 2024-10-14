@@ -12,6 +12,7 @@
     "build": "nx run-many -t build",
     "build:slack": "nx run @idealgma/slack:build",
     "start:dev:slack": "nx run @idealgma/slack:build && nx run @idealgma/slack:start:dev",
+    "start:prod:slack": "npm --workspace @idealgma/slack run start:prod",
     "build:backend": "npm --workspace @idealgma/backend run build",
     "start:dev:backend": "nx run @idealgma/backend:start:dev",
     "start:prod:backend": "npm --workspace @idealgma/backend run start:prod",

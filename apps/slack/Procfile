@@ -1,1 +1,1 @@
-web: npm run -w @idealgma/slack start
+web: npm run start:prod:slack
