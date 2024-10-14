@@ -1,10 +1,10 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
+import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from "../../constants";
 import {
   createHeaderBlock,
   createRichTextBlock,
   createSectionWithButton,
 } from "../../utils/blocks";
-import { OPEN_INSIGHT_MODAL } from "../../constants";
 
 const getHomeViewBlocks = () => [
   createHeaderBlock("👋 Meet Echo"),
@@ -45,6 +45,11 @@ const getHomeViewBlocks = () => [
     "📄 *Submit a Quick Insight*\nCreate an Intros, Watercooler, or Celebrations channel.",
     "Submit an Insight",
     OPEN_INSIGHT_MODAL,
+  ),
+  createSectionWithButton(
+    "📄 *Checkout your Dashboard*\nCreate an Intros, Watercooler, or Celebrations channel.",
+    "Go to Dashboard",
+    AUTO_LOGIN,
   ),
 ];
 

@@ -1,12 +1,9 @@
-import {
-  AllMiddlewareArgs,
-  ModalView,
-  SlackViewMiddlewareArgs,
-} from "@slack/bolt";
+import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
+import { ModalView } from "@slack/types";
+import config from "../../config";
 import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from "../../constants";
-import { insightService } from "../../services/InsightService";
+import { apiRequest } from "../../utils/apiRequest";
 import logger from "../../utils/logger";
-import tagService from "../../services/TagService";
 
 const getModalBlocks = () => [
   {
@@ -114,19 +111,33 @@ const submitInsight = async ({
 
   try {
     const insight = view.state.values.insight.input.value!; // Required
-    const tags = view.state.values.tags.input.value || undefined; // Optional
+    const tags = view.state.values.tags.input.value || ""; // Optional
     const link = view.state.values.link.input.value || undefined; // Optional
+    const parsedTags = tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag);
 
-    const savedTags = await tagService.parseAndSaveTags(tags);
-    await insightService.saveInsight(body.user.id, insight, savedTags, link);
+    logger.info(`Saving insight for user ${body.user.id}`);
+    await apiRequest({
+      method: "post",
+      url: `${config.apiUrl}/insights`,
+      data: {
+        userId: body.user.id,
+        text: insight,
+        tags: parsedTags,
+        link,
+      },
+    });
 
+    logger.info(`Posting users ${body.user.id} insight: ${insight}`);
     // TODO: Figure out how to post message as user
     await client.chat.postMessage({
       channel: body.user.id,
       text: `${insight}`,
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error submiting insight for user ${body.user.id}: ${error}`);
   }
 };
 

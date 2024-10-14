@@ -5,12 +5,14 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:dev": "nodemon --exec \"ts-node\" src/index.ts",
     "lint": "eslint"
   },
   "dependencies": {
-    "@idealgma/datasource": "^1.0.0",
+    "@idealgma/common": "^1.0.0",
     "@slack/bolt": "^4.0.0-rc.1",
     "@slack/web-api": "^7.3.4",
+    "axios": "^1.7.7",
     "dotenv": "~16.4.5",
     "luxon": "^3.5.0",
     "node-cron": "^3.0.3",

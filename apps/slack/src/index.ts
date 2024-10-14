@@ -1,18 +1,14 @@
-import { getDatasource } from "@idealgma/datasource";
-import config from "./config";
 import app from "./app";
-import tasks from "./tasks";
+import config from "./config";
 import registerListeners from "./listeners";
+import tasks from "./tasks";
 import logger from "./utils/logger";
-
-const datasource = getDatasource();
 
 registerListeners(app);
 
 const startApp = async () => {
   try {
     tasks.schedule();
-    await datasource.initialize();
     await app.start(config.port);
     logger.info("Echo is running");
   } catch (error) {

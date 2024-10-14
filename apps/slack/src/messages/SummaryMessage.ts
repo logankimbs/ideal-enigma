@@ -1,4 +1,4 @@
-import { KnownBlock, Block, SectionBlock } from "@slack/types";
+import { Block, KnownBlock, SectionBlock } from "@slack/types";
 import { IMessage, Message, SummaryMessageOptions, Theme } from "../types";
 import { createHeaderSection, createSectionBlock } from "../utils/blocks";
 

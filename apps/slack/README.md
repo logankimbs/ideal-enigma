@@ -101,7 +101,7 @@ To set up the Slack integration, follow these steps:
 To start the application in development mode, use:
 
 ```bash
-npm run dev
+npm run start:dev:slack
 ```
 
 ## Tunneling with ngrok
@@ -115,7 +115,7 @@ After starting the application, you'll need to expose your local server to the i
    Run the following command to start an HTTP tunnel to your local server.
 
    ```bash
-   ngrok http 3000
+   ngrok http 8080
    ```
 
 3. **Copy the ngrok URL**:

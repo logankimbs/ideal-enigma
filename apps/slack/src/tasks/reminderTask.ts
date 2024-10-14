@@ -1,13 +1,11 @@
-import { getDatasource, InstallationEntity } from "@idealgma/datasource";
+import { Installation, Team } from "@idealgma/common";
 import { WebClient } from "@slack/web-api";
-import { SlackService } from "../services/SlackService";
+import config from "../config";
 import { message } from "../messages";
-import logger from "../utils/logger";
+import { SlackService } from "../services/SlackService";
+import { apiRequest } from "../utils/apiRequest";
 import getNextOccurrence from "../utils/date";
-
-const datasource = getDatasource();
-const installationRepository = datasource.getRepository(InstallationEntity);
-const teamRepository = datasource.getTeamRepository();
+import logger from "../utils/logger";
 
 /**
  * Runs every Monday at midnight (12:00 AM)
@@ -23,12 +21,21 @@ export const reminderTask = async () => {
   try {
     // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
     const friReminder = message.getReminderMessage({ day: "Friday" });
-    const installations = await installationRepository.find();
+    logger.info("Grabbing installations...");
+    const installations: Installation[] = await apiRequest({
+      method: "get",
+      url: `${config.apiUrl}/installations`,
+    });
 
     for (const installation of installations) {
       const webClient = new WebClient(installation.token);
       const slackService = new SlackService(webClient);
-      const team = await teamRepository.getTeamWithUsers(installation.id);
+
+      logger.info(`Grabbing team ${installation.id}...`);
+      const team: Team = await apiRequest({
+        method: "get",
+        url: `${config.apiUrl}/teams/${installation.id}`,
+      });
 
       if (team?.users !== undefined) {
         for (const user of team.users) {
@@ -42,6 +49,7 @@ export const reminderTask = async () => {
           //   wedReminder.blocks,
           // );
 
+          logger.info(`Scheduling reminder message to be sent to ${user.id}`);
           await slackService.scheduleMessage(
             user.id,
             friReminder.text,

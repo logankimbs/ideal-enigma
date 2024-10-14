@@ -1,6 +1,5 @@
-import { KnownBlock, Block } from "@slack/types";
+import { Block, KnownBlock } from "@slack/types";
 import { OPEN_INSIGHT_MODAL } from "../constants";
-import { createButton, createTextSection } from "../utils/blocks";
 import {
   IMessage,
   Message,
@@ -8,6 +7,7 @@ import {
   MessageText,
   ReminderMessageOptions,
 } from "../types";
+import { createButton, createTextSection } from "../utils/blocks";
 
 class ReminderMessage implements IMessage {
   public getMessage({ day }: ReminderMessageOptions): Message {
