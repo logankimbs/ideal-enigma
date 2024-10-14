@@ -1,15 +1,12 @@
-import { getDatasource, InstallationEntity } from "@idealgma/datasource";
+import { Insight, Installation, Team } from "@idealgma/common";
 import { WebClient } from "@slack/web-api";
+import config from "../config";
 import { message } from "../messages";
 import { OpenAIService } from "../services/OpenAIService";
 import { SlackService } from "../services/SlackService";
+import { apiRequest } from "../utils/apiRequest";
 import getNextOccurrence from "../utils/date";
 import logger from "../utils/logger";
-
-const datasource = getDatasource();
-const installationRepository = datasource.getRepository(InstallationEntity);
-const teamRepository = datasource.getTeamRepository();
-const insightRepository = datasource.getInsightRepository();
 
 /**
  * Runs every Sunday at midnight (12:00 AM)
@@ -22,23 +19,34 @@ export const summaryTask = async () => {
     logger.info("Starting summary task...");
 
     const openAI = new OpenAIService();
-    const installations = await installationRepository.find();
+    logger.info("Grabbing installations...");
+    const installations: Installation[] = await apiRequest({
+      method: "get",
+      url: `${config.apiUrl}/installations`,
+    });
     const reminder = message.getReminderMessage({ day: "Monday" });
 
     for (const installation of installations) {
       if (!installation.token) {
         logger.warn(`Skipping installation ${installation.id}: Missing token`);
-
         continue;
       }
 
       const webClient = new WebClient(installation.token);
       const slackService = new SlackService(webClient);
-      const team = await teamRepository.getTeamWithUsers(installation.id);
+
+      logger.info(`Grabbing team ${installation.id}...`);
+      const team: Team = await apiRequest({
+        method: "get",
+        url: `${config.apiUrl}/teams/${installation.id}`,
+      });
 
       if (team?.users !== undefined) {
-        const insights =
-          await insightRepository.getRecentUnsummarizedInsightsForTeam(team.id);
+        logger.info(`Grabbing insights for team ${team.id}...`);
+        const insights: Insight[] = await apiRequest({
+          method: "get",
+          url: `${config.apiUrl}/insights/${team.id}`,
+        });
 
         if (insights.length >= 10) {
           let summary;
@@ -58,11 +66,14 @@ export const summaryTask = async () => {
             count: insights.length,
           });
 
+          // TODO: Store summary message
+
           const schedulePromises = team.users.map(async (user) => {
             if (user.data.deleted) return;
 
             const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
+            logger.info(`Scheduling summary message to be sent to ${user.id}`);
             return slackService.scheduleMessage(
               user.id,
               summaryMessage.text,
@@ -73,15 +84,21 @@ export const summaryTask = async () => {
 
           await Promise.all(schedulePromises);
 
-          await insightRepository.markInsightsAsSummarized(insights);
+          console.log("Marking insights as summarized...");
+          await apiRequest({
+            method: "put",
+            url: `${config.apiUrl}/insights`,
+            data: { insights },
+          });
         } else {
           const schedulePromises = team.users.map(async (user) => {
             if (user.data.deleted) return;
 
-            logger.info(`Scheduling default summary message for ${user.id}`);
-
             const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
+            logger.info(
+              `Scheduling Monday morning message to be sent to ${user.id}`,
+            );
             return slackService.scheduleMessage(
               user.id,
               reminder.text,

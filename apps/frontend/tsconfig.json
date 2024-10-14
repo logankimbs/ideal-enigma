@@ -1,8 +1,11 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -15,14 +18,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@idealgma/common": ["../../apps/common"],
-      "@idealgma/*": ["../../packages/*/src", "../../apps/*/src"]
-    },
-    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
-    "noEmit": true
+      "@/*": ["./*"],
+      "@badnana/utils": ["../shared/utils"],
+      "@badnana/types": ["../shared/types"]
+    }
   },
-  "references": [{ "path": "../common" }],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

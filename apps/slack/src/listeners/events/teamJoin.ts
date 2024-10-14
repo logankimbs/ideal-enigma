@@ -6,18 +6,16 @@ import logger from "../../utils/logger";
 const teamJoin = async ({
   event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"team_join">) => {
-  logger.info(`Adding user ${event.user.id}`);
+  logger.info(`Adding user ${event.user.id} to team ${event.user.team_id}`);
 
   try {
     await apiRequest({
       method: "post",
-      url: config.apiUrl + "/user",
+      url: config.apiUrl + "/users",
       data: event.user,
     });
-
-    logger.info("User added");
   } catch (error) {
-    logger.error("Could not save user", error);
+    logger.error(`Error adding user ${event.user.id}: ${error}`);
   }
 };
 

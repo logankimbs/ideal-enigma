@@ -1,4 +1,4 @@
-import { InsightEntity } from "@idealgma/datasource";
+import { Insight } from "@idealgma/common";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
@@ -39,7 +39,7 @@ export class OpenAIService {
    * @param insights An array of InsightEntities to be summarized.
    * @returns The summary as a Summary object.
    */
-  public async summarizeInsights(insights: InsightEntity[]): Promise<Summary> {
+  public async summarizeInsights(insights: Insight[]): Promise<Summary> {
     try {
       const origins = insights.map((insight) => ({
         userId: insight.user.id,

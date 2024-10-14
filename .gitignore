@@ -3,8 +3,7 @@ node_modules
 .env
 dist
 .vscode/
-.nx/cache
-.nx/workspace-data
+.nx
 .next
 
 # compiled output
