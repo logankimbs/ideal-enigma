@@ -2,24 +2,20 @@
 
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function SlackLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isClient, setIsClient] = useState(false);
-
-  const token = isClient ? searchParams.get("token") : null;
+  const token = searchParams.get("token");
 
   useEffect(() => {
-    setIsClient(true); // Ensure this code only runs in the browser
-
-    if (!token) {
-      router.replace("/login");
-      return;
-    }
-
     const authenticate = async () => {
+      if (!token) {
+        router.replace("/login");
+        return;
+      }
+
       try {
         await axios.post("/api/auth/validate-token", { token });
         router.replace("/");
@@ -29,14 +25,8 @@ export default function SlackLogin() {
       }
     };
 
-    if (token) {
-      authenticate();
-    }
+    authenticate();
   }, [token, router]);
-
-  if (!isClient) {
-    return <p>Loading...</p>;
-  }
 
   return <p>Logging you in...</p>;
 }
