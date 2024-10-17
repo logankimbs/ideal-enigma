@@ -6,6 +6,40 @@ export async function getRecentOrders() {
   return (await getOrders()).slice(0, 10);
 }
 
+export type Event = {
+  id: string;
+  thumbUrl: string;
+  name: string;
+};
+
+export type Order = {
+  id: number;
+  url: string;
+  date: string;
+  amount: {
+    usd: string;
+    cad: string;
+    fee: string;
+    net: string;
+  };
+  payment: {
+    transactionId: string;
+    card: {
+      number: string;
+      type: string;
+      expiry: string;
+    };
+  };
+  customer: {
+    name: string;
+    email: string;
+    address: string;
+    country: string;
+    countryFlagUrl: string;
+  };
+  event: Event;
+};
+
 export async function getOrders() {
   return [
     {
