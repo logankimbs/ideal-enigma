@@ -1,10 +1,11 @@
+import { TypeORMAdapter } from "@auth/typeorm-adapter";
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
 import "next-auth/jwt";
 import Slack from "next-auth/providers/slack";
 
 const config = {
-  // Do we need an adapter?
+  adapter: TypeORMAdapter(process.env.AUTH_TYPEORM_CONNECTION!),
   providers: [Slack],
   session: { strategy: "jwt" },
   experimental: { enableWebAuthn: true },
