@@ -1,7 +1,7 @@
+import { Insight } from "@idealgma/common";
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { CreateInsightDto } from "./dto/create-insight.dto";
 import { MarkInsightSummarized } from "./dto/insight-summarized.dto";
-import { Insight } from "./insight.entity";
 import { InsightService } from "./insight.service";
 
 @Controller("insights")

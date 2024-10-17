@@ -1,11 +1,11 @@
-import { SlackUser } from "@idealgma/common";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import { Insight } from "../insight/insight.entity";
-import { Team } from "../team/team.entity";
+import { Insight } from "./insight";
+import { SlackUser } from "./slack/slack-user";
+import { Team } from "./team";
+import { Timestamp } from "./timestamp";
 
 @Entity("users")
-export class User extends TimestampEntity {
+export class User extends Timestamp {
   @PrimaryColumn()
   id: string;
 
@@ -16,5 +16,5 @@ export class User extends TimestampEntity {
   team: Team;
 
   @OneToMany(() => Insight, (insight) => insight.user)
-  insights: Insight[];
+  insights?: Insight[];
 }

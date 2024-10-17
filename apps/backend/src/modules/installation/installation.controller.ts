@@ -1,6 +1,6 @@
+import { Installation } from "@idealgma/common";
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { CreateInstallationDto } from "./dto/create-installation.dto";
-import { Installation } from "./installation.entity";
 import { InstallationService } from "./installation.service";
 
 @Controller("installations")

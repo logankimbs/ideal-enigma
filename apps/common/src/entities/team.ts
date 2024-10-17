@@ -1,10 +1,10 @@
-import { SlackTeam } from "@idealgma/common";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import { User } from "../user/user.entity";
+import { SlackTeam } from "./slack/slack-team";
+import { Timestamp } from "./timestamp";
+import { User } from "./user";
 
 @Entity("teams")
-export class Team extends TimestampEntity {
+export class Team extends Timestamp {
   @PrimaryColumn()
   id: string;
 

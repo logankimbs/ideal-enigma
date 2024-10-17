@@ -1,9 +1,9 @@
 import { Installation as SlackInstallation } from "@slack/bolt";
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
+import { Timestamp } from "./timestamp";
 
 @Entity("installations")
-export class Installation extends TimestampEntity {
+export class Installation extends Timestamp {
   @PrimaryColumn()
   id: string;
 

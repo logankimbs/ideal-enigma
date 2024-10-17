@@ -6,12 +6,12 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import { Tag } from "../tag/tag.entity";
-import { User } from "../user/user.entity";
+import { Tag } from "./tag";
+import { Timestamp } from "./timestamp";
+import { User } from "./user";
 
 @Entity("insights")
-export class Insight extends TimestampEntity {
+export class Insight extends Timestamp {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -26,8 +26,8 @@ export class Insight extends TimestampEntity {
 
   @ManyToMany(() => Tag, (tag) => tag.insights)
   @JoinTable({ name: "insight_tag" })
-  tags: Tag[];
+  tags?: Tag[];
 
   @Column({ nullable: true })
-  link: string;
+  link?: string;
 }

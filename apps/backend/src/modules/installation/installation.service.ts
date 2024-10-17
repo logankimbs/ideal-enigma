@@ -1,8 +1,8 @@
+import { Installation } from "@idealgma/common";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateInstallationDto } from "./dto/create-installation.dto";
-import { Installation } from "./installation.entity";
 
 @Injectable()
 export class InstallationService {

@@ -1,9 +1,9 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import { Insight } from "../insight/insight.entity";
+import { Insight } from "./insight";
+import { Timestamp } from "./timestamp";
 
 @Entity("tags")
-export class Tag extends TimestampEntity {
+export class Tag extends Timestamp {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

@@ -1,8 +1,8 @@
+import { Team } from "@idealgma/common";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateTeamDto } from "./dto/create-team.dto";
-import { Team } from "./team.entity";
 
 @Injectable()
 export class TeamService {

@@ -1,11 +1,9 @@
+import { Insight, Tag, User } from "@idealgma/common";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Tag } from "../tag";
-import { User } from "../user/user.entity";
 import { CreateInsightDto } from "./dto/create-insight.dto";
 import { MarkInsightSummarized } from "./dto/insight-summarized.dto";
-import { Insight } from "./insight.entity";
 
 @Injectable()
 export class InsightService {

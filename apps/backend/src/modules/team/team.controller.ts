@@ -1,6 +1,6 @@
+import { Team } from "@idealgma/common";
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { CreateTeamDto } from "./dto/create-team.dto";
-import { Team } from "./team.entity";
 import { TeamService } from "./team.service";
 
 @Controller("teams")
