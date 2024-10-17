@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Cog8ToothIcon,
@@ -47,6 +46,7 @@ import {
 } from "../../components/sidebar";
 import { SidebarLayout } from "../../components/sidebar-layout";
 import { getEvents } from "../../data";
+import { SignOutDropdownItem } from "@/src/components/signout-dropdown";
 
 function AccountDropdownMenu({
   anchor,
@@ -69,10 +69,7 @@ function AccountDropdownMenu({
         <DropdownLabel>Share feedback</DropdownLabel>
       </DropdownItem>
       <DropdownDivider />
-      <DropdownItem href="#">
-        <ArrowRightStartOnRectangleIcon />
-        <DropdownLabel>Sign out</DropdownLabel>
-      </DropdownItem>
+      <SignOutDropdownItem />
     </DropdownMenu>
   );
 }
