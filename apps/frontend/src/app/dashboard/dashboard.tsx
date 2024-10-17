@@ -19,7 +19,7 @@ import {
   TicketIcon,
 } from "@heroicons/react/20/solid";
 import { usePathname } from "next/navigation";
-import { Avatar } from "../components/avatar";
+import { Avatar } from "../../components/avatar";
 import {
   Dropdown,
   DropdownButton,
@@ -27,13 +27,13 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from "../components/dropdown";
+} from "../../components/dropdown";
 import {
   Navbar,
   NavbarItem,
   NavbarSection,
   NavbarSpacer,
-} from "../components/navbar";
+} from "../../components/navbar";
 import {
   Sidebar,
   SidebarBody,
@@ -44,9 +44,9 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
-} from "../components/sidebar";
-import { SidebarLayout } from "../components/sidebar-layout";
-import { getEvents } from "../data";
+} from "../../components/sidebar";
+import { SidebarLayout } from "../../components/sidebar-layout";
+import { getEvents } from "../../data";
 
 function AccountDropdownMenu({
   anchor,
@@ -77,7 +77,7 @@ function AccountDropdownMenu({
   );
 }
 
-export function ApplicationLayout({
+export function Dashboard({
   events,
   children,
 }: {
@@ -147,21 +147,21 @@ export function ApplicationLayout({
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/events"
+                href="/dashboard/events"
                 current={pathname.startsWith("/events")}
               >
                 <Square2StackIcon />
                 <SidebarLabel>Events</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/orders"
+                href="/dashboard/orders"
                 current={pathname.startsWith("/orders")}
               >
                 <TicketIcon />
                 <SidebarLabel>Orders</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/settings"
+                href="/dashboard/settings"
                 current={pathname.startsWith("/settings")}
               >
                 <Cog6ToothIcon />

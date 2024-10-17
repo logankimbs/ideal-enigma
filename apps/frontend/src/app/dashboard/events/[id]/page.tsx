@@ -1,11 +1,10 @@
 import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Stat } from "../../../app/page";
-import { Badge } from "../../../components/badge";
-import { Button } from "../../../components/button";
-import { Heading, Subheading } from "../../../components/heading";
-import { Link } from "../../../components/link";
+import { Badge } from "../../../../components/badge";
+import { Button } from "../../../../components/button";
+import { Heading, Subheading } from "../../../../components/heading";
+import { Link } from "../../../../components/link";
 import {
   Table,
   TableBody,
@@ -13,8 +12,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/table";
-import { getEvent, getEventOrders } from "../../../data";
+} from "../../../../components/table";
+import { getEvent, getEventOrders } from "../../../../data";
+import { Stat } from "../../page";
 
 export async function generateMetadata({
   params,
@@ -40,7 +40,7 @@ export default async function Event({ params }: { params: { id: string } }) {
     <>
       <div className="max-lg:hidden">
         <Link
-          href="/events"
+          href="/dashboard/events"
           className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
         >
           <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
@@ -50,6 +50,7 @@ export default async function Event({ params }: { params: { id: string } }) {
       <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-wrap items-center gap-6">
           <div className="w-32 shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="aspect-[3/2] rounded-lg shadow"
               src={event.imgUrl}
