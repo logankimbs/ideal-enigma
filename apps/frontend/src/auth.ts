@@ -6,10 +6,10 @@ import Slack from "next-auth/providers/slack";
 const config = {
   // Do we need an adapter?
   providers: [Slack],
-  // basePath: "/auth",
   session: { strategy: "jwt" },
   experimental: { enableWebAuthn: true },
   debug: process.env.NODE_ENV !== "production" ? true : false,
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async authorized({ request, auth }) {
       const { pathname } = request.nextUrl;
