@@ -1,14 +1,12 @@
 import type React from "react";
 import { getEvents } from "../../data";
-import "../../styles/tailwind.css";
 import { Dashboard } from "./dashboard";
 
-export default async function DashboardLayout({
-  children,
-}: {
+type DashboardLayoutProps = {
   children: React.ReactNode;
-}) {
-  const events = await getEvents();
+};
 
-  return <Dashboard events={events}>{children}</Dashboard>;
+export default async function DashboardLayout(props: DashboardLayoutProps) {
+  const events = await getEvents();
+  return <Dashboard events={events}>{props.children}</Dashboard>;
 }

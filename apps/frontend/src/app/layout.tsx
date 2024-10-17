@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default async function RootLayout(props: RootLayoutProps) {
   return (
     <html
       lang="en"
@@ -20,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body>{children}</body>
+      <body>{props.children}</body>
     </html>
   );
 }

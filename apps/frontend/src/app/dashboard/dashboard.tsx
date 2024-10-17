@@ -77,13 +77,12 @@ function AccountDropdownMenu({
   );
 }
 
-export function Dashboard({
-  events,
-  children,
-}: {
+type DashboardProps = {
   events: Awaited<ReturnType<typeof getEvents>>;
   children: React.ReactNode;
-}) {
+};
+
+export function Dashboard(props: DashboardProps) {
   const pathname = usePathname();
 
   return (
@@ -114,7 +113,7 @@ export function Dashboard({
                 className="min-w-80 lg:min-w-64"
                 anchor="bottom start"
               >
-                <DropdownItem href="/settings">
+                <DropdownItem href="/dashboard/settings">
                   <Cog8ToothIcon />
                   <DropdownLabel>Settings</DropdownLabel>
                 </DropdownItem>
@@ -142,7 +141,10 @@ export function Dashboard({
 
           <SidebarBody>
             <SidebarSection>
-              <SidebarItem href="/" current={pathname === "/"}>
+              <SidebarItem
+                href="/dashboard"
+                current={pathname === "/dashboard"}
+              >
                 <HomeIcon />
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
@@ -171,7 +173,7 @@ export function Dashboard({
 
             <SidebarSection className="max-lg:hidden">
               <SidebarHeading>Upcoming Events</SidebarHeading>
-              {events.map((event) => (
+              {props.events.map((event) => (
                 <SidebarItem key={event.id} href={event.url}>
                   {event.name}
                 </SidebarItem>
@@ -219,7 +221,7 @@ export function Dashboard({
         </Sidebar>
       }
     >
-      {children}
+      {props.children}
     </SidebarLayout>
   );
 }
