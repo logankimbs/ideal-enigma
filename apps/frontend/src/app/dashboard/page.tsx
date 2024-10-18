@@ -1,0 +1,104 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import { Badge } from "../../components/badge";
+import { Divider } from "../../components/divider";
+import { Heading, Subheading } from "../../components/heading";
+import { Select } from "../../components/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/table";
+import { getRecentOrders } from "@/src/data";
+// import { Avatar } from "@/src/components/avatar";
+
+type StatProps = {
+  title: string;
+  value: string;
+  change: string;
+};
+
+export function Stat(props: StatProps) {
+  return (
+    <div>
+      <Divider />
+      <div className="mt-6 text-lg/6 font-medium sm:text-sm/6">
+        {props.title}
+      </div>
+      <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">
+        {props.value}
+      </div>
+      <div className="mt-3 text-sm/6 sm:text-xs/6">
+        <Badge color={props.change.startsWith("+") ? "lime" : "pink"}>
+          {props.change}
+        </Badge>{" "}
+        <span className="text-zinc-500">from last week</span>
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  const orders = getRecentOrders();
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  return (
+    <>
+      <Heading>Good afternoon, {user?.name}</Heading>
+      <div className="mt-8 flex items-end justify-between">
+        <Subheading>Overview</Subheading>
+        <div>
+          <Select name="period">
+            <option value="last_week">Last week</option>
+            <option value="last_two">Last two weeks</option>
+            <option value="last_month">Last month</option>
+            <option value="last_quarter">Last quarter</option>
+          </Select>
+        </div>
+      </div>
+      <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+        <Stat title="Total insights" value="26" change="+4.5%" />
+        <Stat title="Weeks engaged" value="3" change="-0.5%" />
+        <Stat title="Submissions per period" value="3.2" change="+4.5%" />
+        <Stat title="Last submission" value="May 9, 2024" change="" />
+      </div>
+      <Subheading className="mt-14">Recent insights</Subheading>
+      <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+        <TableHead>
+          <TableRow>
+            {/* <TableHeader>Order number</TableHeader> */}
+            <TableHeader>Date</TableHeader>
+            <TableHeader>Author</TableHeader>
+            <TableHeader>Insight</TableHeader>
+            <TableHeader>Tags</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {orders.map((order) => (
+            <TableRow
+              key={order.id}
+              href={order.url}
+              title={`Order #${order.id}`}
+            >
+              {/* <TableCell>{order.id}</TableCell> */}
+              <TableCell className="text-zinc-500">{order.date}</TableCell>
+              <TableCell>{order.customer.name}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  {/* <Avatar src={order.event.thumbUrl} className="size-6" /> */}
+                  <span>{order.event.name}</span>
+                </div>
+              </TableCell>
+              <TableCell className="text-right">US{order.amount.usd}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
+  );
+}

@@ -1,14 +1,18 @@
 "use client";
 
 import {
+<<<<<<< Updated upstream:apps/frontend/src/app/application-layout.tsx
   ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
+=======
+  // ChevronDownIcon,
+>>>>>>> Stashed changes:apps/frontend/src/app/dashboard/dashboard.tsx
   ChevronUpIcon,
-  Cog8ToothIcon,
+  // Cog8ToothIcon,
   LightBulbIcon,
-  PlusIcon,
+  // PlusIcon,
   ShieldCheckIcon,
-  UserCircleIcon,
+  // UserCircleIcon,
 } from "@heroicons/react/16/solid";
 import {
   Cog6ToothIcon,
@@ -56,8 +60,8 @@ function AccountDropdownMenu({
   return (
     <DropdownMenu className="min-w-64" anchor={anchor}>
       <DropdownItem href="#">
-        <UserCircleIcon />
-        <DropdownLabel>My account</DropdownLabel>
+        <Cog6ToothIcon />
+        <DropdownLabel>Settings</DropdownLabel>
       </DropdownItem>
       <DropdownDivider />
       <DropdownItem href="#">
@@ -67,6 +71,10 @@ function AccountDropdownMenu({
       <DropdownItem href="#">
         <LightBulbIcon />
         <DropdownLabel>Share feedback</DropdownLabel>
+      </DropdownItem>
+      <DropdownItem href="#">
+        <QuestionMarkCircleIcon />
+        <DropdownLabel>Support</DropdownLabel>
       </DropdownItem>
       <DropdownDivider />
       <DropdownItem href="#">
@@ -104,13 +112,12 @@ export function ApplicationLayout({
       sidebar={
         <Sidebar>
           <SidebarHeader>
-            <Dropdown>
-              <DropdownButton as={SidebarItem}>
-                <Avatar src="/teams/catalyst.svg" />
-                <SidebarLabel>Catalyst</SidebarLabel>
-                <ChevronDownIcon />
-              </DropdownButton>
-              <DropdownMenu
+            <SidebarItem href="/dashboard">
+              {/* TODO: Add echo logo */}
+              <Avatar src="/teams/catalyst.svg" />
+              <SidebarLabel>Echo</SidebarLabel>
+            </SidebarItem>
+            {/* <DropdownMenu
                 className="min-w-80 lg:min-w-64"
                 anchor="bottom start"
               >
@@ -136,59 +143,90 @@ export function ApplicationLayout({
                   <PlusIcon />
                   <DropdownLabel>New team&hellip;</DropdownLabel>
                 </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+              </DropdownMenu> */}
           </SidebarHeader>
 
           <SidebarBody>
             <SidebarSection>
               <SidebarItem href="/" current={pathname === "/"}>
                 <HomeIcon />
-                <SidebarLabel>Home</SidebarLabel>
+                <SidebarLabel>Dashboard</SidebarLabel>
               </SidebarItem>
               <SidebarItem
+<<<<<<< Updated upstream:apps/frontend/src/app/application-layout.tsx
                 href="/events"
                 current={pathname.startsWith("/events")}
+=======
+                href="/dashboard/events"
+                current={pathname.startsWith("/dashboard/events")}
+>>>>>>> Stashed changes:apps/frontend/src/app/dashboard/dashboard.tsx
               >
                 <Square2StackIcon />
-                <SidebarLabel>Events</SidebarLabel>
+                <SidebarLabel>My Repository</SidebarLabel>
               </SidebarItem>
               <SidebarItem
+<<<<<<< Updated upstream:apps/frontend/src/app/application-layout.tsx
                 href="/orders"
                 current={pathname.startsWith("/orders")}
+=======
+                href="/dashboard/orders"
+                current={pathname.startsWith("/dashboard/orders")}
+>>>>>>> Stashed changes:apps/frontend/src/app/dashboard/dashboard.tsx
               >
                 <TicketIcon />
-                <SidebarLabel>Orders</SidebarLabel>
+                {/* TODO: Update icon! */}
+                <SidebarLabel>[Company] Repository</SidebarLabel>
               </SidebarItem>
               <SidebarItem
+<<<<<<< Updated upstream:apps/frontend/src/app/application-layout.tsx
                 href="/settings"
                 current={pathname.startsWith("/settings")}
+=======
+                href="/dashboard/summaries"
+                current={pathname.startsWith("/dashboard/summaries")}
+>>>>>>> Stashed changes:apps/frontend/src/app/dashboard/dashboard.tsx
               >
-                <Cog6ToothIcon />
-                <SidebarLabel>Settings</SidebarLabel>
+                {/* <Cog6ToothIcon /> */}
+                <SparklesIcon />
+                <SidebarLabel>Summaries</SidebarLabel>
               </SidebarItem>
             </SidebarSection>
 
             <SidebarSection className="max-lg:hidden">
+<<<<<<< Updated upstream:apps/frontend/src/app/application-layout.tsx
               <SidebarHeading>Upcoming Events</SidebarHeading>
               {events.map((event) => (
+=======
+              <SidebarHeading>Resources</SidebarHeading>
+              {/* Links to blog articles - Loop through blog articles */}
+              <SidebarItem key={1} href={""}>
+                Actionable Insights Framework
+              </SidebarItem>
+              <SidebarItem key={2} href={""}>
+                Scaling a (Learning) Startup
+              </SidebarItem>
+              <SidebarItem key={3} href={""}>
+                Build - Measure - Learn Cycle
+              </SidebarItem>
+              {/* {props.events.map((event) => (
+>>>>>>> Stashed changes:apps/frontend/src/app/dashboard/dashboard.tsx
                 <SidebarItem key={event.id} href={event.url}>
                   {event.name}
                 </SidebarItem>
-              ))}
+              ))} */}
             </SidebarSection>
 
             <SidebarSpacer />
 
             <SidebarSection>
-              <SidebarItem href="#">
+              {/* <SidebarItem href="#">
                 <QuestionMarkCircleIcon />
                 <SidebarLabel>Support</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem href="#">
+              </SidebarItem> */}
+              {/* <SidebarItem href="#">
                 <SparklesIcon />
                 <SidebarLabel>Changelog</SidebarLabel>
-              </SidebarItem>
+              </SidebarItem> */}
             </SidebarSection>
           </SidebarBody>
 
