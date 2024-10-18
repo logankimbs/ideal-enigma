@@ -6,18 +6,18 @@ import {
 } from "@heroicons/react/16/solid";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Avatar } from "../../../components/avatar";
-import { Badge } from "../../../components/badge";
-import { Button } from "../../../components/button";
+import { Avatar } from "../../../../components/avatar";
+import { Badge } from "../../../../components/badge";
+import { Button } from "../../../../components/button";
 import {
   DescriptionDetails,
   DescriptionList,
   DescriptionTerm,
-} from "../../../components/description-list";
-import { Divider } from "../../../components/divider";
-import { Heading, Subheading } from "../../../components/heading";
-import { Link } from "../../../components/link";
-import { getOrder } from "../../../data";
+} from "../../../../components/description-list";
+import { Divider } from "../../../../components/divider";
+import { Heading, Subheading } from "../../../../components/heading";
+import { Link } from "../../../../components/link";
+import { getOrder } from "../../../../data";
 import { RefundOrder } from "./refund";
 
 export async function generateMetadata({
@@ -43,7 +43,7 @@ export default async function Order({ params }: { params: { id: string } }) {
     <>
       <div className="max-lg:hidden">
         <Link
-          href="/orders"
+          href="/dashboard/orders"
           className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
         >
           <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
@@ -132,6 +132,7 @@ export default async function Order({ params }: { params: { id: string } }) {
           <DescriptionTerm>Country</DescriptionTerm>
           <DescriptionDetails>
             <span className="inline-flex gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={order.customer.countryFlagUrl}
                 alt={order.customer.country}

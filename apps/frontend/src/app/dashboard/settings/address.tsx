@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "../../components/input";
-import { Listbox, ListboxLabel, ListboxOption } from "../../components/listbox";
-import { getCountries } from "../../data";
+import { Input } from "../../../components/input";
+import {
+  Listbox,
+  ListboxLabel,
+  ListboxOption,
+} from "../../../components/listbox";
+import { getCountries } from "../../../data";
 
 export function Address() {
   const countries = getCountries();
@@ -54,6 +58,7 @@ export function Address() {
       >
         {countries.map((country) => (
           <ListboxOption key={country.code} value={country}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="w-5 sm:w-4" src={country.flagUrl} alt="" />
             <ListboxLabel>{country.name}</ListboxLabel>
           </ListboxOption>

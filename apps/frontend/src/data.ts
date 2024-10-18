@@ -6,11 +6,45 @@ export async function getRecentOrders() {
   return (await getOrders()).slice(0, 10);
 }
 
+export type Event = {
+  id: string;
+  thumbUrl: string;
+  name: string;
+};
+
+export type Order = {
+  id: number;
+  url: string;
+  date: string;
+  amount: {
+    usd: string;
+    cad: string;
+    fee: string;
+    net: string;
+  };
+  payment: {
+    transactionId: string;
+    card: {
+      number: string;
+      type: string;
+      expiry: string;
+    };
+  };
+  customer: {
+    name: string;
+    email: string;
+    address: string;
+    country: string;
+    countryFlagUrl: string;
+  };
+  event: Event;
+};
+
 export async function getOrders() {
   return [
     {
       id: 3000,
-      url: "/orders/3000",
+      url: "/dashboard/orders/3000",
       date: "May 9, 2024",
       amount: {
         usd: "$80.00",
@@ -37,7 +71,7 @@ export async function getOrders() {
     },
     {
       id: 3001,
-      url: "/orders/3001",
+      url: "/dashboard/orders/3001",
       date: "May 5, 2024",
       amount: {
         usd: "$299.00",
@@ -64,7 +98,7 @@ export async function getOrders() {
     },
     {
       id: 3002,
-      url: "/orders/3002",
+      url: "/dashboard/orders/3002",
       date: "Apr 28, 2024",
       amount: {
         usd: "$150.00",
@@ -91,7 +125,7 @@ export async function getOrders() {
     },
     {
       id: 3003,
-      url: "/orders/3003",
+      url: "/dashboard/orders/3003",
       date: "Apr 23, 2024",
       amount: {
         usd: "$80.00",
@@ -118,7 +152,7 @@ export async function getOrders() {
     },
     {
       id: 3004,
-      url: "/orders/3004",
+      url: "/dashboard/orders/3004",
       date: "Apr 18, 2024",
       amount: {
         usd: "$114.99",
@@ -145,7 +179,7 @@ export async function getOrders() {
     },
     {
       id: 3005,
-      url: "/orders/3005",
+      url: "/dashboard/orders/3005",
       date: "Apr 14, 2024",
       amount: {
         usd: "$299.00",
@@ -172,7 +206,7 @@ export async function getOrders() {
     },
     {
       id: 3006,
-      url: "/orders/3006",
+      url: "/dashboard/orders/3006",
       date: "Apr 10, 2024",
       amount: {
         usd: "$150.00",
@@ -199,7 +233,7 @@ export async function getOrders() {
     },
     {
       id: 3007,
-      url: "/orders/3007",
+      url: "/dashboard/orders/3007",
       date: "Apr 6, 2024",
       amount: {
         usd: "$80.00",
@@ -226,7 +260,7 @@ export async function getOrders() {
     },
     {
       id: 3008,
-      url: "/orders/3008",
+      url: "/dashboard/orders/3008",
       date: "Apr 3, 2024",
       amount: {
         usd: "$80.00",
@@ -253,7 +287,7 @@ export async function getOrders() {
     },
     {
       id: 3009,
-      url: "/orders/3009",
+      url: "/dashboard/orders/3009",
       date: "Mar 29, 2024",
       amount: {
         usd: "$114.99",
@@ -280,7 +314,7 @@ export async function getOrders() {
     },
     {
       id: 3010,
-      url: "/orders/3010",
+      url: "/dashboard/orders/3010",
       date: "Mar 25, 2024",
       amount: {
         usd: "$299.00",
@@ -307,7 +341,7 @@ export async function getOrders() {
     },
     {
       id: 3011,
-      url: "/orders/3011",
+      url: "/dashboard/orders/3011",
       date: "Mar 21, 2024",
       amount: {
         usd: "$80.00",
@@ -334,7 +368,7 @@ export async function getOrders() {
     },
     {
       id: 3012,
-      url: "/orders/3012",
+      url: "/dashboard/orders/3012",
       date: "Mar 16, 2024",
       amount: {
         usd: "$150.00",
@@ -361,7 +395,7 @@ export async function getOrders() {
     },
     {
       id: 3013,
-      url: "/orders/3013",
+      url: "/dashboard/orders/3013",
       date: "Mar 12, 2024",
       amount: {
         usd: "$299.00",
@@ -388,7 +422,7 @@ export async function getOrders() {
     },
     {
       id: 3014,
-      url: "/orders/3014",
+      url: "/dashboard/orders/3014",
       date: "Mar 8, 2024",
       amount: {
         usd: "$150.00",
@@ -415,7 +449,7 @@ export async function getOrders() {
     },
     {
       id: 3015,
-      url: "/orders/3015",
+      url: "/dashboard/orders/3015",
       date: "Mar 4, 2024",
       amount: {
         usd: "$150.00",
@@ -442,7 +476,7 @@ export async function getOrders() {
     },
     {
       id: 3016,
-      url: "/orders/3016",
+      url: "/dashboard/orders/3016",
       date: "Feb 28, 2024",
       amount: {
         usd: "$80.00",
@@ -469,7 +503,7 @@ export async function getOrders() {
     },
     {
       id: 3017,
-      url: "/orders/3017",
+      url: "/dashboard/orders/3017",
       date: "Feb 23, 2024",
       amount: {
         usd: "$80.00",
@@ -496,7 +530,7 @@ export async function getOrders() {
     },
     {
       id: 3018,
-      url: "/orders/3018",
+      url: "/dashboard/orders/3018",
       date: "Feb 19, 2024",
       amount: {
         usd: "$114.99",
@@ -523,7 +557,7 @@ export async function getOrders() {
     },
     {
       id: 3019,
-      url: "/orders/3019",
+      url: "/dashboard/orders/3019",
       date: "Feb 15, 2024",
       amount: {
         usd: "$114.99",
@@ -550,7 +584,7 @@ export async function getOrders() {
     },
     {
       id: 3020,
-      url: "/orders/3020",
+      url: "/dashboard/orders/3020",
       date: "Feb 10, 2024",
       amount: {
         usd: "$299.00",
@@ -577,7 +611,7 @@ export async function getOrders() {
     },
     {
       id: 3021,
-      url: "/orders/3021",
+      url: "/dashboard/orders/3021",
       date: "Feb 5, 2024",
       amount: {
         usd: "$80.00",
@@ -604,7 +638,7 @@ export async function getOrders() {
     },
     {
       id: 3022,
-      url: "/orders/3022",
+      url: "/dashboard/orders/3022",
       date: "Feb 1, 2024",
       amount: {
         usd: "$114.99",
@@ -631,7 +665,7 @@ export async function getOrders() {
     },
     {
       id: 3023,
-      url: "/orders/3023",
+      url: "/dashboard/orders/3023",
       date: "Jan 27, 2024",
       amount: {
         usd: "$114.99",
@@ -658,7 +692,7 @@ export async function getOrders() {
     },
     {
       id: 3024,
-      url: "/orders/3024",
+      url: "/dashboard/orders/3024",
       date: "Jan 22, 2024",
       amount: {
         usd: "$114.99",
@@ -685,7 +719,7 @@ export async function getOrders() {
     },
     {
       id: 3025,
-      url: "/orders/3025",
+      url: "/dashboard/orders/3025",
       date: "Jan 18, 2024",
       amount: {
         usd: "$114.99",
@@ -728,7 +762,7 @@ export async function getEvents() {
     {
       id: 1000,
       name: "Bear Hug: Live in Concert",
-      url: "/events/1000",
+      url: "/dashboard/events/1000",
       date: "May 20, 2024",
       time: "10 PM",
       location: "Harmony Theater, Winnipeg, MB",
@@ -746,7 +780,7 @@ export async function getEvents() {
     {
       id: 1001,
       name: "Six Fingers — DJ Set",
-      url: "/events/1001",
+      url: "/dashboard/events/1001",
       date: "Jun 2, 2024",
       time: "8 PM",
       location: "Moonbeam Arena, Uxbridge, ON",
@@ -764,7 +798,7 @@ export async function getEvents() {
     {
       id: 1002,
       name: "We All Look The Same",
-      url: "/events/1002",
+      url: "/dashboard/events/1002",
       date: "Aug 5, 2024",
       time: "4 PM",
       location: "Electric Coliseum, New York, NY",
@@ -782,7 +816,7 @@ export async function getEvents() {
     {
       id: 1003,
       name: "Viking People",
-      url: "/events/1003",
+      url: "/dashboard/events/1003",
       date: "Dec 31, 2024",
       time: "8 PM",
       location: "Tapestry Hall, Cambridge, ON",

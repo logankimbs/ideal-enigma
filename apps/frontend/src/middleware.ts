@@ -1,33 +1,19 @@
-import { jwtVerify } from "jose";
-import type { NextRequest } from "next/server";
+import { auth } from "@/src/auth"; // Import auth from your src/auth.ts
 import { NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const authToken = request.cookies.get("authToken")?.value;
-  const protectedRoutes = ["/dashboard"];
-
-  if (
-    protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
-  ) {
-    if (!authToken) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-
-    try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET as string);
-
-      await jwtVerify(authToken, secret);
-      return NextResponse.next();
-    } catch (error) {
-      console.log("error", error);
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+export default auth((req) => {
+  // Check if the user is not authenticated
+  if (!req.auth?.user) {
+    const loginUrl = new URL("/auth/signin", req.url);
+    // Optional: Set a callbackUrl parameter to redirect back after login
+    loginUrl.searchParams.set("callbackUrl", req.url);
+    return NextResponse.redirect(loginUrl);
   }
 
+  // If the user is authenticated, allow the request to continue
   return NextResponse.next();
-}
+});
 
-// Paths where the middleware should run
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*"], // Apply middleware to all routes under /dashboard
 };

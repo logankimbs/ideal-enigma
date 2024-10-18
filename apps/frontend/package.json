@@ -9,14 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@idealgma/common": "^1.0.0",
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.3",
+    "@idealgma/common": "^1.0.0",
     "clsx": "^2.1.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
     "framer-motion": "^11.11.1",
     "next": "14.2.3",
+    "next-auth": "^5.0.0-beta.22",
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.5",

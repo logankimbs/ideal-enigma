@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRightStartOnRectangleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Cog8ToothIcon,
@@ -19,7 +18,7 @@ import {
   TicketIcon,
 } from "@heroicons/react/20/solid";
 import { usePathname } from "next/navigation";
-import { Avatar } from "../components/avatar";
+import { Avatar } from "../../components/avatar";
 import {
   Dropdown,
   DropdownButton,
@@ -27,13 +26,13 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from "../components/dropdown";
+} from "../../components/dropdown";
 import {
   Navbar,
   NavbarItem,
   NavbarSection,
   NavbarSpacer,
-} from "../components/navbar";
+} from "../../components/navbar";
 import {
   Sidebar,
   SidebarBody,
@@ -44,9 +43,11 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
-} from "../components/sidebar";
-import { SidebarLayout } from "../components/sidebar-layout";
-import { getEvents } from "../data";
+} from "../../components/sidebar";
+import { SidebarLayout } from "../../components/sidebar-layout";
+import { getEvents } from "../../data";
+import { SignOutDropdownItem } from "@/src/components/signout-dropdown";
+import { useSession } from "next-auth/react";
 
 function AccountDropdownMenu({
   anchor,
@@ -69,22 +70,20 @@ function AccountDropdownMenu({
         <DropdownLabel>Share feedback</DropdownLabel>
       </DropdownItem>
       <DropdownDivider />
-      <DropdownItem href="#">
-        <ArrowRightStartOnRectangleIcon />
-        <DropdownLabel>Sign out</DropdownLabel>
-      </DropdownItem>
+      <SignOutDropdownItem />
     </DropdownMenu>
   );
 }
 
-export function ApplicationLayout({
-  events,
-  children,
-}: {
+type DashboardProps = {
   events: Awaited<ReturnType<typeof getEvents>>;
   children: React.ReactNode;
-}) {
+};
+
+export function Dashboard(props: DashboardProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const user = session?.user;
 
   return (
     <SidebarLayout
@@ -94,7 +93,7 @@ export function ApplicationLayout({
           <NavbarSection>
             <Dropdown>
               <DropdownButton as={NavbarItem}>
-                <Avatar src="/users/erica.jpg" square />
+                <Avatar src={user?.image} square />
               </DropdownButton>
               <AccountDropdownMenu anchor="bottom end" />
             </Dropdown>
@@ -114,7 +113,7 @@ export function ApplicationLayout({
                 className="min-w-80 lg:min-w-64"
                 anchor="bottom start"
               >
-                <DropdownItem href="/settings">
+                <DropdownItem href="/dashboard/settings">
                   <Cog8ToothIcon />
                   <DropdownLabel>Settings</DropdownLabel>
                 </DropdownItem>
@@ -142,26 +141,29 @@ export function ApplicationLayout({
 
           <SidebarBody>
             <SidebarSection>
-              <SidebarItem href="/" current={pathname === "/"}>
+              <SidebarItem
+                href="/dashboard"
+                current={pathname === "/dashboard"}
+              >
                 <HomeIcon />
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/events"
+                href="/dashboard/events"
                 current={pathname.startsWith("/events")}
               >
                 <Square2StackIcon />
                 <SidebarLabel>Events</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/orders"
+                href="/dashboard/orders"
                 current={pathname.startsWith("/orders")}
               >
                 <TicketIcon />
                 <SidebarLabel>Orders</SidebarLabel>
               </SidebarItem>
               <SidebarItem
-                href="/settings"
+                href="/dashboard/settings"
                 current={pathname.startsWith("/settings")}
               >
                 <Cog6ToothIcon />
@@ -171,7 +173,7 @@ export function ApplicationLayout({
 
             <SidebarSection className="max-lg:hidden">
               <SidebarHeading>Upcoming Events</SidebarHeading>
-              {events.map((event) => (
+              {props.events.map((event) => (
                 <SidebarItem key={event.id} href={event.url}>
                   {event.name}
                 </SidebarItem>
@@ -196,18 +198,13 @@ export function ApplicationLayout({
             <Dropdown>
               <DropdownButton as={SidebarItem}>
                 <span className="flex min-w-0 items-center gap-3">
-                  <Avatar
-                    src="/users/erica.jpg"
-                    className="size-10"
-                    square
-                    alt=""
-                  />
+                  <Avatar src={user?.image} className="size-10" square alt="" />
                   <span className="min-w-0">
                     <span className="block truncate text-sm/5 font-medium text-zinc-950 dark:text-white">
-                      Erica
+                      {user?.name}
                     </span>
                     <span className="block truncate text-xs/5 font-normal text-zinc-500 dark:text-zinc-400">
-                      erica@example.com
+                      {user?.email}
                     </span>
                   </span>
                 </span>
@@ -219,7 +216,7 @@ export function ApplicationLayout({
         </Sidebar>
       }
     >
-      {children}
+      {props.children}
     </SidebarLayout>
   );
 }
