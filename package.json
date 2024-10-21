@@ -22,7 +22,8 @@
     "dev": "nx run-many -t start:dev --watch",
     "format": "prettier --write .",
     "lint": "nx run-many -t lint",
-    "test": "jest"
+    "test": "jest",
+    "ngrok": "ngrok start --config ngrok.yaml --all"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",
