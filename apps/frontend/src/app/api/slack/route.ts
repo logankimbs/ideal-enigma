@@ -1,7 +1,11 @@
-export const dynamic = "force-dynamic"; // defaults to auto
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request, response: Response) {
-  console.log("request in frontend api", request);
-  console.log("response in frontend api", response);
-  return Response.json({ greeting: "hello from frontend api baby" });
+export const dynamic = "force-dynamic";
+
+// TODO: Make sure this route can only be called from the backend!
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const accessToken = searchParams.get("access_token")!;
+
+  return NextResponse.json({ token: accessToken });
 }

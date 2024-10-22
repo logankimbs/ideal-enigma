@@ -3,23 +3,13 @@ import {
   BlockAction,
   SlackActionMiddlewareArgs,
 } from "@slack/bolt";
-import config from "../../config";
-import { apiRequest } from "../../utils/apiRequest";
 
+// This actions sole purpose is to acknowledge the button click to go to dashboard
 const autoLogin = async ({
   ack,
-  client,
-  body,
 }: AllMiddlewareArgs & SlackActionMiddlewareArgs<BlockAction>) => {
   try {
     await ack();
-    const response: { access_token: string } = await apiRequest({
-      method: "post",
-      url: `${config.apiUrl}/auth/slack-login`,
-      data: body.user,
-    });
-
-    console.log("response", response.access_token);
   } catch (error) {
     console.error(error);
   }
