@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useContext } from "react";
 import { Badge } from "../../components/badge";
 import { Divider } from "../../components/divider";
 import { Heading, Subheading } from "../../components/heading";
@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/table";
+import { UserContext } from "./dashboard";
 
 type StatProps = {
   title: string;
@@ -40,12 +41,11 @@ export function Stat(props: StatProps) {
 }
 
 export default function Home() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  const user = useContext(UserContext);
 
   return (
     <>
-      <Heading>Good afternoon, {user?.name}</Heading>
+      <Heading>Good afternoon, {user?.data.profile.first_name}</Heading>
       <div className="mt-8 flex items-end justify-between">
         <Subheading>Overview</Subheading>
         <div>

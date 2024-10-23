@@ -1,8 +1,8 @@
 import type React from "react";
+import jwt from "jsonwebtoken";
 import { getEvents } from "../../data";
 import { Dashboard } from "./dashboard";
-import { auth } from "@/src/auth";
-import { SessionProvider } from "next-auth/react";
+import { cookies } from "next/headers";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -10,19 +10,40 @@ type DashboardLayoutProps = {
 
 export default async function DashboardLayout(props: DashboardLayoutProps) {
   const events = await getEvents();
-  const session = await auth();
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("access_token")!.value;
+  const secretKey = process.env.JWT_SECRET!;
+  const decoded = jwt.verify(accessToken, secretKey);
 
-  if (session?.user) {
-    session.user = {
-      name: session.user.name,
-      email: session.user.email,
-      image: session.user.image,
-    };
+  let user = null;
+  if (accessToken) {
+    try {
+      // 2. Make a request to the backend using the access token
+      const response = await fetch(
+        `http://localhost:4000/users/${decoded.sub}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        user = await response.json();
+      } else {
+        console.error("Failed to fetch user info:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+  } else {
+    console.error("No access token found in cookies");
   }
 
   return (
-    <SessionProvider session={session}>
-      <Dashboard events={events}>{props.children}</Dashboard>
-    </SessionProvider>
+    <Dashboard events={events} user={user}>
+      {props.children}
+    </Dashboard>
   );
 }

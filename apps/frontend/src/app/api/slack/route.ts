@@ -1,11 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
-export const dynamic = "force-dynamic";
-
-// TODO: Make sure this route can only be called from the backend!
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const accessToken = searchParams.get("access_token")!;
+  const accessToken = request.nextUrl.searchParams.get("access_token");
 
-  return NextResponse.json({ token: accessToken });
+  if (!accessToken) return NextResponse.redirect(new URL("/", request.url));
+
+  try {
+    const secretKey = process.env.JWT_SECRET!;
+    const decoded = jwt.verify(accessToken, secretKey);
+
+    console.log(decoded);
+    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+
+    response.cookies.set("access_token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      // TODO: set max age to exp? Exp = 1729722901
+      // maxAge: decoded.exp - Math.floor(Date.now() / 1000),
+    });
+
+    return response;
+  } catch (error) {
+    console.error("JWT verification failed:", error);
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 }
