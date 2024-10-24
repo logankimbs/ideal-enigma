@@ -20,7 +20,7 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
     try {
       // 2. Make a request to the backend using the access token
       const response = await fetch(
-        `http://localhost:4000/users/${decoded.sub}`,
+        `${process.env.BACKEND_URL}/users/${decoded.sub}`,
         {
           method: "GET",
           headers: {
