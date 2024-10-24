@@ -36,12 +36,14 @@ export class AuthController {
     return this.authService.validateToken(validateTokenDto);
   }
 
+  @Public()
   @Get("slack")
   @Redirect("https://slack.com", 302)
   slackAuthorize(@Query() slackAuthorizeDto: SlackAuthorizeDto) {
     return this.authService.slackAuthorize(slackAuthorizeDto);
   }
 
+  @Public()
   @Get("slack/callback")
   @Redirect(frontend_url, 302)
   async slackCallback(@Query() slackCallbackDto: SlackCallbackDto) {

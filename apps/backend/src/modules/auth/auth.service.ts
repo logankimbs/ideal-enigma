@@ -14,7 +14,7 @@ type AuthPayload = {
 
 // THIS SHOULD NOT BE PUSHED TO PRODUCTION. THIS IS FOR LOCAL TESTING!!!
 const backend_url =
-  "https://401b-2600-8802-450f-bc00-c02a-6342-f94-8f3a.ngrok-free.app";
+  "https://f4ca-2600-8802-450f-bc00-10b6-13a3-79a8-384c.ngrok-free.app";
 const slack_callback_path = "/auth/slack/callback";
 const redirect_uri = backend_url + slack_callback_path;
 const frontend_url = "http://localhost:3000";
@@ -73,8 +73,20 @@ export class AuthService {
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
     const user = await this.userService.findOne(slackAuthorizeDto.user);
 
-    if (!user || user.data.team_id !== slackAuthorizeDto.team_id) {
-      throw new UnauthorizedException();
+    console.log(user);
+
+    if (!user) throw new UnauthorizedException();
+
+    if (user.data.enterprise_user) {
+      const teams = user.data.enterprise_user.teams;
+
+      if (!teams.includes(slackAuthorizeDto.team_id)) {
+        throw new UnauthorizedException();
+      }
+    } else {
+      if (user.data.team_id !== slackAuthorizeDto.team_id) {
+        throw new UnauthorizedException();
+      }
     }
 
     const url = new URL("https://slack.com/openid/connect/authorize");
