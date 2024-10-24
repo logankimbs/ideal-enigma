@@ -1,4 +1,5 @@
 import {
+  Button,
   ContextBlock,
   HeaderBlock,
   InputBlock,
@@ -60,17 +61,17 @@ export const createButton = (text: string, value: string): KnownBlock => ({
   ],
 });
 
-export const createSectionWithButton = (
-  text: string,
-  buttonText: string,
-  buttonValue: string,
-) => ({
-  type: "section",
-  text: {
-    type: "mrkdwn",
-    text,
-  },
-  accessory: {
+type CreateSectionWithButtonProps = {
+  text: string;
+  buttonText: string;
+  buttonValue: string;
+  url?: string;
+};
+
+export const createSectionWithButton = (props: CreateSectionWithButtonProps) => {
+  const { text, buttonText, buttonValue, url } = props;
+
+  const accessory: Button = {
     type: "button",
     text: {
       type: "plain_text",
@@ -79,8 +80,19 @@ export const createSectionWithButton = (
     },
     value: buttonValue,
     action_id: buttonValue,
-  },
-});
+  };
+
+  if (url) accessory.url = url;
+
+  return {
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text,
+    },
+    accessory,
+  };
+};
 
 export const createRichTextBlock = (
   header: string,

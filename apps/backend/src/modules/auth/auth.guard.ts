@@ -31,6 +31,12 @@ export class AuthGuard implements CanActivate {
 
     if (!token) throw new UnauthorizedException();
 
+    // TODO: This needs to be addressed!
+    // We need to find another way to communicate with the slack app
+    if (token === this.configService.get<string>("slack.secretKey")) {
+      return true;
+    }
+
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get<string>("jwtSecret"),

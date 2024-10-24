@@ -22,7 +22,10 @@ export class UserService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOneByOrFail({ id });
+    return this.userRepository.findOneOrFail({
+      where: { id },
+      relations: ["team"],
+    });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {

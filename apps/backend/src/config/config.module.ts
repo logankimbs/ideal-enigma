@@ -20,6 +20,15 @@ const config = () => {
       synchronize: isDev,
       ssl: !isDev ? { rejectUnauthorized: false } : false,
     },
+    slack: {
+      secretKey: process.env.SLACK_SECRET_KEY,
+      clientId: process.env.SLACK_CLIENT_ID,
+      clientSecret: process.env.SLACK_CLIENT_SECRET,
+      openId: {
+        state: process.env.SLACK_STATE,
+        nonce: process.env.SLACK_NONCE,
+      },
+    },
   };
 };
 

@@ -3,20 +3,20 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/16/solid";
 import type { Metadata } from "next";
-import { Badge } from "../../components/badge";
-import { Button } from "../../components/button";
-import { Divider } from "../../components/divider";
+import { Badge } from "../../../components/badge";
+import { Button } from "../../../components/button";
+import { Divider } from "../../../components/divider";
 import {
   Dropdown,
   DropdownButton,
   DropdownItem,
   DropdownMenu,
-} from "../../components/dropdown";
-import { Heading } from "../../components/heading";
-import { Input, InputGroup } from "../../components/input";
-import { Link } from "../../components/link";
-import { Select } from "../../components/select";
-import { getEvents } from "../../data";
+} from "../../../components/dropdown";
+import { Heading } from "../../../components/heading";
+import { Input, InputGroup } from "../../../components/input";
+import { Link } from "../../../components/link";
+import { Select } from "../../../components/select";
+import { getEvents } from "../../../data";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -57,6 +57,7 @@ export default async function Events() {
                 <div key={event.id} className="flex gap-6 py-6">
                   <div className="w-32 shrink-0">
                     <Link href={event.url} aria-hidden="true">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         className="aspect-[3/2] rounded-lg shadow"
                         src={event.imgUrl}

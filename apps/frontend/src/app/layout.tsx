@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import type React from "react";
-import { getEvents } from "../data";
 import "../styles/tailwind.css";
-import { ApplicationLayout } from "./application-layout";
 
 export const metadata: Metadata = {
   title: {
@@ -12,13 +10,11 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default async function RootLayout({
-  children,
-}: {
+type RootLayoutProps = {
   children: React.ReactNode;
-}) {
-  const events = await getEvents();
+};
 
+export default async function RootLayout(props: RootLayoutProps) {
   return (
     <html
       lang="en"
@@ -28,9 +24,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body>
-        <ApplicationLayout events={events}>{children}</ApplicationLayout>
-      </body>
+      <body>{props.children}</body>
     </html>
   );
 }

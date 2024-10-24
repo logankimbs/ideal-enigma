@@ -91,6 +91,7 @@ export type Config = {
   nodeEnv: string;
   isDev: boolean;
   port: string;
+  secretKey: string;
   receiver: ExpressReceiverOptions;
   openAI: ClientOptions;
 };
