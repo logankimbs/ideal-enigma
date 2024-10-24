@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const secretKey = process.env.JWT_SECRET!;
     const decoded = jwt.verify(accessToken, secretKey);
 
+    // FIXME: Only here because we arent using decoded yet, but we will when we implement token refresh logic
     console.log(decoded);
     const response = NextResponse.redirect(new URL("/dashboard", request.url));
 
