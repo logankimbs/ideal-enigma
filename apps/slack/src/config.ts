@@ -13,6 +13,7 @@ const getConfig = () => {
     nodeEnv: process.env.NODE_ENV || "development",
     isDev: process.env.NODE_ENV === "development",
     port: process.env.PORT || "3000",
+    secretKey: process.env.SECRET_KEY!,
     receiver: {
       signingSecret: process.env.SLACK_SIGNING_SECRET!,
       clientId: process.env.SLACK_CLIENT_ID,

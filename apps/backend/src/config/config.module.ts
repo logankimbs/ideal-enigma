@@ -21,6 +21,7 @@ const config = () => {
       ssl: !isDev ? { rejectUnauthorized: false } : false,
     },
     slack: {
+      secretKey: process.env.SLACK_SECRET_KEY,
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       openId: {

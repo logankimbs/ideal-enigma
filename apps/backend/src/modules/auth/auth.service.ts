@@ -73,21 +73,7 @@ export class AuthService {
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
     const user = await this.userService.findOne(slackAuthorizeDto.user);
 
-    console.log(user);
-
     if (!user) throw new UnauthorizedException();
-
-    if (user.data.enterprise_user) {
-      const teams = user.data.enterprise_user.teams;
-
-      if (!teams.includes(slackAuthorizeDto.team_id)) {
-        throw new UnauthorizedException();
-      }
-    } else {
-      if (user.data.team_id !== slackAuthorizeDto.team_id) {
-        throw new UnauthorizedException();
-      }
-    }
 
     const url = new URL("https://slack.com/openid/connect/authorize");
     const params = new URLSearchParams({
@@ -95,10 +81,12 @@ export class AuthService {
       scope: ["openid", "profile", "email"].join(" "),
       client_id: this.client_id,
       state: this.state_secret,
-      team: slackAuthorizeDto.team_id,
+      team: user.team.id,
       nonce: this.nonce_secret,
       redirect_uri: redirect_uri,
     });
+
+    console.log(params);
 
     url.search = params.toString();
 

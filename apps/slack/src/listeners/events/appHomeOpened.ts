@@ -9,7 +9,8 @@ import config from "../../config";
 
 const getHomeViewBlocks = (event: any) => {
   const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
-  const params = { user: event.user, team_id: event.view.team_id };
+  console.log(event);
+  const params = { user: event.user };
 
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
 

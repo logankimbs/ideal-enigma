@@ -14,6 +14,7 @@ export async function apiRequest<T>(options: ApiRequestOptions): Promise<T> {
     url: options.url,
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.SECRET_KEY}`,
       ...options.headers,
     },
     data: options.data,

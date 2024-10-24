@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { Config } from "./config/config.module";
 import { DatabaseModule } from "./database/database.module";
 import { Modules } from "./modules";
-import { AuthGuard } from "./modules/auth/auth.gaurd";
+import { AuthGuard } from "./modules/auth/auth.guard";
 
 @Module({
   imports: [Config, DatabaseModule, ...Modules],
