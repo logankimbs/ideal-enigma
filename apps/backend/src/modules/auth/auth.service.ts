@@ -12,12 +12,10 @@ type AuthPayload = {
   access_token: string;
 };
 
-// THIS SHOULD NOT BE PUSHED TO PRODUCTION. THIS IS FOR LOCAL TESTING!!!
-const backend_url =
-  "https://f4ca-2600-8802-450f-bc00-10b6-13a3-79a8-384c.ngrok-free.app";
+const backend_url = process.env.BACKEND_URL;
 const slack_callback_path = "/auth/slack/callback";
 const redirect_uri = backend_url + slack_callback_path;
-const frontend_url = "http://localhost:3000";
+const frontend_url = process.env.FRONTEND_URL;
 
 @Injectable()
 export class AuthService {
@@ -86,8 +84,6 @@ export class AuthService {
       redirect_uri: redirect_uri,
     });
 
-    console.log(params);
-
     url.search = params.toString();
 
     return { url: url.toString() };
@@ -102,7 +98,6 @@ export class AuthService {
       redirect_uri,
     });
 
-    console.log("token", token);
     let userAccessToken = token.access_token;
 
     if (token.refresh_token) {
@@ -116,7 +111,6 @@ export class AuthService {
         refresh_token: token.refresh_token,
       });
 
-      console.log("refresh_token", JSON.stringify(refreshedToken, null, 2));
       userAccessToken = refreshedToken.access_token;
     }
 

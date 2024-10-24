@@ -1,8 +1,6 @@
 "use client";
 
 import { useContext } from "react";
-import { Badge } from "../../components/badge";
-import { Divider } from "../../components/divider";
 import { Heading, Subheading } from "../../components/heading";
 import { Select } from "../../components/select";
 import {
@@ -13,32 +11,7 @@ import {
   TableRow,
 } from "../../components/table";
 import { UserContext } from "./dashboard";
-
-type StatProps = {
-  title: string;
-  value: string;
-  change: string;
-};
-
-export function Stat(props: StatProps) {
-  return (
-    <div>
-      <Divider />
-      <div className="mt-6 text-lg/6 font-medium sm:text-sm/6">
-        {props.title}
-      </div>
-      <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">
-        {props.value}
-      </div>
-      <div className="mt-3 text-sm/6 sm:text-xs/6">
-        <Badge color={props.change.startsWith("+") ? "lime" : "pink"}>
-          {props.change}
-        </Badge>{" "}
-        <span className="text-zinc-500">from last week</span>
-      </div>
-    </div>
-  );
-}
+import { Stat } from "@/src/components/stat";
 
 export default function Home() {
   const user = useContext(UserContext);

@@ -14,7 +14,8 @@ import {
   TableRow,
 } from "../../../../components/table";
 import { getEvent, getEventOrders } from "../../../../data";
-import { Stat } from "../../page";
+import { Stat } from "@/src/components/stat";
+
 
 export async function generateMetadata({
   params,

@@ -15,8 +15,7 @@ import { SlackAuthorizeDto } from "./dto/slack-authorize.dto";
 import { SlackCallbackDto } from "./dto/slack-callback.dto";
 import { ValidateTokenDto } from "./dto/validate-token.dto";
 
-// THIS SHOULD NOT BE PUSHED TO PRODUCTION. THIS IS FOR LOCAL TESTING!!!
-const frontend_url = "http://localhost:3000";
+const frontend_url = process.env.FRONTEND_URL;
 
 @Controller("auth")
 export class AuthController {
