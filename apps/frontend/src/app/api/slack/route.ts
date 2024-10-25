@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { redirect } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const accessToken = request.nextUrl.searchParams.get("access_token");
 
-  if (!accessToken) return NextResponse.redirect("/");
+  if (!accessToken) redirect("/poop");
 
   try {
     const secretKey = process.env.JWT_SECRET!;
