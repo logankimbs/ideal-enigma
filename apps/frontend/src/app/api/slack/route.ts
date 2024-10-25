@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export async function GET(request: NextRequest) {
   const accessToken = request.nextUrl.searchParams.get("access_token");
 
-  if (!accessToken) return NextResponse.redirect(new URL("/", request.url));
+  if (!accessToken) return NextResponse.redirect("/");
 
   try {
     const secretKey = process.env.JWT_SECRET!;
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
     // FIXME: Only here because we arent using decoded yet, but we will when we implement token refresh logic
     console.log(decoded);
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    const response = NextResponse.redirect("/dashboard");
 
     response.cookies.set("access_token", accessToken, {
       httpOnly: true,
@@ -25,6 +25,6 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("JWT verification failed:", error);
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect("/");
   }
 }
