@@ -22,9 +22,13 @@ export async function GET(request: NextRequest) {
       // maxAge: decoded.exp - Math.floor(Date.now() / 1000),
     });
 
+    const redirectUrl = `${process.env.BASE_URL}/dashboard`;
+    console.log(redirectUrl);
+
     redirect(`${process.env.BASE_URL}/dashboard`);
   } catch (error) {
     console.error("JWT verification failed:", error);
     redirect(`${process.env.BASE_URL}/`);
   }
+
 }
