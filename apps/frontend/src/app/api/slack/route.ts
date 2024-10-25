@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const accessToken = request.nextUrl.searchParams.get("access_token");
 
-  if (!accessToken) redirect("/");
+  if (!accessToken) redirect(`${process.env.BASE_URL}/`);
 
   try {
     const secretKey = process.env.JWT_SECRET!;
@@ -22,9 +22,9 @@ export async function GET(request: NextRequest) {
       // maxAge: decoded.exp - Math.floor(Date.now() / 1000),
     });
 
-    redirect("/dashboard");
+    redirect(`${process.env.BASE_URL}/dashboard`);
   } catch (error) {
     console.error("JWT verification failed:", error);
-    return redirect("/");
+    redirect(`${process.env.BASE_URL}/`);
   }
 }
