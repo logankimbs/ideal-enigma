@@ -1,6 +1,6 @@
-import { SlackTeam } from "./slack/slack-team";
-import { Timestamp } from "./timestamp";
-import { User } from "./user";
+import { SlackTeam } from './slack/slack-team';
+import { Timestamp } from './timestamp';
+import { User } from './user';
 
 export interface Team extends Timestamp {
   id: string;

@@ -1,6 +1,6 @@
-import { Tag } from "./tag";
-import { Timestamp } from "./timestamp";
-import { User } from "./user";
+import { Tag } from './tag';
+import { Timestamp } from './timestamp';
+import { User } from './user';
 
 export interface Insight extends Timestamp {
   id: string;

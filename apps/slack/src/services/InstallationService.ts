@@ -1,23 +1,23 @@
-import { Installation, Team, User } from "@ideal-enigma/common";
+import { Installation, Team, User } from '@ideal-enigma/common';
 import {
   InstallationQuery,
   InstallationStore,
   Installation as SlackInstallation,
-} from "@slack/bolt";
-import { WebClient } from "@slack/web-api";
-import config from "../config";
-import { message } from "../messages";
-import { apiRequest } from "../utils/apiRequest";
-import logger from "../utils/logger";
-import { SlackService } from "./SlackService";
+} from '@slack/bolt';
+import { WebClient } from '@slack/web-api';
+import config from '../config';
+import { message } from '../messages';
+import { apiRequest } from '../utils/apiRequest';
+import logger from '../utils/logger';
+import { SlackService } from './SlackService';
 
 const installationService: InstallationStore = {
-  storeInstallation: async function <AuthVersion extends "v1" | "v2">(
-    installation: SlackInstallation<AuthVersion, boolean>,
+  storeInstallation: async function <AuthVersion extends 'v1' | 'v2'>(
+    installation: SlackInstallation<AuthVersion, boolean>
   ): Promise<void> {
     try {
       if (installation.isEnterpriseInstall && installation.enterprise) {
-        logger.warn("Enterprise wide app installation is not yet supported");
+        logger.warn('Enterprise wide app installation is not yet supported');
         // TODO: Implement enterprise app installation
         return;
       }
@@ -27,37 +27,37 @@ const installationService: InstallationStore = {
         return;
       }
 
-      throw new Error("Installation is missing required information.");
+      throw new Error('Installation is missing required information.');
     } catch (error) {
-      logger.error("Failed to save installation:", error);
+      logger.error('Failed to save installation:', error);
     }
   },
 
   fetchInstallation: async function (
-    query: InstallationQuery<boolean>,
-  ): Promise<SlackInstallation<"v1" | "v2", boolean>> {
+    query: InstallationQuery<boolean>
+  ): Promise<SlackInstallation<'v1' | 'v2', boolean>> {
     const id = getInstallationId(query);
     logger.info(`Fetching installation for ${id}`);
     const installationEntity: Installation = await apiRequest({
-      method: "get",
+      method: 'get',
       url: `${config.apiUrl}/installations/${id}`,
     });
 
     if (!installationEntity) {
-      throw new Error("Installation was not found.");
+      throw new Error('Installation was not found.');
     }
 
     return installationEntity.data as SlackInstallation;
   },
 
   deleteInstallation: async function (
-    query: InstallationQuery<boolean>,
+    query: InstallationQuery<boolean>
   ): Promise<void> {
     const id = getInstallationId(query);
 
     try {
       await apiRequest({
-        method: "delete",
+        method: 'delete',
         url: `${config.apiUrl}/installations/${id}`,
       });
     } catch (error) {
@@ -69,12 +69,12 @@ const installationService: InstallationStore = {
 /*********************/
 /* Helper Functions */
 async function handleSingleTeamInstallation(
-  installation: SlackInstallation,
+  installation: SlackInstallation
 ): Promise<void> {
   try {
     const slackInstallation = await saveInstallation(
       installation.team!.id,
-      installation,
+      installation
     );
 
     const webClient = new WebClient(slackInstallation.token);
@@ -84,7 +84,7 @@ async function handleSingleTeamInstallation(
 
     logger.info(`Saving team ${slackTeam?.id}`);
     const teamEntity: Team = await apiRequest({
-      method: "post",
+      method: 'post',
       url: `${config.apiUrl}/teams`,
       data: slackTeam,
     });
@@ -92,7 +92,7 @@ async function handleSingleTeamInstallation(
     if (slackUsers) {
       logger.info(`Saving a batch of users for team ${teamEntity.id}`);
       const userEntities: User[] = await apiRequest({
-        method: "post",
+        method: 'post',
         url: `${config.apiUrl}/users/batch?teamId=${teamEntity.id}`,
         data: { users: slackUsers },
       });
@@ -110,28 +110,28 @@ async function handleSingleTeamInstallation(
             user.id,
             welcomeMessage.text,
             postAt,
-            welcomeMessage.blocks,
+            welcomeMessage.blocks
           );
-        }),
+        })
       );
     }
   } catch (error) {
-    console.error("Error handling single team installation:", error);
+    console.error('Error handling single team installation:', error);
     throw new Error(
-      `Failed to handle installation for team: ${installation.team?.id}`,
+      `Failed to handle installation for team: ${installation.team?.id}`
     );
   }
 }
 
 async function saveInstallation(
   id: string,
-  installation: SlackInstallation,
+  installation: SlackInstallation
 ): Promise<Installation> {
   logger.info(`Saving installation for ${id}`);
 
   try {
     const installationEntity: Installation = await apiRequest({
-      method: "post",
+      method: 'post',
       url: `${config.apiUrl}/installations`,
       data: {
         id,
@@ -149,7 +149,7 @@ async function saveInstallation(
 }
 
 function getInstallationId(
-  query: InstallationQuery<boolean>,
+  query: InstallationQuery<boolean>
 ): string | undefined {
   return query.isEnterpriseInstall ? query.enterpriseId : query.teamId;
 }

@@ -1,9 +1,9 @@
-import { Insight } from "@ideal-enigma/common";
-import OpenAI from "openai";
-import { zodResponseFormat } from "openai/helpers/zod";
-import { z } from "zod";
-import { Summary } from "../types";
-import logger from "../utils/logger";
+import { Insight } from '@ideal-enigma/common';
+import OpenAI from 'openai';
+import { zodResponseFormat } from 'openai/helpers/zod';
+import { z } from 'zod';
+import { Summary } from '../types';
+import logger from '../utils/logger';
 
 const InsightSchema = z.object({
   origin: z.object({
@@ -49,11 +49,11 @@ export class OpenAIService {
       const summaryRequest = { insights: origins };
 
       const completion = await this.openai.chat.completions.create({
-        model: "gpt-4o-2024-08-06",
+        model: 'gpt-4o-2024-08-06',
         messages: [
-          { role: "system", content: "You are a helpful assistant." },
+          { role: 'system', content: 'You are a helpful assistant.' },
           {
-            role: "user",
+            role: 'user',
             content: `Act as skilled project manager. You are tasked with analyzing the provided list of team member insights. Please perform the following tasks:
 
 First, filter out any entries that are gibberish, nonsensical, or clearly invalid.
@@ -108,9 +108,9 @@ Ensure that your final output strictly adheres to the standardized format and in
 
 Input:`,
           },
-          { role: "user", content: JSON.stringify(summaryRequest) },
+          { role: 'user', content: JSON.stringify(summaryRequest) },
         ],
-        response_format: zodResponseFormat(SummaryResponseSchema, "summary"),
+        response_format: zodResponseFormat(SummaryResponseSchema, 'summary'),
         // temperature: 0.7,
         // max_tokens: MAX_TOKENS,
       });
@@ -121,15 +121,15 @@ Input:`,
         return JSON.parse(message.content) as Summary;
       } else if (message?.refusal) {
         throw new Error(
-          `Model refused to generate the summary: ${message.refusal}`,
+          `Model refused to generate the summary: ${message.refusal}`
         );
       } else {
         throw new Error(
-          "Failed to generate summary: Unexpected response format.",
+          'Failed to generate summary: Unexpected response format.'
         );
       }
     } catch (error) {
-      logger.error("Error while summarizing insights:", error);
+      logger.error('Error while summarizing insights:', error);
       throw error;
     }
   }

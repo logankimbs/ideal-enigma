@@ -1,11 +1,11 @@
-import { Installation, Team } from "@ideal-enigma/common";
-import { WebClient } from "@slack/web-api";
-import config from "../config";
-import { message } from "../messages";
-import { SlackService } from "../services/SlackService";
-import { apiRequest } from "../utils/apiRequest";
-import getNextOccurrence from "../utils/date";
-import logger from "../utils/logger";
+import { Installation, Team } from '@ideal-enigma/common';
+import { WebClient } from '@slack/web-api';
+import config from '../config';
+import { message } from '../messages';
+import { SlackService } from '../services/SlackService';
+import { apiRequest } from '../utils/apiRequest';
+import getNextOccurrence from '../utils/date';
+import logger from '../utils/logger';
 
 /**
  * Runs every Monday at midnight (12:00 AM)
@@ -20,10 +20,10 @@ export const reminderTask = async () => {
 
   try {
     // const wedReminder = message.getReminderMessage({ day: "Wednesday" });
-    const friReminder = message.getReminderMessage({ day: "Friday" });
-    logger.info("Grabbing installations...");
+    const friReminder = message.getReminderMessage({ day: 'Friday' });
+    logger.info('Grabbing installations...');
     const installations: Installation[] = await apiRequest({
-      method: "get",
+      method: 'get',
       url: `${config.apiUrl}/installations`,
     });
 
@@ -33,7 +33,7 @@ export const reminderTask = async () => {
 
       logger.info(`Grabbing team ${installation.id}...`);
       const team: Team = await apiRequest({
-        method: "get",
+        method: 'get',
         url: `${config.apiUrl}/teams/${installation.id}`,
       });
 
@@ -54,7 +54,7 @@ export const reminderTask = async () => {
             user.id,
             friReminder.text,
             friTimestamp,
-            friReminder.blocks,
+            friReminder.blocks
           );
         }
       }
@@ -64,5 +64,5 @@ export const reminderTask = async () => {
     return;
   }
 
-  logger.info("Reminder task completed successfully");
+  logger.info('Reminder task completed successfully');
 };
