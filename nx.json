@@ -14,7 +14,7 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "671e81c4d4ea3c25c46efb37",
+  "nxCloudId": "66fad5df175f7c6817c96a8b",
   "plugins": [
     {
       "plugin": "@nx/next/plugin",
