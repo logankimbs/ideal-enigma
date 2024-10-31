@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "../../components/table";
 import { UserContext } from "./dashboard";
-import { Stat } from "@/src/components/stat";
+import { Stat } from "../../components/stat";
 
 export default function Home() {
   const user = useContext(UserContext);

@@ -1,4 +1,5 @@
-import { deleteSession } from "@/src/app/libs/session";
+import { deleteSession } from "../../../libs/session";
+
 
 export async function POST(req: Request) {
   console.log(req);

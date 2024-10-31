@@ -46,9 +46,9 @@ import {
 } from "../../components/sidebar";
 import { SidebarLayout } from "../../components/sidebar-layout";
 import { getEvents } from "../../data";
-import { SignOutDropdownItem } from "@/src/components/signout-dropdown";
-import { User } from "@idealgma/common";
 import { createContext } from "react";
+import { User } from "@ideal-enigma/common";
+import { SignOutDropdownItem } from "../../components/signout-dropdown";
 
 function AccountDropdownMenu({
   anchor,
