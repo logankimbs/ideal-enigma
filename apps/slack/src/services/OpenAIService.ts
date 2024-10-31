@@ -1,4 +1,4 @@
-import { Insight } from "@idealgma/common";
+import { Insight } from "@ideal-enigma/common";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";

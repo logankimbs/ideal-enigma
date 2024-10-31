@@ -1,4 +1,4 @@
-import { Installation, Team, User } from "@idealgma/common";
+import { Installation, Team, User } from "@ideal-enigma/common";
 import {
   InstallationQuery,
   InstallationStore,

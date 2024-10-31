@@ -1,4 +1,4 @@
-import { Insight, Installation, Team } from "@idealgma/common";
+import { Insight, Installation, Team } from "@ideal-enigma/common";
 import { WebClient } from "@slack/web-api";
 import config from "../config";
 import { message } from "../messages";
