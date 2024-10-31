@@ -1,12 +1,12 @@
 {
   "name": "@ideal-enigma/common",
   "version": "0.0.1",
-  "dependencies": {
-    "@slack/bolt": "^4.0.0-rc.1",
-    "tslib": "^2.3.0"
-  },
   "type": "commonjs",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@slack/bolt": "^4.0.0-rc.1",
+    "tslib": "^2.3.0"
+  }
 }
