@@ -45,4 +45,5 @@ Thumbs.db
 .next
 out
 
+.env
 .env.local
