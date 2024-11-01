@@ -5,13 +5,13 @@
   "private": true,
   "scripts": {
     "heroku-postbuild": "npm add -g nx && npm run build",
-    "build": "nx run-many -t build",
+    "build": "npx nx run-many -t build",
     "start:dev:backend": "nx serve backend",
-    "start:prod:backend": "nx serve backend --configuration=production",
+    "start:prod:backend": "npx nx run backend:serve:production --inspect=false",
     "start:dev:frontend": "nx dev frontend",
-    "start:prod:frontend": "nx start frontend",
+    "start:prod:frontend": "npx nx start frontend --prod",
     "start:dev:slack": "nx serve slack",
-    "start:prod:slack": "nx serve slack --configuration=production"
+    "start:prod:slack": "npx nx run slack:serve:production --inspect=false"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
