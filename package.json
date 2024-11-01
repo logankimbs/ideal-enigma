@@ -12,7 +12,8 @@
     "start:dev:frontend": "nx dev frontend",
     "start:prod:frontend": "next start dist/apps/frontend",
     "start:dev:slack": "nx serve slack",
-    "start:prod:slack": "node dist/apps/slack/main.js"
+    "start:prod:slack": "node dist/apps/slack/main.js",
+    "ngrok": "ngrok start --config=ngrok.yaml --all"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
