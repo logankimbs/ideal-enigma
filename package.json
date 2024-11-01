@@ -8,8 +8,9 @@
     "build": "npx nx run-many -t build",
     "start:dev:backend": "nx serve backend",
     "start:prod:backend": "npx nx run backend:serve:production --inspect=false",
+    "build:frontend": "next build",
     "start:dev:frontend": "nx dev frontend",
-    "start:prod:frontend": "npx nx start frontend --prod",
+    "start:prod:frontend": "next start dist/apps/frontend",
     "start:dev:slack": "nx serve slack",
     "start:prod:slack": "npx nx run slack:serve:production --inspect=false"
   },
