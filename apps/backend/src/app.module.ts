@@ -8,7 +8,6 @@ import { AuthGuard } from "./modules/auth/auth.guard";
   imports: [Config, DatabaseModule, ...Modules],
   providers: [
     // Makes all endpoint private
-
     { provide: 'APP_GUARD', useClass: AuthGuard },
   ],
 })
