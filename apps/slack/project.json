@@ -47,10 +47,12 @@
       },
       "configurations": {
         "development": {
-          "buildTarget": "slack:build:development"
+          "buildTarget": "slack:build:development",
+          "inspect": false
         },
         "production": {
-          "buildTarget": "slack:build:production"
+          "buildTarget": "slack:build:production",
+          "inspect": false
         }
       }
     }
