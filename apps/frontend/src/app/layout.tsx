@@ -29,7 +29,7 @@ export default async function RootLayout(props: RootLayoutProps) {
           href="/blog/feed.xml"
         />
       </head>
-      <body className="dark:text-white antialiased">{props.children}</body>
+      <body className="text-gray-950 antialiased">{props.children}</body>
     </html>
   );
 }
