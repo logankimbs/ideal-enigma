@@ -42,8 +42,15 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
   }
 
   return (
-    <Dashboard events={events} user={user}>
-      {props.children}
-    </Dashboard>
+    <html
+      lang="en"
+      className="text-zinc-950 antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950"
+    >
+      <body>
+        <Dashboard events={events} user={user}>
+          {props.children}
+        </Dashboard>
+      </body>
+    </html>
   );
 }
