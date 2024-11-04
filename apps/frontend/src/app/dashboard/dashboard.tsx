@@ -3,14 +3,10 @@
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  Cog8ToothIcon,
-  LightBulbIcon,
   PlusIcon,
-  ShieldCheckIcon,
 } from '@heroicons/react/16/solid';
 import {
   HomeIcon,
-  QuestionMarkCircleIcon,
   SparklesIcon,
   Square2StackIcon,
 } from '@heroicons/react/20/solid';
@@ -45,37 +41,7 @@ import { SidebarLayout } from '../../components/sidebar-layout';
 import { getEvents } from '../../data';
 import { createContext } from 'react';
 import { User } from '@ideal-enigma/common';
-import { SignOutDropdownItem } from '../../components/signout-dropdown';
-
-function AccountDropdownMenu({
-  anchor,
-}: {
-  anchor: 'top start' | 'bottom end';
-}) {
-  return (
-    <DropdownMenu className="min-w-64" anchor={anchor}>
-      <DropdownItem href="/dashboard/settings">
-        <Cog8ToothIcon />
-        <DropdownLabel>Settings</DropdownLabel>
-      </DropdownItem>
-      <DropdownDivider />
-      <DropdownItem href="#">
-        <ShieldCheckIcon />
-        <DropdownLabel>Privacy policy</DropdownLabel>
-      </DropdownItem>
-      <DropdownItem href="#">
-        <LightBulbIcon />
-        <DropdownLabel>Share feedback</DropdownLabel>
-      </DropdownItem>
-      <DropdownItem href="#">
-        <QuestionMarkCircleIcon />
-        <DropdownLabel>Support</DropdownLabel>
-      </DropdownItem>
-      <DropdownDivider />
-      <SignOutDropdownItem />
-    </DropdownMenu>
-  );
-}
+import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
 
 export const UserContext = createContext<User | null>(null);
 
