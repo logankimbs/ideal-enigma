@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
 import { Badge } from '../../../components/badge';
-import { Button } from '../../../components/button';
 import { Divider } from '../../../components/divider';
 import {
   Dropdown,
