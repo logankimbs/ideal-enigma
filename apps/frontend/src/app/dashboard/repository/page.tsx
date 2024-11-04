@@ -16,10 +16,10 @@ import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { Select } from '../../../components/select';
 
 export const metadata: Metadata = {
-  title: 'Orders',
+  title: 'Repository',
 };
 
-export default async function Orders() {
+export default async function Repository() {
   const orders = await getOrders();
 
   return (
