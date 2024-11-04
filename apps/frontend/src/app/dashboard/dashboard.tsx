@@ -94,12 +94,8 @@ export function Dashboard(props: DashboardProps) {
               </SidebarSection>
 
               <SidebarSection className="max-lg:hidden">
-                <SidebarHeading>Upcoming Events</SidebarHeading>
-                {props.events.map((event) => (
-                  <SidebarItem key={event.id} href={event.url}>
-                    {event.name}
-                  </SidebarItem>
-                ))}
+                <SidebarHeading>Resources</SidebarHeading>
+                <SidebarItem>The Secret Behind Impactful Insights</SidebarItem>
               </SidebarSection>
             </SidebarBody>
 
