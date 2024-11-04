@@ -12,7 +12,7 @@ const getConfig = () => {
     apiUrl: process.env.BACKEND_URL || 'http://localhost:4000',
     nodeEnv: process.env.NODE_ENV || 'development',
     isDev: process.env.NODE_ENV === 'development',
-    port: process.env.SLACK_PORT || '8080',
+    port: process.env.SLACK_PORT || process.env.PORT || '8080',
     secretKey: process.env.SLACK_SECRET_KEY,
     receiver: {
       signingSecret: process.env.SLACK_SIGNING_SECRET,
