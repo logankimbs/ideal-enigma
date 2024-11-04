@@ -1,10 +1,10 @@
-import { ChevronLeftIcon } from "@heroicons/react/16/solid";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Badge } from "../../../../components/badge";
-import { Button } from "../../../../components/button";
-import { Heading, Subheading } from "../../../../components/heading";
-import { Link } from "../../../../components/link";
+import { ChevronLeftIcon } from '@heroicons/react/16/solid';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Badge } from '../../../../components/badge';
+import { Button } from '../../../../components/button';
+import { Heading, Subheading } from '../../../../components/heading';
+import { Link } from '../../../../components/link';
 import {
   Table,
   TableBody,
@@ -12,10 +12,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../../components/table";
-import { getEvent, getEventOrders } from "../../../../data";
-import { Stat } from "@/src/components/stat";
-
+} from '../../../../components/table';
+import { getEvent, getEventOrders } from '../../../../data';
+import { Stat } from '../../../../components/stat';
 
 export async function generateMetadata({
   params,
@@ -61,12 +60,12 @@ export default async function Event({ params }: { params: { id: string } }) {
           <div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <Heading>{event.name}</Heading>
-              <Badge color={event.status === "On Sale" ? "lime" : "zinc"}>
+              <Badge color={event.status === 'On Sale' ? 'lime' : 'zinc'}>
                 {event.status}
               </Badge>
             </div>
             <div className="mt-2 text-sm/6 text-zinc-500">
-              {event.date} at {event.time} <span aria-hidden="true">·</span>{" "}
+              {event.date} at {event.time} <span aria-hidden="true">·</span>{' '}
               {event.location}
             </div>
           </div>

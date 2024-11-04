@@ -1,12 +1,12 @@
-import { Insight, Installation, Team } from "@idealgma/common";
-import { WebClient } from "@slack/web-api";
-import config from "../config";
-import { message } from "../messages";
-import { OpenAIService } from "../services/OpenAIService";
-import { SlackService } from "../services/SlackService";
-import { apiRequest } from "../utils/apiRequest";
-import getNextOccurrence from "../utils/date";
-import logger from "../utils/logger";
+import { Insight, Installation, Team } from '@ideal-enigma/common';
+import { WebClient } from '@slack/web-api';
+import config from '../config';
+import { message } from '../messages';
+import { OpenAIService } from '../services/OpenAIService';
+import { SlackService } from '../services/SlackService';
+import { apiRequest } from '../utils/apiRequest';
+import getNextOccurrence from '../utils/date';
+import logger from '../utils/logger';
 
 /**
  * Runs every Sunday at midnight (12:00 AM)
@@ -16,15 +16,15 @@ import logger from "../utils/logger";
  */
 export const summaryTask = async () => {
   try {
-    logger.info("Starting summary task...");
+    logger.info('Starting summary task...');
 
     const openAI = new OpenAIService();
-    logger.info("Grabbing installations...");
+    logger.info('Grabbing installations...');
     const installations: Installation[] = await apiRequest({
-      method: "get",
+      method: 'get',
       url: `${config.apiUrl}/installations`,
     });
-    const reminder = message.getReminderMessage({ day: "Monday" });
+    const reminder = message.getReminderMessage({ day: 'Monday' });
 
     for (const installation of installations) {
       if (!installation.token) {
@@ -37,14 +37,14 @@ export const summaryTask = async () => {
 
       logger.info(`Grabbing team ${installation.id}...`);
       const team: Team = await apiRequest({
-        method: "get",
+        method: 'get',
         url: `${config.apiUrl}/teams/${installation.id}`,
       });
 
       if (team?.users !== undefined) {
         logger.info(`Grabbing insights for team ${team.id}...`);
         const insights: Insight[] = await apiRequest({
-          method: "get",
+          method: 'get',
           url: `${config.apiUrl}/insights/${team.id}`,
         });
 
@@ -55,7 +55,7 @@ export const summaryTask = async () => {
             summary = await openAI.summarizeInsights(insights);
           } catch (error) {
             logger.error(
-              `Failed to generate summary for installation ${installation.id}: ${error}`,
+              `Failed to generate summary for installation ${installation.id}: ${error}`
             );
 
             continue;
@@ -78,15 +78,15 @@ export const summaryTask = async () => {
               user.id,
               summaryMessage.text,
               timestamp,
-              summaryMessage.blocks,
+              summaryMessage.blocks
             );
           });
 
           await Promise.all(schedulePromises);
 
-          console.log("Marking insights as summarized...");
+          console.log('Marking insights as summarized...');
           await apiRequest({
-            method: "put",
+            method: 'put',
             url: `${config.apiUrl}/insights`,
             data: { insights },
           });
@@ -97,13 +97,13 @@ export const summaryTask = async () => {
             const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
             logger.info(
-              `Scheduling Monday morning message to be sent to ${user.id}`,
+              `Scheduling Monday morning message to be sent to ${user.id}`
             );
             return slackService.scheduleMessage(
               user.id,
               reminder.text,
               timestamp,
-              reminder.blocks,
+              reminder.blocks
             );
           });
 
@@ -116,5 +116,5 @@ export const summaryTask = async () => {
     return;
   }
 
-  logger.info("Summary task completed successfully");
+  logger.info('Summary task completed successfully');
 };

@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import logger from "./logger";
 
 interface ApiRequestOptions {
-  method: "get" | "post" | "put" | "delete" | "patch";
+  method: 'get' | 'post' | 'put' | 'delete' | 'patch';
   url: string;
   headers?: Record<string, string>;
   data?: unknown;
@@ -13,8 +13,8 @@ export async function apiRequest<T>(options: ApiRequestOptions): Promise<T> {
     method: options.method,
     url: options.url,
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.SECRET_KEY}`,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.SLACK_SECRET_KEY}`,
       ...options.headers,
     },
     data: options.data,

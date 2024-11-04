@@ -1,7 +1,7 @@
-import { deleteSession } from "@/src/app/libs/session";
+import { deleteSession } from '../../../libs/session';
 
 export async function POST(req: Request) {
   console.log(req);
   await deleteSession();
-  return new Response("Session deleted", { status: 200 });
+  return new Response('Session deleted', { status: 200 });
 }

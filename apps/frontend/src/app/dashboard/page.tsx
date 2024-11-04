@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useContext } from "react";
-import { Heading, Subheading } from "../../components/heading";
-import { Select } from "../../components/select";
+import { useContext } from 'react';
+import { Heading, Subheading } from '../../components/heading';
+import { Select } from '../../components/select';
 import {
   Table,
   TableBody,
   TableHead,
   TableHeader,
   TableRow,
-} from "../../components/table";
-import { UserContext } from "./dashboard";
-import { Stat } from "@/src/components/stat";
+} from '../../components/table';
+import { UserContext } from './dashboard';
+import { Stat } from '../../components/stat';
 
 export default function Home() {
   const user = useContext(UserContext);

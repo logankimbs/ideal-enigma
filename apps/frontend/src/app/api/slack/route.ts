@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   const accessToken = request.nextUrl.searchParams.get("access_token");
 
   if (!accessToken) {
-    return NextResponse.redirect(`${process.env.BASE_URL}/`);
+    return NextResponse.redirect(`${process.env.FRONTEND_URL}/`);
   }
 
   try {
@@ -15,18 +15,20 @@ export async function GET(request: NextRequest) {
     console.log(decoded);
 
     // Create a response with the redirection
-    const response = NextResponse.redirect(`${process.env.BASE_URL}/dashboard`);
+    const response = NextResponse.redirect(
+      `${process.env.FRONTEND_URL}/dashboard`
+    );
 
     // Set the cookie in the response
-    response.cookies.set("access_token", accessToken, {
+    response.cookies.set('access_token', accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
     });
 
     return response;
   } catch (error) {
-    console.error("JWT verification failed:", error);
-    return NextResponse.redirect(`${process.env.BASE_URL}/`);
+    console.error('JWT verification failed:', error);
+    return NextResponse.redirect(`${process.env.FRONTEND_URL}/`);
   }
 }

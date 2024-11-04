@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   ChevronDownIcon,
@@ -8,7 +8,7 @@ import {
   PlusIcon,
   ShieldCheckIcon,
   UserCircleIcon,
-} from "@heroicons/react/16/solid";
+} from '@heroicons/react/16/solid';
 import {
   Cog6ToothIcon,
   HomeIcon,
@@ -16,9 +16,9 @@ import {
   SparklesIcon,
   Square2StackIcon,
   TicketIcon,
-} from "@heroicons/react/20/solid";
-import { usePathname } from "next/navigation";
-import { Avatar } from "../../components/avatar";
+} from '@heroicons/react/20/solid';
+import { usePathname } from 'next/navigation';
+import { Avatar } from '../../components/avatar';
 import {
   Dropdown,
   DropdownButton,
@@ -26,13 +26,13 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from "../../components/dropdown";
+} from '../../components/dropdown';
 import {
   Navbar,
   NavbarItem,
   NavbarSection,
   NavbarSpacer,
-} from "../../components/navbar";
+} from '../../components/navbar';
 import {
   Sidebar,
   SidebarBody,
@@ -43,17 +43,17 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
-} from "../../components/sidebar";
-import { SidebarLayout } from "../../components/sidebar-layout";
-import { getEvents } from "../../data";
-import { SignOutDropdownItem } from "@/src/components/signout-dropdown";
-import { User } from "@idealgma/common";
-import { createContext } from "react";
+} from '../../components/sidebar';
+import { SidebarLayout } from '../../components/sidebar-layout';
+import { getEvents } from '../../data';
+import { createContext } from 'react';
+import { User } from '@ideal-enigma/common';
+import { SignOutDropdownItem } from '../../components/signout-dropdown';
 
 function AccountDropdownMenu({
   anchor,
 }: {
-  anchor: "top start" | "bottom end";
+  anchor: 'top start' | 'bottom end';
 }) {
   return (
     <DropdownMenu className="min-w-64" anchor={anchor}>
@@ -147,28 +147,28 @@ export function Dashboard(props: DashboardProps) {
               <SidebarSection>
                 <SidebarItem
                   href="/dashboard"
-                  current={pathname === "/dashboard"}
+                  current={pathname === '/dashboard'}
                 >
                   <HomeIcon />
                   <SidebarLabel>Home</SidebarLabel>
                 </SidebarItem>
                 <SidebarItem
                   href="/dashboard/events"
-                  current={pathname.startsWith("/events")}
+                  current={pathname.startsWith('/events')}
                 >
                   <Square2StackIcon />
                   <SidebarLabel>Events</SidebarLabel>
                 </SidebarItem>
                 <SidebarItem
                   href="/dashboard/orders"
-                  current={pathname.startsWith("/orders")}
+                  current={pathname.startsWith('/orders')}
                 >
                   <TicketIcon />
                   <SidebarLabel>Orders</SidebarLabel>
                 </SidebarItem>
                 <SidebarItem
                   href="/dashboard/settings"
-                  current={pathname.startsWith("/settings")}
+                  current={pathname.startsWith('/settings')}
                 >
                   <Cog6ToothIcon />
                   <SidebarLabel>Settings</SidebarLabel>
