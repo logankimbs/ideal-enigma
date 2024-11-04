@@ -24,7 +24,6 @@ import {
   SidebarItem,
   SidebarLabel,
   SidebarSection,
-  SidebarSpacer,
 } from '../../components/sidebar';
 import { SidebarLayout } from '../../components/sidebar-layout';
 import { getEvents } from '../../data';
