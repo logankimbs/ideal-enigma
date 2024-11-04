@@ -70,6 +70,10 @@ function AccountDropdownMenu({
         <LightBulbIcon />
         <DropdownLabel>Share feedback</DropdownLabel>
       </DropdownItem>
+      <DropdownItem href="#">
+        <QuestionMarkCircleIcon />
+        <DropdownLabel>Support</DropdownLabel>
+      </DropdownItem>
       <DropdownDivider />
       <SignOutDropdownItem />
     </DropdownMenu>
@@ -175,10 +179,6 @@ export function Dashboard(props: DashboardProps) {
               <SidebarSpacer />
 
               <SidebarSection>
-                <SidebarItem href="#">
-                  <QuestionMarkCircleIcon />
-                  <SidebarLabel>Support</SidebarLabel>
-                </SidebarItem>
                 <SidebarItem href="#">
                   <SparklesIcon />
                   <SidebarLabel>Changelog</SidebarLabel>
