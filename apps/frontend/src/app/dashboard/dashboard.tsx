@@ -86,11 +86,11 @@ export function Dashboard(props: DashboardProps) {
                   <SidebarLabel>Repository</SidebarLabel>
                 </SidebarItem>
                 <SidebarItem
-                  href="/dashboard/events"
-                  current={pathname.startsWith('/dashboard/events')}
+                  href="/dashboard/summaries"
+                  current={pathname.startsWith('/dashboard/summaries')}
                 >
-                  <Square2StackIcon />
-                  <SidebarLabel>Events</SidebarLabel>
+                  <SparklesIcon />
+                  <SidebarLabel>Summaries</SidebarLabel>
                 </SidebarItem>
               </SidebarSection>
 
@@ -101,15 +101,6 @@ export function Dashboard(props: DashboardProps) {
                     {event.name}
                   </SidebarItem>
                 ))}
-              </SidebarSection>
-
-              <SidebarSpacer />
-
-              <SidebarSection>
-                <SidebarItem href="#">
-                  <SparklesIcon />
-                  <SidebarLabel>Changelog</SidebarLabel>
-                </SidebarItem>
               </SidebarSection>
             </SidebarBody>
 

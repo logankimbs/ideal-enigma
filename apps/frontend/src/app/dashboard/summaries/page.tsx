@@ -1,40 +1,40 @@
 import {
   EllipsisVerticalIcon,
   MagnifyingGlassIcon,
-} from "@heroicons/react/16/solid";
-import type { Metadata } from "next";
-import { Badge } from "../../../components/badge";
-import { Button } from "../../../components/button";
-import { Divider } from "../../../components/divider";
+} from '@heroicons/react/16/solid';
+import type { Metadata } from 'next';
+import { Badge } from '../../../components/badge';
+import { Button } from '../../../components/button';
+import { Divider } from '../../../components/divider';
 import {
   Dropdown,
   DropdownButton,
   DropdownItem,
   DropdownMenu,
-} from "../../../components/dropdown";
-import { Heading } from "../../../components/heading";
-import { Input, InputGroup } from "../../../components/input";
-import { Link } from "../../../components/link";
-import { Select } from "../../../components/select";
-import { getEvents } from "../../../data";
+} from '../../../components/dropdown';
+import { Heading } from '../../../components/heading';
+import { Input, InputGroup } from '../../../components/input';
+import { Link } from '../../../components/link';
+import { Select } from '../../../components/select';
+import { getEvents } from '../../../data';
 
 export const metadata: Metadata = {
-  title: "Events",
+  title: 'Summaries',
 };
 
-export default async function Events() {
+export default async function Summaries() {
   const events = await getEvents();
 
   return (
     <>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-sm:w-full sm:flex-1">
-          <Heading>Events</Heading>
+          <Heading>Summaries</Heading>
           <div className="mt-4 flex max-w-xl gap-4">
             <div className="flex-1">
               <InputGroup>
                 <MagnifyingGlassIcon />
-                <Input name="search" placeholder="Search events&hellip;" />
+                <Input name="search" placeholder="Search summaries&hellip;" />
               </InputGroup>
             </div>
             <div>
@@ -70,7 +70,7 @@ export default async function Events() {
                       <Link href={event.url}>{event.name}</Link>
                     </div>
                     <div className="text-xs/6 text-zinc-500">
-                      {event.date} at {event.time}{" "}
+                      {event.date} at {event.time}{' '}
                       <span aria-hidden="true">·</span> {event.location}
                     </div>
                     <div className="text-xs/6 text-zinc-600">
@@ -81,7 +81,7 @@ export default async function Events() {
                 <div className="flex items-center gap-4">
                   <Badge
                     className="max-sm:hidden"
-                    color={event.status === "On Sale" ? "lime" : "zinc"}
+                    color={event.status === 'On Sale' ? 'lime' : 'zinc'}
                   >
                     {event.status}
                   </Badge>
