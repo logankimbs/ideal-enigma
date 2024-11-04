@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  PlusIcon,
-} from '@heroicons/react/16/solid';
+import { ChevronUpIcon } from '@heroicons/react/16/solid';
 import {
   HomeIcon,
   SparklesIcon,
@@ -12,14 +8,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { usePathname } from 'next/navigation';
 import { Avatar } from '../../components/avatar';
-import {
-  Dropdown,
-  DropdownButton,
-  DropdownDivider,
-  DropdownItem,
-  DropdownLabel,
-  DropdownMenu,
-} from '../../components/dropdown';
+import { Dropdown, DropdownButton } from '../../components/dropdown';
 import {
   Navbar,
   NavbarItem,
@@ -74,35 +63,10 @@ export function Dashboard(props: DashboardProps) {
         sidebar={
           <Sidebar>
             <SidebarHeader>
-              <Dropdown>
-                <DropdownButton as={SidebarItem}>
-                  <Avatar src="/teams/catalyst.svg" />
-                  <SidebarLabel>Catalyst</SidebarLabel>
-                  <ChevronDownIcon />
-                </DropdownButton>
-                <DropdownMenu
-                  className="min-w-80 lg:min-w-64"
-                  anchor="bottom start"
-                >
-                  <DropdownItem href="#">
-                    <Avatar slot="icon" src="/teams/catalyst.svg" />
-                    <DropdownLabel>Catalyst</DropdownLabel>
-                  </DropdownItem>
-                  <DropdownItem href="#">
-                    <Avatar
-                      slot="icon"
-                      initials="BE"
-                      className="bg-purple-500 text-white"
-                    />
-                    <DropdownLabel>Big Events</DropdownLabel>
-                  </DropdownItem>
-                  <DropdownDivider />
-                  <DropdownItem href="#">
-                    <PlusIcon />
-                    <DropdownLabel>New team&hellip;</DropdownLabel>
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+              <SidebarItem href="/dashboard">
+                <Avatar src="/teams/catalyst.svg" />
+                <SidebarLabel>Catalyst</SidebarLabel>
+              </SidebarItem>
             </SidebarHeader>
 
             <SidebarBody>
