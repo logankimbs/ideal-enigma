@@ -57,9 +57,9 @@ function AccountDropdownMenu({
 }) {
   return (
     <DropdownMenu className="min-w-64" anchor={anchor}>
-      <DropdownItem href="#">
-        <UserCircleIcon />
-        <DropdownLabel>My account</DropdownLabel>
+      <DropdownItem href="/dashboard/settings">
+        <Cog8ToothIcon />
+        <DropdownLabel>Settings</DropdownLabel>
       </DropdownItem>
       <DropdownDivider />
       <DropdownItem href="#">
@@ -117,11 +117,6 @@ export function Dashboard(props: DashboardProps) {
                   className="min-w-80 lg:min-w-64"
                   anchor="bottom start"
                 >
-                  <DropdownItem href="/dashboard/settings">
-                    <Cog8ToothIcon />
-                    <DropdownLabel>Settings</DropdownLabel>
-                  </DropdownItem>
-                  <DropdownDivider />
                   <DropdownItem href="#">
                     <Avatar slot="icon" src="/teams/catalyst.svg" />
                     <DropdownLabel>Catalyst</DropdownLabel>
@@ -165,13 +160,6 @@ export function Dashboard(props: DashboardProps) {
                 >
                   <TicketIcon />
                   <SidebarLabel>Orders</SidebarLabel>
-                </SidebarItem>
-                <SidebarItem
-                  href="/dashboard/settings"
-                  current={pathname.startsWith('/settings')}
-                >
-                  <Cog6ToothIcon />
-                  <SidebarLabel>Settings</SidebarLabel>
                 </SidebarItem>
               </SidebarSection>
 
