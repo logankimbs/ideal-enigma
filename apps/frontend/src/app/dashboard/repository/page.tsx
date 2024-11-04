@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Avatar } from "../../../components/avatar";
-import { Button } from "../../../components/button";
-import { Heading } from "../../../components/heading";
+import type { Metadata } from 'next';
+import { Avatar } from '../../../components/avatar';
+import { Button } from '../../../components/button';
+import { Heading } from '../../../components/heading';
 import {
   Table,
   TableBody,
@@ -9,11 +9,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/table";
-import { getOrders } from "../../../data";
+} from '../../../components/table';
+import { getOrders } from '../../../data';
 
 export const metadata: Metadata = {
-  title: "Orders",
+  title: 'Orders',
 };
 
 export default async function Orders() {

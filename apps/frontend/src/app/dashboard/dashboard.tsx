@@ -7,15 +7,12 @@ import {
   LightBulbIcon,
   PlusIcon,
   ShieldCheckIcon,
-  UserCircleIcon,
 } from '@heroicons/react/16/solid';
 import {
-  Cog6ToothIcon,
   HomeIcon,
   QuestionMarkCircleIcon,
   SparklesIcon,
   Square2StackIcon,
-  TicketIcon,
 } from '@heroicons/react/20/solid';
 import { usePathname } from 'next/navigation';
 import { Avatar } from '../../components/avatar';
@@ -152,18 +149,18 @@ export function Dashboard(props: DashboardProps) {
                   <SidebarLabel>Home</SidebarLabel>
                 </SidebarItem>
                 <SidebarItem
+                  href="/dashboard/repository"
+                  current={pathname.startsWith('/dashboard/repository')}
+                >
+                  <Square2StackIcon />
+                  <SidebarLabel>Repository</SidebarLabel>
+                </SidebarItem>
+                <SidebarItem
                   href="/dashboard/events"
-                  current={pathname.startsWith('/events')}
+                  current={pathname.startsWith('/dashboard/events')}
                 >
                   <Square2StackIcon />
                   <SidebarLabel>Events</SidebarLabel>
-                </SidebarItem>
-                <SidebarItem
-                  href="/dashboard/orders"
-                  current={pathname.startsWith('/orders')}
-                >
-                  <TicketIcon />
-                  <SidebarLabel>Orders</SidebarLabel>
                 </SidebarItem>
               </SidebarSection>
 
