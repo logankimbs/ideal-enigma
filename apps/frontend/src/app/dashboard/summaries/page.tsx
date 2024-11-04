@@ -46,7 +46,6 @@ export default async function Summaries() {
             </div>
           </div>
         </div>
-        <Button>Create event</Button>
       </div>
       <ul className="mt-10">
         {events.map((event, index) => (
