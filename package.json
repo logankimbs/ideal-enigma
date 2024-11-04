@@ -14,7 +14,7 @@
     "frontend:prod": "next start dist/apps/frontend",
     "slack:build": "npx nx build slack",
     "slack": "npx nx run slack:serve:development",
-    "slack:prod": "node dist/apps/slack",
+    "slack:prod": "node dist/apps/slack/apps/slack/src/main.js",
     "ngrok": "ngrok start --config=ngrok.yaml --all"
   },
   "dependencies": {
