@@ -11,6 +11,9 @@ import {
   TableRow,
 } from '../../../components/table';
 import { getOrders } from '../../../data';
+import { Input, InputGroup } from '../../../components/input';
+import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
+import { Select } from '../../../components/select';
 
 export const metadata: Metadata = {
   title: 'Orders',
@@ -21,9 +24,26 @@ export default async function Orders() {
 
   return (
     <>
-      <div className="flex items-end justify-between gap-4">
-        <Heading>Orders</Heading>
-        <Button className="-my-0.5">Create order</Button>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="max-sm:w-full sm:flex-1">
+          <Heading>Repository</Heading>
+          <div className="mt-4 flex max-w-xl gap-4">
+            <div className="flex-1">
+              <InputGroup>
+                <MagnifyingGlassIcon />
+                <Input name="search" placeholder="Search repository&hellip;" />
+              </InputGroup>
+            </div>
+            <div>
+              <Select name="sort_by">
+                <option value="name">Sort by name</option>
+                <option value="date">Sort by date</option>
+                <option value="status">Sort by status</option>
+              </Select>
+            </div>
+          </div>
+        </div>
+        <Button>Add insight</Button>
       </div>
       <Table className="mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <TableHead>
