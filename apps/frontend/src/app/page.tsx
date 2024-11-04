@@ -19,7 +19,7 @@ import { Heading, Subheading } from '../components/landing/text';
 function Hero() {
   return (
     <div className="relative">
-      <Gradient className="absolute inset-2 bottom-0 rounded-4xl ring-1 ring-inset ring-black/5" />
+      <Gradient className="absolute inset-2 bottom-0 rounded-[32px] ring-1 ring-inset ring-black/5" />
       <Container className="relative">
         <Navbar
           banner={
@@ -131,7 +131,7 @@ function BentoSection() {
 
 function DarkBentoSection() {
   return (
-    <div className="mx-2 mt-2 rounded-4xl bg-gray-900 py-32">
+    <div className="mx-2 mt-2 rounded-[32px] bg-gray-900 py-32">
       <Container>
         <Subheading dark>Outreach</Subheading>
         <Heading as="h3" dark className="mt-2 max-w-3xl">

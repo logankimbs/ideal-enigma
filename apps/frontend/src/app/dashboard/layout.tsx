@@ -46,7 +46,7 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
       lang="en"
       className="text-zinc-950 antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950"
     >
-      <body>
+      <body className="dark:text-white antialiased">
         <Dashboard events={events} user={user}>
           {props.children}
         </Dashboard>
