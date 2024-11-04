@@ -28,7 +28,7 @@ export async function generateMetadata({
   const order = await getOrder(params.id);
 
   return {
-    title: order && `Order #${order.id}`,
+    title: order && `Insight #${order.id}`,
   };
 }
 
@@ -43,11 +43,11 @@ export default async function Order({ params }: { params: { id: string } }) {
     <>
       <div className="max-lg:hidden">
         <Link
-          href="/dashboard/orders"
+          href="/dashboard/repository"
           className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
         >
           <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
-          Orders
+          Repository
         </Link>
       </div>
       <div className="mt-4 lg:mt-8">
@@ -64,9 +64,9 @@ export default async function Order({ params }: { params: { id: string } }) {
             <span className="flex items-center gap-3 text-base/6 text-zinc-950 sm:text-sm/6 dark:text-white">
               <CreditCardIcon className="size-4 shrink-0 fill-zinc-400 dark:fill-zinc-500" />
               <span className="inline-flex gap-3">
-                {order.payment.card.type}{" "}
+                {order.payment.card.type}{' '}
                 <span>
-                  <span aria-hidden="true">••••</span>{" "}
+                  <span aria-hidden="true">••••</span>{' '}
                   {order.payment.card.number}
                 </span>
               </span>
