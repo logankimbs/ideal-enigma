@@ -1,34 +1,19 @@
-import jwt from "jsonwebtoken";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { createSession } from '../../libs/session';
 
 export async function GET(request: NextRequest) {
-  const accessToken = request.nextUrl.searchParams.get("access_token");
+  const accessToken = request.nextUrl.searchParams.get('access_token');
 
   if (!accessToken) {
     return NextResponse.redirect(`${process.env.FRONTEND_URL}/`);
   }
 
   try {
-    const secretKey = process.env.JWT_SECRET!;
-    const decoded = jwt.verify(accessToken, secretKey);
+    await createSession(accessToken);
 
-    console.log(decoded);
-
-    // Create a response with the redirection
-    const response = NextResponse.redirect(
-      `${process.env.FRONTEND_URL}/dashboard`
-    );
-
-    // Set the cookie in the response
-    response.cookies.set('access_token', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-    });
-
-    return response;
+    return NextResponse.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (error) {
-    console.error('JWT verification failed:', error);
+    console.error(error);
     return NextResponse.redirect(`${process.env.FRONTEND_URL}/`);
   }
 }
