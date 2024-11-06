@@ -14,6 +14,7 @@ import { Input, InputGroup } from '../../../components/input';
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { Select } from '../../../components/select';
 import { getRespository } from '../../libs/api';
+import { Badge } from '../../../components/badge';
 
 export const metadata: Metadata = {
   title: 'Repository',
@@ -86,7 +87,11 @@ export default async function Repository() {
               </TableCell>
               <TableCell className="text-right">
                 {insight.tags
-                  ? insight.tags.map((tag) => tag.text).join(' ')
+                  ? insight.tags.map((tag) => (
+                      <Badge key={tag.text} style={{ marginLeft: '4px' }}>
+                        {tag.text}
+                      </Badge>
+                    ))
                   : ''}
               </TableCell>
             </TableRow>
