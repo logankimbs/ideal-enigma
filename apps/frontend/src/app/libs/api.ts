@@ -1,4 +1,4 @@
-import { User } from '@ideal-enigma/common';
+import { Insight, User } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
 
@@ -37,6 +37,16 @@ export async function getSessionUser(): Promise<User> {
   const response: User = await api({
     method: 'get',
     endpoint: `users/${session.payload.sub}`,
+  });
+
+  return response;
+}
+
+export async function getRespository(): Promise<Insight[]> {
+  const session = await getSession();
+  const response: Insight[] = await api({
+    method: 'get',
+    endpoint: `insights/repository?userId=${session.payload.sub}`,
   });
 
   return response;

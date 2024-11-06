@@ -45,7 +45,7 @@ export const summaryTask = async () => {
         logger.info(`Grabbing insights for team ${team.id}...`);
         const insights: Insight[] = await apiRequest({
           method: 'get',
-          url: `${config.apiUrl}/insights/${team.id}`,
+          url: `${config.apiUrl}/insights/summarize?teamId=${team.id}`,
         });
 
         if (insights.length >= 10) {

@@ -10,17 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from '../../../components/table';
-import { getOrders } from '../../../data';
 import { Input, InputGroup } from '../../../components/input';
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { Select } from '../../../components/select';
+import { getRespository } from '../../libs/api';
 
 export const metadata: Metadata = {
   title: 'Repository',
 };
 
 export default async function Repository() {
-  const orders = await getOrders();
+  const repository = await getRespository();
+
+  // TODO: If repository is empty display empty message
 
   return (
     <>
@@ -48,30 +50,45 @@ export default async function Repository() {
       <Table className="mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <TableHead>
           <TableRow>
-            <TableHeader>Order number</TableHeader>
-            <TableHeader>Purchase date</TableHeader>
-            <TableHeader>Customer</TableHeader>
-            <TableHeader>Event</TableHeader>
-            <TableHeader className="text-right">Amount</TableHeader>
+            <TableHeader>Date</TableHeader>
+            <TableHeader>Author</TableHeader>
+            <TableHeader>Insight</TableHeader>
+            <TableHeader className="text-right"></TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((order) => (
+          {repository.map((insight) => (
             <TableRow
-              key={order.id}
-              href={order.url}
-              title={`Order #${order.id}`}
+              key={insight.id}
+              href={`/dashboard/repository/3017`}
+              title={`insight #${insight.id}`}
             >
-              <TableCell>{order.id}</TableCell>
-              <TableCell className="text-zinc-500">{order.date}</TableCell>
-              <TableCell>{order.customer.name}</TableCell>
+              <TableCell className="text-zinc-500">
+                {new Date(insight.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <Avatar src={order.event.thumbUrl} className="size-6" />
-                  <span>{order.event.name}</span>
+                  <Avatar
+                    src={insight.user.data.profile.image_72}
+                    className="size-6"
+                  />
+                  <span className="text-zinc-500">
+                    {insight.user.data.profile.first_name}
+                  </span>
                 </div>
               </TableCell>
-              <TableCell className="text-right">US{order.amount.usd}</TableCell>
+              <TableCell className="truncate max-w-xs">
+                {insight.text}
+              </TableCell>
+              <TableCell className="text-right">
+                {insight.tags
+                  ? insight.tags.map((tag) => tag.text).join(' ')
+                  : ''}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

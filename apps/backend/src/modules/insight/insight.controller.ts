@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateInsightDto } from "./dto/create-insight.dto";
-import { MarkInsightSummarized } from "./dto/insight-summarized.dto";
-import { Insight } from "./insight.entity";
-import { InsightService } from "./insight.service";
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { CreateInsightDto } from './dto/create-insight.dto';
+import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
+import { Insight } from './insight.entity';
+import { InsightService } from './insight.service';
 
-@Controller("insights")
+@Controller('insights')
 export class InsightController {
   constructor(private readonly insightService: InsightService) {}
 
@@ -13,31 +13,27 @@ export class InsightController {
     return await this.insightService.create(createInsightDto);
   }
 
-  @Get()
-  async findAll(): Promise<Insight[]> {
-    const insights = await this.insightService.findAll();
-    return insights;
+  @Get('repository')
+  async getInsightsRepository(
+    @Query() query: { userId: string }
+  ): Promise<Insight[]> {
+    console.log('getting insight repo for user', query.userId);
+    return await this.insightService.getInsightsRepository(query.userId);
   }
 
-  @Get(":id")
-  async getRecentUnsummarizedInsightsForTeam(
-    @Param() params: { id: string },
+  @Get('summarize')
+  async getInsightsToSummarize(
+    @Query() query: { teamId: string }
   ): Promise<Insight[]> {
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-    return await this.insightService.getRecentUnsummarizedInsightsForTeam(
-      params.id,
-      oneMonthAgo,
-    );
+    return await this.insightService.getInsightsToSummarize(query.teamId);
   }
 
   @Put()
-  async markInsightsAsSummarized(
-    @Body() markInsightSummarized: MarkInsightSummarized,
+  async markInsightsSummarized(
+    @Body() markInsightSummarizedDto: MarkInsightSummarizedDto
   ): Promise<void> {
-    return await this.insightService.markInsightsAsSummarized(
-      markInsightSummarized,
+    return await this.insightService.markInsightsSummarized(
+      markInsightSummarizedDto
     );
   }
 }
