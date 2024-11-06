@@ -17,7 +17,6 @@ export class InsightController {
   async getInsightsRepository(
     @Query() query: { userId: string }
   ): Promise<Insight[]> {
-    console.log('getting insight repo for user', query.userId);
     return await this.insightService.getInsightsRepository(query.userId);
   }
 
