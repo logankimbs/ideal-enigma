@@ -3,6 +3,7 @@ import { CreateInsightDto } from './dto/create-insight.dto';
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
 import { InsightService } from './insight.service';
+import { GetInsightByIdDto } from './dto/get-insight.dto';
 
 @Controller('insights')
 export class InsightController {
@@ -11,6 +12,13 @@ export class InsightController {
   @Post()
   async create(@Body() createInsightDto: CreateInsightDto): Promise<Insight> {
     return await this.insightService.create(createInsightDto);
+  }
+
+  @Get()
+  async getInsightsById(
+    @Query() getInsightByIdDto: GetInsightByIdDto
+  ): Promise<Insight> {
+    return await this.insightService.getInsightsById(getInsightByIdDto);
   }
 
   @Get('repository')

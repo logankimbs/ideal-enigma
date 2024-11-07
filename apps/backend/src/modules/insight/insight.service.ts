@@ -6,6 +6,7 @@ import { User } from "../user/user.entity";
 import { CreateInsightDto } from "./dto/create-insight.dto";
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
+import { GetInsightByIdDto } from './dto/get-insight.dto';
 
 @Injectable()
 export class InsightService {
@@ -51,6 +52,14 @@ export class InsightService {
     insight.link = createInsightDto.link || '';
 
     return await this.insightRepository.save(insight);
+  }
+
+  async getInsightsById(
+    getInsightByIdDto: GetInsightByIdDto
+  ): Promise<Insight> {
+    const { id } = getInsightByIdDto;
+
+    return this.insightRepository.findOneByOrFail({ id });
   }
 
   async getInsightsRepository(userId: string): Promise<Insight[]> {

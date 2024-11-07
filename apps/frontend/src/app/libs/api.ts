@@ -51,3 +51,14 @@ export async function getRespository(): Promise<Insight[]> {
 
   return response;
 }
+
+export async function getInsight(insightId: string): Promise<Insight> {
+  const response: Insight = await api({
+    method: 'get',
+    endpoint: `insights?id=${insightId}`,
+  });
+
+  console.log(response);
+
+  return response;
+}

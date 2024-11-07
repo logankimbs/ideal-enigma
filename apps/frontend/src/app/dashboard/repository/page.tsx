@@ -61,7 +61,7 @@ export default async function Repository() {
           {repository.map((insight) => (
             <TableRow
               key={insight.id}
-              href={`/dashboard/repository/3017`}
+              href={`/dashboard/repository/${insight.id}`}
               title={`insight #${insight.id}`}
             >
               <TableCell className="text-zinc-500">
