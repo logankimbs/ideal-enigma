@@ -1,6 +1,4 @@
 version: 2
-authtoken: ${NGROK_AUTHTOKEN}
-
 tunnels:
   backend:
     addr: 4000
