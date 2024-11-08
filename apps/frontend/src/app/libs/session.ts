@@ -28,6 +28,7 @@ export async function decrypt(
 
 export async function createSession(accessToken: string | undefined = '') {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const decoded = await decrypt(accessToken);
 
     cookies().set('access_token', accessToken, {

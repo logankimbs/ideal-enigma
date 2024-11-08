@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image';
 
 function Marker({
   src,
@@ -8,10 +9,10 @@ function Marker({
   offset,
   delay,
 }: {
-  src: string
-  top: number
-  offset: number
-  delay: number
+  src: string;
+  top: number;
+  offset: number;
+  delay: number;
 }) {
   return (
     <motion.div
@@ -33,13 +34,13 @@ function Marker({
           className="fill-white"
         />
       </svg>
-      <img
+      <Image
         alt=""
         src={src}
         className="absolute left-[7px] top-[4px] size-6 rounded-full"
       />
     </motion.div>
-  )
+  );
 }
 
 export function Map() {

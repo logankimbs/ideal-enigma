@@ -3,12 +3,13 @@
 import { CheckIcon } from '@heroicons/react/16/solid'
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
+import Image from 'next/image';
 
 const transition = {
   duration: 0.75,
   repeat: Infinity,
   repeatDelay: 1.25,
-}
+};
 
 function Rings() {
   return (
@@ -17,7 +18,7 @@ function Rings() {
       fill="none"
       className={clsx(
         'col-start-1 row-start-1 size-full',
-        '[mask-composite:intersect] [mask-image:linear-gradient(to_bottom,black_90%,transparent),radial-gradient(circle,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]',
+        '[mask-composite:intersect] [mask-image:linear-gradient(to_bottom,black_90%,transparent),radial-gradient(circle,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]'
       )}
     >
       {Array.from(Array(42).keys()).map((n) => (
@@ -41,7 +42,7 @@ function Rings() {
         />
       ))}
     </svg>
-  )
+  );
 }
 
 function Checkmark() {
@@ -60,26 +61,26 @@ function Checkmark() {
         <CheckIcon className="size-4 fill-white" />
       </motion.div>
     </div>
-  )
+  );
 }
 
 function Photos() {
   return (
     <div className="z-10 col-start-1 row-start-1">
       <div className="mx-auto flex size-full max-w-md items-center justify-around">
-        <img
+        <Image
           alt=""
           src="/linked-avatars/customer.jpg"
           className="size-20 rounded-full bg-white/15 ring-4 ring-white/10"
         />
-        <img
+        <Image
           alt=""
           src="/linked-avatars/manager.jpg"
           className="size-20 rounded-full bg-white/15 ring-4 ring-white/10"
         />
       </div>
     </div>
-  )
+  );
 }
 
 export function LinkedAvatars() {
