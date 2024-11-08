@@ -6,6 +6,7 @@ import { Footer } from '../../components/landing/footer';
 import { GradientBackground } from '../../components/landing/gradient';
 import { Navbar } from '../../components/landing/navbar';
 import { Heading, Lead, Subheading } from '../../components/landing/text';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Company',
@@ -43,32 +44,52 @@ function Header() {
         <div className="pt-20 lg:row-span-2 lg:-mr-16 xl:mr-auto">
           <div className="-mx-8 grid grid-cols-2 gap-4 sm:-mx-16 sm:grid-cols-4 lg:mx-0 lg:grid-cols-2 lg:gap-4 xl:gap-8">
             <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
-              <img
+              <Image
+                src="/company/1.jpg"
+                alt={''}
+                className="block size-full object-cover"
+              />
+              {/* <img
                 alt=""
                 src="/company/1.jpg"
                 className="block size-full object-cover"
-              />
+              /> */}
             </div>
             <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-32">
-              <img
+              <Image
+                src="/company/2.jpg"
+                alt={''}
+                className="block size-full object-cover"
+              />
+              {/* <img
                 alt=""
                 src="/company/2.jpg"
                 className="block size-full object-cover"
-              />
+              /> */}
             </div>
             <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
-              <img
+              <Image
+                src="/company/3.jpg"
+                alt={''}
+                className="block size-full object-cover"
+              />
+              {/* <img
                 alt=""
                 src="/company/3.jpg"
                 className="block size-full object-cover"
-              />
+              /> */}
             </div>
             <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-32">
-              <img
+              <Image
+                src="/company/4.jpg"
+                alt={''}
+                className="block size-full object-cover"
+              />
+              {/* <img
                 alt=""
                 src="/company/4.jpg"
                 className="block size-full object-cover"
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -118,7 +139,8 @@ function Person({
 }) {
   return (
     <li className="flex items-center gap-4">
-      <img alt="" src={img} className="size-12 rounded-full" />
+      <Image src={img} alt={''} className="size-12 rounded-full" />
+      {/* <img alt="" src={img} className="size-12 rounded-full" /> */}
       <div className="text-sm/6">
         <h3 className="font-medium">{name}</h3>
         <p className="text-gray-500">{description}</p>
