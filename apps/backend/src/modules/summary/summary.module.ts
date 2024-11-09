@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SummaryController } from './summary.controller';
 import { Summary } from './summary.entity';
 import { SummaryService } from './summary.service';
+import { TeamModule } from '../team/team.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Summary])],
+  imports: [TeamModule, TypeOrmModule.forFeature([Summary])],
   controllers: [SummaryController],
   providers: [SummaryService],
 })
