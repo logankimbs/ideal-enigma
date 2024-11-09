@@ -1,10 +1,12 @@
-import { Insight } from '@ideal-enigma/common';
+import { Insight, SummaryTextV1 } from '@ideal-enigma/common';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { z } from 'zod';
-import { Summary } from '../types';
 import logger from '../utils/logger';
 
+// IMPORTANT!!!
+// These zonds represent VERSION 1 on our summaries.
+// TODO: Find a better way of doing this.
 const InsightSchema = z.object({
   origin: z.object({
     userId: z.string(),
@@ -25,6 +27,7 @@ const SummaryResponseSchema = z.object({
   actions: z.array(z.string()),
   conclusion: z.string(),
 });
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 export class OpenAIService {
   private openai: OpenAI;
@@ -39,7 +42,7 @@ export class OpenAIService {
    * @param insights An array of InsightEntities to be summarized.
    * @returns The summary as a Summary object.
    */
-  public async summarizeInsights(insights: Insight[]): Promise<Summary> {
+  public async summarizeInsights(insights: Insight[]): Promise<SummaryTextV1> {
     try {
       const origins = insights.map((insight) => ({
         userId: insight.user.id,
@@ -118,7 +121,7 @@ Input:`,
       const message = completion.choices[0]?.message;
 
       if (message?.content) {
-        return JSON.parse(message.content) as Summary;
+        return JSON.parse(message.content) as SummaryTextV1;
       } else if (message?.refusal) {
         throw new Error(
           `Model refused to generate the summary: ${message.refusal}`
