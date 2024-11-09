@@ -2,7 +2,6 @@ import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Badge } from '../../../../components/badge';
-import { Button } from '../../../../components/button';
 import { Heading, Subheading } from '../../../../components/heading';
 import { Link } from '../../../../components/link';
 import {
@@ -13,8 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from '../../../../components/table';
-import { getEvent, getEventOrders } from '../../../../data';
-import { Stat } from '../../../../components/stat';
+import { getEvent } from '../../../../data';
+// import { Stat } from '../../../../components/stat';
+import { getSummary, getSummaryInsights } from '../../../libs/api';
+import { Avatar } from '../../../../components/avatar';
+import SummaryDisplay from '../../../../components/summary-display';
 
 export async function generateMetadata({
   params,
@@ -29,10 +31,10 @@ export async function generateMetadata({
 }
 
 export default async function Summary({ params }: { params: { id: string } }) {
-  const event = await getEvent(params.id);
-  const orders = await getEventOrders(params.id);
+  const summary = await getSummary(params.id);
+  const insights = await getSummaryInsights(params.id);
 
-  if (!event) {
+  if (!summary) {
     notFound();
   }
 
@@ -49,33 +51,25 @@ export default async function Summary({ params }: { params: { id: string } }) {
       </div>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-wrap items-center gap-6">
-          <div className="w-32 shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="aspect-[3/2] rounded-lg shadow"
-              src={event.imgUrl}
-              alt=""
-            />
-          </div>
           <div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <Heading>{event.name}</Heading>
-              <Badge color={event.status === 'On Sale' ? 'lime' : 'zinc'}>
-                {event.status}
+              <Heading>
+                LAST DATE -{' '}
+                {new Date(summary.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </Heading>
+              <Badge color={summary.version === 1 ? 'lime' : 'zinc'}>
+                Weekly
               </Badge>
-            </div>
-            <div className="mt-2 text-sm/6 text-zinc-500">
-              {event.date} at {event.time} <span aria-hidden="true">·</span>{' '}
-              {event.location}
             </div>
           </div>
         </div>
-        <div className="flex gap-4">
-          <Button outline>Edit</Button>
-          <Button>View</Button>
-        </div>
       </div>
-      <div className="mt-8 grid gap-8 sm:grid-cols-3">
+      {/* Stats */}
+      {/* <div className="mt-8 grid gap-8 sm:grid-cols-3">
         <Stat
           title="Total revenue"
           value={event.totalRevenue}
@@ -83,36 +77,63 @@ export default async function Summary({ params }: { params: { id: string } }) {
         />
         <Stat
           title="Tickets sold"
-          value={`${event.ticketsSold}/${event.ticketsAvailable}`}
-          change={event.ticketsSoldChange}
+          value={`${summary.ticketsSold}/${summary.ticketsAvailable}`}
+          change={summary.ticketsSoldChange}
         />
         <Stat
           title="Pageviews"
-          value={event.pageViews}
-          change={event.pageViewsChange}
+          value={summary.pageViews}
+          change={summary.pageViewsChange}
         />
-      </div>
-      <Subheading className="mt-12">Recent orders</Subheading>
-      <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      </div> */}
+      <SummaryDisplay summary={summary} count={summary.data.actions.length} />
+      <Subheading className="mt-12">Insights used</Subheading>
+      <Table className="mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <TableHead>
           <TableRow>
-            <TableHeader>Order number</TableHeader>
-            <TableHeader>Purchase date</TableHeader>
-            <TableHeader>Customer</TableHeader>
-            <TableHeader className="text-right">Amount</TableHeader>
+            <TableHeader>Date</TableHeader>
+            <TableHeader>Author</TableHeader>
+            <TableHeader>Insight</TableHeader>
+            <TableHeader className="text-right"></TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((order) => (
+          {insights.map((insight) => (
             <TableRow
-              key={order.id}
-              href={order.url}
-              title={`Order #${order.id}`}
+              key={insight.id}
+              href={`/dashboard/repository/${insight.id}`}
+              title={`insight #${insight.id}`}
             >
-              <TableCell>{order.id}</TableCell>
-              <TableCell className="text-zinc-500">{order.date}</TableCell>
-              <TableCell>{order.customer.name}</TableCell>
-              <TableCell className="text-right">US{order.amount.usd}</TableCell>
+              <TableCell className="text-zinc-500">
+                {new Date(insight.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Avatar
+                    src={insight.user.data.profile.image_72}
+                    className="size-6"
+                  />
+                  <span className="text-zinc-500">
+                    {insight.user.data.profile.first_name}
+                  </span>
+                </div>
+              </TableCell>
+              <TableCell className="truncate max-w-xs">
+                {insight.text}
+              </TableCell>
+              <TableCell className="text-right">
+                {insight.tags
+                  ? insight.tags.map((tag) => (
+                      <Badge key={tag.text} style={{ marginLeft: '4px' }}>
+                        {tag.text}
+                      </Badge>
+                    ))
+                  : ''}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

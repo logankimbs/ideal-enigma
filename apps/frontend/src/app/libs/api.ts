@@ -1,4 +1,4 @@
-import { Insight, User } from '@ideal-enigma/common';
+import { Insight, Summary, User } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
 
@@ -58,7 +58,30 @@ export async function getInsight(insightId: string): Promise<Insight> {
     endpoint: `insights?id=${insightId}`,
   });
 
-  console.log(response);
+  return response;
+}
+
+export async function getSummaries(): Promise<Summary[]> {
+  const session = await getSession();
+  const response: Summary[] = await api({
+    method: 'get',
+    endpoint: `summaries/team/${session.payload['https://slack.com/team_id']}`,
+  });
 
   return response;
+}
+
+export async function getSummary(summaryId: string): Promise<Summary> {
+  const response: Summary = await api({
+    method: 'get',
+    endpoint: `summaries/${summaryId}`,
+  });
+
+  return response;
+}
+
+export async function getSummaryInsights(
+  summaryId: string
+): Promise<Insight[]> {
+  return [];
 }

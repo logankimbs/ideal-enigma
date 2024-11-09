@@ -3,7 +3,8 @@ import { cookies } from 'next/headers';
 import 'server-only';
 
 export type SessionPayload = {
-  sub: string;
+  sub: string; // UserId
+  'https://slack.com/team_id': string;
   // TODO: Add more values
 };
 

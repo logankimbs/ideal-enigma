@@ -1,28 +1,19 @@
-import {
-  EllipsisVerticalIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/16/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
 import { Badge } from '../../../components/badge';
 import { Divider } from '../../../components/divider';
-import {
-  Dropdown,
-  DropdownButton,
-  DropdownItem,
-  DropdownMenu,
-} from '../../../components/dropdown';
 import { Heading } from '../../../components/heading';
 import { Input, InputGroup } from '../../../components/input';
 import { Link } from '../../../components/link';
 import { Select } from '../../../components/select';
-import { getEvents } from '../../../data';
+import { getSummaries } from '../../libs/api';
 
 export const metadata: Metadata = {
   title: 'Summaries',
 };
 
 export default async function Summaries() {
-  const events = await getEvents();
+  const summaries = await getSummaries();
 
   return (
     <>
@@ -47,52 +38,41 @@ export default async function Summaries() {
         </div>
       </div>
       <ul className="mt-10">
-        {events.map((event, index) => (
+        {summaries.map((summary, index) => (
           <>
-            <li key={event.id}>
+            <li key={summary.id}>
               <Divider soft={index > 0} />
               <div className="flex items-center justify-between">
-                <div key={event.id} className="flex gap-6 py-6">
-                  <div className="w-32 shrink-0">
-                    <Link href={event.url} aria-hidden="true">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        className="aspect-[3/2] rounded-lg shadow"
-                        src={event.imgUrl}
-                        alt=""
-                      />
-                    </Link>
-                  </div>
+                <div key={summary.id} className="flex gap-6 py-6">
                   <div className="space-y-1.5">
                     <div className="text-base/6 font-semibold">
-                      <Link href={event.url}>{event.name}</Link>
+                      <Link href={`/dashboard/summaries/${summary.id}`}>
+                        LAST DATE -{' '}
+                        {new Date(summary.createdAt).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          }
+                        )}
+                      </Link>
                     </div>
-                    <div className="text-xs/6 text-zinc-500">
-                      {event.date} at {event.time}{' '}
-                      <span aria-hidden="true">·</span> {event.location}
+                    <div className="text-xs/6 text-zinc-400">
+                      {summary.data.actions.join(' ')}
                     </div>
                     <div className="text-xs/6 text-zinc-600">
-                      {event.ticketsSold}/{event.ticketsAvailable} tickets sold
+                      {`{number of insights submitted}`} insights submitted
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <Badge
                     className="max-sm:hidden"
-                    color={event.status === 'On Sale' ? 'lime' : 'zinc'}
+                    color={summary.version === 1 ? 'lime' : 'zinc'}
                   >
-                    {event.status}
+                    Weekly
                   </Badge>
-                  <Dropdown>
-                    <DropdownButton plain aria-label="More options">
-                      <EllipsisVerticalIcon />
-                    </DropdownButton>
-                    <DropdownMenu anchor="bottom end">
-                      <DropdownItem href={event.url}>View</DropdownItem>
-                      <DropdownItem>Edit</DropdownItem>
-                      <DropdownItem>Delete</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
                 </div>
               </div>
             </li>

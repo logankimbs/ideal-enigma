@@ -4,7 +4,7 @@ import { Divider } from "./divider";
 type StatProps = {
   title: string;
   value: string;
-  change: string;
+  change?: string;
 };
 
 export function Stat(props: StatProps) {
@@ -17,12 +17,14 @@ export function Stat(props: StatProps) {
       <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">
         {props.value}
       </div>
-      <div className="mt-3 text-sm/6 sm:text-xs/6">
-        <Badge color={props.change.startsWith("+") ? "lime" : "pink"}>
-          {props.change}
-        </Badge>{" "}
-        <span className="text-zinc-500">from last week</span>
-      </div>
+      {props.change && (
+        <div className="mt-3 text-sm/6 sm:text-xs/6">
+          <Badge color={props.change.startsWith('+') ? 'lime' : 'pink'}>
+            {props.change}
+          </Badge>{' '}
+          <span className="text-zinc-500">from last week</span>
+        </div>
+      )}
     </div>
   );
 }
