@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Tag } from "../tag";
+import { Repository } from 'typeorm';
 import { User } from "../user/user.entity";
 import { CreateInsightDto } from "./dto/create-insight.dto";
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
 import { GetInsightByIdDto } from './dto/get-insight.dto';
+import { Tag } from '../tag/tag.entity';
 
 @Injectable()
 export class InsightService {
