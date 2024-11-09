@@ -1,6 +1,5 @@
 import { clsx } from 'clsx'
-import { Mark } from './logo'
-import Image from 'next/image';
+import { Mark } from './logo';
 
 function Row({ children }: { children: React.ReactNode }) {
   return (
@@ -30,7 +29,8 @@ function Logo({
         '[--move-x-from:-100%] [--move-x-to:calc(100%+100cqw)] [animation-iteration-count:infinite] [animation-name:move-x] [animation-play-state:paused] [animation-timing-function:linear] group-hover:[animation-play-state:running]'
       )}
     >
-      <Image alt="" src={src} className="size-4" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img alt="" src={src} className="size-4" />
       <span className="text-sm/6 font-medium text-white">{label}</span>
     </div>
   );

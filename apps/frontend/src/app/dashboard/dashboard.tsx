@@ -63,7 +63,7 @@ export function Dashboard(props: DashboardProps) {
           <Sidebar>
             <SidebarHeader>
               <SidebarItem href="/dashboard">
-                <Avatar src="/teams/catalyst.svg" />
+                {/* <Avatar src="/teams/catalyst.svg" /> */}
                 <SidebarLabel>Catalyst</SidebarLabel>
               </SidebarItem>
             </SidebarHeader>

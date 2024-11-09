@@ -1,7 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 function Marker({
   src,
@@ -34,7 +33,8 @@ function Marker({
           className="fill-white"
         />
       </svg>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         alt=""
         src={src}
         className="absolute left-[7px] top-[4px] size-6 rounded-full"

@@ -2,8 +2,7 @@ import * as Headless from "@headlessui/react";
 import clsx from "clsx";
 import React, { forwardRef } from "react";
 import { TouchTarget } from "./button";
-import { Link } from "./link";
-import Image from 'next/image';
+import { Link } from './link';
 
 type AvatarProps = {
   src?: string | null;
@@ -17,10 +16,10 @@ export function Avatar({
   src = null,
   square = false,
   initials,
-  alt = "",
+  alt = '',
   className,
   ...props
-}: AvatarProps & React.ComponentPropsWithoutRef<"span">) {
+}: AvatarProps & React.ComponentPropsWithoutRef<'span'>) {
   return (
     <span
       data-slot="avatar"
@@ -55,7 +54,8 @@ export function Avatar({
           </text>
         </svg>
       )}
-      {src && <Image className="size-full" src={src} alt={alt} />}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {src && <img className="size-full" src={src} alt={alt} />}
     </span>
   );
 }
