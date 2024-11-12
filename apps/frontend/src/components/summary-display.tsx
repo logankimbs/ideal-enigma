@@ -1,7 +1,7 @@
 import { Summary, SummaryThemeV1 } from '@ideal-enigma/common';
 import React from 'react';
 import { Badge } from './badge';
-import { Heading, Subheading } from './heading';
+import { Heading } from './heading';
 
 interface SummaryDisplayProps {
   summary: Summary;
