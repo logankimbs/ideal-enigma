@@ -8,5 +8,6 @@ import { InstallationService } from "./installation.service";
   imports: [TypeOrmModule.forFeature([Installation])],
   controllers: [InstallationController],
   providers: [InstallationService],
+  exports: [InstallationService],
 })
 export class InstallationModule {}

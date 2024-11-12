@@ -14,6 +14,9 @@ export class Summary extends TimestampEntity {
   data: SummaryData;
 
   @Column()
+  startDate: Date;
+
+  @Column()
   version: number;
 
   @ManyToOne(() => Team, (team) => team.summaries)

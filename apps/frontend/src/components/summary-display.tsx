@@ -47,7 +47,12 @@ export default function SummaryDisplay(props: SummaryDisplayProps) {
   return (
     <main className="overflow-hidden">
       <Heading className="mt-6">
-        Nov 1, 2024 -{' '}
+        {new Date(summary.startDate).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })}{' '}
+        -{' '}
         {new Date(summary.createdAt).toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'short',

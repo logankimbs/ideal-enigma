@@ -47,7 +47,15 @@ export default async function Summaries() {
                   <div className="space-y-1.5">
                     <div className="text-base/6 font-semibold">
                       <Link href={`/dashboard/summaries/${summary.id}`}>
-                        LAST DATE -{' '}
+                        {new Date(summary.startDate).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          }
+                        )}{' '}
+                        -{' '}
                         {new Date(summary.createdAt).toLocaleDateString(
                           'en-US',
                           {

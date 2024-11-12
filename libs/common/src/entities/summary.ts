@@ -4,6 +4,7 @@ import { Timestamp } from './timestamp';
 export interface Summary extends Timestamp {
   id: string;
   data: SummaryData;
+  startDate: Date;
   version: number;
   team: Team;
 }
