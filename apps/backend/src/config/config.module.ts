@@ -17,7 +17,7 @@ const config = () => {
       name: process.env.DATABASE_NAME,
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
-      synchronize: false, // FIXME: THIS IS VERY BAD!
+      synchronize: true, // FIXME: THIS IS VERY BAD!
       ssl: !isDev ? { rejectUnauthorized: false } : false,
     },
     slack: {
