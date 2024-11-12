@@ -1,0 +1,87 @@
+import { Insight, Summary, User } from '@ideal-enigma/common';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getSession } from './session';
+
+interface ApiRequestOptions {
+  method: 'get' | 'post' | 'put' | 'delete' | 'patch';
+  endpoint: string;
+  headers?: Record<string, string>;
+  data?: unknown;
+}
+
+export async function api<T>(options: ApiRequestOptions): Promise<T> {
+  const session = await getSession();
+
+  const config: AxiosRequestConfig = {
+    method: options.method,
+    url: `${process.env.BACKEND_URL}/${options.endpoint}`,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.token}`,
+      ...options.headers,
+    },
+    data: options.data,
+  };
+
+  try {
+    const response: AxiosResponse<T> = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    console.error(`Backend request failed: ${error}`);
+    throw error;
+  }
+}
+
+export async function getSessionUser(): Promise<User> {
+  const session = await getSession();
+  const response: User = await api({
+    method: 'get',
+    endpoint: `users/${session.payload.sub}`,
+  });
+
+  return response;
+}
+
+export async function getRespository(): Promise<Insight[]> {
+  const session = await getSession();
+  const response: Insight[] = await api({
+    method: 'get',
+    endpoint: `insights/repository?userId=${session.payload.sub}`,
+  });
+
+  return response;
+}
+
+export async function getInsight(insightId: string): Promise<Insight> {
+  const response: Insight = await api({
+    method: 'get',
+    endpoint: `insights?id=${insightId}`,
+  });
+
+  return response;
+}
+
+export async function getSummaries(): Promise<Summary[]> {
+  const session = await getSession();
+  const response: Summary[] = await api({
+    method: 'get',
+    endpoint: `summaries/team/${session.payload['https://slack.com/team_id']}`,
+  });
+
+  return response;
+}
+
+export async function getSummary(summaryId: string): Promise<Summary> {
+  const response: Summary = await api({
+    method: 'get',
+    endpoint: `summaries/${summaryId}`,
+  });
+
+  return response;
+}
+
+export async function getSummaryInsights(
+  summaryId: string
+): Promise<Insight[]> {
+  return [];
+}

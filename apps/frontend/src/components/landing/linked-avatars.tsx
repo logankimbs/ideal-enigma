@@ -1,14 +1,15 @@
-'use client'
+/* eslint-disable @next/next/no-img-element */
+'use client';
 
-import { CheckIcon } from '@heroicons/react/16/solid'
-import { clsx } from 'clsx'
-import { motion } from 'framer-motion'
+import { CheckIcon } from '@heroicons/react/16/solid';
+import { clsx } from 'clsx';
+import { motion } from 'framer-motion';
 
 const transition = {
   duration: 0.75,
   repeat: Infinity,
   repeatDelay: 1.25,
-}
+};
 
 function Rings() {
   return (
@@ -17,7 +18,7 @@ function Rings() {
       fill="none"
       className={clsx(
         'col-start-1 row-start-1 size-full',
-        '[mask-composite:intersect] [mask-image:linear-gradient(to_bottom,black_90%,transparent),radial-gradient(circle,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]',
+        '[mask-composite:intersect] [mask-image:linear-gradient(to_bottom,black_90%,transparent),radial-gradient(circle,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]'
       )}
     >
       {Array.from(Array(42).keys()).map((n) => (
@@ -41,7 +42,7 @@ function Rings() {
         />
       ))}
     </svg>
-  )
+  );
 }
 
 function Checkmark() {
@@ -60,7 +61,7 @@ function Checkmark() {
         <CheckIcon className="size-4 fill-white" />
       </motion.div>
     </div>
-  )
+  );
 }
 
 function Photos() {
@@ -79,7 +80,7 @@ function Photos() {
         />
       </div>
     </div>
-  )
+  );
 }
 
 export function LinkedAvatars() {
@@ -89,5 +90,5 @@ export function LinkedAvatars() {
       <Photos />
       <Checkmark />
     </div>
-  )
+  );
 }

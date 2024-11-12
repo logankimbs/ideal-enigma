@@ -118,6 +118,7 @@ function TestimonialCard({
       {...props}
       className="relative flex aspect-[9/16] w-72 shrink-0 snap-start scroll-ml-[var(--scroll-padding)] flex-col justify-end overflow-hidden rounded-3xl sm:aspect-[3/4] sm:w-96"
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt=""
         src={img}

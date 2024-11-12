@@ -1,4 +1,5 @@
-import { clsx } from 'clsx'
+/* eslint-disable @next/next/no-img-element */
+import { clsx } from 'clsx';
 
 export function LogoCloud({
   className,
@@ -7,7 +8,7 @@ export function LogoCloud({
     <div
       className={clsx(
         className,
-        'flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4',
+        'flex justify-between max-sm:mx-auto max-sm:max-w-md max-sm:flex-wrap max-sm:justify-evenly max-sm:gap-x-4 max-sm:gap-y-4'
       )}
     >
       <img
@@ -36,5 +37,5 @@ export function LogoCloud({
         className="h-9 max-sm:mx-auto sm:h-8 lg:h-12"
       />
     </div>
-  )
+  );
 }

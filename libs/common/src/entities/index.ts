@@ -5,3 +5,4 @@ export * from './slack/slack-user';
 export * from './tag';
 export * from './team';
 export * from './user';
+export * from './summary';

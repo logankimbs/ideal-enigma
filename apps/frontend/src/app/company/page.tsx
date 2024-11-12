@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import type { Metadata } from 'next';
 import { AnimatedNumber } from '../../components/landing/animated-number';
 import { Button } from '../../components/landing/button';
@@ -118,7 +120,7 @@ function Person({
 }) {
   return (
     <li className="flex items-center gap-4">
-      <img alt="" src={img} className="size-12 rounded-full" />
+      <img src={img} alt="" className="size-12 rounded-full" />
       <div className="text-sm/6">
         <h3 className="font-medium">{name}</h3>
         <p className="text-gray-500">{description}</p>

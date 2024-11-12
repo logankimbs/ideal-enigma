@@ -11,11 +11,11 @@
     "backend:prod": "node dist/apps/backend",
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
-    "frontend:prod": "next start dist/apps/frontend",
+    "frontend:prod": "next start apps/frontend",
     "slack:build": "npx nx build slack",
     "slack": "npx nx run slack:serve:development",
     "slack:prod": "node dist/apps/slack/apps/slack/src/main.js",
-    "ngrok": "ngrok start --config=ngrok.yaml --all"
+    "ngrok": "dotenv -e .env -- ngrok start --config=ngrok.yaml --all --authtoken=$NGROK_AUTHTOKEN"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -43,6 +43,7 @@
     "react-use-measure": "^2.1.1",
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.0",
+    "sharp": "^0.33.5",
     "typeorm": "^0.3.20",
     "winston": "^3.15.0",
     "zod": "^3.23.8"
@@ -77,6 +78,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.13",
     "babel-jest": "^29.7.0",
+    "dotenv-cli": "^7.4.2",
     "esbuild": "^0.19.2",
     "eslint": "^9.8.0",
     "eslint-config-next": "^15.0.1",

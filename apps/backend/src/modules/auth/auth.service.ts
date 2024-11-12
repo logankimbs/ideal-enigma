@@ -1,12 +1,12 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
-import { WebClient } from "@slack/web-api";
-import { UserService } from "../user";
-import { LoginDto } from "./dto/login.dto";
-import { SlackAuthorizeDto } from "./dto/slack-authorize.dto";
-import { SlackCallbackDto } from "./dto/slack-callback.dto";
-import { ValidateTokenDto } from "./dto/validate-token.dto";
+import { WebClient } from '@slack/web-api';
+import { LoginDto } from './dto/login.dto';
+import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
+import { SlackCallbackDto } from './dto/slack-callback.dto';
+import { ValidateTokenDto } from './dto/validate-token.dto';
+import { UserService } from '../user/user.service';
 
 type AuthPayload = {
   access_token: string;
