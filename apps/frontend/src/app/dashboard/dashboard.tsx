@@ -30,6 +30,7 @@ import { getEvents } from '../../data';
 import { createContext } from 'react';
 import { User } from '@ideal-enigma/common';
 import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
+import { ThemeToggle } from '../../components/theme-toggle';
 
 export const UserContext = createContext<User | null>(null);
 
@@ -62,10 +63,13 @@ export function Dashboard(props: DashboardProps) {
         sidebar={
           <Sidebar>
             <SidebarHeader>
-              <SidebarItem href="/dashboard">
-                {/* <Avatar src="/teams/catalyst.svg" /> */}
-                <SidebarLabel>Catalyst</SidebarLabel>
-              </SidebarItem>
+              <div className="flex justify-between">
+                <SidebarItem href="/dashboard">
+                  <Avatar src="/teams/catalyst.svg" />
+                  <SidebarLabel>Catalyst</SidebarLabel>
+                </SidebarItem>
+                <ThemeToggle />
+              </div>
             </SidebarHeader>
 
             <SidebarBody>

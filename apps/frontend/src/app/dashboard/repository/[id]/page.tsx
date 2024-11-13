@@ -64,7 +64,7 @@ export default async function Insight({ params }: { params: { id: string } }) {
           </p>
         </div>
       </div>
-      <hr className="my-6 border-t border-gray-200" />
+      <hr className="my-6 border-t border-t-zinc-950/10 dark:border-t-white/10 py-6 first:border-t first:border-b-zinc-950/10" />
     </>
   );
 }
