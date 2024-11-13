@@ -1,6 +1,5 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
-import { Badge } from '../../../components/badge';
 import { Divider } from '../../../components/divider';
 import { Heading } from '../../../components/heading';
 import { Input, InputGroup } from '../../../components/input';
@@ -69,18 +68,10 @@ export default async function Summaries() {
                     <div className="text-xs/6 text-zinc-400">
                       {summary.data.actions.join(' ')}
                     </div>
-                    <div className="text-xs/6 text-zinc-600">
+                    {/* <div className="text-xs/6 text-zinc-600">
                       {`{number of insights submitted}`} insights submitted
-                    </div>
+                    </div> */}
                   </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Badge
-                    className="max-sm:hidden"
-                    color={summary.version === 1 ? 'lime' : 'zinc'}
-                  >
-                    Weekly
-                  </Badge>
                 </div>
               </div>
             </li>
