@@ -39,7 +39,10 @@ export default async function Repository() {
         </div>
         <Button>Add insight</Button>
       </div>
-      <RepositoryStackedList repository={repository} />
+
+      <div className="mt-10">
+        <RepositoryStackedList repository={repository} />
+      </div>
     </>
   );
 }
