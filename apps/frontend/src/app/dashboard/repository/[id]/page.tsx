@@ -1,70 +1,71 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Badge } from '../../../../components/badge';
-import { Heading } from '../../../../components/heading';
 import { Link } from '../../../../components/link';
 import { getInsight } from '../../../libs/api';
+import { Avatar } from '../../../../components/avatar';
+import { Badge } from '../../../../components/badge';
+import { Text } from '../../../../components/text';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: 'Insight' };
 }
 
-export default async function Insight({ params }: { params: { id: string } }) {
-  const insight = await getInsight(params.id);
+interface InsightProps {
+  params: { id: string };
+}
+
+export default async function Insight(props: InsightProps) {
+  const insight = await getInsight(props.params.id);
 
   if (!insight) notFound();
 
+  const user = insight.user.data.profile;
+
   return (
     <>
-      <div className="max-lg:hidden">
-        <Link
-          href="/dashboard/repository"
-          className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
-        >
-          <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
-          Repository
-        </Link>
-      </div>
-      <div className="mt-6 grid grid-cols-1 pb-4 gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
-        <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
-          {insight.user && (
-            <div className="flex items-center gap-3">
-              {insight.user.data.profile.image_72 && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  alt=""
-                  src={insight.user.data.profile.image_72}
-                  className="aspect-square size-6 rounded-full object-cover"
-                />
-              )}
-              <div className="text-sm/5">
-                {insight.user.data.profile.real_name}
-              </div>
+      <Link
+        href="/dashboard/repository"
+        className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
+      >
+        <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
+        Repository
+      </Link>
+
+      <div className="my-8 flex flex-wrap items-center gap-6 max-lg:justify-between lg:flex-col lg:items-start">
+        <div className="flex items-center gap-4">
+          <Avatar src={user.image_72} className="size-12" />
+
+          <div className="font-medium">
+            <div>{user.real_name}</div>
+
+            <div className="text-zinc-500">
+              <a href={`mailto:${user.email}`} className="hover:text-zinc-700">
+                {user.email}
+              </a>
             </div>
-          )}
-          {Array.isArray(insight.tags) && (
-            <div className="flex flex-wrap gap-2">
-              {insight.tags.map((tag) => (
-                <Badge key={tag.id}>{tag.text}</Badge>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          <Heading className="mb-4">
-            {new Date(insight.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })}
-          </Heading>
-          <p className='"my-6 text-base/8 first:mt-0 last:mb-0"'>
-            {insight.text}
-          </p>
+          </div>
         </div>
       </div>
-      <hr className="my-6 border-t border-t-zinc-950/10 dark:border-t-white/10 py-6 first:border-t first:border-b-zinc-950/10" />
+
+      <div className="font-medium">
+        <div className="mb-4">
+          {new Date(insight.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </div>
+
+        <Text className="mb-6">{insight.text}</Text>
+
+        <div className="flex flex-wrap gap-2">
+          {insight.tags &&
+            insight.tags.map((tag) => <Badge key={tag.text}>{tag.text}</Badge>)}
+        </div>
+      </div>
+
+      <hr className="my-8 border-t border-t-zinc-950/10 dark:border-t-white/10" />
     </>
   );
 }

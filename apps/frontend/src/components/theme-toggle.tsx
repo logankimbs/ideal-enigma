@@ -1,30 +1,20 @@
+'use client';
+
 import { MoonIcon, SunIcon } from '@heroicons/react/16/solid';
-import { useEffect, useState } from 'react';
-import { SidebarItem } from './sidebar';
+import { useTheme } from 'next-themes';
+import { Button } from './button';
 
 export function ThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // Initialize theme based on html tag's class
-  useEffect(() => {
-    const htmlElement = document.documentElement;
-    setIsDarkMode(htmlElement.classList.contains('dark'));
-  }, []);
-
-  const toggleDarkMode = () => {
-    const htmlElement = document.documentElement;
-    if (isDarkMode) {
-      htmlElement.classList.remove('dark');
-      setIsDarkMode(false);
-    } else {
-      htmlElement.classList.add('dark');
-      setIsDarkMode(true);
-    }
-  };
+  const { setTheme, resolvedTheme } = useTheme();
 
   return (
-    <SidebarItem onClick={toggleDarkMode} href="#">
-      {isDarkMode ? <MoonIcon /> : <SunIcon />}
-    </SidebarItem>
+    <Button
+      plain
+      href="#"
+      onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
+    >
+      <MoonIcon className="transition-all dark:-rotate-90 dark:scale-0" />
+      <SunIcon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    </Button>
   );
 }

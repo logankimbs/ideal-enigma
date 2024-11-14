@@ -63,8 +63,8 @@ export function Dashboard(props: DashboardProps) {
         sidebar={
           <Sidebar>
             <SidebarHeader>
-              <div className="flex justify-between">
-                <SidebarItem href="/dashboard">
+              <div className="flex gap-2">
+                <SidebarItem href="/dashboard" className="flex-auto">
                   <Avatar src="/teams/catalyst.svg" />
                   <SidebarLabel>Catalyst</SidebarLabel>
                 </SidebarItem>
