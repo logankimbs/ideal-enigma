@@ -36,7 +36,9 @@ export default async function Summaries() {
         </div>
       </div>
 
-      <SummaryStackedList summaries={summaries} />
+      <div className="mt-10">
+        <SummaryStackedList summaries={summaries} />
+      </div>
     </>
   );
 }

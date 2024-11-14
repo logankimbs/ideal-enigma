@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from './table';
+import { Text } from './text';
 
 type RepositoryStackedListProps = {
   repository: Insight[];
@@ -61,7 +62,7 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
               </div> */}
             </TableCell>
             <TableCell className="whitespace-normal break-words">
-              <div className="line-clamp-3">{insight.text}</div>
+              <Text className="line-clamp-3">{insight.text}</Text>
             </TableCell>
           </TableRow>
         ))}

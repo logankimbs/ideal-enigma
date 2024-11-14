@@ -1,11 +1,11 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
-import { Button } from '../../../components/button';
 import { Heading } from '../../../components/heading';
 import { Input, InputGroup } from '../../../components/input';
 import { RepositoryStackedList } from '../../../components/repository-stacked-list';
 import { Select } from '../../../components/select';
 import { getRespository } from '../../libs/api';
+import { AddInsight } from './add-insight';
 
 export const metadata: Metadata = {
   title: 'Repository',
@@ -37,7 +37,7 @@ export default async function Repository() {
             </div>
           </div>
         </div>
-        <Button>Add insight</Button>
+        <AddInsight href="#">Add Insight</AddInsight>
       </div>
 
       <div className="mt-10">
