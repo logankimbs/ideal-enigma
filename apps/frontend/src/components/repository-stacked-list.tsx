@@ -35,13 +35,11 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
               <div className="flex items-center gap-4">
                 <Avatar
                   src={insight.user.data.profile.image_72}
-                  className="size-12"
+                  className="size-10"
                 />
 
-                <div className="hidden sm:block">
-                  <div className="font-medium">
-                    {insight.user.data.profile.real_name}
-                  </div>
+                <div className="text-sm hidden sm:block">
+                  <div>{insight.user.data.profile.real_name}</div>
 
                   <div className="text-zinc-500">
                     {new Date(insight.createdAt).toLocaleDateString('en-US', {
@@ -62,7 +60,7 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
               </div> */}
             </TableCell>
             <TableCell className="whitespace-normal break-words">
-              <Text className="line-clamp-3">{insight.text}</Text>
+              <Text className="line-clamp-2">{insight.text}</Text>
             </TableCell>
           </TableRow>
         ))}

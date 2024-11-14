@@ -6,6 +6,7 @@ import { getInsight } from '../../../libs/api';
 import { Avatar } from '../../../../components/avatar';
 import { Badge } from '../../../../components/badge';
 import { Text } from '../../../../components/text';
+import { Subheading } from '../../../../components/heading';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: 'Insight' };
@@ -34,9 +35,9 @@ export default async function Insight(props: InsightProps) {
 
       <div className="my-8 flex flex-wrap items-center gap-6 max-lg:justify-between lg:flex-col lg:items-start">
         <div className="flex items-center gap-4">
-          <Avatar src={user.image_72} className="size-12" />
+          <Avatar src={user.image_72} className="size-10" />
 
-          <div className="font-medium">
+          <div className="text-sm">
             <div>{user.real_name}</div>
 
             <div className="text-zinc-500">
@@ -49,13 +50,13 @@ export default async function Insight(props: InsightProps) {
       </div>
 
       <div className="font-medium">
-        <div className="mb-4">
+        <Subheading className="mb-4">
           {new Date(insight.createdAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
-        </div>
+        </Subheading>
 
         <Text className="mb-6">{insight.text}</Text>
 
