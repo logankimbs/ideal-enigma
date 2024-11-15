@@ -5,6 +5,7 @@ import { Input, InputGroup } from '../../../components/input';
 import { Select } from '../../../components/select';
 import { getSummaries } from '../../libs/api';
 import { SummaryStackedList } from '../../../components/summary-stacked-list';
+import EmptySummariesState from '../../../components/empty-summaries';
 
 export const metadata: Metadata = {
   title: 'Summaries',
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 
 export default async function Summaries() {
   const summaries = await getSummaries();
+
+  if (!summaries.length) return <EmptySummariesState />;
 
   return (
     <>
@@ -35,7 +38,6 @@ export default async function Summaries() {
           </div>
         </div>
       </div>
-
       <div className="mt-10">
         <SummaryStackedList summaries={summaries} />
       </div>

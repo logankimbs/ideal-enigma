@@ -5,6 +5,7 @@ import { Input, InputGroup } from '../../../components/input';
 import { RepositoryStackedList } from '../../../components/repository-stacked-list';
 import { Select } from '../../../components/select';
 import { getRespository } from '../../libs/api';
+import EmptyRepositoryState from '../../../components/empty-repository';
 
 export const metadata: Metadata = {
   title: 'Repository',
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default async function Repository() {
   const repository = await getRespository();
 
-  // TODO: If repository is empty display empty message
+  if (!repository.length) return <EmptyRepositoryState />;
 
   return (
     <>
