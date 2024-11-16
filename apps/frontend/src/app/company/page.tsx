@@ -321,7 +321,7 @@ function Investors() {
 
 function Testimonial() {
   return (
-    <div className="relative flex aspect-square flex-col justify-end overflow-hidden rounded-3xl sm:aspect-[5/4] lg:aspect-[3/4]">
+    <div className="relative flex aspect-square flex-col shadow-2xl justify-end overflow-hidden rounded-3xl sm:aspect-[5/4] lg:aspect-[3/4]">
       <img
         alt=""
         src="/testimonials/veronica-winton.jpg"
