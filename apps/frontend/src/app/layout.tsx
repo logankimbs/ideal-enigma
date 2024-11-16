@@ -4,10 +4,10 @@ import "../styles/tailwind.css";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Catalyst",
-    default: "Catalyst",
+    template: '%s - Catalyst',
+    default: 'Catalyst',
   },
-  description: "",
+  description: 'Nice',
 };
 
 type RootLayoutProps = {
