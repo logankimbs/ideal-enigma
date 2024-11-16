@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import type React from "react";
-import "../styles/tailwind.css";
+import type { Metadata } from 'next';
+import type React from 'react';
+import '../styles/tailwind.css';
 
 export const metadata: Metadata = {
   title: {
     template: '%s - Catalyst',
     default: 'Catalyst',
   },
-  description: 'Nice',
+  description: '',
 };
 
 type RootLayoutProps = {
@@ -16,7 +16,11 @@ type RootLayoutProps = {
 
 export default async function RootLayout(props: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
+    >
       <head>
         <link
           rel="stylesheet"

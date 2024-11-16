@@ -186,13 +186,13 @@ function DarkBentoSection() {
 
 export default async function Home() {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <Hero />
       <main>
         <Container className="mt-10">
           <LogoCloud />
         </Container>
-        <div className="bg-gradient-to-b from-white from-50% to-gray-100 py-32">
+        <div className="py-32">
           <FeatureSection />
           <BentoSection />
         </div>

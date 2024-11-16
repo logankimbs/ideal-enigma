@@ -460,7 +460,7 @@ function Careers() {
 
 export default function Company() {
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden bg-white">
       <GradientBackground />
       <Container>
         <Navbar />

@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-} from '@headlessui/react'
-import { Bars2Icon } from '@heroicons/react/24/solid'
-import { motion } from 'framer-motion'
-import { Link } from './link'
-import { Logo } from './logo'
-import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
+} from '@headlessui/react';
+import { Bars2Icon } from '@heroicons/react/24/solid';
+import { motion } from 'framer-motion';
+import { Link } from './link';
+import { Logo } from './logo';
+import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid';
 
 const links = [
   { href: '/pricing', label: 'Pricing' },
   { href: '/company', label: 'Company' },
   { href: '/blog', label: 'Blog' },
   { href: '/login', label: 'Login' },
-]
+];
 
 function DesktopNav() {
   return (
@@ -32,7 +32,7 @@ function DesktopNav() {
         </PlusGridItem>
       ))}
     </nav>
-  )
+  );
 }
 
 function MobileNavButton() {
@@ -43,7 +43,7 @@ function MobileNavButton() {
     >
       <Bars2Icon className="size-6" />
     </DisclosureButton>
-  )
+  );
 }
 
 function MobileNav() {
@@ -68,11 +68,11 @@ function MobileNav() {
         ))}
       </div>
       <div className="absolute left-1/2 w-screen -translate-x-1/2">
-        <div className="absolute inset-x-0 top-0 border-t border-black/5" />
-        <div className="absolute inset-x-0 top-2 border-t border-black/5" />
+        <div className="absolute inset-x-0 top-0" />
+        <div className="absolute inset-x-0 top-2" />
       </div>
     </DisclosurePanel>
-  )
+  );
 }
 
 export function Navbar({ banner }: { banner?: React.ReactNode }) {
@@ -98,5 +98,5 @@ export function Navbar({ banner }: { banner?: React.ReactNode }) {
       </PlusGrid>
       <MobileNav />
     </Disclosure>
-  )
+  );
 }

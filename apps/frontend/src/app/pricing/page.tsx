@@ -504,7 +504,7 @@ export default function Pricing({
       : tiers[0];
 
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden bg-white">
       <GradientBackground />
       <Container>
         <Navbar />
