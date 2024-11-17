@@ -8,13 +8,10 @@ import {
 } from '../../utils/blocks';
 
 const getHomeViewBlocks = (event: any) => {
-  console.log('Get home view', event);
   const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
   const params = { user: event.user };
 
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
-
-  console.log('The url for backend', slackAuthUrl);
 
   return [
     createHeaderBlock('👋 Meet Echo'),

@@ -69,10 +69,8 @@ export class AuthService {
   }
 
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
-    console.log('user in query params', slackAuthorizeDto.user);
     const user = await this.userService.findOne(slackAuthorizeDto.user);
 
-    console.log('user from database', user);
     if (!user) throw new UnauthorizedException();
 
     const url = new URL('https://slack.com/openid/connect/authorize');
@@ -86,11 +84,7 @@ export class AuthService {
       redirect_uri: redirect_uri,
     });
 
-    console.log('query params', params);
-
     url.search = params.toString();
-
-    console.log('url', url);
 
     return { url: url.toString() };
   }
