@@ -1,19 +1,19 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { JwtService } from "@nestjs/jwt";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { WebClient } from '@slack/web-api';
+import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
 import { SlackCallbackDto } from './dto/slack-callback.dto';
 import { ValidateTokenDto } from './dto/validate-token.dto';
-import { UserService } from '../user/user.service';
 
 type AuthPayload = {
   access_token: string;
 };
 
 const backend_url = process.env.BACKEND_URL;
-const slack_callback_path = "/auth/slack/callback";
+const slack_callback_path = '/auth/slack/callback';
 const redirect_uri = backend_url + slack_callback_path;
 const frontend_url = process.env.FRONTEND_URL;
 
@@ -28,15 +28,15 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {
     this.client = new WebClient();
 
     // Why does this seem weird?
-    this.client_id = this.configService.get<string>("slack.clientId")!;
-    this.client_secret = this.configService.get<string>("slack.clientSecret")!;
-    this.state_secret = this.configService.get<string>("slack.openId.state")!;
-    this.nonce_secret = this.configService.get<string>("slack.openId.nonce")!;
+    this.client_id = this.configService.get<string>('slack.clientId')!;
+    this.client_secret = this.configService.get<string>('slack.clientSecret')!;
+    this.state_secret = this.configService.get<string>('slack.openId.state')!;
+    this.nonce_secret = this.configService.get<string>('slack.openId.nonce')!;
   }
 
   async login(loginDto: LoginDto): Promise<AuthPayload> {
@@ -53,36 +53,40 @@ export class AuthService {
       const payload = this.jwtService.verify(validateTokenDto.token);
       const user = await this.userService.findOne(payload.sub);
 
-      if (!user) throw new UnauthorizedException("User not found");
+      if (!user) throw new UnauthorizedException('User not found');
 
       // Generate a new token for the session
       const authToken = this.jwtService.sign(
         { sub: user.id, email: user.data.profile.email },
-        { expiresIn: "1h" },
+        { expiresIn: '1h' }
       );
 
       return { authToken };
     } catch (error: unknown) {
-      console.log("Error:", error);
-      throw new UnauthorizedException("Invalid or expired token");
+      console.log('Error:', error);
+      throw new UnauthorizedException('Invalid or expired token');
     }
   }
 
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
+    console.log('user in query params', slackAuthorizeDto.user);
     const user = await this.userService.findOne(slackAuthorizeDto.user);
 
+    console.log('user from database', user);
     if (!user) throw new UnauthorizedException();
 
-    const url = new URL("https://slack.com/openid/connect/authorize");
+    const url = new URL('https://slack.com/openid/connect/authorize');
     const params = new URLSearchParams({
-      response_type: "code",
-      scope: ["openid", "profile", "email"].join(" "),
+      response_type: 'code',
+      scope: ['openid', 'profile', 'email'].join(' '),
       client_id: this.client_id,
       state: this.state_secret,
       team: user.team.id,
       nonce: this.nonce_secret,
       redirect_uri: redirect_uri,
     });
+
+    console.log('query params', params);
 
     url.search = params.toString();
 
@@ -93,7 +97,7 @@ export class AuthService {
     const token = await this.client.openid.connect.token({
       client_id: this.client_id,
       client_secret: this.client_secret,
-      grant_type: "authorization_code",
+      grant_type: 'authorization_code',
       code: slackCallbackDto.code,
       redirect_uri,
     });
@@ -107,7 +111,7 @@ export class AuthService {
       const refreshedToken = await this.client.openid.connect.token({
         client_id: this.client_id,
         client_secret: this.client_secret,
-        grant_type: "refresh_token",
+        grant_type: 'refresh_token',
         refresh_token: token.refresh_token,
       });
 

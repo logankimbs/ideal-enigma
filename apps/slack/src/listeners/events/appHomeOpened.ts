@@ -1,17 +1,20 @@
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
-import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from "../../constants";
+import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from '@slack/bolt';
+import config from '../../config';
+import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from '../../constants';
 import {
   createHeaderBlock,
   createRichTextBlock,
   createSectionWithButton,
-} from "../../utils/blocks";
-import config from "../../config";
+} from '../../utils/blocks';
 
 const getHomeViewBlocks = (event: any) => {
+  console.log('Get home view', event);
   const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
   const params = { user: event.user };
 
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
+
+  console.log('The url for backend', slackAuthUrl);
 
   return [
     createHeaderBlock('👋 Meet Echo'),
@@ -65,19 +68,19 @@ const getHomeViewBlocks = (event: any) => {
 const appHomeOpened = async ({
   client,
   event,
-}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
-  if (event.tab !== "home") return;
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<'app_home_opened'>) => {
+  if (event.tab !== 'home') return;
 
   try {
     await client.views.publish({
       user_id: event.user,
       view: {
-        type: "home",
+        type: 'home',
         blocks: getHomeViewBlocks(event),
       },
     });
   } catch (error) {
-    console.error("Error publishing home view:", error);
+    console.error('Error publishing home view:', error);
   }
 };
 
