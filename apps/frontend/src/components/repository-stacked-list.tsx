@@ -1,5 +1,14 @@
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { Insight } from '@ideal-enigma/common';
+import { useContext, useState } from 'react';
+import { UserContext } from '../app/dashboard/dashboard';
 import { Avatar } from './avatar';
+import ButtonGroup from './button-group';
+import { Heading, Subheading } from './heading';
+import { Input, InputGroup } from './input';
+import { Select } from './select';
 import {
   Table,
   TableBody,
@@ -14,8 +23,12 @@ type RepositoryStackedListProps = {
   repository: Insight[];
 };
 
-export function RepositoryStackedList(props: RepositoryStackedListProps) {
-  const { repository } = props;
+type RepositoryTableProps = {
+  insights: Insight[];
+};
+
+function RepositoryTable(props: RepositoryTableProps) {
+  const { insights } = props;
 
   return (
     <Table className="[--gutter:theme(spacing.6)] sm:[--gutter:theme(spacing.8)]">
@@ -26,7 +39,7 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {repository.map((insight) => (
+        {insights.map((insight) => (
           <TableRow
             key={insight.id}
             href={`/dashboard/repository/${insight.id}`}
@@ -53,11 +66,11 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
 
               {/* Badges */}
               {/* <div className="flex flex-wrap gap-1 mt-6">
-                {insight.tags &&
-                  insight.tags.map((tag) => (
-                    <Badge key={tag.text}>{tag.text}</Badge>
-                  ))}
-              </div> */}
+          {insight.tags &&
+            insight.tags.map((tag) => (
+              <Badge key={tag.text}>{tag.text}</Badge>
+            ))}
+        </div> */}
             </TableCell>
             <TableCell className="whitespace-normal break-words">
               <Text className="line-clamp-2">{insight.text}</Text>
@@ -66,5 +79,82 @@ export function RepositoryStackedList(props: RepositoryStackedListProps) {
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+export function RepositoryStackedList(props: RepositoryStackedListProps) {
+  const user = useContext(UserContext);
+  const [activeButton, setActiveButton] = useState('All');
+  const [query, setQuery] = useState('');
+
+  const { repository } = props;
+
+  const filteredInsights = repository.filter((insight) => {
+    const textMatch = insight.text.toLowerCase().includes(query.toLowerCase());
+    const tagsMatch = insight.tags?.some((tag) =>
+      tag.text.toLowerCase().includes(query.toLowerCase())
+    );
+
+    const userMatch = activeButton === 'All' || insight.user.id === user?.id;
+
+    return (textMatch || tagsMatch) && userMatch;
+  });
+
+  const buttons = [
+    { id: 'All', label: 'All insights' },
+    { id: 'Mine', label: 'Mine' },
+  ];
+
+  return (
+    <>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="max-sm:w-full sm:flex-1">
+          <Heading>Repository</Heading>
+
+          <div className="mt-4 flex max-w-xl gap-4">
+            <div className="flex-1">
+              <InputGroup>
+                <MagnifyingGlassIcon />
+                <Input
+                  name=""
+                  placeholder="Search repository&hellip;"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </InputGroup>
+            </div>
+            <div>
+              <Select name="sort_by">
+                <option value="name">Sort by name</option>
+                <option value="date">Sort by date</option>
+                <option value="status">Sort by status</option>
+              </Select>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <ButtonGroup
+              buttons={buttons}
+              activeButton={activeButton}
+              onSetActive={setActiveButton}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10">
+        {filteredInsights.length ? (
+          <RepositoryTable insights={filteredInsights} />
+        ) : (
+          <div className="flex justify-center">
+            <div className="text-center max-w-lg">
+              <Subheading className="mb-2">
+                Looks like no one insights match your search.
+              </Subheading>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

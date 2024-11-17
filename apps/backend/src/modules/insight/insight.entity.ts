@@ -5,14 +5,14 @@ import {
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { TimestampEntity } from "../../common/classes/timestamp.entity";
-import { Tag } from "../tag/tag.entity";
-import { User } from "../user/user.entity";
+} from 'typeorm';
+import { TimestampEntity } from '../../common/classes/timestamp.entity';
+import { Tag } from '../tag/tag.entity';
+import { User } from '../user/user.entity';
 
-@Entity("insights")
+@Entity('insights')
 export class Insight extends TimestampEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -25,7 +25,7 @@ export class Insight extends TimestampEntity {
   user: User;
 
   @ManyToMany(() => Tag, (tag) => tag.insights)
-  @JoinTable({ name: "insight_tag" })
+  @JoinTable({ name: 'insight_tag' })
   tags: Tag[];
 
   @Column({ nullable: true })
