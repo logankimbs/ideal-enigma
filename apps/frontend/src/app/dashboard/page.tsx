@@ -50,7 +50,6 @@ export default function Home() {
 
       {/* display getting started flow if user has not completed it */}
       {/* else display most recent summary */}
-      <Subheading className="mt-14">Getting started</Subheading>
     </>
   );
 }

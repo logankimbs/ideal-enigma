@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import 'server-only';
 
 export type SessionPayload = {
@@ -23,7 +24,7 @@ export async function decrypt(
     ) as SessionPayload;
   } catch (error) {
     console.error('Failed to verify session', error);
-    throw error;
+    redirect('/');
   }
 }
 

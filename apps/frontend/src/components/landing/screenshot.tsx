@@ -19,7 +19,7 @@ export function Screenshot({
         'relative aspect-[var(--width)/var(--height)] [--radius:theme(borderRadius.xl)]'
       )}
     >
-      <div className="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] shadow-sm ring-1 ring-black/5 [--padding:theme(spacing.2)]" />
+      <div className="absolute -inset-[var(--padding)] rounded-[calc(var(--radius)+var(--padding))] [--padding:theme(spacing.2)]" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt=""

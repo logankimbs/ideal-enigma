@@ -41,7 +41,9 @@ function Hero() {
             your customers.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href="#">Get started</Button>
+            <Button href={`${process.env.SLACK_URL}/slack/install`}>
+              Get started
+            </Button>
             <Button variant="secondary" href="/pricing">
               See pricing
             </Button>
@@ -186,13 +188,13 @@ function DarkBentoSection() {
 
 export default async function Home() {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <Hero />
       <main>
         <Container className="mt-10">
           <LogoCloud />
         </Container>
-        <div className="bg-gradient-to-b from-white from-50% to-gray-100 py-32">
+        <div className="py-32">
           <FeatureSection />
           <BentoSection />
         </div>

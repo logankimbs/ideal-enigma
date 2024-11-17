@@ -57,9 +57,10 @@ export class InsightService {
   async getInsightsById(
     getInsightByIdDto: GetInsightByIdDto
   ): Promise<Insight> {
-    const { id } = getInsightByIdDto;
-
-    return this.insightRepository.findOneByOrFail({ id });
+    return await this.insightRepository.findOneOrFail({
+      where: { id: getInsightByIdDto.id },
+      relations: ['tags', 'user'],
+    });
   }
 
   async getInsightsRepository(userId: string): Promise<Insight[]> {
