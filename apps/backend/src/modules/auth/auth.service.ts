@@ -90,6 +90,8 @@ export class AuthService {
 
     url.search = params.toString();
 
+    console.log('url', url);
+
     return { url: url.toString() };
   }
 
