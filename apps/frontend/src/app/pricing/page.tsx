@@ -1,9 +1,3 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  MinusIcon,
-} from '@heroicons/react/16/solid';
 import type { Metadata } from 'next';
 import { Button } from '../../components/landing/button';
 import { Container } from '../../components/landing/container';
@@ -12,7 +6,6 @@ import {
   Gradient,
   GradientBackground,
 } from '../../components/landing/gradient';
-import { Link } from '../../components/landing/link';
 import { LogoCloud } from '../../components/landing/logo-cloud';
 import { Navbar } from '../../components/landing/navbar';
 import { Heading, Lead, Subheading } from '../../components/landing/text';
@@ -25,17 +18,17 @@ export const metadata: Metadata = {
 
 const tiers = [
   {
-    name: 'Starter' as const,
-    slug: 'starter',
-    description: 'Everything you need to start selling.',
-    priceMonthly: 99,
+    name: 'Free' as const,
+    slug: 'free',
+    description: 'Everything you need to get started with Loop.',
+    priceMonthly: 0,
     href: '#',
     highlights: [
-      { description: 'Up to 3 team members' },
-      { description: 'Up to 5 deal progress boards' },
-      { description: 'Source leads from select platforms' },
-      { description: 'RadiantAI integrations', disabled: true },
-      { description: 'Competitor analysis', disabled: true },
+      { description: 'Up to 20 team members' },
+      { description: '1 submission per user per week' },
+      { description: 'AI powered monthly summaries' },
+      { description: 'Access to advanced analytics', disabled: true },
+      { description: 'Customizable settings', disabled: true },
     ],
     features: [
       { section: 'Features', name: 'Accounts', value: 3 },
@@ -56,14 +49,14 @@ const tiers = [
     name: 'Growth' as const,
     slug: 'growth',
     description: 'All the extras for your growing team.',
-    priceMonthly: 149,
+    priceMonthly: 99,
     href: '#',
     highlights: [
-      { description: 'Up to 10 team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 50 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: '5 competitor analyses per month' },
+      { description: 'Up to 250 team members' },
+      { description: 'Up to 3 submissions per user per week' },
+      { description: 'AI powered weekly & monthly summaries' },
+      { description: 'Access to advanced analytics', disabled: true },
+      { description: 'Customizable settings', disabled: true },
     ],
     features: [
       { section: 'Features', name: 'Accounts', value: 10 },
@@ -83,15 +76,15 @@ const tiers = [
   {
     name: 'Enterprise' as const,
     slug: 'enterprise',
-    description: 'Added flexibility to close deals at scale.',
+    description: 'Added flexibility to accelerate teams at scale.',
     priceMonthly: 299,
     href: '#',
     highlights: [
-      { description: 'Unlimited active team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 100 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: 'Unlimited competitor analyses' },
+      { description: 'Unlimited team members' },
+      { description: 'Unlimited submissions per user per week' },
+      { description: 'Custom scheduling of AI powered summaries' },
+      { description: 'Access to advanced analytics' },
+      { description: 'Customizable settings' },
     ],
     features: [
       { section: 'Features', name: 'Accounts', value: 'Unlimited' },
@@ -173,171 +166,171 @@ function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
   );
 }
 
-function PricingTable({
-  selectedTier,
-}: {
-  selectedTier: (typeof tiers)[number];
-}) {
-  return (
-    <Container className="py-24">
-      <table className="w-full text-left">
-        <caption className="sr-only">Pricing plan comparison</caption>
-        <colgroup>
-          <col className="w-3/5 sm:w-2/5" />
-          <col
-            data-selected={selectedTier === tiers[0] ? true : undefined}
-            className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[1] ? true : undefined}
-            className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[2] ? true : undefined}
-            className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
-          />
-        </colgroup>
-        <thead>
-          <tr className="max-sm:hidden">
-            <td className="p-0" />
-            {tiers.map((tier) => (
-              <th
-                key={tier.slug}
-                scope="col"
-                data-selected={selectedTier === tier ? true : undefined}
-                className="p-0 data-[selected]:table-cell max-sm:hidden"
-              >
-                <Subheading as="div">{tier.name}</Subheading>
-              </th>
-            ))}
-          </tr>
-          <tr className="sm:hidden">
-            <td className="p-0">
-              <div className="relative inline-block">
-                <Menu>
-                  <MenuButton className="flex items-center justify-between gap-2 font-medium">
-                    {selectedTier.name}
-                    <ChevronUpDownIcon className="size-4 fill-slate-900" />
-                  </MenuButton>
-                  <MenuItems
-                    anchor="bottom start"
-                    className="min-w-[--button-width] rounded-lg bg-white p-1 shadow-lg ring-1 ring-gray-200 [--anchor-gap:6px] [--anchor-offset:-4px] [--anchor-padding:10px]"
-                  >
-                    {tiers.map((tier) => (
-                      <MenuItem key={tier.slug}>
-                        <Link
-                          scroll={false}
-                          href={`/pricing?tier=${tier.slug}`}
-                          data-selected={
-                            tier === selectedTier ? true : undefined
-                          }
-                          className="group flex items-center gap-2 rounded-md px-2 py-1 data-[focus]:bg-gray-200"
-                        >
-                          {tier.name}
-                          <CheckIcon className="hidden size-4 group-data-[selected]:block" />
-                        </Link>
-                      </MenuItem>
-                    ))}
-                  </MenuItems>
-                </Menu>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <ChevronUpDownIcon className="size-4 fill-slate-900" />
-                </div>
-              </div>
-            </td>
-            <td colSpan={3} className="p-0 text-right">
-              <Button variant="outline" href={selectedTier.href}>
-                Get started
-              </Button>
-            </td>
-          </tr>
-          <tr className="max-sm:hidden">
-            <th className="p-0" scope="row">
-              <span className="sr-only">Get started</span>
-            </th>
-            {tiers.map((tier) => (
-              <td
-                key={tier.slug}
-                data-selected={selectedTier === tier ? true : undefined}
-                className="px-0 pb-0 pt-4 data-[selected]:table-cell max-sm:hidden"
-              >
-                <Button variant="outline" href={tier.href}>
-                  Get started
-                </Button>
-              </td>
-            ))}
-          </tr>
-        </thead>
-        {[...new Set(tiers[0].features.map(({ section }) => section))].map(
-          (section) => (
-            <tbody key={section} className="group">
-              <tr>
-                <th
-                  scope="colgroup"
-                  colSpan={4}
-                  className="px-0 pb-0 pt-10 group-first-of-type:pt-5"
-                >
-                  <div className="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
-                    {section}
-                  </div>
-                </th>
-              </tr>
-              {tiers[0].features
-                .filter((feature) => feature.section === section)
-                .map(({ name }) => (
-                  <tr
-                    key={name}
-                    className="border-b border-gray-100 last:border-none"
-                  >
-                    <th
-                      scope="row"
-                      className="px-0 py-4 text-sm/6 font-normal text-gray-600"
-                    >
-                      {name}
-                    </th>
-                    {tiers.map((tier) => {
-                      const value = tier.features.find(
-                        (feature) =>
-                          feature.section === section && feature.name === name
-                      )?.value;
+// function PricingTable({
+//   selectedTier,
+// }: {
+//   selectedTier: (typeof tiers)[number];
+// }) {
+//   return (
+//     <Container className="py-24">
+//       <table className="w-full text-left">
+//         <caption className="sr-only">Pricing plan comparison</caption>
+//         <colgroup>
+//           <col className="w-3/5 sm:w-2/5" />
+//           <col
+//             data-selected={selectedTier === tiers[0] ? true : undefined}
+//             className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
+//           />
+//           <col
+//             data-selected={selectedTier === tiers[1] ? true : undefined}
+//             className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
+//           />
+//           <col
+//             data-selected={selectedTier === tiers[2] ? true : undefined}
+//             className="w-2/5 data-[selected]:table-column max-sm:hidden sm:w-1/5"
+//           />
+//         </colgroup>
+//         <thead>
+//           <tr className="max-sm:hidden">
+//             <td className="p-0" />
+//             {tiers.map((tier) => (
+//               <th
+//                 key={tier.slug}
+//                 scope="col"
+//                 data-selected={selectedTier === tier ? true : undefined}
+//                 className="p-0 data-[selected]:table-cell max-sm:hidden"
+//               >
+//                 <Subheading as="div">{tier.name}</Subheading>
+//               </th>
+//             ))}
+//           </tr>
+//           <tr className="sm:hidden">
+//             <td className="p-0">
+//               <div className="relative inline-block">
+//                 <Menu>
+//                   <MenuButton className="flex items-center justify-between gap-2 font-medium">
+//                     {selectedTier.name}
+//                     <ChevronUpDownIcon className="size-4 fill-slate-900" />
+//                   </MenuButton>
+//                   <MenuItems
+//                     anchor="bottom start"
+//                     className="min-w-[--button-width] rounded-lg bg-white p-1 shadow-lg ring-1 ring-gray-200 [--anchor-gap:6px] [--anchor-offset:-4px] [--anchor-padding:10px]"
+//                   >
+//                     {tiers.map((tier) => (
+//                       <MenuItem key={tier.slug}>
+//                         <Link
+//                           scroll={false}
+//                           href={`/pricing?tier=${tier.slug}`}
+//                           data-selected={
+//                             tier === selectedTier ? true : undefined
+//                           }
+//                           className="group flex items-center gap-2 rounded-md px-2 py-1 data-[focus]:bg-gray-200"
+//                         >
+//                           {tier.name}
+//                           <CheckIcon className="hidden size-4 group-data-[selected]:block" />
+//                         </Link>
+//                       </MenuItem>
+//                     ))}
+//                   </MenuItems>
+//                 </Menu>
+//                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+//                   <ChevronUpDownIcon className="size-4 fill-slate-900" />
+//                 </div>
+//               </div>
+//             </td>
+//             <td colSpan={3} className="p-0 text-right">
+//               <Button variant="outline" href={selectedTier.href}>
+//                 Get started
+//               </Button>
+//             </td>
+//           </tr>
+//           <tr className="max-sm:hidden">
+//             <th className="p-0" scope="row">
+//               <span className="sr-only">Get started</span>
+//             </th>
+//             {tiers.map((tier) => (
+//               <td
+//                 key={tier.slug}
+//                 data-selected={selectedTier === tier ? true : undefined}
+//                 className="px-0 pb-0 pt-4 data-[selected]:table-cell max-sm:hidden"
+//               >
+//                 <Button variant="outline" href={tier.href}>
+//                   Get started
+//                 </Button>
+//               </td>
+//             ))}
+//           </tr>
+//         </thead>
+//         {[...new Set(tiers[0].features.map(({ section }) => section))].map(
+//           (section) => (
+//             <tbody key={section} className="group">
+//               <tr>
+//                 <th
+//                   scope="colgroup"
+//                   colSpan={4}
+//                   className="px-0 pb-0 pt-10 group-first-of-type:pt-5"
+//                 >
+//                   <div className="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
+//                     {section}
+//                   </div>
+//                 </th>
+//               </tr>
+//               {tiers[0].features
+//                 .filter((feature) => feature.section === section)
+//                 .map(({ name }) => (
+//                   <tr
+//                     key={name}
+//                     className="border-b border-gray-100 last:border-none"
+//                   >
+//                     <th
+//                       scope="row"
+//                       className="px-0 py-4 text-sm/6 font-normal text-gray-600"
+//                     >
+//                       {name}
+//                     </th>
+//                     {tiers.map((tier) => {
+//                       const value = tier.features.find(
+//                         (feature) =>
+//                           feature.section === section && feature.name === name
+//                       )?.value;
 
-                      return (
-                        <td
-                          key={tier.slug}
-                          data-selected={
-                            selectedTier === tier ? true : undefined
-                          }
-                          className="p-4 data-[selected]:table-cell max-sm:hidden"
-                        >
-                          {value === true ? (
-                            <>
-                              <CheckIcon className="size-4 fill-green-600" />
-                              <span className="sr-only">
-                                Included in {tier.name}
-                              </span>
-                            </>
-                          ) : value === false || value === undefined ? (
-                            <>
-                              <MinusIcon className="size-4 fill-gray-400" />
-                              <span className="sr-only">
-                                Not included in {tier.name}
-                              </span>
-                            </>
-                          ) : (
-                            <div className="text-sm/6">{value}</div>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-            </tbody>
-          )
-        )}
-      </table>
-    </Container>
-  );
-}
+//                       return (
+//                         <td
+//                           key={tier.slug}
+//                           data-selected={
+//                             selectedTier === tier ? true : undefined
+//                           }
+//                           className="p-4 data-[selected]:table-cell max-sm:hidden"
+//                         >
+//                           {value === true ? (
+//                             <>
+//                               <CheckIcon className="size-4 fill-green-600" />
+//                               <span className="sr-only">
+//                                 Included in {tier.name}
+//                               </span>
+//                             </>
+//                           ) : value === false || value === undefined ? (
+//                             <>
+//                               <MinusIcon className="size-4 fill-gray-400" />
+//                               <span className="sr-only">
+//                                 Not included in {tier.name}
+//                               </span>
+//                             </>
+//                           ) : (
+//                             <div className="text-sm/6">{value}</div>
+//                           )}
+//                         </td>
+//                       );
+//                     })}
+//                   </tr>
+//                 ))}
+//             </tbody>
+//           )
+//         )}
+//       </table>
+//     </Container>
+//   );
+// }
 
 function FeatureItem({
   description,
@@ -511,7 +504,8 @@ export default function Pricing({
       </Container>
       <Header />
       <PricingCards />
-      <PricingTable selectedTier={tier} />
+      <div className="py-24" />
+      {/* <PricingTable selectedTier={tier} /> */}
       <Testimonial />
       <FrequentlyAskedQuestions />
       <Footer />
