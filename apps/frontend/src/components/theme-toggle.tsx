@@ -10,7 +10,6 @@ export function ThemeToggle() {
   return (
     <Button
       plain
-      href="#"
       onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
     >
       <MoonIcon className="transition-all dark:-rotate-90 dark:scale-0" />
