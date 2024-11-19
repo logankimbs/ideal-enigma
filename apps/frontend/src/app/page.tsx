@@ -1,15 +1,11 @@
-import { ChevronRightIcon } from '@heroicons/react/16/solid';
 import { BentoCard } from '../components/landing/bento-card';
 import { Button } from '../components/landing/button';
 import { Container } from '../components/landing/container';
 import { Footer } from '../components/landing/footer';
 import { Gradient } from '../components/landing/gradient';
 import { Keyboard } from '../components/landing/keyboard';
-import { Link } from '../components/landing/link';
-import { LinkedAvatars } from '../components/landing/linked-avatars';
 import { LogoCloud } from '../components/landing/logo-cloud';
 import { LogoCluster } from '../components/landing/logo-cluster';
-import { LogoTimeline } from '../components/landing/logo-timeline';
 import { Map } from '../components/landing/map';
 import { Navbar } from '../components/landing/navbar';
 import { Screenshot } from '../components/landing/screenshot';
@@ -21,28 +17,23 @@ function Hero() {
     <div className="relative">
       <Gradient className="absolute inset-2 bottom-0 rounded-[32px] ring-1 ring-inset ring-black/5" />
       <Container className="relative">
-        <Navbar
-          banner={
-            <Link
-              href="/blog/radiant-raises-100m-series-a-from-tailwind-ventures"
-              className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30"
-            >
-              Radiant raises $100M Series A from Tailwind Ventures
-              <ChevronRightIcon className="size-4" />
-            </Link>
-          }
-        />
+        <Navbar />
         <div className="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
           <h1 className="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
-            Close every deal.
+            Cultivate a culture of curiosity.
           </h1>
           <p className="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
-            Radiant helps you sell more by revealing sensitive information about
-            your customers.
+            The ultimate learnings repository for fast-paced teams to capture,
+            share, and discuss weekly insights.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href={`${process.env.SLACK_URL}/slack/install`}>
-              Get started
+            <Button
+              href={`${process.env.SLACK_URL}/slack/install`}
+              className="gap-2"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get
+              started for free
             </Button>
             <Button variant="secondary" href="/pricing">
               See pricing
@@ -59,7 +50,7 @@ function FeatureSection() {
     <div className="overflow-hidden">
       <Container className="pb-24">
         <Heading as="h2" className="max-w-3xl">
-          A snapshot of your entire sales pipeline.
+          A centralized repository of your teams learnings.
         </Heading>
         <Screenshot
           width={1216}
@@ -75,16 +66,16 @@ function FeatureSection() {
 function BentoSection() {
   return (
     <Container>
-      <Subheading>Sales</Subheading>
+      <Subheading>Value</Subheading>
       <Heading as="h3" className="mt-2 max-w-3xl">
-        Know more about your customers than they do.
+        Build, Measure, and <strong>Learn</strong>
       </Heading>
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
         <BentoCard
-          eyebrow="Insight"
-          title="Get perfect clarity"
-          description="Radiant uses social engineering to build a detailed financial picture of your leads. Know their budget, compensation package, social security number, and more."
+          eyebrow="Capture"
+          title="Effortlessly capture employee insights"
+          description="Loop seamlessly integrates with your team communication tool, making it easy to capture, organize, and share valuable insights across your team."
           graphic={
             <div className="h-80 bg-[url(/screenshots/profile.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
           }
@@ -92,9 +83,9 @@ function BentoSection() {
           className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
         />
         <BentoCard
-          eyebrow="Analysis"
-          title="Undercut your competitors"
-          description="With our advanced data mining, you’ll know which companies your leads are talking to and exactly how much they’re being charged."
+          eyebrow="Centralize"
+          title="Valuable information all in one place"
+          description="Consolidate your team’s insights into a unified, searchable repository, ensuring knowledge is always at your fingertips."
           graphic={
             <div className="absolute inset-0 bg-[url(/screenshots/competitors.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
           }
@@ -102,9 +93,9 @@ function BentoSection() {
           className="lg:col-span-3 lg:rounded-tr-4xl"
         />
         <BentoCard
-          eyebrow="Speed"
-          title="Built for power users"
-          description="It’s never been faster to cold email your entire contact list using our streamlined keyboard shortcuts."
+          eyebrow="Curate"
+          title="Create actionable summaries based on employee insights"
+          description="Loop leverages AI to transform submitted insights into actionable summaries, tailored for employees at all levels to quickly understand."
           graphic={
             <div className="flex size-full pl-10 pt-10">
               <Keyboard highlighted={['LeftCommand', 'LeftShift', 'D']} />
@@ -113,16 +104,16 @@ function BentoSection() {
           className="lg:col-span-2 lg:rounded-bl-4xl"
         />
         <BentoCard
-          eyebrow="Source"
-          title="Get the furthest reach"
-          description="Bypass those inconvenient privacy laws to source leads from the most unexpected places."
+          eyebrow="Circulate"
+          title="Automate the distribution of knowledge"
+          description="We deliver summaries to your team, sparking meaningful conversations, follow-ups, and actionable next steps."
           graphic={<LogoCluster />}
           className="lg:col-span-2"
         />
         <BentoCard
-          eyebrow="Limitless"
-          title="Sell globally"
-          description="Radiant helps you sell in locations currently under international embargo."
+          eyebrow="Cultivate"
+          title="Enable your team to operate with curiosity"
+          description="Accelerate your team's growth by inspiring employees to lead with curiosity at the heart of their work."
           graphic={<Map />}
           className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
         />
@@ -131,60 +122,60 @@ function BentoSection() {
   );
 }
 
-function DarkBentoSection() {
-  return (
-    <div className="mx-2 mt-2 rounded-[32px] bg-gray-900 py-32">
-      <Container>
-        <Subheading dark>Outreach</Subheading>
-        <Heading as="h3" dark className="mt-2 max-w-3xl">
-          Customer outreach has never been easier.
-        </Heading>
+// function DarkBentoSection() {
+//   return (
+//     <div className="mx-2 mt-2 rounded-[32px] bg-gray-900 py-32">
+//       <Container>
+//         <Subheading dark>Outreach</Subheading>
+//         <Heading as="h3" dark className="mt-2 max-w-3xl">
+//           Customer outreach has never been easier.
+//         </Heading>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
-          <BentoCard
-            dark
-            eyebrow="Networking"
-            title="Sell at the speed of light"
-            description="Our RadiantAI chat assistants analyze the sentiment of your conversations in real time, ensuring you're always one step ahead."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/networking.png)] bg-[size:851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
-            className="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl"
-          />
-          <BentoCard
-            dark
-            eyebrow="Integrations"
-            title="Meet leads where they are"
-            description="With thousands of integrations, no one will be able to escape your cold outreach."
-            graphic={<LogoTimeline />}
-            // `!overflow-visible` is needed to work around a Chrome bug that disables the mask on the graphic.
-            className="z-10 !overflow-visible lg:col-span-2 lg:rounded-tr-4xl"
-          />
-          <BentoCard
-            dark
-            eyebrow="Meetings"
-            title="Smart call scheduling"
-            description="Automatically insert intro calls into your leads' calendars without their consent."
-            graphic={<LinkedAvatars />}
-            className="lg:col-span-2 lg:rounded-bl-4xl"
-          />
-          <BentoCard
-            dark
-            eyebrow="Engagement"
-            title="Become a thought leader"
-            description="RadiantAI automatically writes LinkedIn posts that relate current events to B2B sales, helping you build a reputation as a thought leader."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/engagement.png)] bg-[size:851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
-            className="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl"
-          />
-        </div>
-      </Container>
-    </div>
-  );
-}
+//         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
+//           <BentoCard
+//             dark
+//             eyebrow="Networking"
+//             title="Sell at the speed of light"
+//             description="Our RadiantAI chat assistants analyze the sentiment of your conversations in real time, ensuring you're always one step ahead."
+//             graphic={
+//               <div className="h-80 bg-[url(/screenshots/networking.png)] bg-[size:851px_344px] bg-no-repeat" />
+//             }
+//             fade={['top']}
+//             className="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl"
+//           />
+//           <BentoCard
+//             dark
+//             eyebrow="Integrations"
+//             title="Meet leads where they are"
+//             description="With thousands of integrations, no one will be able to escape your cold outreach."
+//             graphic={<LogoTimeline />}
+//             // `!overflow-visible` is needed to work around a Chrome bug that disables the mask on the graphic.
+//             className="z-10 !overflow-visible lg:col-span-2 lg:rounded-tr-4xl"
+//           />
+//           <BentoCard
+//             dark
+//             eyebrow="Meetings"
+//             title="Smart call scheduling"
+//             description="Automatically insert intro calls into your leads' calendars without their consent."
+//             graphic={<LinkedAvatars />}
+//             className="lg:col-span-2 lg:rounded-bl-4xl"
+//           />
+//           <BentoCard
+//             dark
+//             eyebrow="Engagement"
+//             title="Become a thought leader"
+//             description="RadiantAI automatically writes LinkedIn posts that relate current events to B2B sales, helping you build a reputation as a thought leader."
+//             graphic={
+//               <div className="h-80 bg-[url(/screenshots/engagement.png)] bg-[size:851px_344px] bg-no-repeat" />
+//             }
+//             fade={['top']}
+//             className="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl"
+//           />
+//         </div>
+//       </Container>
+//     </div>
+//   );
+// }
 
 export default async function Home() {
   return (
@@ -198,7 +189,7 @@ export default async function Home() {
           <FeatureSection />
           <BentoSection />
         </div>
-        <DarkBentoSection />
+        {/* <DarkBentoSection /> */}
       </main>
       <Testimonials />
       <Footer />
