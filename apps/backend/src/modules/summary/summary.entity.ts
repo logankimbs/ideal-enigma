@@ -1,6 +1,13 @@
 import { SummaryData } from '@ideal-enigma/common';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { TimestampEntity } from '../../common/classes/timestamp.entity';
+import { Insight } from '../insight/insight.entity';
 import { Team } from '../team/team.entity';
 
 @Entity('summaries')
@@ -21,4 +28,7 @@ export class Summary extends TimestampEntity {
 
   @ManyToOne(() => Team, (team) => team.summaries)
   team: Team;
+
+  @OneToMany(() => Insight, (insight) => insight.summary)
+  insights: Insight[];
 }

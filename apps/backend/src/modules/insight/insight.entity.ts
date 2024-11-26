@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TimestampEntity } from '../../common/classes/timestamp.entity';
+import { Summary } from '../summary/summary.entity';
 import { Tag } from '../tag/tag.entity';
 import { User } from '../user/user.entity';
 
@@ -30,4 +31,7 @@ export class Insight extends TimestampEntity {
 
   @Column({ nullable: true })
   link: string;
+
+  @ManyToOne(() => Summary, (summary) => summary.insights, { nullable: true })
+  summary?: Summary;
 }

@@ -1,3 +1,4 @@
+import { Insight } from './insight';
 import { Team } from './team';
 import { Timestamp } from './timestamp';
 
@@ -7,6 +8,7 @@ export interface Summary extends Timestamp {
   startDate: Date;
   version: number;
   team: Team;
+  insights: Insight[];
 }
 
 // IMPORTANT!!!
