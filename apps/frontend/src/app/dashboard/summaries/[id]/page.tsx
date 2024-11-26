@@ -2,10 +2,10 @@ import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import { Insight, SummaryThemeV1 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Link } from '../../../../components/link';
-import { RepositoryStackedList } from '../../../../components/repository-stacked-list';
-import { getSummary } from '../../../libs/api';
 import { Heading, Subheading } from '../../../../components/heading';
+import { Link } from '../../../../components/link';
+import { RepositoryTableV2 } from '../../../../components/repository-table';
+import { getSummary } from '../../../libs/api';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: 'Summary' };
@@ -94,11 +94,7 @@ export default async function Summary(props: SummaryProps) {
         </div>
       </div>
 
-      {insights.length ? (
-        <RepositoryStackedList repository={insights} />
-      ) : (
-        <></>
-      )}
+      {insights.length > 0 && <RepositoryTableV2 repository={insights} />}
     </>
   );
 }

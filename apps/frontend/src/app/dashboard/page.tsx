@@ -1,17 +1,19 @@
-'use client';
-
-import { useContext } from 'react';
 import { Heading, Subheading } from '../../components/heading';
+import { RepositoryPreview } from '../../components/repository-preview';
 import { Select } from '../../components/select';
-import { UserContext } from './dashboard';
 import { Stat } from '../../components/stat';
+import { SummaryPreview } from '../../components/summary-preview';
+import { getRespository, getSummaries } from '../libs/api';
 
-export default function Home() {
-  const user = useContext(UserContext);
+export default async function Home() {
+  const summaries = await getSummaries();
+  const recentSummary = summaries[0];
+  const repository = await getRespository();
+  const recentInsights = repository.slice(0, 5);
 
   return (
     <>
-      <Heading>Good afternoon, {user?.data.profile.first_name}</Heading>
+      <Heading>Good afternoon!</Heading>
       <div className="mt-8 flex items-end justify-between">
         <Subheading>My Overview</Subheading>
         <div>
@@ -29,7 +31,6 @@ export default function Home() {
         <Stat title="Tickets sold" value="5,888" change="+4.5%" />
         <Stat title="Pageviews" value="823,067" change="+21.2%" />
       </div>
-
       <div className="mt-8 flex items-end justify-between">
         <Subheading>Company Overview</Subheading>
         <div>
@@ -47,9 +48,12 @@ export default function Home() {
         <Stat title="Tickets sold" value="5,888" change="+4.5%" />
         <Stat title="Pageviews" value="823,067" change="+21.2%" />
       </div>
-
-      {/* display getting started flow if user has not completed it */}
-      {/* else display most recent summary */}
+      <div className="mt-8 flex grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
+        {recentSummary && <SummaryPreview summary={recentSummary} />}
+        {recentInsights && recentInsights.length > 0 && (
+          <RepositoryPreview repository={recentInsights} />
+        )}
+      </div>
     </>
   );
 }

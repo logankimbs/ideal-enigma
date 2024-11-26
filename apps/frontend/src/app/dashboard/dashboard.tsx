@@ -6,7 +6,10 @@ import {
   SparklesIcon,
   Square2StackIcon,
 } from '@heroicons/react/20/solid';
+import { User } from '@ideal-enigma/common';
 import { usePathname } from 'next/navigation';
+import { createContext } from 'react';
+import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
 import { Avatar } from '../../components/avatar';
 import { Dropdown, DropdownButton } from '../../components/dropdown';
 import {
@@ -26,11 +29,8 @@ import {
   SidebarSection,
 } from '../../components/sidebar';
 import { SidebarLayout } from '../../components/sidebar-layout';
-import { getEvents } from '../../data';
-import { createContext } from 'react';
-import { User } from '@ideal-enigma/common';
-import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
 import { ThemeToggle } from '../../components/theme-toggle';
+import { getEvents } from '../../data';
 
 export const UserContext = createContext<User | null>(null);
 

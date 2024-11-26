@@ -1,7 +1,6 @@
 'use client';
 
 import * as Headless from '@headlessui/react';
-import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 import { clsx } from 'clsx';
 import {
   MotionValue,
@@ -14,7 +13,6 @@ import {
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import useMeasure, { type RectReadOnly } from 'react-use-measure';
 import { Container } from './container';
-import { Link } from './link';
 import { Heading, Subheading } from './text';
 
 const testimonials = [
@@ -153,25 +151,25 @@ function TestimonialCard({
   );
 }
 
-function CallToAction() {
-  return (
-    <div>
-      <p className="max-w-sm text-sm/6 text-gray-600">
-        Join the best sellers in the business and start using Radiant to hit
-        your targets today.
-      </p>
-      <div className="mt-2">
-        <Link
-          href="#"
-          className="inline-flex items-center gap-2 text-sm/6 font-medium text-pink-600"
-        >
-          Get started
-          <ArrowLongRightIcon className="size-5" />
-        </Link>
-      </div>
-    </div>
-  );
-}
+// function CallToAction() {
+//   return (
+//     <div>
+//       <p className="max-w-sm text-sm/6 text-gray-600">
+//         Join the best sellers in the business and start using Radiant to hit
+//         your targets today.
+//       </p>
+//       <div className="mt-2">
+//         <Link
+//           href="#"
+//           className="inline-flex items-center gap-2 text-sm/6 font-medium text-pink-600"
+//         >
+//           Get started
+//           <ArrowLongRightIcon className="size-5" />
+//         </Link>
+//       </div>
+//     </div>
+//   );
+// }
 
 export function Testimonials() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -195,7 +193,7 @@ export function Testimonials() {
         <div ref={setReferenceWindowRef}>
           <Subheading>What everyone is saying</Subheading>
           <Heading as="h3" className="mt-2">
-            Trusted by professionals.
+            Trusted by startups.
           </Heading>
         </div>
       </Container>
@@ -225,7 +223,7 @@ export function Testimonials() {
       </div>
       <Container className="mt-16">
         <div className="flex justify-between">
-          <CallToAction />
+          {/* <CallToAction /> */}
           <div className="hidden sm:flex sm:gap-2">
             {testimonials.map(({ name }, testimonialIndex) => (
               <Headless.Button

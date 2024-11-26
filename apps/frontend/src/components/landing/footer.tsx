@@ -12,18 +12,19 @@ function CallToAction() {
       <hgroup>
         <Subheading>Get started</Subheading>
         <p className="mt-6 text-3xl font-medium tracking-tight text-gray-950 sm:text-5xl">
-          Ready to dive in?
+          Ready to accelerate growth?
           <br />
-          Start your free trial today.
+          Start capturing insights today.
         </p>
       </hgroup>
-      <p className="mx-auto mt-6 max-w-xs text-sm/6 text-gray-500">
-        Get the cheat codes for selling and unlock your team&apos;s revenue
-        potential.
-      </p>
       <div className="mt-6">
-        <Button className="w-full sm:w-auto" href="#">
-          Get started
+        <Button
+          className="w-full sm:w-auto gap-2"
+          href={`${process.env.SLACK_URL}/slack/install`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get started
+          for free
         </Button>
       </div>
     </div>
@@ -56,15 +57,13 @@ function Sitemap() {
         <SitemapHeading>Product</SitemapHeading>
         <SitemapLinks>
           <SitemapLink href="/pricing">Pricing</SitemapLink>
-          <SitemapLink href="#">Analysis</SitemapLink>
-          <SitemapLink href="#">API</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
         <SitemapHeading>Company</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="#">Careers</SitemapLink>
-          <SitemapLink href="/blog">Blog</SitemapLink>
+          <SitemapLink href="/pricing">Pricing</SitemapLink>
+          {/* <SitemapLink href="#">Blog</SitemapLink> */}
           <SitemapLink href="/company">Company</SitemapLink>
         </SitemapLinks>
       </div>
@@ -148,7 +147,7 @@ function SocialLinks() {
 function Copyright() {
   return (
     <div className="text-sm/6 text-gray-950">
-      &copy; {new Date().getFullYear()} Radiant Inc.
+      &copy; {new Date().getFullYear()} Loop Inc.
     </div>
   );
 }

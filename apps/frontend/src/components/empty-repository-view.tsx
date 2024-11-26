@@ -2,7 +2,7 @@ import { Square2StackIcon } from '@heroicons/react/16/solid';
 import { Subheading } from './heading';
 import { Text } from './text';
 
-export default function EmptyRepositoryState() {
+export default function EmptyRepositoryView() {
   return (
     <div className="flex justify-center">
       <div className="text-center max-w-lg">

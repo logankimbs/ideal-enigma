@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import EmptyRepositoryState from '../../../components/empty-repository';
-import { RepositoryStackedList } from '../../../components/repository-stacked-list';
+import RepositoryView from '../../../components/repository-view';
 import { getRespository } from '../../libs/api';
 
 export const metadata: Metadata = {
@@ -10,7 +9,5 @@ export const metadata: Metadata = {
 export default async function Repository() {
   const repository = await getRespository();
 
-  if (!repository.length) return <EmptyRepositoryState />;
-
-  return <RepositoryStackedList repository={repository} />;
+  return <RepositoryView repository={repository} />;
 }
