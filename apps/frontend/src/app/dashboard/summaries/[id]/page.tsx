@@ -2,9 +2,10 @@ import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import { SummaryThemeV1 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Heading, Subheading } from '../../../../components/heading';
+import { Divider } from '../../../../components/divider';
+import { Heading } from '../../../../components/heading';
 import { Link } from '../../../../components/link';
-import { RepositoryTableV2 } from '../../../../components/repository-table';
+import RepositoryView from '../../../../components/repository-view';
 import { getInsightsInSummary, getSummary } from '../../../libs/api';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,7 +22,7 @@ const getIntro = (count: number): string =>
 const getKeyThemes = (themes: SummaryThemeV1[]) =>
   themes.map((theme, index) => (
     <div key={index} className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-      <h3 className="font-bold">{theme.title}</h3>
+      <h3 className="font-bold text-base mb-1.5">{theme.title}</h3>
 
       <div>
         <strong>Objective:</strong> {theme.objective}
@@ -35,12 +36,17 @@ const getKeyThemes = (themes: SummaryThemeV1[]) =>
     </div>
   ));
 
-const getImmediateActions = (actions: string[]) =>
-  actions.map((action, index) => (
-    <div key={index} className="text-lg/6 font-medium sm:text-sm/6">
-      {action}
-    </div>
-  ));
+const getImmediateActions = (actions: string[]) => {
+  return (
+    <ul className="list-disc ml-3.5">
+      {actions.map((action, index) => (
+        <li key={index} className="text-lg/6 font-medium sm:text-sm/6">
+          {action}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
@@ -50,51 +56,63 @@ export default async function Summary(props: SummaryProps) {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <Link
-            href="/dashboard/summaries"
-            className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
-          >
-            <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
-            Summaries
-          </Link>
+      <div>
+        <Link
+          href="/dashboard/summaries"
+          className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
+        >
+          <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
+          Summaries
+        </Link>
 
-          <Heading className="mt-8 mb-6">
-            {new Date(summary.startDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}{' '}
-            -{' '}
-            {new Date(summary.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </Heading>
+        <Heading className="mt-8 mb-6">
+          {new Date(summary.startDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}{' '}
+          -{' '}
+          {new Date(summary.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </Heading>
 
-          <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-            {getIntro(summary.data.themes.length)}
-          </div>
+        <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
+          {getIntro(summary.data.themes.length)}
+        </div>
 
-          <div className="mb-6">
-            <Subheading className="mb-4">Key Themes</Subheading>
-            {getKeyThemes(summary.data.themes)}
-          </div>
+        <div className="mb-6">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-950 dark:text-white">
+            Key Themes
+          </h2>
+          {getKeyThemes(summary.data.themes)}
+        </div>
 
-          <div className="mb-6">
-            <Subheading className="mb-4">Immediate Actions</Subheading>
-            {getImmediateActions(summary.data.actions)}
-          </div>
+        <div className="mb-6">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-950 dark:text-white">
+            Immediate Actions
+          </h2>
+          {getImmediateActions(summary.data.actions)}
+        </div>
 
-          <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-            {summary.data.conclusion}
-          </div>
+        <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
+          <h2 className="mb-4 text-xl font-semibold text-zinc-950 dark:text-white">
+            Conclusion
+          </h2>
+          {summary.data.conclusion}
         </div>
       </div>
 
-      {insights.length > 0 && <RepositoryTableV2 repository={insights} />}
+      {insights.length > 0 && (
+        <>
+          <Divider className="mt-10" />
+          <div className="mt-8">
+            <RepositoryView repository={insights} />
+          </div>
+        </>
+      )}
     </>
   );
 }
