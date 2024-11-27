@@ -10,6 +10,14 @@ import EmptyRepositoryView from './empty-repository-view';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
 import { Listbox, ListboxLabel, ListboxOption } from './listbox';
+import {
+  Pagination,
+  PaginationGap,
+  PaginationList,
+  PaginationNext,
+  PaginationPage,
+  PaginationPrevious,
+} from './pagination';
 import { RepositoryTableV2 } from './repository-table';
 import { Select } from './select';
 
@@ -47,6 +55,10 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
   const [view, setView] = useState(views[0]);
   const [query, setQuery] = useState('');
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
   const filteredInsights = repository.filter((insight) => {
     const queryLower = query.toLowerCase();
     const textMatch = insight.text.toLowerCase().includes(queryLower);
@@ -58,6 +70,47 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
 
     return (textMatch || tagsMatch) && viewMatch;
   });
+
+  // Pagination
+  const totalItems = filteredInsights.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Paginate the filtered insights
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedInsights = filteredInsights.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const generatePageLinks = () => {
+    const pages = [];
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <PaginationPage
+          key={i}
+          href={`?page=${i}`}
+          current={i === currentPage}
+          onClick={(e) => {
+            e.preventDefault();
+            setCurrentPage(i);
+          }}
+        >
+          {i}
+        </PaginationPage>
+      );
+    }
+
+    return (
+      <>
+        {startPage > 1 && <PaginationGap />}
+        {pages}
+        {endPage < totalPages && <PaginationGap />}
+      </>
+    );
+  };
 
   if (!repository.length) return <EmptyRepositoryView />;
 
@@ -74,7 +127,10 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
                   name=""
                   placeholder="Search repository&hellip;"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setCurrentPage(1); // Reset to the first page
+                  }}
                 />
               </InputGroup>
             </div>
@@ -92,7 +148,10 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
             placeholder="View Filter"
             by="code"
             value={view}
-            onChange={(view) => setView(view)}
+            onChange={(view) => {
+              setView(view);
+              setCurrentPage(1);
+            }}
             className="mt-4 md:max-w-48"
           >
             {views.map((view) => (
@@ -105,9 +164,28 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
         </div>
       </div>
 
-      <div className="mt-6">
-        <RepositoryTableV2 repository={filteredInsights} />
+      <div className="my-6">
+        <RepositoryTableV2 repository={paginatedInsights} />
       </div>
+
+      {/* Pagination */}
+      <Pagination>
+        <PaginationPrevious
+          href={currentPage > 1 ? `?page=${currentPage - 1}` : null}
+          onClick={(e) => {
+            e.preventDefault();
+            if (currentPage > 1) setCurrentPage(currentPage - 1);
+          }}
+        />
+        <PaginationList>{generatePageLinks()}</PaginationList>
+        <PaginationNext
+          href={currentPage < totalPages ? `?page=${currentPage + 1}` : null}
+          onClick={(e) => {
+            e.preventDefault();
+            if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+          }}
+        />
+      </Pagination>
     </>
   );
 }
