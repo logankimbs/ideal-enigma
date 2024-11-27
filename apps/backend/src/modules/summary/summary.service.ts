@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Summary } from './summary.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateSummaryDto } from './dto/create-summary.dto';
-import { TeamService } from '../team/team.service';
+import { InsightService } from '../insight/insight.service';
 import { InstallationService } from '../installation/installation.service';
+import { TeamService } from '../team/team.service';
+import { CreateSummaryDto } from './dto/create-summary.dto';
+import { Summary } from './summary.entity';
 
 @Injectable()
 export class SummaryService {
   constructor(
     @InjectRepository(Summary) private summaryRepository: Repository<Summary>,
     private teamService: TeamService,
-    private installationService: InstallationService
+    private installationService: InstallationService,
+    private insightService: InsightService
   ) {}
 
   async create(createSummaryDto: CreateSummaryDto): Promise<Summary> {
@@ -56,5 +58,9 @@ export class SummaryService {
     }
 
     return latestSummary.createdAt;
+  }
+
+  async getInsightsInSummary(id: string) {
+    return await this.insightService.getInsightsBySummaryId(id);
   }
 }

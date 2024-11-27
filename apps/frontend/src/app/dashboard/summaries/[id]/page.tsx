@@ -1,11 +1,11 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
-import { Insight, SummaryThemeV1 } from '@ideal-enigma/common';
+import { SummaryThemeV1 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Heading, Subheading } from '../../../../components/heading';
 import { Link } from '../../../../components/link';
 import { RepositoryTableV2 } from '../../../../components/repository-table';
-import { getSummary } from '../../../libs/api';
+import { getInsightsInSummary, getSummary } from '../../../libs/api';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: 'Summary' };
@@ -44,7 +44,7 @@ const getImmediateActions = (actions: string[]) =>
 
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
-  const insights: Insight[] = [];
+  const insights = await getInsightsInSummary(props.params.id);
 
   if (!summary) notFound();
 

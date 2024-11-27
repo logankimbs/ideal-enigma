@@ -103,4 +103,11 @@ export class InsightService {
 
     await this.insightRepository.save(markInsightSummarizedDto.insights);
   }
+
+  async getInsightsBySummaryId(summaryId: string) {
+    return await this.insightRepository.find({
+      where: { summary: { id: summaryId } },
+      relations: ['summary', 'user', 'tags'],
+    });
+  }
 }
