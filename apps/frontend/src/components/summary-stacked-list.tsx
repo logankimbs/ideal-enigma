@@ -1,15 +1,27 @@
 import { Summary } from '@ideal-enigma/common';
-import { Table, TableBody, TableCell, TableHead, TableRow } from './table';
-import { Text } from './text';
 import { Divider } from './divider';
 import { Subheading } from './heading';
+import { Table, TableBody, TableCell, TableHead, TableRow } from './table';
+import { Text } from './text';
+
+function NoMatchingSummaries() {
+  return (
+    <div className="flex justify-center">
+      <div className="text-center max-w-lg">
+        <Subheading className="mb-2">
+          No summaries match your search.
+        </Subheading>
+      </div>
+    </div>
+  );
+}
 
 type SummaryStackedListProps = {
   summaries: Summary[];
 };
 
-export function SummaryStackedList(props: SummaryStackedListProps) {
-  const { summaries } = props;
+export function SummaryStackedList({ summaries }: SummaryStackedListProps) {
+  if (!summaries.length) return <NoMatchingSummaries />;
 
   return (
     <Table className="[--gutter:theme(spacing.6)] sm:[--gutter:theme(spacing.8)]">
@@ -64,4 +76,3 @@ export function SummaryStackedList(props: SummaryStackedListProps) {
     </Table>
   );
 }
-
