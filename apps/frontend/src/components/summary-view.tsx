@@ -1,15 +1,13 @@
 'use client';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
-import { Insight, User } from '@ideal-enigma/common';
+import { Summary } from '@ideal-enigma/common';
 import { redirect } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { UserContext } from '../app/dashboard/dashboard';
-import { Avatar } from './avatar';
 import EmptyRepositoryView from './empty-repository-view';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
-import { Listbox, ListboxLabel, ListboxOption } from './listbox';
 import {
   Pagination,
   PaginationGap,
@@ -18,66 +16,49 @@ import {
   PaginationPage,
   PaginationPrevious,
 } from './pagination';
-import { RepositoryTableV2 } from './repository-table';
 import { Select } from './select';
+import { SummaryStackedList } from './summary-stacked-list';
 
-type View = {
-  code: string;
-  name: string;
-  avatarUrl?: string | undefined;
+type SummariesViewProps = {
+  summaries: Summary[];
 };
 
-function getViews(user: User): View[] {
-  return [
-    {
-      code: user.team.id,
-      name: user.team.data.name || 'Company',
-      avatarUrl: user.team.data.icon?.image_68,
-    },
-    {
-      code: user.id,
-      name: user.data.profile.real_name,
-      avatarUrl: user.data.profile.image_72,
-    },
-  ];
-}
-
-type RepositoryViewProps = {
-  repository: Insight[];
-};
-
-export default function RepositoryView({ repository }: RepositoryViewProps) {
+export default function SummariesView({ summaries }: SummariesViewProps) {
   const user = useContext(UserContext);
 
   if (!user) redirect('/');
 
-  const views = getViews(user);
-  const [view, setView] = useState(views[0]);
   const [query, setQuery] = useState('');
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  const filteredInsights = repository.filter((insight) => {
+  const filteredSummaries = summaries.filter((summary) => {
     const queryLower = query.toLowerCase();
-    const textMatch = insight.text.toLowerCase().includes(queryLower);
-    const tagsMatch = insight.tags?.some((tag) =>
-      tag.text.toLowerCase().includes(queryLower)
+    const titleMatch = summary.data.themes.some((theme) => {
+      return (
+        theme.title.toLocaleLowerCase().includes(queryLower) ||
+        theme.trend.toLocaleLowerCase().includes(queryLower) ||
+        theme.objective.toLocaleLowerCase().includes(queryLower)
+      );
+    });
+    const actionMatch = summary.data.actions.some((action) =>
+      action.toLocaleLowerCase().includes(queryLower)
     );
-    const viewMatch =
-      view.code === user.team.id || insight.user.id === user?.id;
+    const conclusionMatch = summary.data.conclusion
+      .toLocaleLowerCase()
+      .includes(queryLower);
 
-    return (textMatch || tagsMatch) && viewMatch;
+    return titleMatch || actionMatch || conclusionMatch;
   });
 
-  // Pagination
-  const totalItems = filteredInsights.length;
+  const totalItems = filteredSummaries.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // Paginate the filtered insights
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedInsights = filteredInsights.slice(
+  const paginatedSummaries = filteredSummaries.slice(
     startIndex,
     startIndex + itemsPerPage
   );
@@ -112,20 +93,20 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
     );
   };
 
-  if (!repository.length) return <EmptyRepositoryView />;
+  if (!summaries.length) return <EmptyRepositoryView />;
 
   return (
     <>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-sm:w-full sm:flex-1">
-          <Heading>Repository</Heading>
+          <Heading>Summaries</Heading>
           <div className="mt-4 flex max-w-xl gap-4">
             <div className="flex-1">
               <InputGroup>
                 <MagnifyingGlassIcon />
                 <Input
-                  name=""
-                  placeholder="Search repository&hellip;"
+                  name="search"
+                  placeholder="Search summaries&hellip;"
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value);
@@ -136,36 +117,17 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
             </div>
             <div>
               <Select name="sort_by">
-                <option value="name">Sort by featured</option>
+                <option value="name">Sort by name</option>
                 <option value="date">Sort by date</option>
+                <option value="status">Sort by status</option>
               </Select>
             </div>
           </div>
-
-          <Listbox
-            aria-label="View Filter"
-            name="view_filter"
-            placeholder="View Filter"
-            by="code"
-            value={view}
-            onChange={(view) => {
-              setView(view);
-              setCurrentPage(1);
-            }}
-            className="mt-4 md:max-w-48"
-          >
-            {views.map((view) => (
-              <ListboxOption key={view.code} value={view}>
-                <Avatar src={view.avatarUrl} />
-                <ListboxLabel>{view.name}</ListboxLabel>
-              </ListboxOption>
-            ))}
-          </Listbox>
         </div>
       </div>
 
       <div className="my-6">
-        <RepositoryTableV2 repository={paginatedInsights} />
+        <SummaryStackedList summaries={paginatedSummaries} />
       </div>
 
       {/* Pagination */}

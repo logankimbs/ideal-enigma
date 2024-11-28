@@ -21,4 +21,9 @@ export class SummaryController {
   async getSummarriesByTeamId(@Param('teamId') teamId: string) {
     return this.summaryService.findByTeamId(teamId);
   }
+
+  @Get(':id/insights')
+  async getInsightsInSummary(@Param('id') id: string) {
+    return this.summaryService.getInsightsInSummary(id);
+  }
 }

@@ -1,6 +1,7 @@
 import {
   Insight,
   Installation,
+  Summary,
   SummaryTextV1,
   Team,
 } from '@ideal-enigma/common';
@@ -71,10 +72,10 @@ export const summaryTask = async () => {
             continue;
           }
 
-          await apiRequest({
+          const summaryResponse = await apiRequest<Summary>({
             method: 'post',
             url: `${config.apiUrl}/summaries`,
-            data: { teamId: team.id, text: summary, version: SUMMARY_VERSION },
+            data: { teamId: team.id, data: summary, version: SUMMARY_VERSION },
           });
 
           const summaryMessage = message.getSummaryMessage({
@@ -98,11 +99,11 @@ export const summaryTask = async () => {
 
           await Promise.all(schedulePromises);
 
-          console.log('Marking insights as summarized...');
+          logger.info('Marking insights as summarized...');
           await apiRequest({
             method: 'put',
             url: `${config.apiUrl}/insights`,
-            data: { insights },
+            data: { insights, summary: summaryResponse },
           });
         } else {
           const schedulePromises = team.users.map(async (user) => {

@@ -1,11 +1,13 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
-import { Insight, SummaryThemeV1 } from '@ideal-enigma/common';
+import { SummaryThemeV1 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Heading, Subheading } from '../../../../components/heading';
+import { Avatar } from '../../../../components/avatar';
+import { Badge } from '../../../../components/badge';
+import { Divider } from '../../../../components/divider';
 import { Link } from '../../../../components/link';
-import { RepositoryTableV2 } from '../../../../components/repository-table';
-import { getSummary } from '../../../libs/api';
+import SummaryInsights from '../../../../components/summary-insights';
+import { getInsightsInSummary, getSummary } from '../../../libs/api';
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: 'Summary' };
@@ -15,86 +17,146 @@ interface SummaryProps {
   params: { id: string };
 }
 
+const formatTitle = (date: Date) =>
+  new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
 const getIntro = (count: number): string =>
   `This week, ${count} insights were submitted across various teams, highlighting trends, challenges, and opportunities aligned with the company's strategic objectives. Below is a summary of the most critical insights and actionable steps.`;
 
-const getKeyThemes = (themes: SummaryThemeV1[]) =>
-  themes.map((theme, index) => (
-    <div key={index} className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-      <h3 className="font-bold">{theme.title}</h3>
+const getKeyThemes = (themes: SummaryThemeV1[]) => {
+  return (
+    <ol className="list-inside mt-4 mb-10">
+      {themes.map((theme, index) => (
+        <li key={index} className="list-decimal mb-10">
+          <h3 className="inline text-base font-semibold text-zinc-950 dark:text-white">
+            {theme.title}
+          </h3>
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Objective:{' '}
+            </strong>
+            {theme.objective}
+          </p>
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Trend:{' '}
+            </strong>
+            {theme.trend}
+          </p>
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Actionable Insight:{' '}
+            </strong>
+            {theme.insight.interpretation}
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+};
 
-      <div>
-        <strong>Objective:</strong> {theme.objective}
-      </div>
-      <div>
-        <strong>Trend:</strong> {theme.trend}
-      </div>
-      <div>
-        <strong>Actionable Insight:</strong> {theme.insight.interpretation}
-      </div>
-    </div>
-  ));
-
-const getImmediateActions = (actions: string[]) =>
-  actions.map((action, index) => (
-    <div key={index} className="text-lg/6 font-medium sm:text-sm/6">
-      {action}
-    </div>
-  ));
+const getImmediateActions = (actions: string[]) => {
+  return (
+    <ul className="list-disc list-inside mt-4 mb-10">
+      {actions.map((action, index) => (
+        <li key={index} className="my-0.5">
+          <p className="inline text-base leading-loose text-zinc-500 dark:text-zinc-400">
+            {action}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
-  const insights: Insight[] = [];
+  const insights = await getInsightsInSummary(props.params.id);
 
   if (!summary) notFound();
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <Link
-            href="/dashboard/summaries"
-            className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
-          >
-            <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
-            Summaries
-          </Link>
+      <div className="mb-12">
+        <Link
+          href="/dashboard/summaries"
+          className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
+        >
+          <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
+          Summaries
+        </Link>
 
-          <Heading className="mt-8 mb-6">
-            {new Date(summary.startDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}{' '}
-            -{' '}
-            {new Date(summary.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </Heading>
-
-          <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-            {getIntro(summary.data.themes.length)}
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+          <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+            <div>
+              <div className="flex items-center justify-center -space-x-2">
+                {[
+                  ...new Map(
+                    insights.map((insight) => [insight.user.id, insight])
+                  ).values(),
+                ]
+                  .slice(0, 4)
+                  .map((uniqueInsight, index) => (
+                    <Avatar
+                      key={index}
+                      src={uniqueInsight.user.data.profile.image_72}
+                      className="size-8 ring-2 ring-white dark:ring-zinc-900"
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {insights.map(
+                (insight) =>
+                  insight.tags &&
+                  insight.tags.map((tag) => (
+                    <Badge key={tag.text}>{tag.text}</Badge>
+                  ))
+              )}
+            </div>
           </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-zinc-950 dark:text-white">
+              {formatTitle(summary.startDate)} -{' '}
+              {formatTitle(summary.createdAt)}
+            </h1>
 
-          <div className="mb-6">
-            <Subheading className="mb-4">Key Themes</Subheading>
-            {getKeyThemes(summary.data.themes)}
-          </div>
+            <p className="text-base leading-loose mt-6 mb-10 text-zinc-500 dark:text-zinc-400">
+              {getIntro(insights.length)}
+            </p>
 
-          <div className="mb-6">
-            <Subheading className="mb-4">Immediate Actions</Subheading>
+            <div>
+              <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+                Key Themes
+              </h2>
+              {getKeyThemes(summary.data.themes)}
+            </div>
+
+            <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+              Immediate Actions
+            </h2>
             {getImmediateActions(summary.data.actions)}
-          </div>
 
-          <div className="mb-6 text-lg/6 font-medium sm:text-sm/6">
-            {summary.data.conclusion}
+            <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+              Conclusion
+            </h2>
+            <p className="text-base leading-loose mt-4 mb-10 text-zinc-500 dark:text-zinc-400">
+              {summary.data.conclusion}
+            </p>
           </div>
         </div>
       </div>
 
-      {insights.length > 0 && <RepositoryTableV2 repository={insights} />}
+      {insights.length > 0 && (
+        <>
+          <Divider />
+          <SummaryInsights insights={insights} />
+        </>
+      )}
     </>
   );
 }

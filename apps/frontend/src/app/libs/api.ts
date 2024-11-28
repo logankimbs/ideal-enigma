@@ -80,8 +80,13 @@ export async function getSummary(summaryId: string): Promise<Summary> {
   return response;
 }
 
-export async function getSummaryInsights(
+export async function getInsightsInSummary(
   summaryId: string
 ): Promise<Insight[]> {
-  return [];
+  const response: Insight[] = await api({
+    method: 'get',
+    endpoint: `summaries/${summaryId}/insights`,
+  });
+
+  return response;
 }
