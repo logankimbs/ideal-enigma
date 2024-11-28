@@ -1,6 +1,7 @@
 import { Summary } from '@ideal-enigma/common';
 import { Divider } from './divider';
 import { Subheading } from './heading';
+import { ReadMore } from './read-more';
 import { Table, TableBody, TableCell, TableHead, TableRow } from './table';
 import { Text } from './text';
 
@@ -34,12 +35,9 @@ export function SummaryStackedList({ summaries }: SummaryStackedListProps) {
       </TableHead>
       <TableBody>
         {summaries.map((summary) => (
-          <TableRow
-            key={summary.id}
-            href={`/dashboard/summaries/${summary.id}`}
-          >
-            <TableCell>
-              <Subheading>
+          <TableRow key={summary.id}>
+            <TableCell className="py-8">
+              <div className="text-sm/5 sm:font-medium">
                 {new Date(summary.startDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'short',
@@ -51,25 +49,16 @@ export function SummaryStackedList({ summaries }: SummaryStackedListProps) {
                   month: 'short',
                   day: 'numeric',
                 })}
-              </Subheading>
+              </div>
 
-              <Text className="pt-2 whitespace-normal break-words line-clamp-3">
-                {summary.data.actions.join(' ')}
+              <Text className="pt-2 whitespace-normal break-words line-clamp-2">
+                {summary.data.conclusion}
               </Text>
 
-              {/* Badges */}
-              {/* <div className="flex flex-wrap gap-1 mt-6">
-                {insight.tags &&
-                  insight.tags.map((tag) => (
-                    <Badge key={tag.text}>{tag.text}</Badge>
-                  ))}
-              </div> */}
-            </TableCell>
-            {/* <TableCell className="whitespace-normal break-words">
-              <div className="line-clamp-3">
-                {summary.data.actions.join(' ')}
+              <div className="mt-4">
+                <ReadMore href={`/dashboard/summaries/${summary.id}`} />
               </div>
-            </TableCell> */}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
