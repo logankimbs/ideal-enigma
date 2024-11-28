@@ -2,6 +2,7 @@ import app from './app';
 import config from './config';
 import registerListeners from './listeners';
 import tasks from './tasks';
+import { summaryTask } from './tasks/summaryTask';
 import logger from './utils/logger';
 
 registerListeners(app);
@@ -17,3 +18,4 @@ const startApp = async () => {
 };
 
 startApp();
+summaryTask();
