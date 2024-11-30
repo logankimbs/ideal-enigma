@@ -52,6 +52,17 @@ export async function getRespository(): Promise<Insight[]> {
   return response;
 }
 
+export async function getRecentInsights(limit = 5): Promise<Insight[]> {
+  const session = await getSession();
+  const teamId = session.payload['https://slack.com/team_id'];
+  const response: Insight[] = await api({
+    method: 'get',
+    endpoint: `teams/${teamId}/insights/recent?limit=${limit}`,
+  });
+
+  return response;
+}
+
 export async function getInsight(insightId: string): Promise<Insight> {
   const response: Insight = await api({
     method: 'get',
@@ -66,6 +77,17 @@ export async function getSummaries(): Promise<Summary[]> {
   const response: Summary[] = await api({
     method: 'get',
     endpoint: `summaries/team/${session.payload['https://slack.com/team_id']}`,
+  });
+
+  return response;
+}
+
+export async function getRecentSummary(): Promise<Summary> {
+  const session = await getSession();
+  const teamId = session.payload['https://slack.com/team_id'];
+  const response: Summary = await api({
+    method: 'get',
+    endpoint: `teams/${teamId}/summaries/recent`,
   });
 
   return response;

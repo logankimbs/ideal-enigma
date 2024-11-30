@@ -3,13 +3,11 @@ import { RepositoryPreview } from '../../components/repository-preview';
 import { Select } from '../../components/select';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
-import { getRespository, getSummaries } from '../libs/api';
+import { getRecentInsights, getRecentSummary } from '../libs/api';
 
 export default async function Home() {
-  const summaries = await getSummaries();
-  const recentSummary = summaries[0];
-  const repository = await getRespository();
-  const recentInsights = repository.slice(0, 5);
+  const recentSummary = await getRecentSummary();
+  const recentInsights = await getRecentInsights();
 
   return (
     <>
