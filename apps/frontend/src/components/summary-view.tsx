@@ -8,14 +8,7 @@ import { UserContext } from '../app/dashboard/dashboard';
 import EmptyRepositoryView from './empty-repository-view';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
-import {
-  Pagination,
-  PaginationGap,
-  PaginationList,
-  PaginationNext,
-  PaginationPage,
-  PaginationPrevious,
-} from './pagination';
+import { Pagination, usePagination } from './pagination';
 import { Select } from './select';
 import { SummaryStackedList } from './summary-stacked-list';
 
@@ -25,14 +18,9 @@ type SummariesViewProps = {
 
 export default function SummariesView({ summaries }: SummariesViewProps) {
   const user = useContext(UserContext);
-
-  if (!user) redirect('/');
-
   const [query, setQuery] = useState('');
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  if (!user) redirect('/');
 
   const filteredSummaries = summaries.filter((summary) => {
     const queryLower = query.toLowerCase();
@@ -53,45 +41,16 @@ export default function SummariesView({ summaries }: SummariesViewProps) {
     return titleMatch || actionMatch || conclusionMatch;
   });
 
-  const totalItems = filteredSummaries.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Paginate the filtered insights
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedSummaries = filteredSummaries.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-
-  const generatePageLinks = () => {
-    const pages = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(totalPages, currentPage + 2);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <PaginationPage
-          key={i}
-          href={`?page=${i}`}
-          current={i === currentPage}
-          onClick={(e) => {
-            e.preventDefault();
-            setCurrentPage(i);
-          }}
-        >
-          {i}
-        </PaginationPage>
-      );
-    }
-
-    return (
-      <>
-        {startPage > 1 && <PaginationGap />}
-        {pages}
-        {endPage < totalPages && <PaginationGap />}
-      </>
-    );
-  };
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: paginatedSummaries,
+    setCurrentPage,
+  } = usePagination<Summary>({
+    data: filteredSummaries,
+    itemsPerPage: 4,
+    initialPage: 1,
+  });
 
   if (!summaries.length) return <EmptyRepositoryView />;
 
@@ -130,24 +89,11 @@ export default function SummariesView({ summaries }: SummariesViewProps) {
         <SummaryStackedList summaries={paginatedSummaries} />
       </div>
 
-      {/* Pagination */}
-      <Pagination>
-        <PaginationPrevious
-          href={currentPage > 1 ? `?page=${currentPage - 1}` : null}
-          onClick={(e) => {
-            e.preventDefault();
-            if (currentPage > 1) setCurrentPage(currentPage - 1);
-          }}
-        />
-        <PaginationList>{generatePageLinks()}</PaginationList>
-        <PaginationNext
-          href={currentPage < totalPages ? `?page=${currentPage + 1}` : null}
-          onClick={(e) => {
-            e.preventDefault();
-            if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-          }}
-        />
-      </Pagination>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </>
   );
 }
