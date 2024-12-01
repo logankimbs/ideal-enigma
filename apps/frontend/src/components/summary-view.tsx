@@ -5,12 +5,12 @@ import { Summary } from '@ideal-enigma/common';
 import { redirect } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { UserContext } from '../app/dashboard/dashboard';
-import EmptyRepositoryView from './empty-repository-view';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
 import { Pagination, usePagination } from './pagination';
 import { Select } from './select';
 import { SummaryStackedList } from './summary-stacked-list';
+import EmptySummariesState from './empty-summaries';
 
 type SummariesViewProps = {
   summaries: Summary[];
@@ -52,7 +52,7 @@ export default function SummariesView({ summaries }: SummariesViewProps) {
     initialPage: 1,
   });
 
-  if (!summaries.length) return <EmptyRepositoryView />;
+  if (!summaries.length) return <EmptySummariesState />;
 
   return (
     <>
