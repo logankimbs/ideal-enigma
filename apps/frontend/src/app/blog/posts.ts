@@ -2,7 +2,7 @@ export type Post = {
   publishedAt: string;
   author: {
     name: string;
-    image: '/company/logo.png';
+    image: string;
   };
   title: string;
   excerpt: string;
