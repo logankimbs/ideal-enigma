@@ -15,7 +15,7 @@ export default function FromInsightToInnovation() {
       <GradientBackground />
       <Container>
         <Navbar />
-        <Subheading className="mt-16">Monday, December 3, 2024</Subheading>
+        <Subheading className="mt-16">Tuesday, November 26, 2024</Subheading>
         <Heading as="h1" className="mt-2">
           From Insight to Innovation: The Power of a Data-Driven Startup Culture
         </Heading>

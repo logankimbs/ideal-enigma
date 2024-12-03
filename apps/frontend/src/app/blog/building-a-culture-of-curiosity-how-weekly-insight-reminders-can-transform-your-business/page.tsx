@@ -27,7 +27,7 @@ export default function CultureOfCuriosity() {
                 src="https://via.placeholder.com/64"
                 className="aspect-square size-6 rounded-full object-cover"
               />
-              <div className="text-sm/5 text-gray-700">Reed Gubernick</div>
+              <div className="text-sm/5 text-gray-700">Loop Team</div>
             </div>
             <div className="flex flex-wrap gap-2">
               {/* Example category */}

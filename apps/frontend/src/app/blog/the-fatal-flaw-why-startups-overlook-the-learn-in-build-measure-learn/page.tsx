@@ -15,7 +15,7 @@ export default function TheFatalFlaw() {
       <GradientBackground />
       <Container>
         <Navbar />
-        <Subheading className="mt-16">Monday, December 3, 2024</Subheading>
+        <Subheading className="mt-16">Monday, November 4, 2024</Subheading>
         <Heading as="h1" className="mt-2">
           The Fatal Flaw: Why Startups Overlook the "Learn" in
           Build-Measure-Learn
@@ -28,7 +28,7 @@ export default function TheFatalFlaw() {
                 src="https://via.placeholder.com/64"
                 className="aspect-square size-6 rounded-full object-cover"
               />
-              <div className="text-sm/5 text-gray-700">Reed Gubernick</div>
+              <div className="text-sm/5 text-gray-700">Loop Team</div>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link

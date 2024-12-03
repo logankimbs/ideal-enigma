@@ -14,7 +14,7 @@ export default function TheHiddenGrowthKiller() {
       <GradientBackground />
       <Container>
         <Navbar />
-        <Subheading className="mt-16">Monday, December 3, 2024</Subheading>
+        <Subheading className="mt-16">Wednesday, October 9, 2024</Subheading>
         <Heading as="h1" className="mt-2">
           The Hidden Growth Killer: Why Startups Struggle to Maintain a Clean
           Repository of Insights
@@ -27,7 +27,7 @@ export default function TheHiddenGrowthKiller() {
                 src="https://via.placeholder.com/64"
                 className="aspect-square size-6 rounded-full object-cover"
               />
-              <div className="text-sm/5 text-gray-700">Reed Gubernick</div>
+              <div className="text-sm/5 text-gray-700">Loop Team</div>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link
