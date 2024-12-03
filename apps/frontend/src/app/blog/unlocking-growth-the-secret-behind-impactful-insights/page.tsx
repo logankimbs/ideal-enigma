@@ -159,38 +159,43 @@ export default function UnlockingGrowth() {
                   <strong className="font-semibold text-gray-950">
                     Improving Operational Efficiency:{' '}
                   </strong>
-                  Insights can also uncover inefficiencies within an organization’s
-                  operations. By identifying and addressing these inefficiencies, companies can reduce costs, streamline
-                  processes, and improve profitability—all of which contribute to growth (Amazon Web Services, Inc.).
+                  Insights can also uncover inefficiencies within an
+                  organization’s operations. By identifying and addressing these
+                  inefficiencies, companies can reduce costs, streamline
+                  processes, and improve profitability—all of which contribute
+                  to growth (Amazon Web Services, Inc.).
                 </li>
 
                 <li className="my-2 pl-2 has-[br]:mb-8">
                   <strong className="font-semibold text-gray-950">
                     Enabling Strategic Pivoting:{' '}
                   </strong>
-                  In today’s volatile markets, the ability to pivot quickly is a competitive
-                  advantage. Impactful insights provide the necessary information to recognize when a change in
-                  strategy is needed and to execute that pivot effectively, ensuring that the business stays on course
-                  for
-                  growth even as conditions change (Growth Navigate).
+                  In today’s volatile markets, the ability to pivot quickly is a
+                  competitive advantage. Impactful insights provide the
+                  necessary information to recognize when a change in strategy
+                  is needed and to execute that pivot effectively, ensuring that
+                  the business stays on course for growth even as conditions
+                  change (Growth Navigate).
                 </li>
               </ol>
               <h2 className="mb-10 mt-12 text-2xl/8 font-medium tracking-tight text-gray-950 first:mt-0 last:mb-0">
                 Conclusion
               </h2>
               <p className="my-10 text-base/8 first:mt-0 last:mb-0">
-                An impactful insight is one that is relevant, actionable, timely, deep, and predictive. These qualities
-                enable
-                insights to serve as powerful catalysts for business growth, driving better decision-making, innovation,
-                customer satisfaction, operational efficiency, and strategic agility. By focusing on generating and
-                acting on
-                impactful insights, businesses can not only navigate the complexities of their markets but also
-                accelerate their
+                An impactful insight is one that is relevant, actionable,
+                timely, deep, and predictive. These qualities enable insights to
+                serve as powerful catalysts for business growth, driving better
+                decision-making, innovation, customer satisfaction, operational
+                efficiency, and strategic agility. By focusing on generating and
+                acting on impactful insights, businesses can not only navigate
+                the complexities of their markets but also accelerate their
                 journey towards long-term success.
               </p>
               <p className="my-10 text-base/8 first:mt-0 last:mb-0">
-                Incorporating tools like Loop can help businesses consistently gather, analyze, and act on these impactful
-                insights, ensuring that every strategic move is informed by deep understanding and foresight.
+                Incorporating tools like Loop can help businesses consistently
+                gather, analyze, and act on these impactful insights, ensuring
+                that every strategic move is informed by deep understanding and
+                foresight.
               </p>
               <div className="mt-10">
                 <Button variant="outline" href="/blog">
