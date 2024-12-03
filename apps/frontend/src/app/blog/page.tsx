@@ -19,7 +19,7 @@ async function FeaturedPosts() {
   const posts = getFeaturedPosts();
 
   return (
-    <div className="mt-16 bg-gradient-to-t from-gray-100 pb-14">
+    <div className="mt-16 pb-14">
       <Container>
         <h2 className="text-2xl font-medium tracking-tight">Featured</h2>
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -129,7 +129,7 @@ export default async function Blog({
       : undefined;
 
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden !bg-white">
       <GradientBackground />
       <Container>
         <Navbar />
