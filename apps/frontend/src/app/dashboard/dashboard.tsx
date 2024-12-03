@@ -55,7 +55,7 @@ export function Dashboard(props: DashboardProps) {
             <NavbarSection>
               <Dropdown>
                 <DropdownButton as={NavbarItem}>
-                  <Avatar src={user.data.profile.image_72} square />
+                  <Avatar src={user.data.profile.image_72} />
                 </DropdownButton>
                 <AccountDropdownMenu anchor="bottom end" />
               </Dropdown>
@@ -116,7 +116,6 @@ export function Dashboard(props: DashboardProps) {
                     <Avatar
                       src={user.data.profile.image_72}
                       className="size-10"
-                      square
                       alt=""
                     />
                     <span className="min-w-0">
