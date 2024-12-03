@@ -8,35 +8,36 @@ import { GradientBackground } from '../../../components/landing/gradient';
 import { Link } from '../../../components/landing/link';
 import { Heading, Subheading } from '../../../components/landing/text';
 import { Navbar } from '../../../components/navbar';
+import { fromInsightToInnovation } from '../posts';
 
 export default function FromInsightToInnovation() {
+  const post = fromInsightToInnovation;
+
   return (
     <main className="overflow-hidden">
       <GradientBackground />
       <Container>
         <Navbar />
-        <Subheading className="mt-16">Tuesday, November 26, 2024</Subheading>
+        <Subheading className="mt-16">{post.publishedAt}</Subheading>
         <Heading as="h1" className="mt-2">
-          From Insight to Innovation: The Power of a Data-Driven Startup Culture
+          {post.title}
         </Heading>
         <div className="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
           <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
             <div className="flex items-center gap-3">
-              <Avatar
-                alt=""
-                src="https://via.placeholder.com/64"
-                className="aspect-square size-6 rounded-full object-cover"
-              />
-              <div className="text-sm/5 text-gray-700">Reed Gubernick</div>
+              <Avatar alt="" src={post.author.image} className="size-6" />
+              <div className="text-sm/5 text-gray-700">Loop Team</div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link
-                key="culture"
-                href={`/blog?category=culture`}
-                className="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500"
-              >
-                Culture
-              </Link>
+              {post.categories.map((category) => (
+                <Link
+                  key={category}
+                  href={''}
+                  className="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500"
+                >
+                  {category}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="text-gray-700">

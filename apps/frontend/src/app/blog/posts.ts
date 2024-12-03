@@ -1,4 +1,4 @@
-type Post = {
+export type Post = {
   publishedAt: string;
   author: {
     name: string;
@@ -7,6 +7,7 @@ type Post = {
   title: string;
   excerpt: string;
   slug: string;
+  categories: string[];
 };
 
 export const cultureOfCuriosity: Post = {
@@ -20,6 +21,7 @@ export const cultureOfCuriosity: Post = {
   excerpt:
     'Weekly insight reminders encourage curiosity and reflection, empowering teams to uncover valuable ideas, accelerate innovation, and drive sustainable business growth.',
   slug: 'building-a-culture-of-curiosity-how-weekly-insight-reminders-can-transform-your-business',
+  categories: ['Culture', 'Growth'],
 };
 
 export const fromInsightToInnovation: Post = {
@@ -33,6 +35,7 @@ export const fromInsightToInnovation: Post = {
   excerpt:
     'A data-driven culture empowers startups to accelerate innovation, reduce risks, and make informed decisions, fostering critical thinking and problem-solving for long-term success.',
   slug: 'from-insight-to-innovation-the-power-of-a-data-driven-startup-culture',
+  categories: ['Growth', 'Innovation'],
 };
 
 export const leveragingAi: Post = {
@@ -46,6 +49,7 @@ export const leveragingAi: Post = {
   excerpt:
     'AI-powered tools transform insight collection into actionable strategies, enabling startups to drive innovation, optimize operations, and accelerate growth in a competitive landscape.',
   slug: 'leveraging-ai-to-transform-insight-collection-into-actionable-business-strategies',
+  categories: ['Artificial Intelligence', 'Strategy'],
 };
 
 export const fatalFlaw: Post = {
@@ -59,6 +63,7 @@ export const fatalFlaw: Post = {
   excerpt:
     'Startups often overlook the critical "Learn" phase of the Build-Measure-Learn cycle, missing opportunities to innovate, optimize resources, and ensure long-term success.',
   slug: 'the-fatal-flaw-why-startups-overlook-the-learn-in-build-measure-learn',
+  categories: ['Build', 'Measure', 'Learn'],
 };
 
 export const growthKiller: Post = {
@@ -72,6 +77,7 @@ export const growthKiller: Post = {
   excerpt:
     'Neglecting a clean insights repository slows decisions and growth, making structured processes and knowledge sharing crucial.',
   slug: 'the-hidden-growth-killer-why-startups-struggle-to-maintain-a-clean-repository-of-insights',
+  categories: ['Culture', 'Growth'],
 };
 
 export const transparencyAndCollaboration: Post = {
@@ -85,6 +91,7 @@ export const transparencyAndCollaboration: Post = {
   excerpt:
     'Transparency and collaboration are key to fostering continuous learning, enabling teams to share insights, drive innovation, and sustain growth.',
   slug: 'the-role-of-transparency-and-collaboration-in-creating-a-culture-of-continuous-learning',
+  categories: ['Culture', 'Collaboration', 'Transparency'],
 };
 
 export const unlockingGrowth: Post = {
@@ -97,6 +104,7 @@ export const unlockingGrowth: Post = {
   excerpt:
     'Transparency and collaboration are key to fostering continuous learning, enabling teams to share insights, drive innovation, and sustain growth.',
   slug: 'unlocking-growth-the-secret-behind-impactful-insights',
+  categories: ['Growth', 'Insight'],
 };
 
 export function getPosts(): Post[] {

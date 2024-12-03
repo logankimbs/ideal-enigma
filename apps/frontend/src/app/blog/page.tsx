@@ -7,7 +7,7 @@ import { GradientBackground } from '../../components/landing/gradient';
 import { Link } from '../../components/landing/link';
 import { Navbar } from '../../components/landing/navbar';
 import { Heading, Lead, Subheading } from '../../components/landing/text';
-import { getFeaturedPosts, getPosts } from './helper';
+import { getFeaturedPosts, getPosts } from './posts';
 
 export const metadata: Metadata = {
   title: 'Blog',
