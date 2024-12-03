@@ -31,6 +31,7 @@ import {
 import { SidebarLayout } from '../../components/sidebar-layout';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { getEvents } from '../../data';
+import { getFeaturedPosts } from '../blog/posts';
 
 export const UserContext = createContext<User | null>(null);
 
@@ -41,6 +42,7 @@ type DashboardProps = {
 };
 
 export function Dashboard(props: DashboardProps) {
+  const blogPosts = getFeaturedPosts();
   const pathname = usePathname();
   const { user } = props;
 
@@ -99,7 +101,11 @@ export function Dashboard(props: DashboardProps) {
 
               <SidebarSection className="max-lg:hidden">
                 <SidebarHeading>Resources</SidebarHeading>
-                <SidebarItem>The Secret Behind Impactful Insights</SidebarItem>
+                {blogPosts.map((post, index) => (
+                  <SidebarItem key={index} href={`blog/${post.slug}`}>
+                    {post.title}
+                  </SidebarItem>
+                ))}
               </SidebarSection>
             </SidebarBody>
 

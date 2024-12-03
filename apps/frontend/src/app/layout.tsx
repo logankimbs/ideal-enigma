@@ -29,8 +29,8 @@ export default async function RootLayout(props: RootLayoutProps) {
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="The Radiant Blog"
-          href="/blog/feed.xml"
+          title="The Loop Blog"
+          // href="/blog/feed.xml"
         />
       </head>
       <body className="text-gray-950 antialiased">{props.children}</body>
