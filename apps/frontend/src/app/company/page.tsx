@@ -463,7 +463,13 @@ export default function Company() {
     <main className="overflow-hidden bg-white">
       <GradientBackground />
       <Container>
-        <Navbar />
+        <Navbar
+          banner={
+            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Currently testing in beta
+            </div>
+          }
+        />
       </Container>
       <Header />
       <Team />

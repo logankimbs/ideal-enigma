@@ -5,8 +5,8 @@ import { Container } from '../../../components/landing/container';
 import { Footer } from '../../../components/landing/footer';
 import { GradientBackground } from '../../../components/landing/gradient';
 import { Link } from '../../../components/landing/link';
+import { Navbar } from '../../../components/landing/navbar';
 import { Heading, Subheading } from '../../../components/landing/text';
-import { Navbar } from '../../../components/navbar';
 import { transparencyAndCollaboration } from '../posts';
 
 export default function TheRoleOfTransparencyAndCollaboration() {
@@ -16,7 +16,13 @@ export default function TheRoleOfTransparencyAndCollaboration() {
     <main className="overflow-hidden">
       <GradientBackground />
       <Container>
-        <Navbar />
+        <Navbar
+          banner={
+            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Currently testing in beta
+            </div>
+          }
+        />
         <Subheading className="mt-16">{post.publishedAt}</Subheading>
         <Heading as="h1" className="mt-2">
           {post.title}
