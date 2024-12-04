@@ -68,7 +68,7 @@ export function Dashboard(props: DashboardProps) {
               <div className="flex gap-2">
                 <SidebarItem href="/dashboard" className="flex-auto">
                   <Avatar src="/teams/catalyst.svg" />
-                  <SidebarLabel>Catalyst</SidebarLabel>
+                  <SidebarLabel>Loop</SidebarLabel>
                 </SidebarItem>
                 <ThemeToggle />
               </div>
@@ -102,7 +102,7 @@ export function Dashboard(props: DashboardProps) {
               <SidebarSection className="max-lg:hidden">
                 <SidebarHeading>Resources</SidebarHeading>
                 {blogPosts.map((post, index) => (
-                  <SidebarItem key={index} href={`blog/${post.slug}`}>
+                  <SidebarItem key={index} href={`/blog/${post.slug}`}>
                     {post.title}
                   </SidebarItem>
                 ))}
