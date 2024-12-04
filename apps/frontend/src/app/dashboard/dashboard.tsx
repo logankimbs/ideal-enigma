@@ -74,7 +74,6 @@ export function Dashboard(props: DashboardProps) {
                   ) : (
                     <Avatar src="/company/logo-dark.svg" />
                   )}
-                  {/*<Avatar src="/company/logo-light.svg" />*/}
                   <SidebarLabel>Loop</SidebarLabel>
                 </SidebarItem>
                 <ThemeToggle />
