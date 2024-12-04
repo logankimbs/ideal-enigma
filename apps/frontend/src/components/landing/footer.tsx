@@ -62,23 +62,17 @@ function Sitemap() {
       <div>
         <SitemapHeading>Company</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="/pricing">Pricing</SitemapLink>
-          {/* <SitemapLink href="#">Blog</SitemapLink> */}
-          <SitemapLink href="/company">Company</SitemapLink>
+          <SitemapLink href="/blog">Blog</SitemapLink>
+          <SitemapLink href="">Terms of service</SitemapLink>
+          <SitemapLink href="">Privacy policy</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
         <SitemapHeading>Support</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="#">Help center</SitemapLink>
-          <SitemapLink href="#">Community</SitemapLink>
-        </SitemapLinks>
-      </div>
-      <div>
-        <SitemapHeading>Company</SitemapHeading>
-        <SitemapLinks>
-          <SitemapLink href="#">Terms of service</SitemapLink>
-          <SitemapLink href="#">Privacy policy</SitemapLink>
+          {/* link to faq on pricing page */}
+          <SitemapLink href="">Help center</SitemapLink>
+          <SitemapLink href="">Community</SitemapLink>
         </SitemapLinks>
       </div>
     </>
@@ -116,22 +110,22 @@ function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
 function SocialLinks() {
   return (
     <>
-      <Link
-        href="https://facebook.com"
-        target="_blank"
-        aria-label="Visit us on Facebook"
-        className="text-gray-950 data-[hover]:text-gray-950/75"
-      >
-        <SocialIconFacebook className="size-4" />
-      </Link>
-      <Link
-        href="https://x.com"
-        target="_blank"
-        aria-label="Visit us on X"
-        className="text-gray-950 data-[hover]:text-gray-950/75"
-      >
-        <SocialIconX className="size-4" />
-      </Link>
+      {/*<Link*/}
+      {/*  href="https://facebook.com"*/}
+      {/*  target="_blank"*/}
+      {/*  aria-label="Visit us on Facebook"*/}
+      {/*  className="text-gray-950 data-[hover]:text-gray-950/75"*/}
+      {/*>*/}
+      {/*  <SocialIconFacebook className="size-4" />*/}
+      {/*</Link>*/}
+      {/*<Link*/}
+      {/*  href="https://x.com"*/}
+      {/*  target="_blank"*/}
+      {/*  aria-label="Visit us on X"*/}
+      {/*  className="text-gray-950 data-[hover]:text-gray-950/75"*/}
+      {/*>*/}
+      {/*  <SocialIconX className="size-4" />*/}
+      {/*</Link>*/}
       <Link
         href="https://linkedin.com"
         target="_blank"
@@ -147,7 +141,7 @@ function SocialLinks() {
 function Copyright() {
   return (
     <div className="text-sm/6 text-gray-950">
-      &copy; {new Date().getFullYear()} Loop Inc.
+      &copy; {new Date().getFullYear()} Loop
     </div>
   );
 }
