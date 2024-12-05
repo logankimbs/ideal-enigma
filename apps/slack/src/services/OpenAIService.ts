@@ -1,4 +1,4 @@
-import { Insight, SummaryTextV1 } from '@ideal-enigma/common';
+import { Insight, SummaryData } from '@ideal-enigma/common';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { z } from 'zod';
@@ -9,24 +9,36 @@ import logger from '../utils/logger';
 // TODO: Find a better way of doing this.
 const InsightSchema = z.object({
   origin: z.object({
+    id: z.string(),
     userId: z.string(),
-    insight: z.string(),
+    // insight: z.string(),
+    text: z.string(),
   }),
-  interpretation: z.string(),
+  // interpretation: z.string(),
+});
+
+const ImmediateActionSchema = z.object({
+  text: z.string(),
+  responsibility: z.string(),
 });
 
 const ThemeSchema = z.object({
   title: z.string(),
   objective: z.string(),
-  trend: z.string(),
-  insight: InsightSchema,
+  // trend: z.string(),
+  // insight: InsightSchema,
+  insights: z.array(InsightSchema),
+  action: z.string(),
+  responsibility: z.string(),
 });
 
 const SummaryResponseSchema = z.object({
   themes: z.array(ThemeSchema),
-  actions: z.array(z.string()),
+  // actions: z.array(z.string()),
+  actions: z.array(ImmediateActionSchema),
   conclusion: z.string(),
 });
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 export class OpenAIService {
@@ -42,11 +54,13 @@ export class OpenAIService {
    * @param insights An array of InsightEntities to be summarized.
    * @returns The summary as a Summary object.
    */
-  public async summarizeInsights(insights: Insight[]): Promise<SummaryTextV1> {
+  public async summarizeInsights(insights: Insight[]): Promise<SummaryData> {
     try {
       const origins = insights.map((insight) => ({
+        id: insight.id,
         userId: insight.user.id,
-        insight: insight.text,
+        // insight: insight.text,
+        text: insight.text,
       }));
 
       const summaryRequest = { insights: origins };
@@ -57,59 +71,76 @@ export class OpenAIService {
           { role: 'system', content: 'You are a helpful assistant.' },
           {
             role: 'user',
-            content: `Act as skilled project manager. You are tasked with analyzing the provided list of team member insights. Please perform the following tasks:
+            content: `You are a skilled project manager tasked with analyzing a list of team member insights. Please perform the following tasks:
+1. Filter Out Invalid Entries:
+   - Exclude any entries that are gibberish, nonsensical, or clearly invalid.
+2. Summarize Valid Insights:
+   - Concisely summarize each valid insight, focusing on key points and essential information.
+3. Group Similar Insights Under Key Themes:
+   - Identify common themes or categories among the insights.
+   - Assign a clear and descriptive title to each theme.
+5. Enhance Each Theme with Specific Details:
+   - For each theme, include the following components:
+      - Objective: A brief statement outlining the goal related to the theme.
+6. Insights:
+   - Provide specific examples or data points from the insights that support the theme.
+   - Actionable Insight: A clear recommendation or action that should be taken based on the insights.
+   - Responsibility: Specify the team or department responsible for implementing the action.
+5. Compile Immediate Actions:
+   - List the actionable recommendations derived from the insights.
+   - Include the responsible team or department for each action item.
+6. Provide a Conclusion:
+   - Summarize the key takeaways from the week's insights.
+   - Emphasize how addressing these areas will benefit the organization.
+7. Formatting Guidelines:
+   - Adhere strictly to the standardized output format provided below.
+   - Do not include any additional commentary or alter the structure.
+   - Use clear and professional language suitable for sharing with the company's leadership team.
+8. Tone and Language: Use professional and objective language suitable for an executive audience.
 
-First, filter out any entries that are gibberish, nonsensical, or clearly invalid.
+9. Confidentiality: Ensure that any sensitive or confidential information is handled appropriately.
 
-Second, concisely summarize each valid insight, focusing on key points and essential information.
+10. No Personal Opinions: Focus solely on summarizing and organizing the insights as instructed.
 
-Third, group similar insights together under relevant common themes or categories, assigning a clear and descriptive title to each theme.
+---
 
-Fourth, ensure that the summaries are brief and highlight actionable information, emphasizing details most relevant to the entire company, especially the C-suite.
+### Key Themes
 
-Fifth, adhere strictly to the standardized output format provided below for your response, regardless of the input content. Do not include any additional commentary or alter the structure.
+1. [Theme Title]
 
-Standardized Output Format:
+- Objective: [Brief objective related to the theme.]
 
-[Week Starting MM/DD/YYYY - Week Ending MM/DD/YYYY]
+- Insights:
+  - "[Specific example or data point from an insight.]"
 
-Theme 1: [Theme Title]
+- Actionable Insight: [Recommendation or action to be taken.]
 
-Insight Summary 1
+- Responsibility: [Team or department responsible.]
 
-Insight Summary 2
+2. [Theme Title]
+
+- Objective: [Brief objective related to the theme.]
+
+- Insights:
+  - "[Specific example or data point from an insight.]"
+
+- Actionable Insight: [Recommendation or action to be taken.]
+
+- Responsibility: [Team or department responsible.]
 
 ...
 
-Theme 2: [Theme Title]
+---
 
-Insight Summary 3
+ Immediate Actions
 
-Insight Summary 4
+1. [Action Item]
 
-...
+   - Responsibility:*[Team or department responsible.]
 
-Theme 3: [Theme Title]
+2. [Action Item]
 
-Insight Summary 5
-
-Insight Summary 6
-
-...
-
-Overall Summary:
-
-Provide a brief paragraph summarizing the key takeaways from this week's insights, highlighting trends, successes, challenges, and opportunities.
-
-Action Items:
-
-List actionable recommendations based on the insights, formatted as plain text.
-
-Additional Instructions:
-
-Ensure that your final output strictly adheres to the standardized format and incorporates all the instructions provided. The goal is to deliver a clear, concise, and actionable summary that incorporates all the insights and can be directly shared with the company's leadership team.
-
-Input:`,
+   - `,
           },
           { role: 'user', content: JSON.stringify(summaryRequest) },
         ],
@@ -121,7 +152,8 @@ Input:`,
       const message = completion.choices[0]?.message;
 
       if (message?.content) {
-        return JSON.parse(message.content) as SummaryTextV1;
+        console.log(message.content);
+        return JSON.parse(message.content) as SummaryData;
       } else if (message?.refusal) {
         throw new Error(
           `Model refused to generate the summary: ${message.refusal}`
