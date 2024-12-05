@@ -69,11 +69,7 @@ export function Dashboard(props: DashboardProps) {
             <SidebarHeader>
               <div className="flex gap-2">
                 <SidebarItem href="/dashboard" className="flex-auto">
-                  {theme === 'light' ? (
-                    <Avatar src="/company/logo-light.svg" />
-                  ) : (
-                    <Avatar src="/company/logo-dark.svg" />
-                  )}
+                  <Avatar src="/company/circle-logo-light.svg" />
                   <SidebarLabel>Loop</SidebarLabel>
                 </SidebarItem>
                 <ThemeToggle />
