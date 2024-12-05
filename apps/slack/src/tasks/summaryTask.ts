@@ -1,4 +1,10 @@
-import { Insight, Installation, SummaryData, Team } from '@ideal-enigma/common';
+import {
+  Insight,
+  Installation,
+  Summary,
+  SummaryData,
+  Team,
+} from '@ideal-enigma/common';
 import { WebClient } from '@slack/web-api';
 import config from '../config';
 import { message } from '../messages';
@@ -49,14 +55,15 @@ export const summaryTask = async () => {
         });
 
         if (insights.length >= 10) {
-          // IMPORTANT!!!
-          // The summary version will help us when displaying in frontend and slack.
-          // each version can have its own structure. We are storing summary as jsonb in db.
-          // TODO: Find a better way to set the summary version? Maybe in the summary service?
           let summary: SummaryData;
 
           try {
             summary = await openAI.summarizeInsights(insights);
+            // IMPORTANT!!!
+            // The summary version will help us when displaying in frontend and slack.
+            // each version can have its own structure. We are storing summary as jsonb in db.
+            // TODO: Find a better way to set the summary version? Maybe in the summary service?
+            summary.version = 2;
           } catch (error) {
             logger.error(
               `Failed to generate summary for installation ${installation.id}: ${error}`
@@ -65,11 +72,11 @@ export const summaryTask = async () => {
             continue;
           }
 
-          // const summaryResponse = await apiRequest<Summary>({
-          //   method: 'post',
-          //   url: `${config.apiUrl}/summaries`,
-          //   data: { teamId: team.id, data: summary, version: summary.version },
-          // });
+          const summaryResponse = await apiRequest<Summary>({
+            method: 'post',
+            url: `${config.apiUrl}/summaries`,
+            data: { teamId: team.id, data: summary, version: summary.version },
+          });
 
           const summaryMessage = message.getSummaryMessage({
             summary,
@@ -79,30 +86,25 @@ export const summaryTask = async () => {
           const schedulePromises = team.users.map(async (user) => {
             if (user.data.deleted) return;
 
-            // const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
+            const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
 
             logger.info(`Scheduling summary message to be sent to ${user.id}`);
-            return slackService.postMessage(
+            return slackService.scheduleMessage(
               user.id,
               summaryMessage.text,
+              timestamp,
               summaryMessage.blocks
             );
-            // return slackService.scheduleMessage(
-            //   user.id,
-            //   summaryMessage.text,
-            //   timestamp,
-            //   summaryMessage.blocks
-            // );
           });
 
           await Promise.all(schedulePromises);
 
-          // logger.info('Marking insights as summarized...');
-          // await apiRequest({
-          //   method: 'put',
-          //   url: `${config.apiUrl}/insights`,
-          //   data: { insights, summary: summaryResponse },
-          // });
+          logger.info('Marking insights as summarized...');
+          await apiRequest({
+            method: 'put',
+            url: `${config.apiUrl}/insights`,
+            data: { insights, summary: summaryResponse },
+          });
         } else {
           const schedulePromises = team.users.map(async (user) => {
             if (user.data.deleted) return;

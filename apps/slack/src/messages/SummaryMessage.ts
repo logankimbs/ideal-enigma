@@ -10,6 +10,8 @@ import { createHeaderSection, createSectionBlock } from '../utils/blocks';
 class SummaryMessage implements IMessage {
   public getMessage({ summary, count }: SummaryMessageOptions): Message {
     console.log('summary', summary);
+    console.log('summary version', summary.version);
+
     if (summary.version == 1) {
       const intro = this.buildIntro(count);
       const keyThemes = this.buildKeyThemes(summary.themes);
@@ -75,12 +77,14 @@ class SummaryMessage implements IMessage {
   private buildKeyThemesV2(themes: SummaryThemeV2[]): SectionBlock[] {
     return themes.map((value, index) => {
       const title = `*${index + 1}. ${value.title}*\n\n`;
-      const objective = `*Objective:* ${value.objective}\n`;
+      const objective = `*Objective:* ${value.objective}\n\n`;
       const insights = value.insights.map((insight) => {
-        return `- ${insight.origin.text}`;
+        return `• ${insight.origin.text}`;
       });
       const insightText = insights.join('\n');
-      const text = `${title}${objective}insights:\n${insightText}`;
+      const actionableInsight = `*Actionable Insight:* ${value.action}\n\n`;
+      const responsibility = `*Responsibility:* ${value.responsibility}\n\n\n`;
+      const text = `${title}${objective}*Insights:*\n${insightText}\n\n${actionableInsight}${responsibility}`;
 
       return createSectionBlock('mrkdwn', text);
     });
@@ -93,10 +97,7 @@ class SummaryMessage implements IMessage {
   private buildImmediateActionsV2(actions: SummaryActionV2[]): string {
     console.log('actions', actions);
     return actions
-      .map(
-        (action) =>
-          `• ${action.text}\n\t- *Responsibility:* ${action.responsibility}`
-      )
+      .map((action) => `• ${action.text} *(${action.responsibility})*\n`)
       .join('\n');
   }
 }
