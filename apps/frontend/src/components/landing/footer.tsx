@@ -71,7 +71,7 @@ function Sitemap() {
         <SitemapHeading>Support</SitemapHeading>
         <SitemapLinks>
           {/* link to faq on pricing page */}
-          <SitemapLink href="">Help center</SitemapLink>
+          <SitemapLink href="/pricing#faqs">Help center</SitemapLink>
           <SitemapLink href="">Community</SitemapLink>
         </SitemapLinks>
       </div>
@@ -79,25 +79,25 @@ function Sitemap() {
   );
 }
 
-function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
-      <path d="M12.6 0h2.454l-5.36 6.778L16 16h-4.937l-3.867-5.594L2.771 16H.316l5.733-7.25L0 0h5.063l3.495 5.114L12.6 0zm-.86 14.376h1.36L4.323 1.539H2.865l8.875 12.837z" />
-    </svg>
-  );
-}
+// function SocialIconX(props: React.ComponentPropsWithoutRef<'svg'>) {
+//   return (
+//     <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+//       <path d="M12.6 0h2.454l-5.36 6.778L16 16h-4.937l-3.867-5.594L2.771 16H.316l5.733-7.25L0 0h5.063l3.495 5.114L12.6 0zm-.86 14.376h1.36L4.323 1.539H2.865l8.875 12.837z" />
+//     </svg>
+//   );
+// }
 
-function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16 8.05C16 3.603 12.418 0 8 0S0 3.604 0 8.05c0 4.016 2.926 7.346 6.75 7.95v-5.624H4.718V8.05H6.75V6.276c0-2.017 1.194-3.131 3.022-3.131.875 0 1.79.157 1.79.157v1.98h-1.008c-.994 0-1.304.62-1.304 1.257v1.51h2.219l-.355 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.95z"
-      />
-    </svg>
-  );
-}
+// function SocialIconFacebook(props: React.ComponentPropsWithoutRef<'svg'>) {
+//   return (
+//     <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
+//       <path
+//         fillRule="evenodd"
+//         clipRule="evenodd"
+//         d="M16 8.05C16 3.603 12.418 0 8 0S0 3.604 0 8.05c0 4.016 2.926 7.346 6.75 7.95v-5.624H4.718V8.05H6.75V6.276c0-2.017 1.194-3.131 3.022-3.131.875 0 1.79.157 1.79.157v1.98h-1.008c-.994 0-1.304.62-1.304 1.257v1.51h2.219l-.355 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.95z"
+//       />
+//     </svg>
+//   );
+// }
 
 function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -110,22 +110,6 @@ function SocialIconLinkedIn(props: React.ComponentPropsWithoutRef<'svg'>) {
 function SocialLinks() {
   return (
     <>
-      {/*<Link*/}
-      {/*  href="https://facebook.com"*/}
-      {/*  target="_blank"*/}
-      {/*  aria-label="Visit us on Facebook"*/}
-      {/*  className="text-gray-950 data-[hover]:text-gray-950/75"*/}
-      {/*>*/}
-      {/*  <SocialIconFacebook className="size-4" />*/}
-      {/*</Link>*/}
-      {/*<Link*/}
-      {/*  href="https://x.com"*/}
-      {/*  target="_blank"*/}
-      {/*  aria-label="Visit us on X"*/}
-      {/*  className="text-gray-950 data-[hover]:text-gray-950/75"*/}
-      {/*>*/}
-      {/*  <SocialIconX className="size-4" />*/}
-      {/*</Link>*/}
       <Link
         href="https://linkedin.com"
         target="_blank"

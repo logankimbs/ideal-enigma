@@ -104,7 +104,13 @@ export function Dashboard(props: DashboardProps) {
               <SidebarSection className="max-lg:hidden">
                 <SidebarHeading>Resources</SidebarHeading>
                 {blogPosts.map((post, index) => (
-                  <SidebarItem key={index} href={`/blog/${post.slug}`}>
+                  <SidebarItem
+                    key={index}
+                    href={`/blog/${post.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit our blog"
+                  >
                     {post.title}
                   </SidebarItem>
                 ))}
