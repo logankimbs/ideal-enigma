@@ -45,6 +45,7 @@ class SummaryMessage implements IMessage {
         ...keyThemes,
         createHeaderSection('Immediate Actions'),
         createSectionBlock('mrkdwn', immediateActions),
+        createHeaderSection('Conclusion'),
         createSectionBlock('plain_text', summary.conclusion),
       ];
 
@@ -79,12 +80,13 @@ class SummaryMessage implements IMessage {
       const title = `*${index + 1}. ${value.title}*\n\n`;
       const objective = `*Objective:* ${value.objective}\n\n`;
       const insights = value.insights.map((insight) => {
-        return `• ${insight.origin.text}`;
+        return `>_${insight.origin.text}_\n`;
       });
       const insightText = insights.join('\n');
       const actionableInsight = `*Actionable Insight:* ${value.action}\n\n`;
       const responsibility = `*Responsibility:* ${value.responsibility}\n\n\n`;
-      const text = `${title}${objective}*Insights:*\n${insightText}\n\n${actionableInsight}${responsibility}`;
+      const themeSummary = `*Summary:* ${value.themeSummary}\n`;
+      const text = `${title}${objective}${themeSummary}\n*Insights:*\n${insightText}\n\n${actionableInsight}${responsibility}`;
 
       return createSectionBlock('mrkdwn', text);
     });

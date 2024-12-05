@@ -25,6 +25,7 @@ const ImmediateActionSchema = z.object({
 const ThemeSchema = z.object({
   title: z.string(),
   objective: z.string(),
+  themeSummary: z.string(),
   // trend: z.string(),
   // insight: InsightSchema,
   insights: z.array(InsightSchema),
@@ -71,7 +72,8 @@ export class OpenAIService {
           { role: 'system', content: 'You are a helpful assistant.' },
           {
             role: 'user',
-            content: `You are a skilled project manager tasked with analyzing a list of team member insights. Please perform the following tasks:
+            content: `
+You are a skilled project manager tasked with analyzing a list of team member insights. Please perform the following tasks:
 1. Filter Out Invalid Entries:
    - Exclude any entries that are gibberish, nonsensical, or clearly invalid.
 2. Summarize Valid Insights:
@@ -82,6 +84,7 @@ export class OpenAIService {
 5. Enhance Each Theme with Specific Details:
    - For each theme, include the following components:
       - Objective: A brief statement outlining the goal related to the theme.
+      - Summary: A brief summary of the insights related to the theme.
 6. Insights:
    - Provide specific examples or data points from the insights that support the theme.
    - Actionable Insight: A clear recommendation or action that should be taken based on the insights.
@@ -110,6 +113,8 @@ export class OpenAIService {
 
 - Objective: [Brief objective related to the theme.]
 
+- Summary: [Brief summary of insights related to theme.]
+
 - Insights:
   - "[Specific example or data point from an insight.]"
 
@@ -120,6 +125,8 @@ export class OpenAIService {
 2. [Theme Title]
 
 - Objective: [Brief objective related to the theme.]
+
+- Summary: [Brief summary of insights related to theme.]
 
 - Insights:
   - "[Specific example or data point from an insight.]"
@@ -152,7 +159,6 @@ export class OpenAIService {
       const message = completion.choices[0]?.message;
 
       if (message?.content) {
-        console.log(message.content);
         return JSON.parse(message.content) as SummaryData;
       } else if (message?.refusal) {
         throw new Error(

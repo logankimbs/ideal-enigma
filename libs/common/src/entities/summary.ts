@@ -51,6 +51,7 @@ export interface SummaryTextV2 {
 export interface SummaryThemeV2 {
   title: string;
   objective: string;
+  themeSummary: string;
   insights: SummaryInsightV2[];
   action: string;
   responsibility: string;
