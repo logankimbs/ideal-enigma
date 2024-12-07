@@ -1,20 +1,7 @@
 import clsx from 'clsx';
 import type React from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from './button';
-
-export function Pagination({
-  'aria-label': ariaLabel = 'Page navigation',
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<'nav'>) {
-  return (
-    <nav
-      aria-label={ariaLabel}
-      {...props}
-      className={clsx(className, 'flex gap-x-2')}
-    />
-  );
-}
 
 export function PaginationPrevious({
   href = null,
@@ -175,5 +162,105 @@ export function PaginationGap({
     >
       {children}
     </span>
+  );
+}
+
+type UsePaginationProps<T> = {
+  data: T[];
+  itemsPerPage: number;
+  initialPage?: number;
+};
+
+export function usePagination<T>({
+  data,
+  itemsPerPage,
+  initialPage = 1,
+}: UsePaginationProps<T>) {
+  const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return data.slice(startIndex, startIndex + itemsPerPage);
+  }, [currentPage, data, itemsPerPage]);
+
+  return {
+    currentPage,
+    totalPages,
+    paginatedData,
+    setCurrentPage,
+  };
+}
+
+type PaginationProps = React.ComponentPropsWithoutRef<'nav'> & {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  'aria-label'?: string;
+  className?: string;
+};
+
+export function Pagination({
+  'aria-label': ariaLabel = 'Page navigation',
+  className,
+  currentPage,
+  totalPages,
+  onPageChange,
+  ...props
+}: PaginationProps) {
+  const generatePageLinks = () => {
+    const pages = [];
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <PaginationPage
+          key={i}
+          href={`?page=${i}`}
+          current={i === currentPage}
+          onClick={(e) => {
+            e.preventDefault();
+            onPageChange(i);
+          }}
+        >
+          {i}
+        </PaginationPage>
+      );
+    }
+
+    return (
+      <>
+        {startPage > 1 && <PaginationGap />}
+        {pages}
+        {endPage < totalPages && <PaginationGap />}
+      </>
+    );
+  };
+
+  return (
+    <nav
+      aria-label={ariaLabel}
+      {...props}
+      className={clsx(className, 'flex gap-x-2')}
+    >
+      <PaginationPrevious
+        href={currentPage > 1 ? `?page=${currentPage - 1}` : null}
+        onClick={(e) => {
+          e.preventDefault();
+          if (currentPage > 1) onPageChange(currentPage - 1);
+        }}
+      />
+      <PaginationList>{generatePageLinks()}</PaginationList>
+      <PaginationNext
+        href={currentPage < totalPages ? `?page=${currentPage + 1}` : null}
+        onClick={(e) => {
+          e.preventDefault();
+          if (currentPage < totalPages) onPageChange(currentPage + 1);
+        }}
+      />
+    </nav>
   );
 }

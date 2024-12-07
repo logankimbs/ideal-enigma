@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InsightModule } from '../insight/insight.module';
 import { InstallationModule } from '../installation/installation.module';
@@ -9,12 +9,13 @@ import { SummaryService } from './summary.service';
 
 @Module({
   imports: [
-    InsightModule,
-    TeamModule,
+    forwardRef(() => TeamModule),
+    forwardRef(() => InsightModule),
     InstallationModule,
     TypeOrmModule.forFeature([Summary]),
   ],
   controllers: [SummaryController],
   providers: [SummaryService],
+  exports: [SummaryService],
 })
 export class SummaryModule {}

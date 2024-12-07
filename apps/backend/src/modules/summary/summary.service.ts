@@ -63,4 +63,15 @@ export class SummaryService {
   async getInsightsInSummary(id: string) {
     return await this.insightService.getInsightsBySummaryId(id);
   }
+
+  async getRecentSummary(teamId: string): Promise<Summary> {
+    const team = await this.teamService.find(teamId);
+
+    return this.summaryRepository
+      .createQueryBuilder('summary')
+      .leftJoin('summary.team', 'team')
+      .where('team.id = :teamId', { teamId: team.id })
+      .orderBy('summary.createdAt', 'DESC')
+      .getOne();
+  }
 }

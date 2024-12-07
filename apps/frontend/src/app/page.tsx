@@ -9,7 +9,6 @@ import { LogoCluster } from '../components/landing/logo-cluster';
 import { Map } from '../components/landing/map';
 import { Navbar } from '../components/landing/navbar';
 import { Screenshot } from '../components/landing/screenshot';
-import { Testimonials } from '../components/landing/testimonials';
 import { Heading, Subheading } from '../components/landing/text';
 
 function Hero() {
@@ -17,7 +16,13 @@ function Hero() {
     <div className="relative">
       <Gradient className="absolute inset-2 bottom-0 rounded-[32px] ring-1 ring-inset ring-black/5" />
       <Container className="relative">
-        <Navbar />
+        <Navbar
+          banner={
+            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Currently testing in beta
+            </div>
+          }
+        />
         <div className="pb-24 pt-16 sm:pb-32 sm:pt-24 md:pb-48 md:pt-32">
           <h1 className="font-display text-balance text-6xl/[0.9] font-medium tracking-tight text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
             Cultivate a culture of curiosity.
@@ -192,7 +197,7 @@ export default async function Home() {
         </div>
         {/* <DarkBentoSection /> */}
       </main>
-      <Testimonials />
+      {/*<Testimonials />*/}
       <Footer />
     </div>
   );

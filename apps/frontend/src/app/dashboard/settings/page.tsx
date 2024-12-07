@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Button } from "../../../components/button";
-import { Checkbox, CheckboxField } from "../../../components/checkbox";
-import { Divider } from "../../../components/divider";
-import { Label } from "../../../components/fieldset";
-import { Heading, Subheading } from "../../../components/heading";
-import { Input } from "../../../components/input";
-import { Select } from "../../../components/select";
-import { Text } from "../../../components/text";
-import { Textarea } from "../../../components/textarea";
-import { Address } from "./address";
+import type { Metadata } from 'next';
+import { Button } from '../../../components/button';
+import { Checkbox, CheckboxField } from '../../../components/checkbox';
+import { Divider } from '../../../components/divider';
+import { Label } from '../../../components/fieldset';
+import { Heading, Subheading } from '../../../components/heading';
+import { Input } from '../../../components/input';
+import { Select } from '../../../components/select';
+import { Text } from '../../../components/text';
+import { Textarea } from '../../../components/textarea';
+import { Address } from './address';
 
 export const metadata: Metadata = {
-  title: "Settings",
+  title: 'Settings',
 };
 
 export default function Settings() {
@@ -29,7 +29,7 @@ export default function Settings() {
           <Input
             aria-label="Organization Name"
             name="name"
-            defaultValue="Catalyst"
+            defaultValue="Loop"
           />
         </div>
       </section>

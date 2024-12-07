@@ -4,7 +4,7 @@
     "minor_version": 1
   },
   "display_information": {
-    "name": "Echo Dev",
+    "name": "Loop Dev",
     "description": "Helping teams capture and share insights",
     "background_color": "#143578"
   },
@@ -20,7 +20,10 @@
     }
   },
   "oauth_config": {
-    "redirect_urls": ["http://localhost:3000/slack/oauth_redirect"],
+    "redirect_urls": [
+      "https://slack-app.ngrok.app/slack/oauth_redirect",
+      "https://backend-app.ngrok.app/auth/slack/callback"
+    ],
     "scopes": {
       "user": ["openid"],
       "bot": ["chat:write", "users:read", "users:read.email", "team:read"]
@@ -28,12 +31,12 @@
   },
   "settings": {
     "event_subscriptions": {
-      "request_url": "http://localhost:3000/slack/events",
-      "bot_events": ["app_home_opened", "user_profile_changed", "team_join"]
+      "request_url": "https://slack-app.ngrok.app/slack/events",
+      "bot_events": ["app_home_opened", "app_uninstalled","user_profile_changed", "team_join"]
     },
     "interactivity": {
       "is_enabled": true,
-      "request_url": "http://localhost:3000/slack/actions"
+      "request_url": "https://slack-app.ngrok.app/slack/actions"
     },
     "org_deploy_enabled": false,
     "socket_mode_enabled": false,
