@@ -5,12 +5,12 @@ import { Summary } from '@ideal-enigma/common';
 import { redirect } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { UserContext } from '../app/dashboard/dashboard';
+import EmptySummariesState from './empty-summaries';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
 import { Pagination, usePagination } from './pagination';
 import { Select } from './select';
 import { SummaryStackedList } from './summary-stacked-list';
-import EmptySummariesState from './empty-summaries';
 
 type SummariesViewProps = {
   summaries: Summary[];
@@ -27,18 +27,14 @@ export default function SummariesView({ summaries }: SummariesViewProps) {
     const titleMatch = summary.data.themes.some((theme) => {
       return (
         theme.title.toLocaleLowerCase().includes(queryLower) ||
-        theme.trend.toLocaleLowerCase().includes(queryLower) ||
         theme.objective.toLocaleLowerCase().includes(queryLower)
       );
     });
-    const actionMatch = summary.data.actions.some((action) =>
-      action.toLocaleLowerCase().includes(queryLower)
-    );
     const conclusionMatch = summary.data.conclusion
       .toLocaleLowerCase()
       .includes(queryLower);
 
-    return titleMatch || actionMatch || conclusionMatch;
+    return titleMatch || conclusionMatch;
   });
 
   const {
