@@ -7,6 +7,7 @@ import {
   Square2StackIcon,
 } from '@heroicons/react/20/solid';
 import { User } from '@ideal-enigma/common';
+import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 import { createContext } from 'react';
 import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
@@ -31,6 +32,7 @@ import {
 import { SidebarLayout } from '../../components/sidebar-layout';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { getEvents } from '../../data';
+import { getFeaturedPosts } from '../blog/posts';
 
 export const UserContext = createContext<User | null>(null);
 
@@ -41,7 +43,9 @@ type DashboardProps = {
 };
 
 export function Dashboard(props: DashboardProps) {
+  const blogPosts = getFeaturedPosts();
   const pathname = usePathname();
+  const { theme } = useTheme();
   const { user } = props;
 
   return (
@@ -53,7 +57,7 @@ export function Dashboard(props: DashboardProps) {
             <NavbarSection>
               <Dropdown>
                 <DropdownButton as={NavbarItem}>
-                  <Avatar src={user.data.profile.image_72} square />
+                  <Avatar src={user.data.profile.image_72} />
                 </DropdownButton>
                 <AccountDropdownMenu anchor="bottom end" />
               </Dropdown>
@@ -65,8 +69,8 @@ export function Dashboard(props: DashboardProps) {
             <SidebarHeader>
               <div className="flex gap-2">
                 <SidebarItem href="/dashboard" className="flex-auto">
-                  <Avatar src="/teams/catalyst.svg" />
-                  <SidebarLabel>Catalyst</SidebarLabel>
+                  <Avatar src="/company/circle-logo-light.svg" />
+                  <SidebarLabel>Loop</SidebarLabel>
                 </SidebarItem>
                 <ThemeToggle />
               </div>
@@ -99,7 +103,17 @@ export function Dashboard(props: DashboardProps) {
 
               <SidebarSection className="max-lg:hidden">
                 <SidebarHeading>Resources</SidebarHeading>
-                <SidebarItem>The Secret Behind Impactful Insights</SidebarItem>
+                {blogPosts.map((post, index) => (
+                  <SidebarItem
+                    key={index}
+                    href={`/blog/${post.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit our blog"
+                  >
+                    {post.title}
+                  </SidebarItem>
+                ))}
               </SidebarSection>
             </SidebarBody>
 
@@ -110,7 +124,6 @@ export function Dashboard(props: DashboardProps) {
                     <Avatar
                       src={user.data.profile.image_72}
                       className="size-10"
-                      square
                       alt=""
                     />
                     <span className="min-w-0">

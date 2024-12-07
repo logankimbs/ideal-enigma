@@ -22,7 +22,8 @@ const tiers = [
     slug: 'free',
     description: 'Everything you need to get started with Loop.',
     priceMonthly: 0,
-    href: '#',
+    href: `${process.env.NEXT_PUBLIC_SLACK_URL}/slack/install`,
+    disabled: false,
     highlights: [
       { description: 'Up to 20 team members' },
       { description: '1 submission per user per week' },
@@ -50,7 +51,8 @@ const tiers = [
     slug: 'growth',
     description: 'All the extras for your growing team.',
     priceMonthly: 99,
-    href: '#',
+    href: '',
+    disabled: true,
     highlights: [
       { description: 'Up to 250 team members' },
       { description: 'Up to 3 submissions per user per week' },
@@ -79,6 +81,7 @@ const tiers = [
     description: 'Added flexibility to accelerate teams at scale.',
     priceMonthly: 299,
     href: '#',
+    disabled: true,
     highlights: [
       { description: 'Unlimited team members' },
       { description: 'Unlimited submissions per user per week' },
@@ -108,8 +111,7 @@ function Header() {
     <Container className="mt-16">
       <Heading as="h1">Pricing that grows with your team size.</Heading>
       <Lead className="mt-6 max-w-3xl">
-        Companies all over the world have closed millions of deals with Radiant.
-        Sign up today and start selling smarter.
+        Sign up today and start accelerating growth.
       </Lead>
     </Container>
   );
@@ -148,7 +150,13 @@ function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
             </div>
           </div>
           <div className="mt-8">
-            <Button href={tier.href}>Start a free trial</Button>
+            {tier.disabled ? (
+              <Button disabled={tier.disabled}>Coming soon</Button>
+            ) : (
+              <Button href={tier.href} disabled={tier.disabled}>
+                Start a free trial
+              </Button>
+            )}
           </div>
           <div className="mt-8">
             <h3 className="text-sm/6 font-medium text-gray-950">
@@ -500,13 +508,19 @@ export default function Pricing({
     <main className="overflow-hidden bg-white">
       <GradientBackground />
       <Container>
-        <Navbar />
+        <Navbar
+          banner={
+            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Currently testing in beta
+            </div>
+          }
+        />
       </Container>
       <Header />
       <PricingCards />
       <div className="py-24" />
       {/* <PricingTable selectedTier={tier} /> */}
-      <Testimonial />
+      {/*<Testimonial />*/}
       <FrequentlyAskedQuestions />
       <Footer />
     </main>

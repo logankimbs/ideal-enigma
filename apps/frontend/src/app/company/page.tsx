@@ -12,34 +12,36 @@ import { Heading, Lead, Subheading } from '../../components/landing/text';
 export const metadata: Metadata = {
   title: 'Company',
   description:
-    'We’re on a mission to transform revenue organizations by harnessing vast amounts of illegally acquired customer data.',
+    'We’re on a mission to transform organizations by harnessing the collective intelligence of their teams.',
 };
 
 function Header() {
   return (
     <Container className="mt-16">
-      <Heading as="h1">Helping companies generate revenue.</Heading>
+      <Heading as="h1">Transforming Insights into Action.</Heading>
       <Lead className="mt-6 max-w-3xl">
-        We’re on a mission to transform revenue organizations by harnessing vast
-        amounts of illegally acquired customer data.
+        We’re on a mission to transform organizations by harnessing the
+        collective intelligence of their teams.
       </Lead>
       <section className="mt-16 grid grid-cols-1 lg:grid-cols-2 lg:gap-12">
         <div className="max-w-lg">
           <h2 className="text-2xl font-medium tracking-tight">Our mission</h2>
           <p className="mt-6 text-sm/6 text-gray-600">
-            At Radiant, we are dedicated to transforming the way revenue
-            organizations source and close deals. Our mission is to provide our
-            customers with an unfair advantage over both their competitors and
-            potential customers through insight and analysis. We’ll stop at
-            nothing to get you the data you need to close a deal.
+            At Loop, we are dedicated to transforming the way organizations
+            capture and share knowledge. Our mission is to provide our customers
+            with a competitive advantage by unlocking the power of their
+            collective insights through seamless collaboration and innovation.
+            We'll stop at nothing to help you harness your team's full potential
+            and drive meaningful growth.
           </p>
           <p className="mt-8 text-sm/6 text-gray-600">
-            We’re customer-obsessed — putting the time in to build a detailed
-            financial picture of every one of our customers so that we know more
-            about your business than you do. We are in this together, mostly
-            because we are all implicated in large-scale financial crime. In our
-            history as a company, we’ve never lost a customer, because if any
-            one of us talks, we all go down.
+            We’re customer-obsessed—investing time to build intuitive solutions
+            that integrate effortlessly into your existing workflows. We strive
+            to know your business as well as you do, so we can tailor our
+            platform to meet your unique needs. We believe that when everyone
+            shares their best ideas, we all succeed together. In our history as
+            a company, we've never lost sight of our commitment to fostering a
+            culture of continuous learning and collaboration.
           </p>
         </div>
         <div className="pt-20 lg:row-span-2 lg:-mr-16 xl:mr-auto">
@@ -131,38 +133,37 @@ function Person({
 
 function Team() {
   return (
-    <Container className="mt-32">
+    <Container className="my-32">
       <Subheading>Meet the team</Subheading>
       <Heading as="h3" className="mt-2">
         Founded by an all-star team.
       </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Radiant is founded by two of the best sellers in the business and backed
-        by investors who look the other way.
+        Loop was founded by seasoned professionals who personally experienced
+        the challenges of knowledge silos while working in hyper-growth teams.
       </Lead>
       <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">
         <div className="max-w-lg">
           <p className="text-sm/6 text-gray-600">
-            Years ago, while working as sales associates at rival companies,
-            Thomas, Ben, and Natalie were discussing a big client they had all
-            been competing for. Joking about seeing the terms of each other’s
-            offers, they had an idea: what if they shared data to win deals and
-            split the commission behind their companies’ backs? It turned out to
-            be an incredible success, and that idea became the kernel for
-            Radiant.
+            During their time at rapidly expanding companies, they witnessed
+            firsthand how valuable insights were often confined within
+            individual teams, hindering innovation and leading to repeated
+            mistakes. They understood that in fast-paced environments, the lack
+            of effective knowledge sharing could slow down progress and impact a
+            company's competitive edge. This realization sparked a visionary
+            idea: what if there was a seamless way to capture and share critical
+            insights across the entire organization?
           </p>
           <p className="mt-8 text-sm/6 text-gray-600">
-            Today, Radiant transforms revenue organizations by harnessing
-            illegally acquired customer and competitor data, using it to provide
-            extraordinary leverage. More than 30,000 companies rely on Radiant
-            to undercut their competitors and extort their customers, all
-            through a single integrated platform.
+            Determined to solve this problem, they set out to create a solution
+            that would integrate effortlessly into daily workflows and foster a
+            culture of continuous learning and collaboration. This idea became
+            the foundation for Loop. Today, Loop transforms organizations by
+            harnessing the collective intelligence of their teams, providing
+            extraordinary leverage. Companies around the world rely on Loop to
+            break down silos, accelerate innovation, and drive growth—all
+            through a single, integrated platform.
           </p>
-          <div className="mt-6">
-            <Button className="w-full sm:w-auto" href="#">
-              Join us
-            </Button>
-          </div>
         </div>
         <div className="max-lg:order-first max-lg:max-w-lg">
           <div className="aspect-[3/2] overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
@@ -183,49 +184,19 @@ function Team() {
         className="mx-auto mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
       >
         <Person
-          name="Michael Foster"
-          description="Co-Founder / CTO"
-          img="/team/michael-foster.jpg"
+          name="Reed Gubernick"
+          description="Co-Founder"
+          img="/team/reed-gubernick.jpg"
         />
         <Person
-          name="Dries Vincent"
-          description="Business Relations"
+          name="Jace Call"
+          description="Co-Founder"
           img="/team/dries-vincent.jpg"
         />
         <Person
-          name="Celeste Vandermark"
-          description="Front-end Developer"
-          img="/team/celeste-vandermark.jpg"
-        />
-        <Person
-          name="Courtney Henry"
-          description="Designer"
-          img="/team/courtney-henry.jpg"
-        />
-        <Person
-          name="Marcus Eldridge"
-          description="Director of Product"
-          img="/team/marcus-eldridge.jpg"
-        />
-        <Person
-          name="Whitney Francis"
-          description="Copywriter"
-          img="/team/whitney-francis.jpg"
-        />
-        <Person
-          name="Leonard Krasner"
-          description="Senior Designer"
-          img="/team/leonard-krasner.jpg"
-        />
-        <Person
-          name="Nolan Sheffield"
-          description="Principal Designer"
-          img="/team/nolan-sheffield.jpg"
-        />
-        <Person
-          name="Emily Selman"
-          description="VP, User Experience"
-          img="/team/emily-selman.jpg"
+          name="Logan Kimball"
+          description="Co-Founder"
+          img="/team/logan-kimball.jpg"
         />
       </ul>
     </Container>
@@ -463,12 +434,18 @@ export default function Company() {
     <main className="overflow-hidden bg-white">
       <GradientBackground />
       <Container>
-        <Navbar />
+        <Navbar
+          banner={
+            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Currently testing in beta
+            </div>
+          }
+        />
       </Container>
       <Header />
       <Team />
-      <Investors />
-      <Careers />
+      {/*<Investors />*/}
+      {/*<Careers />*/}
       <Footer />
     </main>
   );

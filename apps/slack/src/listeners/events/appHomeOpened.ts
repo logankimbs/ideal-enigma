@@ -1,11 +1,11 @@
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
-import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from "../../constants";
+import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from '@slack/bolt';
+import config from '../../config';
+import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from '../../constants';
 import {
   createHeaderBlock,
   createRichTextBlock,
   createSectionWithButton,
-} from "../../utils/blocks";
-import config from "../../config";
+} from '../../utils/blocks';
 
 const getHomeViewBlocks = (event: any) => {
   const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
@@ -25,7 +25,7 @@ const getHomeViewBlocks = (event: any) => {
       text: '*What makes an insight impactful?*\nAn impactful insight sparks action and fuels growth. Here’s what makes it effective:',
       buttonText: '🚀 Impactful Insights',
       buttonValue: AUTO_LOGIN,
-      url: `${process.env.FRONTEND_URL}`,
+      url: `${process.env.FRONTEND_URL}/blog/unlocking-growth-the-secret-behind-impactful-insights`,
     }),
     createRichTextBlock(
       '1. Clear, Actionable, and Specific:',
@@ -65,19 +65,19 @@ const getHomeViewBlocks = (event: any) => {
 const appHomeOpened = async ({
   client,
   event,
-}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
-  if (event.tab !== "home") return;
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<'app_home_opened'>) => {
+  if (event.tab !== 'home') return;
 
   try {
     await client.views.publish({
       user_id: event.user,
       view: {
-        type: "home",
+        type: 'home',
         blocks: getHomeViewBlocks(event),
       },
     });
   } catch (error) {
-    console.error("Error publishing home view:", error);
+    console.error('Error publishing home view:', error);
   }
 };
 

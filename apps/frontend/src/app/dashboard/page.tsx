@@ -1,54 +1,36 @@
 import { Heading, Subheading } from '../../components/heading';
 import { RepositoryPreview } from '../../components/repository-preview';
-import { Select } from '../../components/select';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
-import { getRespository, getSummaries } from '../libs/api';
+import { getRecentInsights, getRecentSummary } from '../libs/api';
 
 export default async function Home() {
-  const summaries = await getSummaries();
-  const recentSummary = summaries[0];
-  const repository = await getRespository();
-  const recentInsights = repository.slice(0, 5);
+  const recentSummary = await getRecentSummary();
+  const recentInsights = await getRecentInsights();
 
   return (
     <>
       <Heading>Good afternoon!</Heading>
       <div className="mt-8 flex items-end justify-between">
-        <Subheading>My Overview</Subheading>
-        <div>
-          <Select name="period">
-            <option value="last_week">Last week</option>
-            <option value="last_two">Last two weeks</option>
-            <option value="last_month">Last month</option>
-            <option value="last_quarter">Last quarter</option>
-          </Select>
-        </div>
+        <Subheading>My Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total revenue" value="$2.6M" change="+4.5%" />
-        <Stat title="Average order value" value="$455" change="-0.5%" />
-        <Stat title="Tickets sold" value="5,888" change="+4.5%" />
-        <Stat title="Pageviews" value="823,067" change="+21.2%" />
+        <Stat title="Total insights" value="87" change="+4.5%" />
+        <Stat title="Total themes" value="10" change="-0.5%" />
+        <Stat title="Average insights" value="0.8" change="+4.5%" />
+        {/* 0-1 no flame. 1-3 one flame. 3-5 two flames. 5+ three flames. */}
+        <Stat title="Current streak" value="4" change="🔥🔥🔥" />
       </div>
       <div className="mt-8 flex items-end justify-between">
-        <Subheading>Company Overview</Subheading>
-        <div>
-          <Select name="period">
-            <option value="last_week">Last week</option>
-            <option value="last_two">Last two weeks</option>
-            <option value="last_month">Last month</option>
-            <option value="last_quarter">Last quarter</option>
-          </Select>
-        </div>
+        <Subheading>Company Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total revenue" value="$2.6M" change="+4.5%" />
-        <Stat title="Average order value" value="$455" change="-0.5%" />
-        <Stat title="Tickets sold" value="5,888" change="+4.5%" />
-        <Stat title="Pageviews" value="823,067" change="+21.2%" />
+        <Stat title="Total insights" value="2,746" change="+4.5%" />
+        <Stat title="Total themes" value="150" change="-0.5%" />
+        <Stat title="Average insights per user" value="2" change="+4.5%" />
+        <Stat title="Active contributors" value="150" change="+21.2%" />
       </div>
-      <div className="mt-8 flex grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
+      <div className="mt-8 grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
         {recentSummary && <SummaryPreview summary={recentSummary} />}
         {recentInsights && recentInsights.length > 0 && (
           <RepositoryPreview repository={recentInsights} />

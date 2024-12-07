@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tag } from '../tag/tag.entity';
+import { TeamService } from '../team/team.service';
 import { User } from '../user/user.entity';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { GetInsightByIdDto } from './dto/get-insight.dto';
@@ -13,7 +14,8 @@ export class InsightService {
   constructor(
     @InjectRepository(Insight) private insightRepository: Repository<Insight>,
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Tag) private tagRepository: Repository<Tag>
+    @InjectRepository(Tag) private tagRepository: Repository<Tag>,
+    private teamService: TeamService
   ) {}
 
   // Create insight and tags. Tags are passed in as an array of strings i.e., ["tag1", "tag2"]
@@ -75,6 +77,19 @@ export class InsightService {
       .leftJoinAndSelect('insights.tags', 'tags')
       .leftJoinAndSelect('user.team', 'team')
       .where('team.id = :teamId', { teamId: user.team.id })
+      .getMany();
+  }
+
+  async getRecentInsights(teamId: string, limit: number): Promise<Insight[]> {
+    const team = await this.teamService.find(teamId);
+
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: team.id })
+      .orderBy('insights.createdAt', 'DESC')
+      .limit(limit)
       .getMany();
   }
 

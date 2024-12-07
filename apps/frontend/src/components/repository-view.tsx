@@ -10,14 +10,7 @@ import EmptyRepositoryView from './empty-repository-view';
 import { Heading } from './heading';
 import { Input, InputGroup } from './input';
 import { Listbox, ListboxLabel, ListboxOption } from './listbox';
-import {
-  Pagination,
-  PaginationGap,
-  PaginationList,
-  PaginationNext,
-  PaginationPage,
-  PaginationPrevious,
-} from './pagination';
+import { Pagination, usePagination } from './pagination';
 import { RepositoryTableV2 } from './repository-table';
 import { Select } from './select';
 
@@ -55,10 +48,6 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
   const [view, setView] = useState(views[0]);
   const [query, setQuery] = useState('');
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-
   const filteredInsights = repository.filter((insight) => {
     const queryLower = query.toLowerCase();
     const textMatch = insight.text.toLowerCase().includes(queryLower);
@@ -71,46 +60,16 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
     return (textMatch || tagsMatch) && viewMatch;
   });
 
-  // Pagination
-  const totalItems = filteredInsights.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Paginate the filtered insights
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedInsights = filteredInsights.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-
-  const generatePageLinks = () => {
-    const pages = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(totalPages, currentPage + 2);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <PaginationPage
-          key={i}
-          href={`?page=${i}`}
-          current={i === currentPage}
-          onClick={(e) => {
-            e.preventDefault();
-            setCurrentPage(i);
-          }}
-        >
-          {i}
-        </PaginationPage>
-      );
-    }
-
-    return (
-      <>
-        {startPage > 1 && <PaginationGap />}
-        {pages}
-        {endPage < totalPages && <PaginationGap />}
-      </>
-    );
-  };
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: paginatedInsights,
+    setCurrentPage,
+  } = usePagination<Insight>({
+    data: filteredInsights,
+    itemsPerPage: 4,
+    initialPage: 1,
+  });
 
   if (!repository.length) return <EmptyRepositoryView />;
 
@@ -168,24 +127,11 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
         <RepositoryTableV2 repository={paginatedInsights} />
       </div>
 
-      {/* Pagination */}
-      <Pagination>
-        <PaginationPrevious
-          href={currentPage > 1 ? `?page=${currentPage - 1}` : null}
-          onClick={(e) => {
-            e.preventDefault();
-            if (currentPage > 1) setCurrentPage(currentPage - 1);
-          }}
-        />
-        <PaginationList>{generatePageLinks()}</PaginationList>
-        <PaginationNext
-          href={currentPage < totalPages ? `?page=${currentPage + 1}` : null}
-          onClick={(e) => {
-            e.preventDefault();
-            if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-          }}
-        />
-      </Pagination>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </>
   );
 }
