@@ -178,6 +178,7 @@ function BentoSection() {
 // }
 
 export default async function Home() {
+  console.log(process.env.NEXT_PUBLIC_SLACK_URL);
   return (
     <div className="overflow-hidden bg-white">
       <Hero />
