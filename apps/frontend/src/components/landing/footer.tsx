@@ -20,7 +20,7 @@ function CallToAction() {
       <div className="mt-6">
         <Button
           className="w-full sm:w-auto gap-2"
-          href={`${process.env.SLACK_URL}/slack/install`}
+          href={`${process.env.NEXT_PUBLIC_SLACK_URL}/slack/install`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get started

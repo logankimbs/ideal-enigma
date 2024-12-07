@@ -22,7 +22,7 @@ const tiers = [
     slug: 'free',
     description: 'Everything you need to get started with Loop.',
     priceMonthly: 0,
-    href: `${process.env.SLACK_URL}/slack/install`,
+    href: `${process.env.NEXT_PUBILC_SLACK_URL}/slack/install`,
     disabled: false,
     highlights: [
       { description: 'Up to 20 team members' },
