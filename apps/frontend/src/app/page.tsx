@@ -28,7 +28,7 @@ function Hero() {
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
             <Button
-              href={`${process.env.SLACK_URL}/slack/install`}
+              href={`${process.env.NEXT_PUBLIC_SLACK_URL}/slack/install`}
               className="gap-2"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
