@@ -1,5 +1,11 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
-import { SummaryThemeV1 } from '@ideal-enigma/common';
+import {
+  SummaryActionV2,
+  SummaryTextV1,
+  SummaryTextV2,
+  SummaryThemeV1,
+  SummaryThemeV2,
+} from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Avatar } from '../../../../components/avatar';
@@ -59,6 +65,58 @@ const getKeyThemes = (themes: SummaryThemeV1[]) => {
   );
 };
 
+const getKeyThemesV2 = (themes: SummaryThemeV2[]) => {
+  return (
+    <ol className="list-inside mt-4 mb-10">
+      {themes.map((theme, index) => (
+        <li key={index} className="list-decimal mb-10">
+          <h3 className="inline text-base font-semibold text-zinc-950 dark:text-white">
+            {theme.title}
+          </h3>
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Objective:{' '}
+            </strong>
+            {theme.objective}
+          </p>
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Summary:{' '}
+            </strong>
+            {theme.themeSummary}
+          </p>
+          {/*<div className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">*/}
+          {/*  <p>*/}
+          {/*    <strong className="font-medium text-zinc-950 dark:text-white">*/}
+          {/*      Insights:{' '}*/}
+          {/*    </strong>*/}
+          {/*  </p>*/}
+          {/*  <ul className="list-inside mb-10">*/}
+          {/*    {theme.insights.map((insight, index) => (*/}
+          {/*      <li key={index}>{insight.origin.text}</li>*/}
+          {/*    ))}*/}
+          {/*  </ul>*/}
+          {/*</div>*/}
+
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Action:{' '}
+            </strong>
+            {theme.action}
+          </p>
+
+          <p className="text-base leading-loose my-0.5 text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              Responsibility:{' '}
+            </strong>
+            {theme.responsibility}
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+};
+
 const getImmediateActions = (actions: string[]) => {
   return (
     <ul className="list-disc list-inside mt-4 mb-10">
@@ -73,12 +131,28 @@ const getImmediateActions = (actions: string[]) => {
   );
 };
 
+const getImmediateActionsV2 = (actions: SummaryActionV2[]) => {
+  return (
+    <ul className="list-disc list-inside mt-4 mb-10">
+      {actions.map((action, index) => (
+        <li key={index} className="my-0.5">
+          <p className="inline text-base leading-loose text-zinc-500 dark:text-zinc-400">
+            <strong className="font-medium text-zinc-950 dark:text-white">
+              {action.responsibility}:{' '}
+            </strong>
+            {action.text}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
   const insights = await getInsightsInSummary(props.params.id);
 
   if (!summary) notFound();
-
   return (
     <>
       <div className="mb-12">
@@ -129,24 +203,9 @@ export default async function Summary(props: SummaryProps) {
               {getIntro(insights.length)}
             </p>
 
-            <div>
-              <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
-                Key Themes
-              </h2>
-              {getKeyThemes(summary.data.themes)}
-            </div>
-
-            <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
-              Immediate Actions
-            </h2>
-            {getImmediateActions(summary.data.actions)}
-
-            <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
-              Conclusion
-            </h2>
-            <p className="text-base leading-loose mt-4 mb-10 text-zinc-500 dark:text-zinc-400">
-              {summary.data.conclusion}
-            </p>
+            {summary.version === 1
+              ? renderV1(summary.data as SummaryTextV1)
+              : renderV2(summary.data as SummaryTextV2)}
           </div>
         </div>
       </div>
@@ -157,6 +216,58 @@ export default async function Summary(props: SummaryProps) {
           <SummaryInsights insights={insights} />
         </>
       )}
+    </>
+  );
+}
+
+function renderV1(summary: SummaryTextV1) {
+  return (
+    <>
+      <div>
+        <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+          Key Themes
+        </h2>
+        {getKeyThemes(summary.themes)}
+      </div>
+
+      <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+        Immediate Actions
+      </h2>
+      {getImmediateActions(summary.actions)}
+
+      <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+        Conclusion
+      </h2>
+
+      <p className="text-base leading-loose mt-4 mb-10 text-zinc-500 dark:text-zinc-400">
+        {summary.conclusion}
+      </p>
+    </>
+  );
+}
+
+function renderV2(summary: SummaryTextV2) {
+  return (
+    <>
+      <div>
+        <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+          Key Themes
+        </h2>
+        {getKeyThemesV2(summary.themes)}
+      </div>
+
+      <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+        Immediate Actions
+      </h2>
+      {getImmediateActionsV2(summary.actions)}
+
+      <h2 className="text-lg font-semibold text-zinc-950 dark:text-white">
+        Conclusion
+      </h2>
+
+      <p className="text-base leading-loose mt-4 mb-10 text-zinc-500 dark:text-zinc-400">
+        {summary.conclusion}
+      </p>
     </>
   );
 }

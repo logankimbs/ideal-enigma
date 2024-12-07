@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from '@heroicons/react/16/solid';
 import { Summary } from '@ideal-enigma/common';
+import { Badge } from './badge';
 import { Divider } from './divider';
 import { Heading, Subheading } from './heading';
 import { Link } from './link';
@@ -29,13 +30,13 @@ export async function SummaryPreview({ summary }: SummaryPreviewProps) {
               day: 'numeric',
             })}
           </Subheading>
-          {/*{Array.isArray(summary.data.actions) && (*/}
-          {/*  <div className="flex flex-wrap gap-2 mt-4">*/}
-          {/*    {summary.data.themes.map((theme) => (*/}
-          {/*      <Badge key={theme.insight.origin.insight}>{theme.title}</Badge>*/}
-          {/*    ))}*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          {Array.isArray(summary.data.actions) && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              {summary.data.themes.map((theme, index) => (
+                <Badge key={index}>{theme.title}</Badge>
+              ))}
+            </div>
+          )}
           <Text className="mt-4">{summary.data.conclusion}</Text>
           <Link
             href={`/dashboard/summaries/${summary.id}`}

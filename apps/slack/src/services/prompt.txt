@@ -1,0 +1,18 @@
+{
+  themes: [{
+    title: ""
+    objective: "",
+    insights: [{
+      id: "",
+      userId: "",
+      text: ""
+    }],
+    action: "",
+    responsibility: ""
+  }],
+  immediateActions: [{
+    text: "",
+    responsibility: ""
+  }],
+  conclusion: ""
+}

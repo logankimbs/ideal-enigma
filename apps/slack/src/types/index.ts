@@ -1,4 +1,4 @@
-import { SummaryTextV1 } from '@ideal-enigma/common';
+import { SummaryData } from '@ideal-enigma/common';
 import { ExpressReceiverOptions } from '@slack/bolt';
 import { Block, KnownBlock } from '@slack/types';
 import { Team } from '@slack/web-api/dist/types/response/TeamInfoResponse';
@@ -48,7 +48,7 @@ export type ReminderMessageOptions = {
 };
 
 export type SummaryMessageOptions = {
-  summary: SummaryTextV1;
+  summary: SummaryData;
   count: number;
 };
 

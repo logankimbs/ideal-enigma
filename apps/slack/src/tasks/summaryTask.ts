@@ -2,7 +2,7 @@ import {
   Insight,
   Installation,
   Summary,
-  SummaryTextV1,
+  SummaryData,
   Team,
 } from '@ideal-enigma/common';
 import { WebClient } from '@slack/web-api';
@@ -55,15 +55,15 @@ export const summaryTask = async () => {
         });
 
         if (insights.length >= 10) {
-          // IMPORTANT!!!
-          // The summary version will help us when displaying in frontend and slack.
-          // each version can have its own structure. We are storing summary as jsonb in db.
-          // TODO: Find a better way to set the summary version? Maybe in the summary service?
-          const SUMMARY_VERSION = 1;
-          let summary: SummaryTextV1;
+          let summary: SummaryData;
 
           try {
             summary = await openAI.summarizeInsights(insights);
+            // IMPORTANT!!!
+            // The summary version will help us when displaying in frontend and slack.
+            // each version can have its own structure. We are storing summary as jsonb in db.
+            // TODO: Find a better way to set the summary version? Maybe in the summary service?
+            summary.version = 2;
           } catch (error) {
             logger.error(
               `Failed to generate summary for installation ${installation.id}: ${error}`
@@ -75,7 +75,7 @@ export const summaryTask = async () => {
           const summaryResponse = await apiRequest<Summary>({
             method: 'post',
             url: `${config.apiUrl}/summaries`,
-            data: { teamId: team.id, data: summary, version: SUMMARY_VERSION },
+            data: { teamId: team.id, data: summary, version: summary.version },
           });
 
           const summaryMessage = message.getSummaryMessage({
