@@ -27,11 +27,11 @@ export class SlackInstallationStore implements InstallationStore {
       throw new Error("We don't support enterprise installations");
     }
 
-    const existingInstallation = await this.installationService.findOne(
+    const installationExists = await this.installationService.exists(
       installation.team.id
     );
 
-    if (existingInstallation) {
+    if (installationExists) {
       throw new Error('Installation already exists');
     }
 
@@ -48,13 +48,9 @@ export class SlackInstallationStore implements InstallationStore {
       return !member.is_bot && member.id !== 'USLACKBOT';
     });
 
-    await this.installationService.create({
-      id: installation.team.id,
-      installation,
-      token: installation.bot.token,
-    });
-    await this.teamService.create(team);
-    await this.userService.createBatch(team.id, users);
+    await this.installationService.create(installation);
+    const teamEntity = await this.teamService.create(team);
+    await this.userService.createBatch(teamEntity, users);
 
     return Promise.resolve();
   }
