@@ -1,21 +1,17 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateTeamDto } from "./dto/create-team.dto";
-import { Team } from "./team.entity";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Team as SlackTeam } from '@slack/web-api/dist/types/response/TeamInfoResponse';
+import { Repository } from 'typeorm';
+import { Team } from './team.entity';
 
 @Injectable()
 export class TeamService {
   constructor(
-    @InjectRepository(Team) private teamRepository: Repository<Team>,
+    @InjectRepository(Team) private teamRepository: Repository<Team>
   ) {}
 
-  async create(createTeamDto: CreateTeamDto): Promise<Team> {
-    const team = new Team();
-    team.id = createTeamDto.id;
-    team.data = createTeamDto;
-
-    return this.teamRepository.save(team);
+  async create(team: SlackTeam): Promise<Team> {
+    return await this.teamRepository.save({ id: team.id, data: team });
   }
 
   findAll(): Promise<Team[]> {
@@ -25,7 +21,7 @@ export class TeamService {
   async find(id: string): Promise<Team> {
     return await this.teamRepository.findOneOrFail({
       where: { id },
-      relations: ["users"],
+      relations: ['users'],
     });
   }
 }
