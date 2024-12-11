@@ -12,7 +12,6 @@ export class InstallationService {
   ) {}
 
   async create(installation: SlackInstallation): Promise<Installation> {
-    console.log(installation);
     const installationId = installation.isEnterpriseInstall
       ? installation.enterprise.id
       : installation.team.id;
