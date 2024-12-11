@@ -16,6 +16,7 @@ export class SlackService {
       installationStore: this.slackInstallationStore,
       installUrlOptions: {
         scopes: ['chat:write', 'users:read', 'users:read.email', 'team:read'],
+        userScopes: ['openid', 'profile', 'email'],
         redirectUri: `${process.env.BACKEND_URL}/slack/install/callback`,
       },
     });
@@ -30,7 +31,7 @@ export class SlackService {
 
     const onSuccess = (installation: Installation) => {
       console.log('Installation successful:', installation);
-      url = `${url}/pricing`;
+      url = `${process.env.BACKEND_URL}/auth/slack?user=${installation.user.id}`;
     };
 
     const onFailure = (error: CodedError) => {
