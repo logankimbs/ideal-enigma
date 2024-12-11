@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InstallProvider } from '@slack/oauth';
+import { CodedError, Installation, InstallProvider } from '@slack/oauth';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { SlackInstallationStore } from './slack.installation.store';
 
@@ -28,15 +28,19 @@ export class SlackService {
   async handleInstallRedirect(req: IncomingMessage, res: ServerResponse) {
     let url = process.env.FRONTEND_URL;
 
+    const onSuccess = (installation: Installation) => {
+      console.log('Installation successful:', installation);
+      url = `${url}/pricing`;
+    };
+
+    const onFailure = (error: CodedError) => {
+      console.log('Installation failed:', error);
+      url = `${url}`;
+    };
+
     await this.installer.handleCallback(req, res, {
-      success: (installation) => {
-        console.log('Installation successful:', installation);
-        url = `${url}/pricing`;
-      },
-      failure: (error) => {
-        console.log('Installation failed:', error);
-        url = `${url}`;
-      },
+      success: onSuccess,
+      failure: onFailure,
     });
 
     return { url };
