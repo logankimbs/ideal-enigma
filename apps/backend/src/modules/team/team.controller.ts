@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { Insight } from '../insight/insight.entity';
 import { InsightService } from '../insight/insight.service';
 import { Summary } from '../summary/summary.entity';
 import { SummaryService } from '../summary/summary.service';
-import { CreateTeamDto } from './dto/create-team.dto';
 import { Team } from './team.entity';
 import { TeamService } from './team.service';
 
@@ -15,10 +14,10 @@ export class TeamController {
     private readonly summaryService: SummaryService
   ) {}
 
-  @Post()
-  create(@Body() createTeamDto: CreateTeamDto): Promise<Team> {
-    return this.teamService.create(createTeamDto);
-  }
+  // @Post()
+  // create(@Body() createTeamDto: CreateTeamDto): Promise<Team> {
+  //   return this.teamService.create(createTeamDto);
+  // }
 
   @Get()
   findAll(): Promise<Team[]> {
