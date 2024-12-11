@@ -14,11 +14,6 @@ export class TeamController {
     private readonly summaryService: SummaryService
   ) {}
 
-  // @Post()
-  // create(@Body() createTeamDto: CreateTeamDto): Promise<Team> {
-  //   return this.teamService.create(createTeamDto);
-  // }
-
   @Get()
   findAll(): Promise<Team[]> {
     return this.teamService.findAll();
