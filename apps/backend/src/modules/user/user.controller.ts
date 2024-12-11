@@ -1,14 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
-import {
-  CreateUserDto,
-  CreateUsersListDto,
-  CreateUsersListQueryDto,
-} from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { User } from "./user.entity";
-import { UserService } from "./user.service";
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './user.entity';
+import { UserService } from './user.service';
 
-@Controller("users")
+@Controller('users')
 export class UserController {
   constructor(private readonly usersService: UserService) {}
 
@@ -17,7 +13,7 @@ export class UserController {
     return await this.usersService.findAll();
   }
 
-  @Get(":id")
+  @Get(':id')
   async findOne(@Param() params: { id: string }): Promise<User> {
     try {
       return await this.usersService.findOne(params.id);
@@ -33,17 +29,6 @@ export class UserController {
     } catch (error: unknown) {
       return `Unable to create user. ${error}`;
     }
-  }
-
-  @Post("batch")
-  async createBatch(
-    @Query() createUsersListQueryDto: CreateUsersListQueryDto,
-    @Body() createUsersListDto: CreateUsersListDto,
-  ) {
-    return await this.usersService.createBatch(
-      createUsersListQueryDto,
-      createUsersListDto,
-    );
   }
 
   @Put()
