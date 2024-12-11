@@ -1,20 +1,17 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
 import { Repository } from 'typeorm';
-import {
-  CreateUserDto,
-  CreateUsersListDto,
-  CreateUsersListQueryDto,
-} from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { User } from "./user.entity";
 import { Team } from '../team/team.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Team) private teamRepository: Repository<Team>,
+    @InjectRepository(Team) private teamRepository: Repository<Team>
   ) {}
 
   findAll(): Promise<User[]> {
@@ -24,7 +21,7 @@ export class UserService {
   findOne(id: string): Promise<User> {
     return this.userRepository.findOneOrFail({
       where: { id },
-      relations: ["team"],
+      relations: ['team'],
     });
   }
 
@@ -41,23 +38,12 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async createBatch(
-    createUsersListQueryDto: CreateUsersListQueryDto,
-    createUsersListDto: CreateUsersListDto,
-  ): Promise<User[]> {
-    // Assuming each user in the batch has the same team id
-    const team = await this.teamRepository.findOneOrFail({
-      where: { id: createUsersListQueryDto.teamId },
-    });
-
-    const users = createUsersListDto.users.map((newUser) => {
-      const user = new User();
-      user.id = newUser.id;
-      user.data = newUser;
-      user.team = team;
-
-      return user;
-    });
+  async createBatch(team: Team, members: Member[]): Promise<User[]> {
+    const users = members.map((member) => ({
+      id: member.id,
+      data: member,
+      team,
+    }));
 
     return this.userRepository.save(users);
   }
