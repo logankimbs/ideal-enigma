@@ -69,6 +69,8 @@ export class InsightService {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
+      order: { createdAt: 'DESC' },
+
     });
 
     return this.insightRepository
