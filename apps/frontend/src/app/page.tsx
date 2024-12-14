@@ -40,8 +40,14 @@ function Hero() {
               <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get
               started for free
             </Button>
-            <Button variant="secondary" href="/pricing">
-              See pricing
+            <Button
+              variant="secondary"
+              href={process.env.NEXT_PUBLIC_GOOGLE_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Schedule a demo"
+            >
+              Schedule demo
             </Button>
           </div>
         </div>
