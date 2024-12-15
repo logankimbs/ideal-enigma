@@ -17,4 +17,11 @@ export class User extends TimestampEntity {
 
   @OneToMany(() => Insight, (insight) => insight.user)
   insights: Insight[];
+
+  // Used for tracking onboarding completion
+  @Column({ type: 'timestamp', nullable: true })
+  onboardCompletedAt: Date | null; // Null if not completed, Date if completed
+
+  @Column({ type: 'boolean', default: false })
+  notifications: boolean;
 }

@@ -35,4 +35,19 @@ export class UserController {
   async update(@Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.update(updateUserDto);
   }
+
+  @Get(':userId/isOnboardingComplete')
+  async isOnboardingComplete(@Param('userId') userId: string) {
+    return await this.usersService.isOnboardingComplete(userId);
+  }
+
+  @Post('enableNotifications')
+  async batchEnableNotifications(@Body('userIds') userIds: string[]) {
+    return await this.usersService.batchEnableNotifications(userIds);
+  }
+
+  @Put(':userId/completeOnboarding')
+  async completeOnboarding(@Param('userId') userId: string) {
+    return await this.usersService.completeOnboarding(userId);
+  }
 }

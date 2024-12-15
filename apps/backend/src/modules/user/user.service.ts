@@ -1,5 +1,7 @@
+import { SlackUser } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User as Installer } from '@slack/web-api/dist/types/response/UsersInfoResponse';
 import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
 import { Repository } from 'typeorm';
 import { Team } from '../team/team.entity';
@@ -38,14 +40,30 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async createBatch(team: Team, members: Member[]): Promise<User[]> {
-    const users = members.map((member) => ({
-      id: member.id,
-      data: member,
-      team,
-    }));
+  async onboardUsers(members: Member[], team: Team): Promise<User[]> {
+    const users: User[] = members.map((member) => {
+      const user = new User();
+
+      user.id = member.id;
+      user.data = member as SlackUser;
+      user.team = team;
+      user.onboardCompletedAt = new Date();
+
+      return user;
+    });
 
     return this.userRepository.save(users);
+  }
+
+  async saveInstaller(installer: Installer, team: Team): Promise<User> {
+    const user = new User();
+
+    user.id = installer.id;
+    user.data = installer as SlackUser;
+    user.team = team;
+    user.onboardCompletedAt = null;
+
+    return this.userRepository.save(user);
   }
 
   async update(updateUserDto: UpdateUserDto): Promise<User> {
@@ -53,5 +71,40 @@ export class UserService {
       id: updateUserDto.id,
       data: updateUserDto,
     });
+  }
+
+  async getUsers(teamId: string): Promise<User[]> {
+    return this.userRepository.find({
+      where: { team: { id: teamId } },
+      relations: ['team'],
+    });
+  }
+
+  async isOnboardingComplete(userId: string) {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+
+    return user.onboardCompletedAt !== null;
+  }
+
+  async batchEnableNotifications(userIds: string[]) {
+    for (const id of userIds) {
+      const user = await this.userRepository.findOneBy({ id });
+
+      user.notifications = true;
+
+      await this.userRepository.save(user);
+    }
+  }
+
+  async completeOnboarding(userId: string) {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+
+    user.onboardCompletedAt = new Date();
+
+    return await this.userRepository.save(user);
   }
 }
