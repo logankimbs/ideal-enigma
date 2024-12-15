@@ -3,6 +3,8 @@ import { Insight } from '../insight/insight.entity';
 import { InsightService } from '../insight/insight.service';
 import { Summary } from '../summary/summary.entity';
 import { SummaryService } from '../summary/summary.service';
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
 import { Team } from './team.entity';
 import { TeamService } from './team.service';
 
@@ -11,7 +13,8 @@ export class TeamController {
   constructor(
     private readonly teamService: TeamService,
     private readonly insightService: InsightService,
-    private readonly summaryService: SummaryService
+    private readonly summaryService: SummaryService,
+    private readonly userService: UserService
   ) {}
 
   @Get()
@@ -35,5 +38,11 @@ export class TeamController {
   @Get(':teamId/summaries/recent')
   async getRecentSummary(@Param('teamId') teamId: string): Promise<Summary> {
     return this.summaryService.getRecentSummary(teamId);
+  }
+
+  // This endpoint gets all users for a given team.
+  @Get(':teamId/users')
+  async getTeamUsers(@Param('teamId') teamId: string): Promise<User[]> {
+    return this.userService.getUsers(teamId);
   }
 }
