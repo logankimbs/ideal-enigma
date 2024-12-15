@@ -112,3 +112,17 @@ export async function getInsightsInSummary(
 
   return response;
 }
+
+export async function getUsersForTeam(teamId: string): Promise<User[]> {
+  return await api({
+    method: 'get',
+    endpoint: `teams/${teamId}/users`,
+  });
+}
+
+export async function isOnboardingComplete(userId: string): Promise<boolean> {
+  return await api({
+    method: 'get',
+    endpoint: `users/${userId}/isOnboardingComplete`,
+  });
+}
