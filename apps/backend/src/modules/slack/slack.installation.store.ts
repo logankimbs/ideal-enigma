@@ -8,6 +8,7 @@ import { WebClient } from '@slack/web-api';
 import { InstallationService } from '../installation/installation.service';
 import { TeamService } from '../team/team.service';
 import { UserService } from '../user/user.service';
+import { hasAdminPrivileges, isMemberBot } from './slack.utils';
 
 @Injectable()
 export class SlackInstallationStore implements InstallationStore {
@@ -23,34 +24,41 @@ export class SlackInstallationStore implements InstallationStore {
   }
 
   async storeInstallation(installation: Installation) {
-    if (installation.isEnterpriseInstall) {
-      throw new Error("We don't support enterprise installations");
-    }
-
     const installationExists = await this.installationService.exists(
       installation.team.id
     );
 
     if (installationExists) {
-      throw new Error('Installation already exists');
+      throw new Error('Installation already exists.');
+    }
+
+    if (installation.isEnterpriseInstall) {
+      throw new Error("We don't support enterprise installations.");
     }
 
     const web = new WebClient(installation.bot.token);
-    const { user } = await web.users.info({ user: installation.user.id });
+    const installerInfo = await web.users.info({ user: installation.user.id });
 
-    if (!(user.is_admin || user.is_owner || user.is_primary_owner)) {
-      throw new Error('Unauthorized');
+    if (!hasAdminPrivileges(installerInfo.user)) {
+      throw new Error('User not authorized.');
     }
 
-    const { team } = await web.team.info({ team: installation.team.id });
-    const { members } = await web.users.list({ team_id: team.id });
-    const users = members.filter((member) => {
-      return !member.is_bot && member.id !== 'USLACKBOT';
+    const teamInfo = await web.team.info({ team: installation.team.id });
+    const usersList = await web.users.list({ team_id: teamInfo.team.id });
+
+    // Filter out all bots and the user that installed the app. This list of
+    // users will be onboarded (won't see onboard module on frontend). Only the
+    // installer will see the onboarding module.
+    const users = usersList.members.filter((member) => {
+      return !isMemberBot(member) && member.id !== installation.user.id;
     });
 
     await this.installationService.create(installation);
-    const teamEntity = await this.teamService.create(team);
-    await this.userService.createBatch(teamEntity, users);
+
+    const team = await this.teamService.create(teamInfo.team);
+
+    await this.userService.onboardUsers(users, team);
+    await this.userService.saveInstaller(installerInfo.user, team);
 
     return Promise.resolve();
   }
