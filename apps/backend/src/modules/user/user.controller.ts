@@ -43,7 +43,8 @@ export class UserController {
 
   @Post('enableNotifications')
   async batchEnableNotifications(@Body('userIds') userIds: string[]) {
-    return await this.usersService.batchEnableNotifications(userIds);
+    await this.usersService.batchEnableNotifications(userIds);
+    return true;
   }
 
   @Put(':userId/completeOnboarding')

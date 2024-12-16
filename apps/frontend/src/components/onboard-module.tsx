@@ -3,6 +3,10 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { User } from '@ideal-enigma/common';
 import { FormEvent, useState } from 'react';
+import {
+  enableNotifications,
+  updateUserOnboardingStatus,
+} from '../app/libs/gateway';
 import { Avatar } from './avatar';
 import { Button } from './button';
 import { Checkbox } from './checkbox';
@@ -18,7 +22,12 @@ import {
 } from './table';
 import { Text } from './text';
 
-export default function OnboardModule({ team }: { team: User[] }) {
+type OnboardModuleProps = {
+  team: User[];
+  user: User;
+};
+
+export default function OnboardModule({ team, user }: OnboardModuleProps) {
   const [checkedIds, setCheckedIds] = useState(new Set<string>());
   const [query, setQuery] = useState('');
 
@@ -44,17 +53,8 @@ export default function OnboardModule({ team }: { team: User[] }) {
       .map((user) => user.id);
 
     try {
-      await fetch('/api/notifications', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userIds: unselectedIds }),
-      });
-
-      await fetch('/api/onboardingStatus', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'complete' }),
-      });
+      await enableNotifications(unselectedIds);
+      await updateUserOnboardingStatus(user.id);
 
       window.location.reload();
     } catch (error) {
@@ -63,12 +63,12 @@ export default function OnboardModule({ team }: { team: User[] }) {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-3 pb-8">
+    <div className="mx-auto max-w-7xl">
       <div className="mx-auto max-w-3xl">
         <form
           method="post"
           onSubmit={handleSubmit}
-          className="mx-auto flex flex-col justify-center min-h-screen"
+          className="mx-auto flex flex-col justify-center min-h-screen px-4 py-8"
         >
           <Heading>Your Slack integration is almost set up.</Heading>
           <Text>

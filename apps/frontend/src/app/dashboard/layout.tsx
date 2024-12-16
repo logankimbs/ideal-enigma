@@ -32,7 +32,7 @@ export default async function DashboardLayout(props: DashboardLayoutProps) {
             {props.children}
           </Dashboard>
         ) : (
-          <OnboardModule team={team} />
+          <OnboardModule team={team} user={user} />
         )}
       </div>
     </ThemeProvider>
