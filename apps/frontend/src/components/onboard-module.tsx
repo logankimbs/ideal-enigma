@@ -64,78 +64,76 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
   };
 
   return (
-    <div className="mx-auto max-w-7xl">
-      <div className="mx-auto max-w-3xl">
-        <form
-          method="post"
-          onSubmit={handleSubmit}
-          className="mx-auto flex flex-col justify-center min-h-screen px-4 py-8"
-        >
-          <Heading>Your Slack integration is almost set up.</Heading>
-          <Text>
-            Before exploring your new Loop dashboard, choose which users you
-            would like to opt out of receiving notifications. Simply select them
-            below and click “Save changes” to apply your preferences.
-          </Text>
-          <div className="my-4 flex max-w-xl gap-4">
-            <div className="flex-1">
-              <InputGroup>
-                <MagnifyingGlassIcon />
-                <Input
-                  name=""
-                  placeholder="Search users&hellip;"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                  }}
-                />
-              </InputGroup>
-            </div>
+    <div className="mx-auto max-w-2xl">
+      <form
+        method="post"
+        onSubmit={handleSubmit}
+        className="mx-auto flex flex-col justify-center min-h-screen px-4 py-8"
+      >
+        <Heading>Your Slack integration is almost set up.</Heading>
+        <Text>
+          Before exploring your new Loop dashboard, choose which users you would
+          like to opt out of receiving notifications. Simply select them below
+          and click “Save changes” to apply your preferences.
+        </Text>
+        <div className="my-4 flex max-w-xl gap-4">
+          <div className="flex-1">
+            <InputGroup>
+              <MagnifyingGlassIcon />
+              <Input
+                name=""
+                placeholder="Search users&hellip;"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+              />
+            </InputGroup>
           </div>
-          <div className="mt-4 mb-10 max-h-80 overflow-y-auto">
-            <Table dense>
-              <TableHead>
-                <TableRow>
-                  <TableHeader className="text-center">Opt out</TableHeader>
-                  <TableHeader>User</TableHeader>
-                  <TableHeader>Role</TableHeader>
-                  <TableHeader className="text-right hidden sm:table-cell">
-                    Email
-                  </TableHeader>
+        </div>
+        <div className="mt-4 mb-10 max-h-80 overflow-y-auto">
+          <Table dense>
+            <TableHead>
+              <TableRow>
+                <TableHeader className="text-center">Opt out</TableHeader>
+                <TableHeader>User</TableHeader>
+                <TableHeader>Role</TableHeader>
+                <TableHeader className="text-right hidden sm:table-cell">
+                  Email
+                </TableHeader>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredUsers.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className="text-center">
+                    <Checkbox
+                      onChange={() => handleCheck(user.id)}
+                      checked={checkedIds.has(user.id)}
+                    />
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    <Avatar
+                      src={user.data.profile.image_72}
+                      className="size-6 ring-2 ring-white dark:ring-zinc-900 mr-2"
+                    />
+                    {user.data.profile.real_name}
+                  </TableCell>
+                  <TableCell>
+                    {user.data.is_admin ? 'Admin' : 'Member'}
+                  </TableCell>
+                  <TableCell className="text-right hidden sm:table-cell">
+                    {user.data.profile.email}
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="text-center">
-                      <Checkbox
-                        onChange={() => handleCheck(user.id)}
-                        checked={checkedIds.has(user.id)}
-                      />
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      <Avatar
-                        src={user.data.profile.image_72}
-                        className="size-6 ring-2 ring-white dark:ring-zinc-900 mr-2"
-                      />
-                      {user.data.profile.real_name}
-                    </TableCell>
-                    <TableCell>
-                      {user.data.is_admin ? 'Admin' : 'Member'}
-                    </TableCell>
-                    <TableCell className="text-right hidden sm:table-cell">
-                      {user.data.profile.email}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="flex justify-end gap-4">
-            <Button type="submit">Save changes</Button>
-          </div>
-        </form>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        <div className="flex justify-end gap-4">
+          <Button type="submit">Save changes</Button>
+        </div>
+      </form>
     </div>
   );
 }
