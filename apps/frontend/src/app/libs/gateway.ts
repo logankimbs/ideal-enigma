@@ -20,7 +20,6 @@ async function gateway<T>(options: ApiRequestOptions): Promise<T> {
 
   try {
     const response = await fetch(input, init);
-
     return await response.json();
   } catch (error) {
     console.error(`Gateway request failed: ${error}`);
@@ -40,5 +39,13 @@ export async function updateUserOnboardingStatus(userId: string) {
   return await gateway({
     method: 'PUT',
     path: `users/${userId}/completeOnboarding`,
+  });
+}
+
+export async function sendWelcomeMessage(teamId: string) {
+  return await gateway({
+    method: 'POST',
+    path: `slack/message/welcome`,
+    body: { teamId },
   });
 }

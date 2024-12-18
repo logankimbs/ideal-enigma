@@ -1,10 +1,10 @@
 'use client';
-
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
 import { User } from '@ideal-enigma/common';
 import { FormEvent, useState } from 'react';
 import {
   enableNotifications,
+  sendWelcomeMessage,
   updateUserOnboardingStatus,
 } from '../app/libs/gateway';
 import { Avatar } from './avatar';
@@ -55,6 +55,7 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
     try {
       await enableNotifications(unselectedIds);
       await updateUserOnboardingStatus(user.id);
+      await sendWelcomeMessage(user.team.id);
 
       window.location.reload();
     } catch (error) {

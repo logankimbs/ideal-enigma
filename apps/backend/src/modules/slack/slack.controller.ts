@@ -1,4 +1,12 @@
-import { Controller, Get, Redirect, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Redirect,
+  Req,
+  Res,
+} from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Public } from '../../common/constants';
 import { SlackService } from './slack.service';
@@ -21,5 +29,10 @@ export class SlackController {
     @Res() res: ServerResponse
   ) {
     return await this.slackService.handleInstallRedirect(req, res);
+  }
+
+  @Post('message/welcome')
+  async sendWelcomeMessage(@Body('teamId') teamId: string) {
+    return await this.slackService.sendWelcomeMessage(teamId);
   }
 }

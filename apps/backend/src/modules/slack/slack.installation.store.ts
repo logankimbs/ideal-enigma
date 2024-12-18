@@ -5,6 +5,11 @@ import {
   InstallationStore,
 } from '@slack/oauth';
 import { WebClient } from '@slack/web-api';
+import {
+  EnterpriseInstallError,
+  InstallExistsError,
+  UnauthorizedInstallError,
+} from '../../common/errors';
 import { InstallationService } from '../installation/installation.service';
 import { TeamService } from '../team/team.service';
 import { UserService } from '../user/user.service';
@@ -28,20 +33,14 @@ export class SlackInstallationStore implements InstallationStore {
       installation.team.id
     );
 
-    if (installationExists) {
-      throw new Error('Installation already exists.');
-    }
-
-    if (installation.isEnterpriseInstall) {
-      throw new Error("We don't support enterprise installations.");
-    }
+    if (installationExists) throw new InstallExistsError();
+    if (installation.isEnterpriseInstall) throw new EnterpriseInstallError();
 
     const web = new WebClient(installation.bot.token);
     const installerInfo = await web.users.info({ user: installation.user.id });
 
-    if (!hasAdminPrivileges(installerInfo.user)) {
-      throw new Error('User not authorized.');
-    }
+    if (!hasAdminPrivileges(installerInfo.user))
+      throw new UnauthorizedInstallError();
 
     const teamInfo = await web.team.info({ team: installation.team.id });
     const usersList = await web.users.list({ team_id: teamInfo.team.id });

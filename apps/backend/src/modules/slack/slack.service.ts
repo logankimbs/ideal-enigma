@@ -1,13 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CodedError, Installation, InstallProvider } from '@slack/oauth';
+import { WebClient } from '@slack/web-api';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import {
+  EnterpriseInstallError,
+  InstallExistsError,
+  UnauthorizedInstallError,
+} from '../../common/errors';
+import { InstallationService } from '../installation/installation.service';
+import { TeamService } from '../team/team.service';
+import { createWelcomeMessage } from './messages/globals';
 import { SlackInstallationStore } from './slack.installation.store';
 
 @Injectable()
 export class SlackService {
   private installer: InstallProvider;
 
-  constructor(private readonly slackInstallationStore: SlackInstallationStore) {
+  constructor(
+    private readonly slackInstallationStore: SlackInstallationStore,
+    private readonly teamService: TeamService,
+    private readonly installationService: InstallationService
+  ) {
     this.installer = new InstallProvider({
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
@@ -35,8 +48,18 @@ export class SlackService {
     };
 
     const onFailure = (error: CodedError) => {
-      console.log('Installation failed:', error);
-      url = `${process.env.FRONT_END}`;
+      url = process.env.FRONTEND_URL || '';
+      let path = '/error';
+
+      if (error instanceof UnauthorizedInstallError) {
+        path += '?unauthorized=true';
+      } else if (error instanceof InstallExistsError) {
+        path += '?installExists=true';
+      } else if (error instanceof EnterpriseInstallError) {
+        path += '?wip=true';
+      }
+
+      url = `${url}${path}`;
     };
 
     await this.installer.handleCallback(req, res, {
@@ -45,5 +68,21 @@ export class SlackService {
     });
 
     return { url };
+  }
+
+  async sendWelcomeMessage(teamId: string) {
+    const team = await this.teamService.find(teamId);
+    const users = team.users.filter((user) => {
+      return user.notifications === true;
+    });
+
+    const installation = await this.installationService.findOne(team.id);
+    const client = new WebClient(installation.token);
+
+    await Promise.all(
+      users.map((user) =>
+        client.chat.postMessage(createWelcomeMessage(user.id))
+      )
+    );
   }
 }
