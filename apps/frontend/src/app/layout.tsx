@@ -19,7 +19,7 @@ export default async function RootLayout(props: RootLayoutProps) {
     <html
       lang="en"
       suppressHydrationWarning
-      className="bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950 h-full"
+      className="bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
     >
       <head>
         <link
@@ -33,7 +33,7 @@ export default async function RootLayout(props: RootLayoutProps) {
           // href="/blog/feed.xml"
         />
       </head>
-      <body className="text-gray-950 antialiased h-full">{props.children}</body>
+      <body className="text-gray-950 antialiased">{props.children}</body>
     </html>
   );
 }
