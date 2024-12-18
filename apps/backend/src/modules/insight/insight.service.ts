@@ -65,7 +65,7 @@ export class InsightService {
     });
   }
 
-  async getUserWeeklyInsightCount(userId: string){
+  async getUserWeeklyInsightCountAndChange(userId: string){
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
@@ -74,23 +74,46 @@ export class InsightService {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-    return this.insightRepository
+    const twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+    //
+
+    const total_weekly = await this.insightRepository
       .createQueryBuilder('insights')
       .leftJoinAndSelect('insights.user', 'user')
       .leftJoinAndSelect('user.team', 'team')
       .where('team.id = :teamId', { teamId: user.team.id })
       .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
       .getCount();
+
+    const previous_weekly = await this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: user.team.id })
+      .andWhere('insights.createdAt > :twoWeeksAgo', { twoWeeksAgo })
+      .andWhere('insights.createdAt < :oneWeekAgo', { oneWeekAgo })
+      .getCount();
+
+    const weekly_change = total_weekly - previous_weekly;
+    const weekly_change_percentage = previous_weekly === 0 ? 0 : (weekly_change / previous_weekly) * 100;
+
+    return { "total_weekly": total_weekly, "weekly_change": weekly_change, "weekly_change_percentage": weekly_change_percentage};
   }
-  async getTeamRecentInsights(userId: string): Promise<number> {
+  async getTeamRecentInsights(userId: string){
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    const twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
     });
 
-    return this.insightRepository
+    const total_weekly = await this.insightRepository
       .createQueryBuilder('insights')
       .leftJoinAndSelect('insights.user', 'user')
       .leftJoinAndSelect('insights.tags', 'tags')
@@ -98,6 +121,22 @@ export class InsightService {
       .where('team.id = :teamId', { teamId: user.team.id })
       .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
       .getCount();
+
+    const previous_weekly = await this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('insights.tags', 'tags')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: user.team.id })
+      .andWhere('insights.createdAt > :twoWeeksAgo', { twoWeeksAgo })
+      .andWhere('insights.createdAt < :oneWeekAgo', { oneWeekAgo })
+      .getCount();
+
+    const weekly_change = total_weekly - previous_weekly;
+    const weekly_change_percentage = previous_weekly === 0 ? 0 : (weekly_change / previous_weekly) * 100;
+
+    return { "total_weekly": total_weekly, "weekly_change": weekly_change, "weekly_change_percentage": weekly_change_percentage};
+
   }
   async getInsightsRepository(userId: string): Promise<Insight[]> {
     const user = await this.userRepository.findOneOrFail({

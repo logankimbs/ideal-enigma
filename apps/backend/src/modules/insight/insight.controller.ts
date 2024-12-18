@@ -24,14 +24,14 @@ export class InsightController {
   @Get(':userId/recent')
   async getUserRecentInsights(
     @Param('id') id: string
-  ): Promise<number> {
-    return await this.insightService.getUserWeeklyInsightCount(id);
+  ): Promise<any> {
+    return await this.insightService.getUserWeeklyInsightCountAndChange(id);
   }
 
   @Get(':userId/team/recent')
   async getTeamRecentInsights(
     @Param('id') id: string
-  ): Promise<number> {
+  ): Promise<any> {
     return await this.insightService.getTeamRecentInsights(id);
   }
 
