@@ -12,6 +12,8 @@ import { Screenshot } from '../components/landing/screenshot';
 import { Heading, Subheading } from '../components/landing/text';
 
 function Hero() {
+  console.log('BackendURL', process.env.NEXT_PUBLIC_BACKEND_URL);
+
   return (
     <div className="relative">
       <Gradient className="absolute inset-2 bottom-0 rounded-[32px] ring-1 ring-inset ring-black/5" />
