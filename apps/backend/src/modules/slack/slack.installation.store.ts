@@ -23,9 +23,12 @@ export class SlackInstallationStore implements InstallationStore {
     private readonly userService: UserService
   ) {}
 
-  fetchInstallation(query: InstallationQuery<boolean>): Promise<Installation> {
-    console.log('Fetch installation query:', query);
-    return Promise.resolve({} as Installation);
+  async fetchInstallation(
+    query: InstallationQuery<boolean>
+  ): Promise<Installation> {
+    const installation = await this.installationService.findOne(query.teamId);
+
+    return installation.data as Installation;
   }
 
   async storeInstallation(installation: Installation) {
@@ -62,8 +65,7 @@ export class SlackInstallationStore implements InstallationStore {
     return Promise.resolve();
   }
 
-  deleteInstallation(query: InstallationQuery<boolean>): Promise<void> {
-    console.log('Delete installation query:', query);
-    return Promise.resolve();
+  async deleteInstallation(query: InstallationQuery<boolean>): Promise<void> {
+    await this.installationService.delete(query.teamId);
   }
 }
