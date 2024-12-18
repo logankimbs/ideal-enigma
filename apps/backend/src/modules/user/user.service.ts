@@ -107,4 +107,15 @@ export class UserService {
 
     return await this.userRepository.save(user);
   }
+
+  async getUsersWithNotifications(
+    teamId: string,
+    enabled = true
+  ): Promise<User[]> {
+    const teamUsers = await this.getUsers(teamId);
+
+    return teamUsers.filter((user) => {
+      return user.notifications === enabled;
+    });
+  }
 }

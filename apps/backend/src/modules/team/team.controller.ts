@@ -45,4 +45,11 @@ export class TeamController {
   async getTeamUsers(@Param('teamId') teamId: string): Promise<User[]> {
     return this.userService.getUsers(teamId);
   }
+
+  @Get(':teamId/users/notifications-enabled')
+  async getUsersWithNotifications(
+    @Param('teamId') teamId: string
+  ): Promise<User[]> {
+    return this.userService.getUsersWithNotifications(teamId, true);
+  }
 }
