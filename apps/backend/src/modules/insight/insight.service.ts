@@ -65,6 +65,24 @@ export class InsightService {
     });
   }
 
+  async getUserWeeklyInsightCount(userId: string){
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+      relations: ['team'],
+    });
+
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: user.team.id })
+      .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
+      .getCount();
+  }
+
   async getInsightsRepository(userId: string): Promise<Insight[]> {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },

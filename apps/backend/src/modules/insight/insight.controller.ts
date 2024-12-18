@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Put, Query} from '@nestjs/common';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
@@ -19,6 +19,13 @@ export class InsightController {
     @Query() getInsightByIdDto: GetInsightByIdDto
   ): Promise<Insight> {
     return await this.insightService.getInsightsById(getInsightByIdDto);
+  }
+
+  @Get(':userId/recent')
+  async getUserRecentInsights(
+    @Param('id') id: string
+  ): Promise<number> {
+    return await this.insightService.getUserWeeklyInsightCount(id);
   }
 
   @Get('repository')
