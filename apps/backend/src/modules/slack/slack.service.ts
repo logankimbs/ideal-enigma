@@ -4,7 +4,6 @@ import { WebClient } from '@slack/web-api';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import {
   EnterpriseInstallError,
-  InstallExistsError,
   UnauthorizedInstallError,
 } from '../../common/errors';
 import { InstallationService } from '../installation/installation.service';
@@ -48,18 +47,20 @@ export class SlackService {
     };
 
     const onFailure = (error: CodedError) => {
-      url = process.env.FRONTEND_URL || '';
-      let path = '/error';
+      const baseUrl = process.env.FRONTEND_URL || '';
+      let path = '/slack/install/error';
 
-      if (error instanceof UnauthorizedInstallError) {
-        path += '?unauthorized=true';
-      } else if (error instanceof InstallExistsError) {
-        path += '?installExists=true';
-      } else if (error instanceof EnterpriseInstallError) {
-        path += '?wip=true';
+      if (error.message.includes('cancelled the OAuth')) {
+        return (url = baseUrl);
       }
 
-      url = `${url}${path}`;
+      if (error instanceof UnauthorizedInstallError) {
+        path += '/unauthorized';
+      } else if (error instanceof EnterpriseInstallError) {
+        path += '/unsupported-plan';
+      }
+
+      url = `${baseUrl}${path}`;
     };
 
     await this.installer.handleCallback(req, res, {
