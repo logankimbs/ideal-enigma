@@ -28,6 +28,13 @@ export class InsightController {
     return await this.insightService.getUserWeeklyInsightCount(id);
   }
 
+  @Get(':userId/team/recent')
+  async getTeamRecentInsights(
+    @Param('id') id: string
+  ): Promise<number> {
+    return await this.insightService.getTeamRecentInsights(id);
+  }
+
   @Get('repository')
   async getInsightsRepository(
     @Query() query: { userId: string }

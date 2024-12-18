@@ -82,7 +82,23 @@ export class InsightService {
       .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
       .getCount();
   }
+  async getTeamRecentInsights(userId: string): Promise<number> {
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+      relations: ['team'],
+    });
 
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('insights.tags', 'tags')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: user.team.id })
+      .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
+      .getCount();
+  }
   async getInsightsRepository(userId: string): Promise<Insight[]> {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
