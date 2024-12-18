@@ -69,7 +69,7 @@ const getHomeViewBlocks = (event: any) => {
       text: {
         type: 'plain_text',
         emoji: true,
-        text: '👋 Meet Echo',
+        text: '👋 Meet Loop',
       },
     },
     {
@@ -127,7 +127,7 @@ const getHomeViewBlocks = (event: any) => {
       text: {
         type: 'plain_text',
         emoji: true,
-        text: '🥇 Do More with Echo',
+        text: '🥇 Do More with Loop',
       },
     },
     {

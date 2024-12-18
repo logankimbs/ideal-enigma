@@ -98,7 +98,7 @@ export default function TheRoleOfTransparencyAndCollaboration() {
                 Tools like{' '}
                 <strong className="font-semibold text-gray-950">Loop</strong>{' '}
                 are instrumental in facilitating this collaborative learning
-                process. By compiling and sharing insights across teams, Echo
+                process. By compiling and sharing insights across teams, Loop
                 ensures that valuable knowledge is not siloed but is accessible
                 to everyone who can benefit from it. This collaborative approach
                 to learning helps startups to adapt quickly, innovate faster,
