@@ -10,9 +10,9 @@ const startApp = async () => {
   try {
     tasks.schedule();
     await app.start(config.port);
-    logger.info('Echo is running');
+    logger.info('Loop is running');
   } catch (error) {
-    logger.error('Echo was unable to start', error);
+    logger.error('Loop was unable to start', error);
   }
 };
 

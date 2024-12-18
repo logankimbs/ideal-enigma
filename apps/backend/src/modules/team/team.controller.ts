@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { Insight } from '../insight/insight.entity';
 import { InsightService } from '../insight/insight.service';
 import { Summary } from '../summary/summary.entity';
 import { SummaryService } from '../summary/summary.service';
-import { CreateTeamDto } from './dto/create-team.dto';
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
 import { Team } from './team.entity';
 import { TeamService } from './team.service';
 
@@ -12,13 +13,9 @@ export class TeamController {
   constructor(
     private readonly teamService: TeamService,
     private readonly insightService: InsightService,
-    private readonly summaryService: SummaryService
+    private readonly summaryService: SummaryService,
+    private readonly userService: UserService
   ) {}
-
-  @Post()
-  create(@Body() createTeamDto: CreateTeamDto): Promise<Team> {
-    return this.teamService.create(createTeamDto);
-  }
 
   @Get()
   findAll(): Promise<Team[]> {
@@ -41,5 +38,18 @@ export class TeamController {
   @Get(':teamId/summaries/recent')
   async getRecentSummary(@Param('teamId') teamId: string): Promise<Summary> {
     return this.summaryService.getRecentSummary(teamId);
+  }
+
+  // This endpoint gets all users for a given team.
+  @Get(':teamId/users')
+  async getTeamUsers(@Param('teamId') teamId: string): Promise<User[]> {
+    return this.userService.getUsers(teamId);
+  }
+
+  @Get(':teamId/users/notifications-enabled')
+  async getUsersWithNotifications(
+    @Param('teamId') teamId: string
+  ): Promise<User[]> {
+    return this.userService.getUsersWithNotifications(teamId, true);
   }
 }

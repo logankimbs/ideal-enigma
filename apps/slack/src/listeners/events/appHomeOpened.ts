@@ -1,11 +1,11 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from '@slack/bolt';
 import config from '../../config';
-import { AUTO_LOGIN, OPEN_INSIGHT_MODAL } from '../../constants';
 import {
-  createHeaderBlock,
-  createRichTextBlock,
-  createSectionWithButton,
-} from '../../utils/blocks';
+  IMPACTFUL_INSIGHTS,
+  LEARN_MORE,
+  OPEN_INSIGHT_MODAL,
+  VISIT_DASHBOARD,
+} from '../../constants';
 
 const getHomeViewBlocks = (event: any) => {
   const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
@@ -14,51 +14,172 @@ const getHomeViewBlocks = (event: any) => {
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
 
   return [
-    createHeaderBlock('👋 Meet Echo'),
-    createSectionWithButton({
-      text: "I'm here to help you recall and submit your weekly insights and share them with your teammates in order to circulate and accelerate the rate at which your team can build, measure, and learn. By frequently sharing your insights, you are contributing to building a culture of continuous learning.",
-      buttonText: '🔍 Learn More',
-      buttonValue: AUTO_LOGIN,
-      url: `${process.env.FRONTEND_URL}`,
-    }),
-    createSectionWithButton({
-      text: '*What makes an insight impactful?*\nAn impactful insight sparks action and fuels growth. Here’s what makes it effective:',
-      buttonText: '🚀 Impactful Insights',
-      buttonValue: AUTO_LOGIN,
-      url: `${process.env.FRONTEND_URL}/blog/unlocking-growth-the-secret-behind-impactful-insights`,
-    }),
-    createRichTextBlock(
-      '1. Clear, Actionable, and Specific:',
-      ' Insights should include specific recommendations that teams can act on right away.'
-    ),
-    createRichTextBlock(
-      '2. Data-Driven:',
-      ' Ground insights in reliable data for credibility.'
-    ),
-    createRichTextBlock(
-      '3. Relevant and Timely:',
-      ' Align insights with strategic goals to drive key metrics.'
-    ),
-    createRichTextBlock(
-      '4. Simple Communication:',
-      ' Avoid jargon and keep insights understandable for anyone.'
-    ),
-    createRichTextBlock(
-      'Here is a good example of an impactful insight:',
-      ' Analyzing user behavior has revealed that simplifying the onboarding process by reducing the steps from 8 to 5 increases user activation rates by 30%.'
-    ),
-    createHeaderBlock('Do More with Echo'),
-    createSectionWithButton({
-      text: '*Submit a Quick Insight*\nSubmit your learnings to share with the team.',
-      buttonText: '📩 Submit an Insight',
-      buttonValue: OPEN_INSIGHT_MODAL,
-    }),
-    createSectionWithButton({
-      text: '*Explore the Echo Dashboard*\nAccess Echo settings, reporting, and the growing repository of insights.',
-      buttonText: '📈 Visit Echo Dashboard',
-      url: `${slackAuthUrl}`,
-      buttonValue: AUTO_LOGIN,
-    }),
+    {
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            emoji: true,
+            text: '📩 Submit an Insight',
+          },
+          style: 'primary',
+          value: OPEN_INSIGHT_MODAL,
+          action_id: OPEN_INSIGHT_MODAL,
+        },
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            emoji: true,
+            text: '📈 Visit Loop Dashboard',
+          },
+          value: VISIT_DASHBOARD,
+          action_id: VISIT_DASHBOARD,
+          url: slackAuthUrl,
+        },
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            emoji: true,
+            text: '🔍 Learn More',
+          },
+          value: LEARN_MORE,
+          action_id: LEARN_MORE,
+          url: process.env.FRONTEND_URL,
+        },
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            emoji: true,
+            text: '🚀 Impactful Insights',
+          },
+          value: IMPACTFUL_INSIGHTS,
+          action_id: IMPACTFUL_INSIGHTS,
+          url: `${process.env.FRONTEND_URL}/blog/unlocking-growth-the-secret-behind-impactful-insights`,
+        },
+      ],
+    },
+    { type: 'divider' },
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        emoji: true,
+        text: '👋 Meet Loop',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'plain_text',
+        emoji: true,
+        text: "I'm here to help you recall and submit your weekly insights, share them with your teammates, and accelerate your team's ability to build, measure, and learn. By frequently sharing insights, you're contributing to a culture of continuous learning.",
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*What makes an insight impactful?*',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*1️⃣ Clear, Actionable, and Specific.* Insights should include specific recommendations that teams can act on right away.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*2️⃣ Data-Driven.* Ground insights in reliable data for credibility.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*3️⃣ Relevant and Timely.* Align insights with strategic goals to drive key metrics.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*4️⃣ Simple Communication.* Avoid jargon and keep insights understandable for anyone.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Example:* Analyzing user behavior has revealed that simplifying the onboarding process by reducing the steps from 8 to 5 increases user activation rates by 30%.',
+      },
+    },
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        emoji: true,
+        text: '🥇 Do More with Loop',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          '*Capture* 📝\n' +
+          '*Effortlessly capture employee insights*\n' +
+          'Loop seamlessly integrates with your team’s communication tools, making it simple to capture, organize, and share valuable insights across every department.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          '*Centralize* 🌐\n' +
+          '*Valuable information all in one place*\n' +
+          'Bring all your team’s insights together in a unified, searchable repository, ensuring that the knowledge you need is always right at your fingertips.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          '*Curate* 🤖\n' +
+          '*Create actionable summaries from employee insights*\n' +
+          'Leverage AI-driven summaries that distill your team’s collective intelligence into easily digestible insights, helping everyone quickly understand the “why” behind the work.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          '*Circulate* 🔄\n' +
+          '*Automate the distribution of knowledge*\n' +
+          'Keep your team in the loop with timely summaries delivered directly to their workspace—sparking discussions, fueling follow-ups, and guiding next steps.',
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          '*Cultivate* 🌱\n' +
+          '*Enable your team to operate with curiosity*\n' +
+          'Empower your team to approach challenges with a growth mindset, turning shared insights into a culture of continuous learning and innovation.',
+      },
+    },
   ];
 };
 

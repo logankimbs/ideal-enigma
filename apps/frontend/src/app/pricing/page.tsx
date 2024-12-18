@@ -22,7 +22,7 @@ const tiers = [
     slug: 'free',
     description: 'Everything you need to get started with Loop.',
     priceMonthly: 0,
-    href: `${process.env.NEXT_PUBLIC_SLACK_URL}/slack/install`,
+    href: `${process.env.NEXT_PUBLIC_BACKEND_URL}/slack/install`,
     disabled: false,
     highlights: [
       { description: 'Up to 20 team members' },
@@ -425,67 +425,104 @@ function FrequentlyAskedQuestions() {
         <div className="mx-auto mb-32 mt-16 max-w-xl space-y-12">
           <dl>
             <dt className="text-sm font-semibold">
-              What measures are in place to ensure the security of our data?
+              How often will Loop prompt me to submit insights, and can I adjust
+              this frequency?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Data security is a top priority for us, which is ironic given that
-              our business depends on others not taking it very seriously. We
-              understand that any breach could put both us and most of our
-              customers out of business—and behind bars. We employ robust
-              security measures, including data encryption, secure data centers,
-              and regular security audits to ensure this never happens.
+              Soon. Loop will allow you to customize your reminder schedule so
+              it aligns with your team’s pace. If you find weekly reminders too
+              frequent, simply adjust the frequency in your settings. Our goal
+              is to encourage consistent insight sharing without overwhelming
+              your workflow.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Is there a mobile app available for your platform?
+              Can I find insights shared by other departments or teams within
+              the company?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, we offer a mobile app that provides all the key
-              functionalities of our desktop platform, allowing sales reps to
-              manage deals on the go. Additionally, we have another app
-              pre-installed on most modern smartphones that allows us to track
-              your location, listen to your conversations, and access your
-              camera and microphone at any time. This app is not available for
-              download.
+              Absolutely. Loop is designed to break down silos, making
+              cross-departmental knowledge easily accessible. By browsing
+              themes, applying filters, or using keyword search, you can
+              discover insights from other teams, gaining a more holistic
+              understanding of what’s happening across the organization.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I customize the workflow to match our company’s deal process?
+              How do I ensure the AI summaries aren’t missing important details?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our platform is highly customizable, although there should be
-              no need. Before you sign up, we discreetly gather information
-              about your company and its processes from a variety of sources. We
-              then use this information to pre-configure the platform to match
-              your existing workflows. This is why we ask for your social
-              security number and access to your email account during the
-              sign-up process.
+              Our AI is trained to identify key themes and essential points, but
+              we understand the importance of accuracy. If you ever feel
+              something’s missing, you can access the full original insight,
+              leave a comment for clarification, or mark the summary for
+              improvement. Your feedback helps us refine our AI models over
+              time.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              What kind of support do you offer?
+              Is it possible to bookmark or highlight certain insights for easy
+              reference later?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              We offer comprehensive support through multiple channels,
-              including 24/7 live chat, email, and phone support. However, since
-              we have full access to your internal network, we will know if
-              you’re having issues before you do.
+              Soon Loop will let you “favorite” insights or add them to custom
+              collections. This makes it simple to return to valuable learnings,
+              share them in meetings, or reference them when making decisions.
+              You’ll never have to dig through old channels or documents to find
+              those crucial nuggets of information again.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I integrate the CRM with other sales intelligence tools?
+              How does Loop help me understand the impact of insights on our
+              company’s decisions?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our solution integrates seamlessly with a variety of other
-              systems. However, be warned that most of these integrations are
-              short-lived. We have a dedicated team of engineers who
-              reverse-engineer the APIs of other tools, enabling us to build
-              their functionality into our product and eventually put them out
-              of business.
+              Loop provides engagement metrics showing how often an insight is
+              viewed, commented on, or referenced. Over time, you can see which
+              ideas influenced strategies, aligned teams, or sparked successful
+              initiatives. This visibility helps you appreciate the real-world
+              impact of shared knowledge.
+            </dd>
+          </dl>
+          <dl>
+            <dt className="text-sm font-semibold">
+              Can I filter insights by specific projects or goals?
+            </dt>
+            <dd className="mt-4 text-sm/6 text-gray-600">
+              Yes. Loop’s filtering tools let you organize and view insights
+              based on projects, departments, tags, or key initiatives. This
+              helps you focus on what’s most relevant to your current work and
+              ensures that valuable information never gets lost in the shuffle.
+            </dd>
+          </dl>
+          <dl>
+            <dt className="text-sm font-semibold">
+              Does Loop integrate with our project management or analytics
+              tools?
+            </dt>
+            <dd className="mt-4 text-sm/6 text-gray-600">
+              Absolutely. Loop is designed to fit into your existing ecosystem.
+              From project management platforms to data visualization tools, we
+              offer the ability to link to projects in other tools that let you
+              flow insights into your current workflows. By connecting your
+              knowledge hub to the apps you rely on, Loop enhances collaboration
+              across all your tools.
+            </dd>
+          </dl>
+          <dl>
+            <dt className="text-sm font-semibold">
+              What if our company’s workflows evolve over time?
+            </dt>
+            <dd className="mt-4 text-sm/6 text-gray-600">
+              Loop is built with flexibility in mind. As your processes mature
+              or shift, you can easily adjust settings, reminder frequencies,
+              categories, and integrations. Whether you’re scaling up,
+              reorganizing teams, or embracing new methodologies, Loop adapts to
+              help your organization continue learning and growing together.
             </dd>
           </dl>
         </div>

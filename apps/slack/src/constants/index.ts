@@ -1,6 +1,8 @@
 export const OPEN_INSIGHT_MODAL = 'open_insight_modal';
 export const SUBMIT_INSIGHT = 'submit_insight';
-export const AUTO_LOGIN = 'auto_login';
+export const VISIT_DASHBOARD = 'visit_dashboard';
+export const LEARN_MORE = 'learn_more';
+export const IMPACTFUL_INSIGHTS = 'impactful_insights';
 
 export const INSIGHT_MODAL_TEXTS = {
   TITLE: 'Submit an Insight',

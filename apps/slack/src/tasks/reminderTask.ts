@@ -1,4 +1,4 @@
-import { Installation, Team } from '@ideal-enigma/common';
+import { Installation, User } from '@ideal-enigma/common';
 import { WebClient } from '@slack/web-api';
 import config from '../config';
 import { message } from '../messages';
@@ -32,13 +32,13 @@ export const reminderTask = async () => {
       const slackService = new SlackService(webClient);
 
       logger.info(`Grabbing team ${installation.id}...`);
-      const team: Team = await apiRequest({
+      const users: User[] = await apiRequest({
         method: 'get',
-        url: `${config.apiUrl}/teams/${installation.id}`,
+        url: `${config.apiUrl}/teams/${installation.id}/users/notifications-enabled`,
       });
 
-      if (team?.users !== undefined) {
-        for (const user of team.users) {
+      if (users && users.length > 0) {
+        for (const user of users) {
           // const wedTimestamp = getNextOccurrence(user.data.tz, 3, 15, 0);
           const friTimestamp = getNextOccurrence(user.data.tz, 5, 10, 0);
 

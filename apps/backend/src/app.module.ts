@@ -5,6 +5,7 @@ import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { InsightModule } from './modules/insight/insight.module';
 import { InstallationModule } from './modules/installation/installation.module';
+import { SlackModule } from './modules/slack/slack.module';
 import { SummaryModule } from './modules/summary/summary.module';
 import { TagModule } from './modules/tag/tag.module';
 import { TeamModule } from './modules/team/team.module';
@@ -18,6 +19,7 @@ const Modules = [
   TeamModule,
   UserModule,
   SummaryModule,
+  SlackModule,
 ];
 
 @Module({

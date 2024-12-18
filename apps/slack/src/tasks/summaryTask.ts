@@ -3,7 +3,7 @@ import {
   Installation,
   Summary,
   SummaryData,
-  Team,
+  User,
 } from '@ideal-enigma/common';
 import { WebClient } from '@slack/web-api';
 import config from '../config';
@@ -42,16 +42,16 @@ export const summaryTask = async () => {
       const slackService = new SlackService(webClient);
 
       logger.info(`Grabbing team ${installation.id}...`);
-      const team: Team = await apiRequest({
+      const users: User[] = await apiRequest({
         method: 'get',
-        url: `${config.apiUrl}/teams/${installation.id}`,
+        url: `${config.apiUrl}/teams/${installation.id}/users/notifications-enabled`,
       });
 
-      if (team?.users !== undefined) {
-        logger.info(`Grabbing insights for team ${team.id}...`);
+      if (users && users.length > 0) {
+        logger.info(`Grabbing insights for team ${installation.id}...`);
         const insights: Insight[] = await apiRequest({
           method: 'get',
-          url: `${config.apiUrl}/insights/summarize?teamId=${team.id}`,
+          url: `${config.apiUrl}/insights/summarize?teamId=${installation.id}`,
         });
 
         if (insights.length >= 10) {
@@ -75,7 +75,11 @@ export const summaryTask = async () => {
           const summaryResponse = await apiRequest<Summary>({
             method: 'post',
             url: `${config.apiUrl}/summaries`,
-            data: { teamId: team.id, data: summary, version: summary.version },
+            data: {
+              teamId: installation.id,
+              data: summary,
+              version: summary.version,
+            },
           });
 
           const summaryMessage = message.getSummaryMessage({
@@ -83,7 +87,7 @@ export const summaryTask = async () => {
             count: insights.length,
           });
 
-          const schedulePromises = team.users.map(async (user) => {
+          const schedulePromises = users.map(async (user) => {
             if (user.data.deleted) return;
 
             const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
@@ -106,7 +110,7 @@ export const summaryTask = async () => {
             data: { insights, summary: summaryResponse },
           });
         } else {
-          const schedulePromises = team.users.map(async (user) => {
+          const schedulePromises = users.map(async (user) => {
             if (user.data.deleted) return;
 
             const timestamp = getNextOccurrence(user.data.tz, 1, 10, 0);
