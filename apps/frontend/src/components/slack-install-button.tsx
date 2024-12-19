@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Button } from './landing/button';
 
 type Props = {
@@ -5,10 +6,12 @@ type Props = {
 };
 
 export function SlackInstallButton({ logo = true }: Props) {
+  console.log('Backend URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
+
   return (
     <Button
       href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/slack/install`}
-      className={`${logo && 'gap-2'}`}
+      className={clsx({ 'gap-2': logo })}
     >
       {logo && (
         // eslint-disable-next-line @next/next/no-img-element
