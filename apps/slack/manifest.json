@@ -15,7 +15,7 @@
       "messages_tab_read_only_enabled": false
     },
     "bot_user": {
-      "display_name": "Echo Dev",
+      "display_name": "Loop Dev",
       "always_online": false
     }
   },
@@ -25,14 +25,26 @@
       "https://backend-app.ngrok.app/auth/slack/callback"
     ],
     "scopes": {
-      "user": ["openid"],
-      "bot": ["chat:write", "users:read", "users:read.email", "team:read"]
+      "user": [
+        "openid"
+      ],
+      "bot": [
+        "chat:write",
+        "users:read",
+        "users:read.email",
+        "team:read"
+      ]
     }
   },
   "settings": {
     "event_subscriptions": {
       "request_url": "https://slack-app.ngrok.app/slack/events",
-      "bot_events": ["app_home_opened", "app_uninstalled","user_profile_changed", "team_join"]
+      "bot_events": [
+        "app_home_opened",
+        "app_uninstalled",
+        "user_profile_changed",
+        "team_join"
+      ]
     },
     "interactivity": {
       "is_enabled": true,

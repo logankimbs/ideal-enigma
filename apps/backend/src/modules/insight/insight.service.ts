@@ -144,6 +144,7 @@ export class InsightService {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
+
     });
 
     return this.insightRepository
@@ -152,7 +153,9 @@ export class InsightService {
       .leftJoinAndSelect('insights.tags', 'tags')
       .leftJoinAndSelect('user.team', 'team')
       .where('team.id = :teamId', { teamId: user.team.id })
-      .getMany();
+      .orderBy('insights.createdAt', 'DESC')
+      .getMany()
+      ;
   }
 
   async getRecentInsights(teamId: string, limit: number): Promise<Insight[]> {

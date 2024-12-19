@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 const config = () => {
-  const isDev = process.env.NODE_ENV === "development";
+  const isDev = process.env.NODE_ENV === 'development';
 
   return {
     port: parseInt(process.env.PORT || '4000', 10),
@@ -25,7 +25,7 @@ const config = () => {
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       openId: {
-        state: process.env.SLACK_STATE,
+        state: process.env.SLACK_STATE_SECRET,
         nonce: process.env.SLACK_NONCE,
       },
     },

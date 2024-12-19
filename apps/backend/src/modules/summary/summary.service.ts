@@ -41,6 +41,7 @@ export class SummaryService {
     return await this.summaryRepository.find({
       where: { team: { id: teamId } },
       relations: ['team'],
+      order: { createdAt: 'DESC' },
     });
   }
 

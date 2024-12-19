@@ -1,4 +1,4 @@
-import { Button } from './button';
+import { SlackInstallButton } from '../slack-install-button';
 import { Container } from './container';
 import { Gradient } from './gradient';
 import { Link } from './link';
@@ -18,14 +18,7 @@ function CallToAction() {
         </p>
       </hgroup>
       <div className="mt-6">
-        <Button
-          className="w-full sm:w-auto gap-2"
-          href={`${process.env.NEXT_PUBLIC_SLACK_URL}/slack/install`}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get started
-          for free
-        </Button>
+        <SlackInstallButton className={'w-full sm:w-auto'} />
       </div>
     </div>
   );

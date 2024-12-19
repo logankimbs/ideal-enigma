@@ -8,4 +8,6 @@ export interface User extends Timestamp {
   data: SlackUser;
   team: Team;
   insights?: Insight[];
+  onboardCompletedAt: Date | null;
+  notifications: boolean;
 }
