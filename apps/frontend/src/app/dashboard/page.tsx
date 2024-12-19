@@ -2,9 +2,16 @@ import { Heading, Subheading } from '../../components/heading';
 import { RepositoryPreview } from '../../components/repository-preview';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
-import { getRecentInsights, getRecentSummary } from '../libs/api';
+import {
+  getRecentInsights,
+  getRecentSummary,
+  getTotalTeamInsights,
+  getTotalUserInsights,
+} from '../libs/api';
 
 export default async function Home() {
+  const totalUserInsights = await getTotalUserInsights();
+  const totalTeamInsights = await getTotalTeamInsights();
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
 
@@ -15,7 +22,13 @@ export default async function Home() {
         <Subheading>My Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total insights" value="87" change="+4.5%" />
+        <Stat
+          title="Total insights"
+          value={totalUserInsights.last_7_days_count}
+          change={`${parseFloat(
+            totalUserInsights.relative_difference_percent
+          ).toFixed(1)}%`}
+        />
         <Stat title="Total themes" value="10" change="-0.5%" />
         <Stat title="Average insights" value="0.8" change="+4.5%" />
         {/* 0-1 no flame. 1-3 one flame. 3-5 two flames. 5+ three flames. */}
@@ -25,7 +38,13 @@ export default async function Home() {
         <Subheading>Company Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total insights" value="2,746" change="+4.5%" />
+        <Stat
+          title="Total insights"
+          value={totalTeamInsights.last_7_days_count}
+          change={`${parseFloat(
+            totalTeamInsights.relative_difference_percent
+          ).toFixed(1)}%`}
+        />
         <Stat title="Total themes" value="150" change="-0.5%" />
         <Stat title="Average insights per user" value="2" change="+4.5%" />
         <Stat title="Active contributors" value="150" change="+21.2%" />

@@ -126,3 +126,29 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
     endpoint: `users/${userId}/isOnboardingComplete`,
   });
 }
+
+type TotalInsights = {
+  last_7_days_count: string;
+  previous_7_days_count: string;
+  relative_difference_percent: string;
+};
+
+export async function getTotalUserInsights(): Promise<TotalInsights> {
+  const session = await getSession();
+  const userId = session.payload.sub;
+
+  return await api({
+    method: 'get',
+    endpoint: `insights/${userId}/recent`,
+  });
+}
+
+export async function getTotalTeamInsights(): Promise<TotalInsights> {
+  const session = await getSession();
+  const userId = session.payload.sub;
+
+  return await api({
+    method: 'get',
+    endpoint: `insights/${userId}/team/recent`,
+  });
+}
