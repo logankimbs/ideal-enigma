@@ -65,68 +65,44 @@ export class InsightService {
     });
   }
 
-  async getUserWeeklyInsightCountAndChange(userId: string){
-    console.log('id', userId);
-    const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
-      relations: ['team'],
-    });
-
+  async getUserWeeklyInsightCountAndChange(userId: string) {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
-    await this.insightRepository
-      .query(`
-      WITH last_7_days AS (
-    SELECT COUNT(*) AS cnt
-    FROM insights
-    WHERE "createdAt" >= CURRENT_DATE - INTERVAL '7 days'
-      AND "createdAt" < CURRENT_DATE
-),
-     previous_7_days AS (
-         SELECT COUNT(*) AS cnt
-         FROM insights
-         WHERE "createdAt" >= CURRENT_DATE - INTERVAL '14 days'
-           AND "createdAt" < CURRENT_DATE - INTERVAL '7 days'
-     )
-SELECT
-    last_7_days.cnt AS last_7_days_count,
-    previous_7_days.cnt AS previous_7_days_count,
-    CASE
-        WHEN previous_7_days.cnt = 0 THEN NULL
-        ELSE ((last_7_days.cnt - previous_7_days.cnt) * 100.0 / previous_7_days.cnt)
-        END AS relative_difference_percent
-FROM last_7_days, previous_7_days;
-      `)
+    await this.userRepository.findOneOrFail({
+      where: { id: userId },
+      relations: ['team'],
+    });
 
-    //
-
-    const total_weekly = await this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
-      .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
-      .getCount();
-
-    const previous_weekly = await this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
-      .andWhere('insights.createdAt > :twoWeeksAgo', { twoWeeksAgo })
-      .andWhere('insights.createdAt < :oneWeekAgo', { oneWeekAgo })
-      .getCount();
-
-    const weekly_change = total_weekly - previous_weekly;
-    const weekly_change_percentage = previous_weekly === 0 ? 0 : (weekly_change / previous_weekly) * 100;
-
-    return { "total_weekly": total_weekly, "weekly_change": weekly_change, "weekly_change_percentage": weekly_change_percentage};
+    return await this.insightRepository
+      .createQueryBuilder('i')
+      .select([
+        `COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count`,
+        `COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count`,
+        `CASE
+      WHEN COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN NULL
+      ELSE (
+        (
+          COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) -
+          COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
+        ) * 100.0 /
+        COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
+      )
+    END AS relative_difference_percent`,
+      ])
+      .where('i.userId = :userId', { userId })
+      .setParameters({
+        oneWeekAgo,
+        currentDate: new Date(),
+        twoWeeksAgo,
+      })
+      .getRawOne();
   }
-  async getTeamRecentInsights(userId: string){
+
+  async getTeamRecentInsights(userId: string) {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -138,31 +114,32 @@ FROM last_7_days, previous_7_days;
       relations: ['team'],
     });
 
-    const total_weekly = await this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('insights.tags', 'tags')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
-      .andWhere('insights.createdAt > :oneWeekAgo', { oneWeekAgo })
-      .getCount();
-
-    const previous_weekly = await this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('insights.tags', 'tags')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
-      .andWhere('insights.createdAt > :twoWeeksAgo', { twoWeeksAgo })
-      .andWhere('insights.createdAt < :oneWeekAgo', { oneWeekAgo })
-      .getCount();
-
-    const weekly_change = total_weekly - previous_weekly;
-    const weekly_change_percentage = previous_weekly === 0 ? 0 : (weekly_change / previous_weekly) * 100;
-
-    return { "total_weekly": total_weekly, "weekly_change": weekly_change, "weekly_change_percentage": weekly_change_percentage};
-
+    return await this.insightRepository
+      .createQueryBuilder('i')
+      .select([
+        `COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count`,
+        `COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count`,
+        `CASE
+      WHEN COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN NULL
+      ELSE (
+        (
+          COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) -
+          COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
+        ) * 100.0 /
+        COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
+      )
+    END AS relative_difference_percent`,
+      ])
+      .innerJoin('users', 'u', 'u.id = i.userId')
+      .where('u.teamId = :teamId', { teamId: user.team.id })
+      .setParameters({
+        oneWeekAgo,
+        currentDate: new Date(),
+        twoWeeksAgo,
+      })
+      .getRawOne();
   }
+
   async getInsightsRepository(userId: string): Promise<Insight[]> {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },

@@ -1,9 +1,9 @@
-import {Body, Controller, Get, Param, Post, Put, Query} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateInsightDto } from './dto/create-insight.dto';
+import { GetInsightByIdDto } from './dto/get-insight.dto';
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
 import { InsightService } from './insight.service';
-import { GetInsightByIdDto } from './dto/get-insight.dto';
 
 @Controller('insights')
 export class InsightController {
@@ -22,17 +22,13 @@ export class InsightController {
   }
 
   @Get(':userId/recent')
-  async getUserRecentInsights(
-    @Param('userId') userId: string
-  ): Promise<any> {
+  async lo(@Param('userId') userId: string): Promise<any> {
     console.log('id', userId);
     return await this.insightService.getUserWeeklyInsightCountAndChange(userId);
   }
 
   @Get(':userId/team/recent')
-  async getTeamRecentInsights(
-    @Param('id') id: string
-  ): Promise<any> {
+  async getTeamRecentInsights(@Param('id') id: string): Promise<any> {
     return await this.insightService.getTeamRecentInsights(id);
   }
 
