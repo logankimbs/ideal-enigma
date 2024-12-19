@@ -10,6 +10,7 @@ import { Map } from '../components/landing/map';
 import { Navbar } from '../components/landing/navbar';
 import { Screenshot } from '../components/landing/screenshot';
 import { Heading, Subheading } from '../components/landing/text';
+import { SlackInstallButton } from '../components/slack-install-button';
 
 function Hero() {
   return (
@@ -32,14 +33,7 @@ function Hero() {
             share, and discuss weekly insights.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button
-              href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/slack/install`}
-              className="gap-2"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-timeline/slack.svg" alt="Slack Logo" /> Get
-              started for free
-            </Button>
+            <SlackInstallButton />
             <Button
               variant="secondary"
               href={process.env.NEXT_PUBLIC_GOOGLE_FORM_URL}
