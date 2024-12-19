@@ -66,6 +66,7 @@ export class InsightService {
   }
 
   async getUserWeeklyInsightCountAndChange(userId: string){
+    console.log('id', userId);
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
@@ -76,6 +77,30 @@ export class InsightService {
 
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+    await this.insightRepository
+      .query(`
+      WITH last_7_days AS (
+    SELECT COUNT(*) AS cnt
+    FROM insights
+    WHERE "createdAt" >= CURRENT_DATE - INTERVAL '7 days'
+      AND "createdAt" < CURRENT_DATE
+),
+     previous_7_days AS (
+         SELECT COUNT(*) AS cnt
+         FROM insights
+         WHERE "createdAt" >= CURRENT_DATE - INTERVAL '14 days'
+           AND "createdAt" < CURRENT_DATE - INTERVAL '7 days'
+     )
+SELECT
+    last_7_days.cnt AS last_7_days_count,
+    previous_7_days.cnt AS previous_7_days_count,
+    CASE
+        WHEN previous_7_days.cnt = 0 THEN NULL
+        ELSE ((last_7_days.cnt - previous_7_days.cnt) * 100.0 / previous_7_days.cnt)
+        END AS relative_difference_percent
+FROM last_7_days, previous_7_days;
+      `)
 
     //
 

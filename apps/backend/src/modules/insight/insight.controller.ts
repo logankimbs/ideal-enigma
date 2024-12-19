@@ -23,9 +23,10 @@ export class InsightController {
 
   @Get(':userId/recent')
   async getUserRecentInsights(
-    @Param('id') id: string
+    @Param('userId') userId: string
   ): Promise<any> {
-    return await this.insightService.getUserWeeklyInsightCountAndChange(id);
+    console.log('id', userId);
+    return await this.insightService.getUserWeeklyInsightCountAndChange(userId);
   }
 
   @Get(':userId/team/recent')
