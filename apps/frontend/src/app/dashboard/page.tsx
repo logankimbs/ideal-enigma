@@ -7,6 +7,8 @@ import {
   getRecentSummary,
   getTotalTeamInsights,
   getTotalUserInsights,
+  getTotalUserTags,
+  getTotalTeamTags,
 } from '../libs/api';
 
 export default async function Home() {
@@ -14,6 +16,8 @@ export default async function Home() {
   const totalTeamInsights = await getTotalTeamInsights();
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
+  const userTagsAnalytics = await getTotalUserTags();
+  const teamTagsAnalytics = await getTotalTeamTags();
 
   return (
     <>
@@ -29,7 +33,9 @@ export default async function Home() {
             totalUserInsights.relative_difference_percent
           ).toFixed(1)}%`}
         />
-        <Stat title="Total themes" value="10" change="-0.5%" />
+        <Stat title="Total themes" value={userTagsAnalytics.total_tags_current} change={`${parseFloat(
+          userTagsAnalytics.relative_difference_percent
+        ).toFixed(1)}%`} />
         <Stat title="Average insights" value="0.8" change="+4.5%" />
         {/* 0-1 no flame. 1-3 one flame. 3-5 two flames. 5+ three flames. */}
         <Stat title="Current streak" value="4" change="🔥🔥🔥" />
@@ -45,7 +51,9 @@ export default async function Home() {
             totalTeamInsights.relative_difference_percent
           ).toFixed(1)}%`}
         />
-        <Stat title="Total themes" value="150" change="-0.5%" />
+        <Stat title="Total themes" value={teamTagsAnalytics.total_tags_current} change={`${parseFloat(
+          teamTagsAnalytics.relative_difference_percent
+        ).toFixed(1)}%`} />
         <Stat title="Average insights per user" value="2" change="+4.5%" />
         <Stat title="Active contributors" value="150" change="+21.2%" />
       </div>

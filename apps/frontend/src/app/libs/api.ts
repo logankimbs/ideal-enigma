@@ -133,6 +133,33 @@ type TotalInsights = {
   relative_difference_percent: string;
 };
 
+type TotalTags = {
+  "total_tags_current": string,
+  "total_tags_previous": string,
+  "relative_difference_percent": string
+}
+
+export async function getTotalUserTags(): Promise<TotalTags>{
+  const session = await getSession();
+  const userId = session.payload.sub;
+
+  return await api({
+    method: 'get',
+    endpoint: `users/${userId}/tags/analytics`,
+  });
+
+}
+
+export async function getTotalTeamTags(): Promise<TotalTags> {
+  const session = await getSession();
+  const teamId = session.payload["https://slack.com/team_id"];
+
+  return await api({
+    method: 'get',
+    endpoint: `users/team/${teamId}/tags/analytics`
+  });
+}
+
 export async function getTotalUserInsights(): Promise<TotalInsights> {
   const session = await getSession();
   const userId = session.payload.sub;

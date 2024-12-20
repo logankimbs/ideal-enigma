@@ -51,4 +51,14 @@ export class UserController {
   async completeOnboarding(@Param('userId') userId: string) {
     return await this.usersService.completeOnboarding(userId);
   }
+
+  @Get(':userId/tags/analytics')
+  async getAnalyticsTags(@Param('userId') userId: string) {
+    return await this.usersService.getUserWeeklyTagCountAndChange(userId)
+  }
+
+  @Get('team/:teamId/tags/analytics')
+  async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
+    return await this.usersService.getTeamWeeklyTagCountAndChange(teamId)
+  }
 }

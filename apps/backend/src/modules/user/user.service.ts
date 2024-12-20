@@ -8,13 +8,17 @@ import { Team } from '../team/team.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
+import {Tag} from "../tag/tag.entity";
+import {TagService} from "../tag/tag.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Team) private teamRepository: Repository<Team>
-  ) {}
+    @InjectRepository(Team) private teamRepository: Repository<Team>,
+    private readonly tagService: TagService,
+  ) {
+  }
 
   findAll(): Promise<User[]> {
     return this.userRepository.find();
@@ -22,14 +26,14 @@ export class UserService {
 
   findOne(id: string): Promise<User> {
     return this.userRepository.findOneOrFail({
-      where: { id },
+      where: {id},
       relations: ['team'],
     });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const team = await this.teamRepository.findOneOrFail({
-      where: { id: createUserDto.team_id },
+      where: {id: createUserDto.team_id},
     });
 
     const user = new User();
@@ -75,14 +79,14 @@ export class UserService {
 
   async getUsers(teamId: string): Promise<User[]> {
     return this.userRepository.find({
-      where: { team: { id: teamId } },
+      where: {team: {id: teamId}},
       relations: ['team'],
     });
   }
 
   async isOnboardingComplete(userId: string) {
     const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
+      where: {id: userId},
     });
 
     return user.onboardCompletedAt !== null;
@@ -90,7 +94,7 @@ export class UserService {
 
   async batchEnableNotifications(userIds: string[]) {
     for (const id of userIds) {
-      const user = await this.userRepository.findOneBy({ id });
+      const user = await this.userRepository.findOneBy({id});
 
       user.notifications = true;
 
@@ -100,7 +104,7 @@ export class UserService {
 
   async completeOnboarding(userId: string) {
     const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
+      where: {id: userId},
     });
 
     user.onboardCompletedAt = new Date();
@@ -117,5 +121,13 @@ export class UserService {
     return teamUsers.filter((user) => {
       return user.notifications === enabled;
     });
+  }
+
+  async getUserWeeklyTagCountAndChange(userId: string) {
+    return await this.tagService.getUserWeeklyTagCountAndChange(userId);
+  }
+
+  async getTeamWeeklyTagCountAndChange(teamId: string) {
+    return await this.tagService.getTeamWeeklyTagCountAndChange(teamId);
   }
 }
