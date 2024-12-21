@@ -12,7 +12,7 @@ import { TeamService } from './team.service';
     forwardRef(() => InsightModule),
     forwardRef(() => SummaryModule),
     TypeOrmModule.forFeature([Team]),
-    UserModule,
+    forwardRef(() => UserModule),
   ],
   controllers: [TeamController],
   providers: [TeamService],

@@ -54,11 +54,16 @@ export class UserController {
 
   @Get(':userId/tags/analytics')
   async getAnalyticsTags(@Param('userId') userId: string) {
-    return await this.usersService.getUserWeeklyTagCountAndChange(userId)
+    return await this.usersService.getUserWeeklyTagCountAndChange(userId);
   }
 
   @Get('team/:teamId/tags/analytics')
   async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
-    return await this.usersService.getTeamWeeklyTagCountAndChange(teamId)
+    return await this.usersService.getTeamWeeklyTagCountAndChange(teamId);
+  }
+
+  @Get(':userId/insights/streak')
+  async getUserInsightStreak(@Param('userId') userId: string) {
+    return await this.usersService.getUserInsightStreak(userId);
   }
 }

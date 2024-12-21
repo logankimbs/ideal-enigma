@@ -23,7 +23,6 @@ export class InsightController {
 
   @Get(':userId/recent')
   async lo(@Param('userId') userId: string): Promise<any> {
-    console.log('id', userId);
     return await this.insightService.getUserWeeklyInsightCountAndChange(userId);
   }
 

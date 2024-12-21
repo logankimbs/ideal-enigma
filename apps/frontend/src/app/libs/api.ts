@@ -134,12 +134,12 @@ type TotalInsights = {
 };
 
 type TotalTags = {
-  "total_tags_current": string,
-  "total_tags_previous": string,
-  "relative_difference_percent": string
-}
+  total_tags_current: string;
+  total_tags_previous: string;
+  relative_difference_percent: string;
+};
 
-export async function getTotalUserTags(): Promise<TotalTags>{
+export async function getTotalUserTags(): Promise<TotalTags> {
   const session = await getSession();
   const userId = session.payload.sub;
 
@@ -147,16 +147,15 @@ export async function getTotalUserTags(): Promise<TotalTags>{
     method: 'get',
     endpoint: `users/${userId}/tags/analytics`,
   });
-
 }
 
 export async function getTotalTeamTags(): Promise<TotalTags> {
   const session = await getSession();
-  const teamId = session.payload["https://slack.com/team_id"];
+  const teamId = session.payload['https://slack.com/team_id'];
 
   return await api({
     method: 'get',
-    endpoint: `users/team/${teamId}/tags/analytics`
+    endpoint: `users/team/${teamId}/tags/analytics`,
   });
 }
 
@@ -177,5 +176,15 @@ export async function getTotalTeamInsights(): Promise<TotalInsights> {
   return await api({
     method: 'get',
     endpoint: `insights/${userId}/team/recent`,
+  });
+}
+
+export async function getUserStreak(): Promise<{ count: number }> {
+  const session = await getSession();
+  const userId = session.payload.sub;
+
+  return await api({
+    method: 'get',
+    endpoint: `users/${userId}/insights/streak`,
   });
 }

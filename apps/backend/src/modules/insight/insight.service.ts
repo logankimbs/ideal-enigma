@@ -144,7 +144,6 @@ export class InsightService {
     const user = await this.userRepository.findOneOrFail({
       where: { id: userId },
       relations: ['team'],
-
     });
 
     return this.insightRepository
@@ -154,8 +153,7 @@ export class InsightService {
       .leftJoinAndSelect('user.team', 'team')
       .where('team.id = :teamId', { teamId: user.team.id })
       .orderBy('insights.createdAt', 'DESC')
-      .getMany()
-      ;
+      .getMany();
   }
 
   async getRecentInsights(teamId: string, limit: number): Promise<Insight[]> {
@@ -202,5 +200,37 @@ export class InsightService {
       where: { summary: { id: summaryId } },
       relations: ['summary', 'user', 'tags'],
     });
+  }
+
+  async getUserStreak(userId: string) {
+    const result = await this.insightRepository
+      .createQueryBuilder('insights')
+      .select(`DATE_TRUNC('week', insights.createdAt)`, 'week_start') // Use "week_start" alias
+      .addSelect(
+        `RANK() OVER (ORDER BY DATE_TRUNC('week', insights.createdAt) ASC)`,
+        'week_rank' // Alias the rank column
+      )
+      .where('insights.userId = :userId', { userId })
+      .groupBy(`DATE_TRUNC('week', insights.createdAt)`)
+      .orderBy(`DATE_TRUNC('week', insights.createdAt)`, 'ASC') // Use the actual expression instead of alias
+      .getRawMany();
+
+    // Process the raw results to calculate the streak
+    let streak = 0;
+    let lastWeek = null;
+
+    for (const row of result) {
+      const currentWeek = new Date(row.week_start).getTime(); // Use the correct alias
+      if (!lastWeek || currentWeek - lastWeek === 7 * 24 * 60 * 60 * 1000) {
+        // Either the first week or consecutive week
+        streak++;
+      } else if (currentWeek - lastWeek > 7 * 24 * 60 * 60 * 1000) {
+        // Break in the streak
+        break;
+      }
+      lastWeek = currentWeek;
+    }
+    
+    return { count: streak };
   }
 }
