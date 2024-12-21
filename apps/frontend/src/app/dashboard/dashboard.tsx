@@ -7,7 +7,6 @@ import {
   Square2StackIcon,
 } from '@heroicons/react/20/solid';
 import { User } from '@ideal-enigma/common';
-import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 import { createContext } from 'react';
 import { AccountDropdownMenu } from '../../components/account-dropdown-menu';
@@ -45,7 +44,6 @@ type DashboardProps = {
 export function Dashboard(props: DashboardProps) {
   const blogPosts = getFeaturedPosts();
   const pathname = usePathname();
-  const { theme } = useTheme();
   const { user } = props;
 
   return (
@@ -69,7 +67,10 @@ export function Dashboard(props: DashboardProps) {
             <SidebarHeader>
               <div className="flex gap-2">
                 <SidebarItem href="/dashboard" className="flex-auto">
-                  <Avatar src="/company/circle-logo-light.svg" />
+                  <Avatar
+                    src={`/company/mark-gradient.svg`}
+                    className={'outline-0'}
+                  />
                   <SidebarLabel>Loop</SidebarLabel>
                 </SidebarItem>
                 <ThemeToggle />
