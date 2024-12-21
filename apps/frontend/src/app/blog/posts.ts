@@ -14,7 +14,7 @@ export const cultureOfCuriosity: Post = {
   publishedAt: 'Monday, December 3, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'Building a Culture of Curiosity: How Weekly Insight Reminders Can Transform Your Business',
@@ -28,7 +28,7 @@ export const fromInsightToInnovation: Post = {
   publishedAt: 'Tuesday, November 26, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'From Insight to Innovation: The Power of a Data-Driven Startup Culture',
@@ -42,7 +42,7 @@ export const leveragingAi: Post = {
   publishedAt: 'Wednesday, November 20, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'Leveraging AI to Transform Insight Collection into Actionable Business Strategies',
@@ -56,7 +56,7 @@ export const fatalFlaw: Post = {
   publishedAt: 'Monday, November 4, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'The Fatal Flaw: Why Startups Overlook the "Learn" in Build-Measure-Learn',
@@ -70,7 +70,7 @@ export const growthKiller: Post = {
   publishedAt: 'Wednesday, October 9, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'The Hidden Growth Killer: Why Startups Struggle to Maintain a Clean Repository of Insights',
@@ -84,7 +84,7 @@ export const transparencyAndCollaboration: Post = {
   publishedAt: 'Tuesday, October 1, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title:
     'The Role of Transparency and Collaboration in Creating a Culture of Continuous Learning',
@@ -98,7 +98,7 @@ export const unlockingGrowth: Post = {
   publishedAt: 'Friday, September 27, 2024',
   author: {
     name: 'Loop Team',
-    image: '/company/logo.png',
+    image: '/company/mark-gradient.svg',
   },
   title: 'Unlocking Growth: The Secret Behind Impactful Insights',
   excerpt:
