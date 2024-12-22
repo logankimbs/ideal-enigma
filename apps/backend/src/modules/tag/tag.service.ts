@@ -1,13 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Tag } from "./tag.entity";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Tag } from './tag.entity';
 
 @Injectable()
 export class TagService {
   constructor(
     @InjectRepository(Tag)
-    private tagRepository: Repository<Tag>,
+    private tagRepository: Repository<Tag>
   ) {}
 
   findAll(): Promise<Tag[]> {
@@ -32,7 +32,7 @@ export class TagService {
         `COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS total_tags_previous`,
         // Calculate percentage change
         `CASE
-        WHEN COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN NULL
+        WHEN COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN 0
         ELSE (
           (
             COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) -
@@ -42,7 +42,7 @@ export class TagService {
         )
       END AS relative_difference_percent`,
       ])
-      .where('i.userId = :userId', {userId})
+      .where('i.userId = :userId', { userId })
       .setParameters({
         oneWeekAgo,
         currentDate: new Date(),
@@ -70,7 +70,7 @@ export class TagService {
         `COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS total_tags_previous`,
         // Percentage change calculation
         `CASE
-        WHEN COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN NULL
+        WHEN COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN 0
         ELSE (
           (
             COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) -

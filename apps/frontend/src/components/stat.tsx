@@ -1,46 +1,32 @@
 import { Badge } from './badge';
 import { Divider } from './divider';
 
+function calculateStreak(value: number): string {
+  if (value < 1) return '';
+  const flamesCount = Math.min(Math.ceil(value / 2), 3);
+  return '🔥'.repeat(flamesCount);
+}
+
 type StatProps = {
   title: string;
   value: string;
-  change?: string;
-  flamer?: boolean;
+  change?: string | null;
+  streak?: boolean;
 };
 
-function calculateFlames(value: number): string {
-  if (value >= 1 && value <= 2) {
-    return '🔥';
-  } else if (value >= 3 && value <= 4) {
-    return '🔥🔥';
-  } else if (value >= 5) {
-    return '🔥🔥🔥';
-  } else {
-    return '';
-  }
-}
-
-export function Stat(props: StatProps) {
-  let flames = '';
-
-  if (props.flamer) {
-    flames = calculateFlames(parseInt(props.value));
-  }
-
+export function Stat({ title, value, change, streak = false }: StatProps) {
   return (
     <div>
       <Divider />
-      <div className="mt-6 text-lg/6 font-medium sm:text-sm/6">
-        {props.title}
+      <div className="mt-6 text-lg/6 font-medium sm:text-sm/6">{title}</div>
+      <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">{value}</div>
+      <div className="mt-3 text-sm/6 sm:text-xs/6">
+        {streak ? calculateStreak(parseInt(value)) : ''}
       </div>
-      <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">
-        {props.value}
-      </div>
-      <div className="mt-3 text-sm/6 sm:text-xs/6">{flames}</div>
-      {props.change && (
+      {change && (
         <div className="mt-3 text-sm/6 sm:text-xs/6">
-          <Badge color={props.change.startsWith('+') ? 'lime' : 'pink'}>
-            {props.change}
+          <Badge color={change.startsWith('+') ? 'green' : 'red'}>
+            {parseFloat(change).toFixed(1)}%
           </Badge>{' '}
           <span className="text-zinc-500">from last week</span>
         </div>

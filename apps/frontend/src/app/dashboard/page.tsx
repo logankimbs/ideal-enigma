@@ -31,24 +31,15 @@ export default async function Home() {
         <Stat
           title="Total insights"
           value={totalUserInsights.last_7_days_count}
-          change={`${parseFloat(
-            totalUserInsights.relative_difference_percent ?? 0
-          ).toFixed(1)}%`}
+          change={totalUserInsights.relative_difference_percent}
         />
         <Stat
           title="Total themes"
           value={userTagsAnalytics.total_tags_current}
-          change={`${parseFloat(
-            userTagsAnalytics.relative_difference_percent ?? 0
-          ).toFixed(1)}%`}
+          change={userTagsAnalytics.relative_difference_percent}
         />
         <Stat title="Average insights" value="0.8" change="+4.5%" />
-        {/* 0-1 no flame. 1-3 one flame. 3-5 two flames. 5+ three flames. */}
-        <Stat
-          title="Current streak"
-          value={`${userStreak.count}`}
-          flamer={true}
-        />
+        <Stat title="Current streak" value={`${userStreak.count}`} streak />
       </div>
       <div className="mt-8 flex items-end justify-between">
         <Subheading>Company Weekly Overview</Subheading>
@@ -57,16 +48,12 @@ export default async function Home() {
         <Stat
           title="Total insights"
           value={totalTeamInsights.last_7_days_count}
-          change={`${parseFloat(
-            totalTeamInsights.relative_difference_percent ?? 0
-          ).toFixed(1)}%`}
+          change={totalTeamInsights.relative_difference_percent}
         />
         <Stat
           title="Total themes"
           value={teamTagsAnalytics.total_tags_current}
-          change={`${parseFloat(
-            teamTagsAnalytics.relative_difference_percent ?? 0
-          ).toFixed(1)}%`}
+          change={teamTagsAnalytics.relative_difference_percent}
         />
         <Stat title="Average insights per user" value="2" change="+4.5%" />
         <Stat title="Active contributors" value="150" change="+21.2%" />
