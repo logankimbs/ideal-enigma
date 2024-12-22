@@ -191,7 +191,7 @@ function Team() {
         <Person
           name="Jace Call"
           description="Co-Founder"
-          img="/team/dries-vincent.jpg"
+          img="/team/jace-call.jpg"
         />
         <Person
           name="Logan Kimball"
