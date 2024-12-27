@@ -230,7 +230,73 @@ export class InsightService {
       }
       lastWeek = currentWeek;
     }
-    
+
     return { count: streak };
   }
+
+
+  async getAverageInsightsWithChange(userId: string): Promise<{
+    average_including_current: number;
+    average_excluding_current: number;
+    change_from_excluding_to_including: number | null;
+  }> {
+    const queryBuilder = this.insightRepository.createQueryBuilder('i');
+
+    const userInsightCounts = queryBuilder
+      .select([
+        'i."userId" AS "userId"',
+        `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
+        `COUNT(i."id") AS "weekly_count"`,
+      ])
+      .where('i."userId" = :userId', { userId })
+      .groupBy('i."userId", DATE_TRUNC(\'week\', i."createdAt")');
+
+    const averageAllWeeks = this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `AVG(user_counts."weekly_count") AS "average_including_current"`,
+      ])
+      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
+      .setParameters(userInsightCounts.getParameters());
+
+    const averageExcludingCurrent = this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `AVG(user_counts."weekly_count") AS "average_excluding_current"`,
+      ])
+      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
+      .where(`user_counts."week_start" < DATE_TRUNC('week', NOW())`)
+      .setParameters(userInsightCounts.getParameters());
+
+    const result = await this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `a_all."average_including_current"`,
+        `a_exc."average_excluding_current"`,
+        `CASE
+        WHEN a_exc."average_excluding_current" = 0 THEN NULL
+        ELSE (
+          (a_all."average_including_current" - a_exc."average_excluding_current")
+          * 100.0 / a_exc."average_excluding_current"
+        )
+      END AS "change_from_excluding_to_including"`,
+      ])
+      .from(`(${averageAllWeeks.getQuery()})`, 'a_all')
+      .addFrom(`(${averageExcludingCurrent.getQuery()})`, 'a_exc')
+      .setParameters({
+        ...averageAllWeeks.getParameters(),
+        ...averageExcludingCurrent.getParameters(),
+      })
+      .getRawOne();
+
+    return {
+      average_including_current: parseFloat(result.average_including_current) || 0,
+      average_excluding_current: parseFloat(result.average_excluding_current) || 0,
+      change_from_excluding_to_including:
+        result.change_from_excluding_to_including !== null
+          ? parseFloat(result.change_from_excluding_to_including)
+          : null,
+    };
+  }
+
 }

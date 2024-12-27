@@ -66,4 +66,8 @@ export class UserController {
   async getUserInsightStreak(@Param('userId') userId: string) {
     return await this.usersService.getUserInsightStreak(userId);
   }
+  @Get(':userId/insights/average')
+  async getUserInsightAverage(@Param('userId') userId: string) {
+    return await this.usersService.getUserInsightAverage(userId);
+  }
 }

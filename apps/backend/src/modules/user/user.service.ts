@@ -135,4 +135,9 @@ export class UserService {
     await this.findOne(userId);
     return await this.insightService.getUserStreak(userId);
   }
+
+  async getUserInsightAverage(userId: string) {
+    return await this.insightService.getAverageInsightsWithChange(userId);
+  }
+
 }
