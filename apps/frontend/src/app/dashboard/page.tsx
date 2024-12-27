@@ -29,10 +29,23 @@ export default async function Home() {
         <Stat title="Average insights per user" value="2" change="+4.5%" />
         <Stat title="Active contributors" value="150" change="+21.2%" />
       </div>
-      <div className="mt-8 grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
-        {recentSummary && <SummaryPreview summary={recentSummary} />}
+      <div
+        className={`mt-8 grid gap-8 sm:grid-cols-1 ${
+          recentSummary && recentInsights?.length
+            ? 'xl:grid-cols-2' // both exist -> 2 columns
+            : 'xl:grid-cols-1' // only one exists -> 1 column
+        } items-stretch`}
+      >
+        {recentSummary && (
+          <div className="h-full">
+            <SummaryPreview summary={recentSummary} />
+          </div>
+        )}
+
         {recentInsights && recentInsights.length > 0 && (
-          <RepositoryPreview repository={recentInsights} />
+          <div className="h-full">
+            <RepositoryPreview repository={recentInsights} />
+          </div>
         )}
       </div>
     </>
