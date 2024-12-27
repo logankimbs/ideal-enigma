@@ -12,7 +12,6 @@ import { Button } from './button';
 import { Checkbox } from './checkbox';
 import { Input, InputGroup } from './input';
 import { GradientBackground } from './landing/gradient';
-import { Link } from './landing/link';
 import { Mark } from './landing/logo';
 import {
   Table,
@@ -68,12 +67,10 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
     <main className="overflow-hidden dark:text-white">
       <GradientBackground />
       <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
-        <div className="w-full max-w-xl rounded-xl bg-white dark:bg-red-50 shadow-md ring-1 ring-black/5 lg:bg-white/50 lg:p-10 lg:shadow-sm lg:ring-1 lg:ring-zinc-950/5 dark:lg:bg-zinc-900/50 dark:lg:ring-white/10">
+        <div className="w-full max-w-xl rounded-xl bg-white shadow-md ring-1 ring-black/5 bg-white/50 lg:p-10 lg:shadow-sm lg:ring-1 lg:ring-zinc-950/5 dark:bg-zinc-900/50 dark:ring-white/10">
           <form onSubmit={handleSubmit} method="POST" className="p-7 sm:p-11">
             <div className="flex items-start">
-              <Link href="/" title="Home">
-                <Mark className="h-9 fill-black" />
-              </Link>
+              <Mark className="h-9 fill-black" />
             </div>
             <h1 className="mt-8 text-base/6 font-medium">
               Your Slack integration is almost set up.
