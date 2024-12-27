@@ -65,10 +65,10 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
   };
 
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden dark:text-white">
       <GradientBackground />
       <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
-        <div className="w-full max-w-xl rounded-xl bg-white shadow-md ring-1 ring-black/5">
+        <div className="w-full max-w-xl rounded-xl bg-white dark:bg-red-50 shadow-md ring-1 ring-black/5 lg:bg-white/50 lg:p-10 lg:shadow-sm lg:ring-1 lg:ring-zinc-950/5 dark:lg:bg-zinc-900/50 dark:lg:ring-white/10">
           <form onSubmit={handleSubmit} method="POST" className="p-7 sm:p-11">
             <div className="flex items-start">
               <Link href="/" title="Home">
@@ -78,7 +78,7 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
             <h1 className="mt-8 text-base/6 font-medium">
               Your Slack integration is almost set up.
             </h1>
-            <p className="mt-1 text-sm/5 text-gray-600">
+            <p className="mt-1 text-sm/5 text-zinc-500 dark:text-zinc-400">
               Before exploring your new Loop dashboard, choose which users you
               would like to opt out of receiving notifications.
             </p>
