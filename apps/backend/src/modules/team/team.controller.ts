@@ -62,4 +62,9 @@ export class TeamController {
   async getContributors(@Param('teamId') teamId: string): Promise<any> {
     return this.insightService.getActiveContrib(teamId)
   }
+
+  @Get(':teamId/tags/analytics')
+  async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
+    return await this.userService.getTeamWeeklyTagCountAndChange(teamId);
+  }
 }

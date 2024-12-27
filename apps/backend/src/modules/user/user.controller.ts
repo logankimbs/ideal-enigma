@@ -57,10 +57,7 @@ export class UserController {
     return await this.usersService.getUserWeeklyTagCountAndChange(userId);
   }
 
-  @Get('team/:teamId/tags/analytics')
-  async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
-    return await this.usersService.getTeamWeeklyTagCountAndChange(teamId);
-  }
+
 
   @Get(':userId/insights/streak')
   async getUserInsightStreak(@Param('userId') userId: string) {

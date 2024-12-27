@@ -155,7 +155,7 @@ export async function getTotalTeamTags(): Promise<TotalTags> {
 
   return await api({
     method: 'get',
-    endpoint: `users/team/${teamId}/tags/analytics`,
+    endpoint: `teams/${teamId}/tags/analytics`,
   });
 }
 
