@@ -1,4 +1,4 @@
-import { Heading, Subheading } from '../../components/heading';
+import { Subheading } from '../../components/heading';
 import { RepositoryPreview } from '../../components/repository-preview';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
@@ -10,8 +10,7 @@ export default async function Home() {
 
   return (
     <>
-      <Heading>Good afternoon!</Heading>
-      <div className="mt-8 flex items-end justify-between">
+      <div className="flex items-end justify-between">
         <Subheading>My Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
