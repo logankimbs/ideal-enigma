@@ -16,18 +16,19 @@ export class InsightService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
     private teamService: TeamService
-  ) {}
+  ) {
+  }
 
   // Create insight and tags. Tags are passed in as an array of strings i.e., ["tag1", "tag2"]
   async create(createInsightDto: CreateInsightDto): Promise<Insight> {
     const user = await this.userRepository.findOneOrFail({
-      where: { id: createInsightDto.userId },
+      where: {id: createInsightDto.userId},
     });
 
     let tags: Tag[] = [];
     if (createInsightDto.tags && createInsightDto.tags.length > 0) {
       const existingTags = await this.tagRepository.find({
-        where: createInsightDto.tags.map((tagText) => ({ text: tagText })),
+        where: createInsightDto.tags.map((tagText) => ({text: tagText})),
       });
 
       // Create a Set of existing tag for quick lookup
@@ -36,7 +37,7 @@ export class InsightService {
       // Identify tags that don't exist yet
       const newTagsData = createInsightDto.tags
         .filter((tagText) => !existingTagTexts.has(tagText))
-        .map((tagText) => this.tagRepository.create({ text: tagText }));
+        .map((tagText) => this.tagRepository.create({text: tagText}));
 
       // Save new tags in one batch if there are any
       if (newTagsData.length > 0) {
@@ -60,7 +61,7 @@ export class InsightService {
     getInsightByIdDto: GetInsightByIdDto
   ): Promise<Insight> {
     return await this.insightRepository.findOneOrFail({
-      where: { id: getInsightByIdDto.id },
+      where: {id: getInsightByIdDto.id},
       relations: ['tags', 'user'],
     });
   }
@@ -73,7 +74,7 @@ export class InsightService {
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
     await this.userRepository.findOneOrFail({
-      where: { id: userId },
+      where: {id: userId},
       relations: ['team'],
     });
 
@@ -93,7 +94,7 @@ export class InsightService {
       )
     END AS relative_difference_percent`,
       ])
-      .where('i.userId = :userId', { userId })
+      .where('i.userId = :userId', {userId})
       .setParameters({
         oneWeekAgo,
         currentDate: new Date(),
@@ -110,7 +111,7 @@ export class InsightService {
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
     const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
+      where: {id: userId},
       relations: ['team'],
     });
 
@@ -131,7 +132,7 @@ export class InsightService {
     END AS relative_difference_percent`,
       ])
       .innerJoin('users', 'u', 'u.id = i.userId')
-      .where('u.teamId = :teamId', { teamId: user.team.id })
+      .where('u.teamId = :teamId', {teamId: user.team.id})
       .setParameters({
         oneWeekAgo,
         currentDate: new Date(),
@@ -142,7 +143,7 @@ export class InsightService {
 
   async getInsightsRepository(userId: string): Promise<Insight[]> {
     const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
+      where: {id: userId},
       relations: ['team'],
     });
 
@@ -151,7 +152,7 @@ export class InsightService {
       .leftJoinAndSelect('insights.user', 'user')
       .leftJoinAndSelect('insights.tags', 'tags')
       .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
+      .where('team.id = :teamId', {teamId: user.team.id})
       .orderBy('insights.createdAt', 'DESC')
       .getMany();
   }
@@ -163,7 +164,7 @@ export class InsightService {
       .createQueryBuilder('insights')
       .leftJoinAndSelect('insights.user', 'user')
       .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: team.id })
+      .where('team.id = :teamId', {teamId: team.id})
       .orderBy('insights.createdAt', 'DESC')
       .limit(limit)
       .getMany();
@@ -177,9 +178,9 @@ export class InsightService {
       .createQueryBuilder('insights')
       .leftJoinAndSelect('insights.user', 'users')
       .leftJoinAndSelect('users.team', 'teams')
-      .where('teams.id = :teamId', { teamId })
+      .where('teams.id = :teamId', {teamId})
       .andWhere('insights.isSummarized = false')
-      .andWhere('insights.createdAt > :oneMonthAgo', { oneMonthAgo })
+      .andWhere('insights.createdAt > :oneMonthAgo', {oneMonthAgo})
       .getMany();
   }
 
@@ -197,7 +198,7 @@ export class InsightService {
 
   async getInsightsBySummaryId(summaryId: string) {
     return await this.insightRepository.find({
-      where: { summary: { id: summaryId } },
+      where: {summary: {id: summaryId}},
       relations: ['summary', 'user', 'tags'],
     });
   }
@@ -210,7 +211,7 @@ export class InsightService {
         `RANK() OVER (ORDER BY DATE_TRUNC('week', insights.createdAt) ASC)`,
         'week_rank' // Alias the rank column
       )
-      .where('insights.userId = :userId', { userId })
+      .where('insights.userId = :userId', {userId})
       .groupBy(`DATE_TRUNC('week', insights.createdAt)`)
       .orderBy(`DATE_TRUNC('week', insights.createdAt)`, 'ASC') // Use the actual expression instead of alias
       .getRawMany();
@@ -231,7 +232,7 @@ export class InsightService {
       lastWeek = currentWeek;
     }
 
-    return { count: streak };
+    return {count: streak};
   }
 
 
@@ -248,7 +249,7 @@ export class InsightService {
         `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
         `COUNT(i."id") AS "weekly_count"`,
       ])
-      .where('i."userId" = :userId', { userId })
+      .where('i."userId" = :userId', {userId})
       .groupBy('i."userId", DATE_TRUNC(\'week\', i."createdAt")');
 
     const averageAllWeeks = this.insightRepository
@@ -299,4 +300,95 @@ export class InsightService {
     };
   }
 
+  async getTeamAverageInsights(teamId: string): Promise<{
+    average_including_current: number;
+    average_excluding_current: number;
+    change_from_excluding_to_including: number | null;
+  }> {
+    const userInsightCounts = this.insightRepository
+      .createQueryBuilder('i')
+      .innerJoin('users', 'u', 'u.id = i.userId')
+      .select([
+        'u."teamId" AS "teamId"',
+        `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
+        `COUNT(i."id") AS "weekly_count"`,
+      ])
+      .where('u."teamId" = :teamId', {teamId})
+      .groupBy('u."teamId", DATE_TRUNC(\'week\', i."createdAt")');
+
+    const averageAllWeeks = this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `AVG(user_counts."weekly_count") AS "average_including_current"`,
+      ])
+      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
+      .setParameters(userInsightCounts.getParameters());
+
+    const averageExcludingCurrent = this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `AVG(user_counts."weekly_count") AS "average_excluding_current"`,
+      ])
+      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
+      .where(`user_counts."week_start" < DATE_TRUNC('week', NOW())`)
+      .setParameters(userInsightCounts.getParameters());
+
+    const combinedResult = await this.insightRepository
+      .createQueryBuilder()
+      .select([
+        `a_all."average_including_current"`,
+        `a_exc."average_excluding_current"`,
+        `CASE
+        WHEN a_exc."average_excluding_current" = 0 THEN NULL
+        ELSE (
+          (a_all."average_including_current" - a_exc."average_excluding_current")
+          * 100.0 / a_exc."average_excluding_current"
+        )
+      END AS "change_from_excluding_to_including"`,
+      ])
+      .from(`(${averageAllWeeks.getQuery()})`, 'a_all')
+      .addFrom(`(${averageExcludingCurrent.getQuery()})`, 'a_exc')
+      .setParameters({
+        ...averageAllWeeks.getParameters(),
+        ...averageExcludingCurrent.getParameters(),
+      })
+      .getRawOne();
+
+    return {
+      average_including_current: parseFloat(combinedResult.average_including_current) || 0,
+      average_excluding_current: parseFloat(combinedResult.average_excluding_current) || 0,
+      change_from_excluding_to_including:
+        combinedResult.change_from_excluding_to_including !== null
+          ? parseFloat(combinedResult.change_from_excluding_to_including)
+          : null,
+    };
+  }
+
+
+  async getActiveContrib(teamId: string): Promise<any> {
+    const weekResults = await this.insightRepository
+      .createQueryBuilder('i')
+      .innerJoin('users', 'u', 'u.id = i.userId')
+      .select([
+        `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
+        `COUNT(DISTINCT i."userId") AS "users_submitted_insights"`,
+      ])
+      .where('u.teamId = :teamId', {teamId})
+      .groupBy(`DATE_TRUNC('week', i."createdAt")`)
+      .orderBy(`DATE_TRUNC('week', i."createdAt")`, 'ASC')
+      .getRawMany();
+
+
+    console.log(weekResults)
+
+    const this_week = weekResults.at(-1)
+    let change_percent = null
+    if(weekResults.length > 1) {
+      const last_week = weekResults.at(-2)
+      change_percent = (this_week.users_submitted_insights - last_week.users_submitted_insights) / last_week.users_submitted_insights * 100
+
+    }
+    return {"this_week_avg": this_week.users_submitted_insights, "change_percent": change_percent}
+
+  }
 }

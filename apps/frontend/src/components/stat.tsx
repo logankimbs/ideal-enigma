@@ -25,7 +25,7 @@ export function Stat({ title, value, change, streak = false }: StatProps) {
       </div>
       {change && (
         <div className="mt-3 text-sm/6 sm:text-xs/6">
-          <Badge color={change.startsWith('+') ? 'green' : 'red'}>
+          <Badge color={change.startsWith('-') ? 'red' : 'green'}>
             {parseFloat(change).toFixed(1)}%
           </Badge>{' '}
           <span className="text-zinc-500">from last week</span>

@@ -10,6 +10,7 @@ import {
   getTotalUserInsights,
   getTotalUserTags,
   getUserStreak,
+  getUserAverageInsight, getTeamAverageInsight, getActiveContributors
 } from '../libs/api';
 
 export default async function Home() {
@@ -20,6 +21,9 @@ export default async function Home() {
   const userStreak = await getUserStreak();
   const userTagsAnalytics = await getTotalUserTags();
   const teamTagsAnalytics = await getTotalTeamTags();
+  const userAverageInsight = await getUserAverageInsight();
+  const teamAverageInsight = await getTeamAverageInsight();
+  const teamContributors = await getActiveContributors();
 
   return (
     <>
@@ -38,7 +42,7 @@ export default async function Home() {
           value={userTagsAnalytics.total_tags_current}
           change={userTagsAnalytics.relative_difference_percent}
         />
-        <Stat title="Average insights" value="0.8" change="+4.5%" />
+        <Stat title="Average insights" value={`${parseFloat(userAverageInsight.average_including_current).toFixed(2,)}`} change={`${userAverageInsight.change_from_excluding_to_including}`} />
         <Stat title="Current streak" value={`${userStreak.count}`} streak />
       </div>
       <div className="mt-8 flex items-end justify-between">
@@ -55,8 +59,8 @@ export default async function Home() {
           value={teamTagsAnalytics.total_tags_current}
           change={teamTagsAnalytics.relative_difference_percent}
         />
-        <Stat title="Average insights per user" value="2" change="+4.5%" />
-        <Stat title="Active contributors" value="150" change="+21.2%" />
+        <Stat title="Average insights per user" value={`${parseFloat(teamAverageInsight.average_including_current).toFixed(2,)}`} change={`${teamAverageInsight.change_from_excluding_to_including}`}/>
+        <Stat title="Active contributors" value={`${teamContributors.this_week_avg}`} change={`${teamContributors.change_percent}`} />
       </div>
       <div className="mt-8 grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
         {recentSummary && <SummaryPreview summary={recentSummary} />}
