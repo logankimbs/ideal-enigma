@@ -1,6 +1,7 @@
 import {
   ActiveContributors,
   AverageInsights,
+  TotalInsights,
   UserStreak,
 } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
@@ -70,33 +71,20 @@ export class InsightService {
     });
   }
 
-  async getUserWeeklyInsightCountAndChange(userId: string) {
+  async getTotalUserInsights(userId: string): Promise<TotalInsights> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
-    await this.userRepository.findOneOrFail({
-      where: { id: userId },
-      relations: ['team'],
-    });
+    await this.userRepository.findOneOrFail({ where: { id: userId } });
 
-    return await this.insightRepository
+    const result = await this.insightRepository
       .createQueryBuilder('i')
       .select([
-        `COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count`,
-        `COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count`,
-        `CASE
-      WHEN COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN 0
-      ELSE (
-        (
-          COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) -
-          COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
-        ) * 100.0 /
-        COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
-      )
-    END AS relative_difference_percent`,
+        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count',
+        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count',
       ])
       .where('i.userId = :userId', { userId })
       .setParameters({
@@ -105,44 +93,59 @@ export class InsightService {
         twoWeeksAgo,
       })
       .getRawOne();
+
+    const { last_7_days_count, previous_7_days_count } = result;
+
+    const relative_difference_percent =
+      previous_7_days_count === 0
+        ? 0
+        : ((last_7_days_count - previous_7_days_count) * 100.0) /
+          previous_7_days_count;
+
+    return {
+      last_7_days_count: last_7_days_count.toString(),
+      previous_7_days_count: previous_7_days_count.toString(),
+      relative_difference_percent: relative_difference_percent.toString(),
+    };
   }
 
-  async getTeamRecentInsights(userId: string) {
+  async getTotalTeamInsights(teamId: string): Promise<TotalInsights> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
-    const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
-      relations: ['team'],
-    });
+    const team = await this.teamService.find(teamId);
 
-    return await this.insightRepository
+    const result = await this.insightRepository
       .createQueryBuilder('i')
       .select([
-        `COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count`,
-        `COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count`,
-        `CASE
-      WHEN COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) = 0 THEN 0
-      ELSE (
-        (
-          COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) -
-          COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
-        ) * 100.0 /
-        COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END)
-      )
-    END AS relative_difference_percent`,
+        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count',
+        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count',
       ])
       .innerJoin('users', 'u', 'u.id = i.userId')
-      .where('u.teamId = :teamId', { teamId: user.team.id })
+      .where('u.teamId = :teamId', { teamId: team.id })
       .setParameters({
         oneWeekAgo,
         currentDate: new Date(),
         twoWeeksAgo,
       })
       .getRawOne();
+
+    const { last_7_days_count, previous_7_days_count } = result;
+
+    const relative_difference_percent =
+      previous_7_days_count === 0
+        ? 0
+        : ((last_7_days_count - previous_7_days_count) * 100.0) /
+          previous_7_days_count;
+
+    return {
+      last_7_days_count: last_7_days_count.toString(),
+      previous_7_days_count: previous_7_days_count.toString(),
+      relative_difference_percent: relative_difference_percent.toString(),
+    };
   }
 
   async getInsightsRepository(userId: string): Promise<Insight[]> {

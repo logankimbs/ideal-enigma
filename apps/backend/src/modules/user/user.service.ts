@@ -140,4 +140,7 @@ export class UserService {
     return await this.insightService.getAverageInsightsWithChange(userId);
   }
 
+  async getTotalUserInsights(userId: string) {
+    return await this.insightService.getTotalUserInsights(userId);
+  }
 }

@@ -52,20 +52,23 @@ export class UserController {
     return await this.usersService.completeOnboarding(userId);
   }
 
+  @Get(':userId/insights/total')
+  async getTotalUserInsights(@Param('userId') userId: string): Promise<any> {
+    return await this.usersService.getTotalUserInsights(userId);
+  }
+
   @Get(':userId/tags/analytics')
   async getAnalyticsTags(@Param('userId') userId: string) {
     return await this.usersService.getUserWeeklyTagCountAndChange(userId);
   }
 
-
-
   @Get(':userId/insights/streak')
   async getUserInsightStreak(@Param('userId') userId: string) {
     return await this.usersService.getUserInsightStreak(userId);
   }
+
   @Get(':userId/insights/average')
   async getUserInsightAverage(@Param('userId') userId: string) {
     return await this.usersService.getUserInsightAverage(userId);
   }
-
 }

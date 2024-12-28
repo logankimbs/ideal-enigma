@@ -67,4 +67,9 @@ export class TeamController {
   async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
     return await this.userService.getTeamWeeklyTagCountAndChange(teamId);
   }
+
+  @Get(':teamId/insights/total')
+  async getTotalTeamInsights(@Param('teamId') teamId: string) {
+    return await this.insightService.getTotalTeamInsights(teamId);
+  }
 }

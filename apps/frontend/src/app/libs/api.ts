@@ -162,17 +162,17 @@ export async function getTotalUserInsights(): Promise<TotalInsights> {
 
   return await api({
     method: 'get',
-    endpoint: `insights/${userId}/recent`,
+    endpoint: `users/${userId}/insights/total`,
   });
 }
 
 export async function getTotalTeamInsights(): Promise<TotalInsights> {
   const session = await getSession();
-  const userId = session.payload.sub;
+  const teamId = session.payload['https://slack.com/team_id'];
 
   return await api({
     method: 'get',
-    endpoint: `insights/${userId}/team/recent`,
+    endpoint: `teams/${teamId}/insights/total`,
   });
 }
 
