@@ -6,6 +6,7 @@ import {
   TotalInsights,
   TotalTags,
   User,
+  UserStreak,
 } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
@@ -175,7 +176,7 @@ export async function getTotalTeamInsights(): Promise<TotalInsights> {
   });
 }
 
-export async function getUserStreak(): Promise<{ count: number }> {
+export async function getUserStreak(): Promise<UserStreak> {
   const session = await getSession();
   const userId = session.payload.sub;
 

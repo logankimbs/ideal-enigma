@@ -21,3 +21,7 @@ export type TotalTags = {
   total_tags_previous: string;
   relative_difference_percent: string;
 };
+
+export type UserStreak = {
+  count: number;
+};

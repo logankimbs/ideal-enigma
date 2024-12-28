@@ -1,4 +1,8 @@
-import { ActiveContributors, AverageInsights } from '@ideal-enigma/common';
+import {
+  ActiveContributors,
+  AverageInsights,
+  UserStreak,
+} from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -203,7 +207,7 @@ export class InsightService {
     });
   }
 
-  async getUserStreak(userId: string) {
+  async getUserStreak(userId: string): Promise<UserStreak> {
     const result = await this.insightRepository
       .createQueryBuilder('insights')
       .select(`DATE_TRUNC('week', insights.createdAt)`, 'week_start') // Use "week_start" alias
