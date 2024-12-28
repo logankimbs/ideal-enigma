@@ -1,4 +1,9 @@
-import { Insight, Summary, User } from '@ideal-enigma/common';
+import {
+  ActiveContributors,
+  Insight,
+  Summary,
+  User,
+} from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
 
@@ -199,7 +204,7 @@ export async function getUserAverageInsight(): Promise<any> {
   });
 }
 
-export async function getTeamAverageInsight(): Promise<any>{
+export async function getTeamAverageInsight(): Promise<any> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
@@ -207,10 +212,9 @@ export async function getTeamAverageInsight(): Promise<any>{
     method: 'get',
     endpoint: `teams/${teamId}/insights/average`,
   });
-
 }
 
-export async function getActiveContributors(): Promise<any> {
+export async function getActiveContributors(): Promise<ActiveContributors> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
   return await api({

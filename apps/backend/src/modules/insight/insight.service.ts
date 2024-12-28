@@ -1,3 +1,4 @@
+import { ActiveContributors } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -382,7 +383,7 @@ export class InsightService {
     };
   }
 
-  async getActiveContrib(teamId: string): Promise<any> {
+  async getActiveContributors(teamId: string): Promise<ActiveContributors> {
     const weekResults = await this.insightRepository
       .createQueryBuilder('i')
       .innerJoin('users', 'u', 'u.id = i.userId')
@@ -396,16 +397,15 @@ export class InsightService {
       .getRawMany();
 
     if (!weekResults.length) {
-      return {
-        this_week_avg: 0,
-        change_percent: 0,
-      };
+      return { this_week_avg: 0, change_percent: 0 };
     }
 
     const this_week = weekResults.at(-1);
     let change_percent = null;
+
     if (weekResults.length > 1) {
       const last_week = weekResults.at(-2);
+
       change_percent =
         ((this_week.users_submitted_insights -
           last_week.users_submitted_insights) /
