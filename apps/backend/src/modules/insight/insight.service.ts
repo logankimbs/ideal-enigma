@@ -312,7 +312,7 @@ export class InsightService {
     };
   }
 
-  async getTeamAverageInsights(teamId: string): Promise<AverageInsights> {
+  async getAverageTeamInsights(teamId: string): Promise<AverageInsights> {
     const userInsightCounts = this.insightRepository
       .createQueryBuilder('i')
       .innerJoin('users', 'u', 'u.id = i.userId')

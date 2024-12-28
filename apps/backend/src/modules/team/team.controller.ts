@@ -55,11 +55,11 @@ export class TeamController {
 
   @Get(':teamId/insights/average')
   async getTeamInsightAverage(@Param('teamId') teamId: string): Promise<any> {
-    return this.insightService.getTeamAverageInsights(teamId);
+    return this.insightService.getAverageTeamInsights(teamId);
   }
 
   @Get(':teamId/contributors')
-  async getContributors(@Param('teamId') teamId: string): Promise<any> {
+  async getContributors(@Param('teamId') teamId: string) {
     return this.insightService.getActiveContributors(teamId);
   }
 
