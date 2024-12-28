@@ -273,12 +273,12 @@ export class InsightService {
         `a_all."average_including_current"`,
         `a_exc."average_excluding_current"`,
         `CASE
-        WHEN a_exc."average_excluding_current" = 0 THEN 0
-        ELSE (
-          (a_all."average_including_current" - a_exc."average_excluding_current")
-          * 100.0 / a_exc."average_excluding_current"
-        )
-      END AS "change_from_excluding_to_including"`,
+       WHEN a_exc."average_excluding_current" = 0 THEN 0
+       ELSE (
+         (a_all."average_including_current" - a_exc."average_excluding_current")
+         * 100.0 / a_exc."average_excluding_current"
+       )
+     END AS "change_from_excluding_to_including"`,
       ])
       .from(`(${averageAllWeeks.getQuery()})`, 'a_all')
       .addFrom(`(${averageExcludingCurrent.getQuery()})`, 'a_exc')
@@ -288,6 +288,14 @@ export class InsightService {
       })
       .getRawOne();
 
+    if (!result) {
+      return {
+        average_including_current: 0,
+        average_excluding_current: 0,
+        change_from_excluding_to_including: 0,
+      };
+    }
+
     return {
       average_including_current:
         parseFloat(result.average_including_current) || 0,
@@ -296,7 +304,7 @@ export class InsightService {
       change_from_excluding_to_including:
         result.change_from_excluding_to_including !== null
           ? parseFloat(result.change_from_excluding_to_including)
-          : null,
+          : 0,
     };
   }
 
@@ -354,6 +362,14 @@ export class InsightService {
       })
       .getRawOne();
 
+    if (!combinedResult) {
+      return {
+        average_including_current: 0,
+        average_excluding_current: 0,
+        change_from_excluding_to_including: 0,
+      };
+    }
+
     return {
       average_including_current:
         parseFloat(combinedResult.average_including_current) || 0,
@@ -362,7 +378,7 @@ export class InsightService {
       change_from_excluding_to_including:
         combinedResult.change_from_excluding_to_including !== null
           ? parseFloat(combinedResult.change_from_excluding_to_including)
-          : null,
+          : 0,
     };
   }
 
@@ -379,7 +395,12 @@ export class InsightService {
       .orderBy(`DATE_TRUNC('week', i."createdAt")`, 'ASC')
       .getRawMany();
 
-    console.log(weekResults);
+    if (!weekResults.length) {
+      return {
+        this_week_avg: 0,
+        change_percent: 0,
+      };
+    }
 
     const this_week = weekResults.at(-1);
     let change_percent = null;
@@ -391,9 +412,10 @@ export class InsightService {
           last_week.users_submitted_insights) *
         100;
     }
+
     return {
       this_week_avg: this_week.users_submitted_insights,
-      change_percent: change_percent,
+      change_percent: change_percent || 0,
     };
   }
 }
