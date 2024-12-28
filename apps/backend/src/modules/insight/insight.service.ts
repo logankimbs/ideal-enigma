@@ -1,4 +1,4 @@
-import { ActiveContributors } from '@ideal-enigma/common';
+import { ActiveContributors, AverageInsights } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -235,11 +235,7 @@ export class InsightService {
     return { count: streak };
   }
 
-  async getAverageInsightsWithChange(userId: string): Promise<{
-    average_including_current: number;
-    average_excluding_current: number;
-    change_from_excluding_to_including: number | null;
-  }> {
+  async getAverageInsightsWithChange(userId: string): Promise<AverageInsights> {
     const queryBuilder = this.insightRepository.createQueryBuilder('i');
 
     const userInsightCounts = queryBuilder
@@ -309,11 +305,7 @@ export class InsightService {
     };
   }
 
-  async getTeamAverageInsights(teamId: string): Promise<{
-    average_including_current: number;
-    average_excluding_current: number;
-    change_from_excluding_to_including: number | null;
-  }> {
+  async getTeamAverageInsights(teamId: string): Promise<AverageInsights> {
     const userInsightCounts = this.insightRepository
       .createQueryBuilder('i')
       .innerJoin('users', 'u', 'u.id = i.userId')

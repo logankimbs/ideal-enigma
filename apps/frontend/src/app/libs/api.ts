@@ -1,7 +1,10 @@
 import {
   ActiveContributors,
+  AverageInsights,
   Insight,
   Summary,
+  TotalInsights,
+  TotalTags,
   User,
 } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -132,18 +135,6 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
   });
 }
 
-type TotalInsights = {
-  last_7_days_count: string;
-  previous_7_days_count: string;
-  relative_difference_percent: string;
-};
-
-type TotalTags = {
-  total_tags_current: string;
-  total_tags_previous: string;
-  relative_difference_percent: string;
-};
-
 export async function getTotalUserTags(): Promise<TotalTags> {
   const session = await getSession();
   const userId = session.payload.sub;
@@ -194,7 +185,7 @@ export async function getUserStreak(): Promise<{ count: number }> {
   });
 }
 
-export async function getUserAverageInsight(): Promise<any> {
+export async function getUserAverageInsight(): Promise<AverageInsights> {
   const session = await getSession();
   const userId = session.payload.sub;
 
@@ -204,7 +195,7 @@ export async function getUserAverageInsight(): Promise<any> {
   });
 }
 
-export async function getTeamAverageInsight(): Promise<any> {
+export async function getTeamAverageInsight(): Promise<AverageInsights> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
@@ -217,6 +208,7 @@ export async function getTeamAverageInsight(): Promise<any> {
 export async function getActiveContributors(): Promise<ActiveContributors> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
+
   return await api({
     method: 'get',
     endpoint: `teams/${teamId}/contributors`,

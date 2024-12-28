@@ -46,9 +46,7 @@ export default async function Home() {
         />
         <Stat
           title="Average insights"
-          value={`${parseFloat(
-            userAverageInsight.average_including_current
-          ).toFixed(2)}`}
+          value={`${userAverageInsight.average_including_current.toFixed(2)}`}
           change={`${userAverageInsight.change_from_excluding_to_including}`}
         />
         <Stat title="Current streak" value={`${userStreak.count}`} streak />
@@ -69,9 +67,7 @@ export default async function Home() {
         />
         <Stat
           title="Average insights per user"
-          value={`${parseFloat(
-            teamAverageInsight.average_including_current
-          ).toFixed(2)}`}
+          value={`${teamAverageInsight.average_including_current.toFixed(2)}`}
           change={`${teamAverageInsight.change_from_excluding_to_including}`}
         />
         <Stat
