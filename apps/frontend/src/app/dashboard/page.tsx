@@ -4,28 +4,32 @@ import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
 import {
   getActiveContributors,
+  getAverageTeamInsights,
   getAverageUserInsights,
   getRecentInsights,
   getRecentSummary,
-  getTeamAverageInsight,
   getTotalTeamInsights,
-  getTotalTeamTags,
+  getTotalTeamThemes,
   getTotalUserInsights,
   getTotalUserThemes,
   getUserStreak,
 } from '../libs/api';
 
 export default async function Home() {
+  /* User Stats */
   const totalUserInsights = await getTotalUserInsights();
+  const totalUserThemes = await getTotalUserThemes();
+  const averageUserInsights = await getAverageUserInsights();
+  const userStreak = await getUserStreak();
+
+  /* Team Stats */
   const totalTeamInsights = await getTotalTeamInsights();
+  const totalTeamThemes = await getTotalTeamThemes();
+  const averageTeamInsights = await getAverageTeamInsights();
+  const teamContributors = await getActiveContributors();
+  
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
-  const userStreak = await getUserStreak();
-  const totalUserThemes = await getTotalUserThemes();
-  const teamTagsAnalytics = await getTotalTeamTags();
-  const averageUserInsights = await getAverageUserInsights();
-  const teamAverageInsight = await getTeamAverageInsight();
-  const teamContributors = await getActiveContributors();
 
   return (
     <>
@@ -62,13 +66,13 @@ export default async function Home() {
         />
         <Stat
           title="Total themes"
-          value={teamTagsAnalytics.total_tags_current}
-          change={teamTagsAnalytics.relative_difference_percent}
+          value={totalTeamThemes.total_tags_current}
+          change={totalTeamThemes.relative_difference_percent}
         />
         <Stat
           title="Average insights per user"
-          value={`${teamAverageInsight.average_including_current.toFixed(2)}`}
-          change={`${teamAverageInsight.change_from_excluding_to_including}`}
+          value={`${averageTeamInsights.average_including_current.toFixed(2)}`}
+          change={`${averageTeamInsights.change_from_excluding_to_including}`}
         />
         <Stat
           title="Active contributors"

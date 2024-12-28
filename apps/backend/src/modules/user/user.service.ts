@@ -123,12 +123,12 @@ export class UserService {
     });
   }
 
-  async getUserWeeklyTagCountAndChange(userId: string) {
-    return await this.tagService.getUserWeeklyTagCountAndChange(userId);
+  async getTotalUserThemes(userId: string) {
+    return await this.tagService.getTotalUserThemes(userId);
   }
 
-  async getTeamWeeklyTagCountAndChange(teamId: string) {
-    return await this.tagService.getTeamWeeklyTagCountAndChange(teamId);
+  async getTotalTeamThemes(teamId: string) {
+    return await this.tagService.getTotalTeamThemes(teamId);
   }
 
   async getUserInsightStreak(userId: string) {

@@ -64,8 +64,8 @@ export class UserController {
   }
 
   @Get(':userId/themes/total')
-  async getAnalyticsTags(@Param('userId') userId: string) {
-    return await this.usersService.getUserWeeklyTagCountAndChange(userId);
+  async getTotalUserThemes(@Param('userId') userId: string) {
+    return await this.usersService.getTotalUserThemes(userId);
   }
 
   @Get(':userId/streak')

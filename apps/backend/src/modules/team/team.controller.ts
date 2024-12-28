@@ -63,9 +63,9 @@ export class TeamController {
     return this.insightService.getActiveContributors(teamId);
   }
 
-  @Get(':teamId/tags/analytics')
-  async getTeamAnalyticsTags(@Param('teamId') teamId: string) {
-    return await this.userService.getTeamWeeklyTagCountAndChange(teamId);
+  @Get(':teamId/themes/total')
+  async getTotalTeamThemes(@Param('teamId') teamId: string) {
+    return await this.userService.getTotalTeamThemes(teamId);
   }
 
   @Get(':teamId/insights/total')
