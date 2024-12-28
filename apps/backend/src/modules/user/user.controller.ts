@@ -58,14 +58,14 @@ export class UserController {
     return await this.usersService.getTotalUserInsights(userId);
   }
 
-  @Get(':userId/insights/average')
-  async getAverageUserInsights(@Param('userId') userId: string) {
-    return await this.usersService.getAverageUserInsights(userId);
-  }
-
   @Get(':userId/themes/total')
   async getTotalUserThemes(@Param('userId') userId: string) {
     return await this.usersService.getTotalUserThemes(userId);
+  }
+
+  @Get(':userId/insights/average')
+  async getAverageUserInsights(@Param('userId') userId: string) {
+    return await this.usersService.getAverageUserInsights(userId);
   }
 
   @Get(':userId/streak')

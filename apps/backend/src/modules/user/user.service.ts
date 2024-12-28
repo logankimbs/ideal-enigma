@@ -123,24 +123,23 @@ export class UserService {
     });
   }
 
+  async getTotalUserInsights(userId: string) {
+    await this.findOne(userId);
+    return await this.insightService.getTotalUserInsights(userId);
+  }
+
   async getTotalUserThemes(userId: string) {
+    await this.findOne(userId);
     return await this.tagService.getTotalUserThemes(userId);
   }
 
-  async getTotalTeamThemes(teamId: string) {
-    return await this.tagService.getTotalTeamThemes(teamId);
+  async getAverageUserInsights(userId: string) {
+    await this.findOne(userId);
+    return await this.insightService.getAverageUserInsights(userId);
   }
 
   async getUserInsightStreak(userId: string) {
     await this.findOne(userId);
     return await this.insightService.getUserStreak(userId);
-  }
-
-  async getAverageUserInsights(userId: string) {
-    return await this.insightService.getAverageUserInsights(userId);
-  }
-
-  async getTotalUserInsights(userId: string) {
-    return await this.insightService.getTotalUserInsights(userId);
   }
 }
