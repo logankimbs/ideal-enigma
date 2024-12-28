@@ -136,13 +136,13 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
   });
 }
 
-export async function getTotalUserTags(): Promise<TotalTags> {
+export async function getTotalUserThemes(): Promise<TotalTags> {
   const session = await getSession();
   const userId = session.payload.sub;
 
   return await api({
     method: 'get',
-    endpoint: `users/${userId}/tags/analytics`,
+    endpoint: `users/${userId}/themes/total`,
   });
 }
 
@@ -182,11 +182,11 @@ export async function getUserStreak(): Promise<UserStreak> {
 
   return await api({
     method: 'get',
-    endpoint: `users/${userId}/insights/streak`,
+    endpoint: `users/${userId}/streak`,
   });
 }
 
-export async function getUserAverageInsight(): Promise<AverageInsights> {
+export async function getAverageUserInsights(): Promise<AverageInsights> {
   const session = await getSession();
   const userId = session.payload.sub;
 

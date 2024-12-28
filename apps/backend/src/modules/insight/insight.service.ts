@@ -71,6 +71,68 @@ export class InsightService {
     });
   }
 
+  async getInsightsRepository(userId: string): Promise<Insight[]> {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+      relations: ['team'],
+    });
+
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('insights.tags', 'tags')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: user.team.id })
+      .orderBy('insights.createdAt', 'DESC')
+      .getMany();
+  }
+
+  async getRecentInsights(teamId: string, limit: number): Promise<Insight[]> {
+    const team = await this.teamService.find(teamId);
+
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'user')
+      .leftJoinAndSelect('user.team', 'team')
+      .where('team.id = :teamId', { teamId: team.id })
+      .orderBy('insights.createdAt', 'DESC')
+      .limit(limit)
+      .getMany();
+  }
+
+  async getInsightsToSummarize(teamId: string): Promise<Insight[]> {
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    return this.insightRepository
+      .createQueryBuilder('insights')
+      .leftJoinAndSelect('insights.user', 'users')
+      .leftJoinAndSelect('users.team', 'teams')
+      .where('teams.id = :teamId', { teamId })
+      .andWhere('insights.isSummarized = false')
+      .andWhere('insights.createdAt > :oneMonthAgo', { oneMonthAgo })
+      .getMany();
+  }
+
+  async markInsightsSummarized(
+    markInsightSummarizedDto: MarkInsightSummarizedDto
+  ): Promise<void> {
+    markInsightSummarizedDto.insights.forEach((insight) => {
+      // TODO: Remove 'isSummarized' column. summaryId can take its place.
+      insight.isSummarized = true;
+      insight.summary = markInsightSummarizedDto.summary;
+    });
+
+    await this.insightRepository.save(markInsightSummarizedDto.insights);
+  }
+
+  async getInsightsBySummaryId(summaryId: string) {
+    return await this.insightRepository.find({
+      where: { summary: { id: summaryId } },
+      relations: ['summary', 'user', 'tags'],
+    });
+  }
+
   async getTotalUserInsights(userId: string): Promise<TotalInsights> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -148,68 +210,6 @@ export class InsightService {
     };
   }
 
-  async getInsightsRepository(userId: string): Promise<Insight[]> {
-    const user = await this.userRepository.findOneOrFail({
-      where: { id: userId },
-      relations: ['team'],
-    });
-
-    return this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('insights.tags', 'tags')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: user.team.id })
-      .orderBy('insights.createdAt', 'DESC')
-      .getMany();
-  }
-
-  async getRecentInsights(teamId: string, limit: number): Promise<Insight[]> {
-    const team = await this.teamService.find(teamId);
-
-    return this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'user')
-      .leftJoinAndSelect('user.team', 'team')
-      .where('team.id = :teamId', { teamId: team.id })
-      .orderBy('insights.createdAt', 'DESC')
-      .limit(limit)
-      .getMany();
-  }
-
-  async getInsightsToSummarize(teamId: string): Promise<Insight[]> {
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-    return this.insightRepository
-      .createQueryBuilder('insights')
-      .leftJoinAndSelect('insights.user', 'users')
-      .leftJoinAndSelect('users.team', 'teams')
-      .where('teams.id = :teamId', { teamId })
-      .andWhere('insights.isSummarized = false')
-      .andWhere('insights.createdAt > :oneMonthAgo', { oneMonthAgo })
-      .getMany();
-  }
-
-  async markInsightsSummarized(
-    markInsightSummarizedDto: MarkInsightSummarizedDto
-  ): Promise<void> {
-    markInsightSummarizedDto.insights.forEach((insight) => {
-      // TODO: Remove 'isSummarized' column. summaryId can take its place.
-      insight.isSummarized = true;
-      insight.summary = markInsightSummarizedDto.summary;
-    });
-
-    await this.insightRepository.save(markInsightSummarizedDto.insights);
-  }
-
-  async getInsightsBySummaryId(summaryId: string) {
-    return await this.insightRepository.find({
-      where: { summary: { id: summaryId } },
-      relations: ['summary', 'user', 'tags'],
-    });
-  }
-
   async getUserStreak(userId: string): Promise<UserStreak> {
     const result = await this.insightRepository
       .createQueryBuilder('insights')
@@ -242,7 +242,7 @@ export class InsightService {
     return { count: streak };
   }
 
-  async getAverageInsightsWithChange(userId: string): Promise<AverageInsights> {
+  async getAverageUserInsights(userId: string): Promise<AverageInsights> {
     const queryBuilder = this.insightRepository.createQueryBuilder('i');
 
     const userInsightCounts = queryBuilder

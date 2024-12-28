@@ -4,14 +4,14 @@ import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
 import {
   getActiveContributors,
+  getAverageUserInsights,
   getRecentInsights,
   getRecentSummary,
   getTeamAverageInsight,
   getTotalTeamInsights,
   getTotalTeamTags,
   getTotalUserInsights,
-  getTotalUserTags,
-  getUserAverageInsight,
+  getTotalUserThemes,
   getUserStreak,
 } from '../libs/api';
 
@@ -21,9 +21,9 @@ export default async function Home() {
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
   const userStreak = await getUserStreak();
-  const userTagsAnalytics = await getTotalUserTags();
+  const totalUserThemes = await getTotalUserThemes();
   const teamTagsAnalytics = await getTotalTeamTags();
-  const userAverageInsight = await getUserAverageInsight();
+  const averageUserInsights = await getAverageUserInsights();
   const teamAverageInsight = await getTeamAverageInsight();
   const teamContributors = await getActiveContributors();
 
@@ -41,13 +41,13 @@ export default async function Home() {
         />
         <Stat
           title="Total themes"
-          value={userTagsAnalytics.total_tags_current}
-          change={userTagsAnalytics.relative_difference_percent}
+          value={totalUserThemes.total_tags_current}
+          change={totalUserThemes.relative_difference_percent}
         />
         <Stat
           title="Average insights"
-          value={`${userAverageInsight.average_including_current.toFixed(2)}`}
-          change={`${userAverageInsight.change_from_excluding_to_including}`}
+          value={`${averageUserInsights.average_including_current.toFixed(2)}`}
+          change={`${averageUserInsights.change_from_excluding_to_including}`}
         />
         <Stat title="Current streak" value={`${userStreak.count}`} streak />
       </div>
