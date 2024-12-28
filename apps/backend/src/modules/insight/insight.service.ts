@@ -1,12 +1,13 @@
 import {
   ActiveContributors,
   AverageInsights,
-  TotalInsights,
+  Stat,
   UserStreak,
 } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { calculateChange } from '../../common/utils';
 import { Tag } from '../tag/tag.entity';
 import { TeamService } from '../team/team.service';
 import { User } from '../user/user.entity';
@@ -133,20 +134,18 @@ export class InsightService {
     });
   }
 
-  async getTotalUserInsights(userId: string): Promise<TotalInsights> {
+  async getTotalUserInsights(userId: string): Promise<Stat> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
-    await this.userRepository.findOneOrFail({ where: { id: userId } });
-
     const result = await this.insightRepository
       .createQueryBuilder('i')
       .select([
-        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count',
-        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count',
+        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
+        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
       ])
       .where('i.userId = :userId', { userId })
       .setParameters({
@@ -156,22 +155,14 @@ export class InsightService {
       })
       .getRawOne();
 
-    const { last_7_days_count, previous_7_days_count } = result;
+    const totalCurrent = Number(result.totalCurrent);
+    const totalPrevious = Number(result.totalPrevious);
+    const change = calculateChange(totalCurrent, totalPrevious).toFixed(2);
 
-    const relative_difference_percent =
-      previous_7_days_count === 0
-        ? 0
-        : ((last_7_days_count - previous_7_days_count) * 100.0) /
-          previous_7_days_count;
-
-    return {
-      last_7_days_count: last_7_days_count.toString(),
-      previous_7_days_count: previous_7_days_count.toString(),
-      relative_difference_percent: relative_difference_percent.toString(),
-    };
+    return { value: totalCurrent.toString(), change: change.toString() };
   }
 
-  async getTotalTeamInsights(teamId: string): Promise<TotalInsights> {
+  async getTotalTeamInsights(teamId: string): Promise<Stat> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -183,31 +174,19 @@ export class InsightService {
     const result = await this.insightRepository
       .createQueryBuilder('i')
       .select([
-        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS last_7_days_count',
-        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS previous_7_days_count',
+        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
+        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
       ])
       .innerJoin('users', 'u', 'u.id = i.userId')
       .where('u.teamId = :teamId', { teamId: team.id })
-      .setParameters({
-        oneWeekAgo,
-        currentDate: new Date(),
-        twoWeeksAgo,
-      })
+      .setParameters({ oneWeekAgo, currentDate: new Date(), twoWeeksAgo })
       .getRawOne();
 
-    const { last_7_days_count, previous_7_days_count } = result;
+    const totalCurrent = Number(result.totalCurrent);
+    const totalPrevious = Number(result.totalPrevious);
+    const change = calculateChange(totalCurrent, totalPrevious).toFixed(2);
 
-    const relative_difference_percent =
-      previous_7_days_count === 0
-        ? 0
-        : ((last_7_days_count - previous_7_days_count) * 100.0) /
-          previous_7_days_count;
-
-    return {
-      last_7_days_count: last_7_days_count.toString(),
-      previous_7_days_count: previous_7_days_count.toString(),
-      relative_difference_percent: relative_difference_percent.toString(),
-    };
+    return { value: totalCurrent.toString(), change: change.toString() };
   }
 
   async getUserStreak(userId: string): Promise<UserStreak> {

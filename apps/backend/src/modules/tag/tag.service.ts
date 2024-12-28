@@ -1,7 +1,8 @@
-import { TotalTags } from '@ideal-enigma/common';
+import { Stat } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { calculateChange } from '../../common/utils';
 import { Tag } from './tag.entity';
 
 @Injectable()
@@ -15,7 +16,7 @@ export class TagService {
     return this.tagRepository.find();
   }
 
-  async getTotalUserThemes(userId: string): Promise<TotalTags> {
+  async getTotalUserThemes(userId: string): Promise<Stat> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -25,35 +26,23 @@ export class TagService {
     const result = await this.tagRepository
       .createQueryBuilder('t')
       .select([
-        'COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) AS total_tags_current',
-        'COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS total_tags_previous',
+        'COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
+        'COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
       ])
       .innerJoin('insight_tag', 'it', 't.id = it.tagsId')
       .innerJoin('insights', 'i', 'i.id = it.insightsId')
       .where('i.userId = :userId', { userId })
-      .setParameters({
-        oneWeekAgo,
-        currentDate: new Date(),
-        twoWeeksAgo,
-      })
+      .setParameters({ oneWeekAgo, currentDate: new Date(), twoWeeksAgo })
       .getRawOne();
 
-    const { total_tags_current, total_tags_previous } = result;
+    const totalCurrent = Number(result.totalCurrent);
+    const totalPrevious = Number(result.totalPrevious);
+    const change = calculateChange(totalCurrent, totalPrevious);
 
-    const relative_difference_percent =
-      total_tags_previous === 0
-        ? 0
-        : ((total_tags_current - total_tags_previous) * 100.0) /
-          total_tags_previous;
-
-    return {
-      total_tags_current: total_tags_current.toString(),
-      total_tags_previous: total_tags_previous.toString(),
-      relative_difference_percent: relative_difference_percent.toString(),
-    };
+    return { value: totalCurrent.toString(), change: change.toString() };
   }
 
-  async getTotalTeamThemes(teamId: string): Promise<TotalTags> {
+  async getTotalTeamThemes(teamId: string): Promise<Stat> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -63,32 +52,20 @@ export class TagService {
     const result = await this.tagRepository
       .createQueryBuilder('t')
       .select([
-        'COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) AS total_tags_current',
-        'COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS total_tags_previous',
+        'COUNT(CASE WHEN t."createdAt" >= :oneWeekAgo AND t."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
+        'COUNT(CASE WHEN t."createdAt" >= :twoWeeksAgo AND t."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
       ])
       .innerJoin('insight_tag', 'it', 't.id = it.tagsId')
       .innerJoin('insights', 'i', 'i.id = it.insightsId')
       .innerJoin('users', 'u', 'i.userId = u.id')
       .where('u.teamId = :teamId', { teamId })
-      .setParameters({
-        oneWeekAgo,
-        currentDate: new Date(),
-        twoWeeksAgo,
-      })
+      .setParameters({ oneWeekAgo, currentDate: new Date(), twoWeeksAgo })
       .getRawOne();
 
-    const { total_tags_current, total_tags_previous } = result;
+    const totalCurrent = Number(result.totalCurrent);
+    const totalPrevious = Number(result.totalPrevious);
+    const change = calculateChange(totalCurrent, totalPrevious);
 
-    const relative_difference_percent =
-      total_tags_previous === 0
-        ? 0
-        : ((total_tags_current - total_tags_previous) * 100.0) /
-          total_tags_previous;
-
-    return {
-      total_tags_current: total_tags_current.toString(),
-      total_tags_previous: total_tags_previous.toString(),
-      relative_difference_percent: relative_difference_percent.toString(),
-    };
+    return { value: totalCurrent.toString(), change: change.toString() };
   }
 }

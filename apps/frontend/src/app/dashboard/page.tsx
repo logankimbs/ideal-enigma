@@ -27,7 +27,7 @@ export default async function Home() {
   const totalTeamThemes = await getTotalTeamThemes();
   const averageTeamInsights = await getAverageTeamInsights();
   const teamContributors = await getActiveContributors();
-  
+
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
 
@@ -40,13 +40,13 @@ export default async function Home() {
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat
           title="Total insights"
-          value={totalUserInsights.last_7_days_count}
-          change={totalUserInsights.relative_difference_percent}
+          value={totalUserInsights.value}
+          change={totalUserInsights.change}
         />
         <Stat
           title="Total themes"
-          value={totalUserThemes.total_tags_current}
-          change={totalUserThemes.relative_difference_percent}
+          value={totalUserThemes.value}
+          change={totalUserThemes.change}
         />
         <Stat
           title="Average insights"
@@ -61,13 +61,13 @@ export default async function Home() {
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat
           title="Total insights"
-          value={totalTeamInsights.last_7_days_count}
-          change={totalTeamInsights.relative_difference_percent}
+          value={totalTeamInsights.value}
+          change={totalTeamInsights.change}
         />
         <Stat
           title="Total themes"
-          value={totalTeamThemes.total_tags_current}
-          change={totalTeamThemes.relative_difference_percent}
+          value={totalTeamThemes.value}
+          change={totalTeamThemes.change}
         />
         <Stat
           title="Average insights per user"

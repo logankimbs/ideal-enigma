@@ -2,9 +2,8 @@ import {
   ActiveContributors,
   AverageInsights,
   Insight,
+  Stat,
   Summary,
-  TotalInsights,
-  TotalTags,
   User,
   UserStreak,
 } from '@ideal-enigma/common';
@@ -137,7 +136,7 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
 }
 
 /* User Stats */
-export async function getTotalUserInsights(): Promise<TotalInsights> {
+export async function getTotalUserInsights(): Promise<Stat> {
   const session = await getSession();
   const userId = session.payload.sub;
 
@@ -147,7 +146,7 @@ export async function getTotalUserInsights(): Promise<TotalInsights> {
   });
 }
 
-export async function getTotalUserThemes(): Promise<TotalTags> {
+export async function getTotalUserThemes(): Promise<Stat> {
   const session = await getSession();
   const userId = session.payload.sub;
 
@@ -178,7 +177,7 @@ export async function getUserStreak(): Promise<UserStreak> {
 }
 
 /* Team Stats */
-export async function getTotalTeamInsights(): Promise<TotalInsights> {
+export async function getTotalTeamInsights(): Promise<Stat> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
@@ -188,7 +187,7 @@ export async function getTotalTeamInsights(): Promise<TotalInsights> {
   });
 }
 
-export async function getTotalTeamThemes(): Promise<TotalTags> {
+export async function getTotalTeamThemes(): Promise<Stat> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 

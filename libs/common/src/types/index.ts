@@ -16,10 +16,9 @@ export type TotalInsights = {
   relative_difference_percent: string;
 };
 
-export type TotalTags = {
-  total_tags_current: string;
-  total_tags_previous: string;
-  relative_difference_percent: string;
+export type Stat = {
+  value: string;
+  change: string;
 };
 
 export type UserStreak = {
