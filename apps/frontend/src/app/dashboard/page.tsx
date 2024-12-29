@@ -2,9 +2,32 @@ import { Heading, Subheading } from '../../components/heading';
 import { RepositoryPreview } from '../../components/repository-preview';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
-import { getRecentInsights, getRecentSummary } from '../libs/api';
+import {
+  getActiveContributors,
+  getAverageTeamInsights,
+  getAverageUserInsights,
+  getRecentInsights,
+  getRecentSummary,
+  getTotalTeamInsights,
+  getTotalTeamThemes,
+  getTotalUserInsights,
+  getTotalUserThemes,
+  getUserStreak,
+} from '../libs/api';
 
 export default async function Home() {
+  /* User Stats */
+  const totalUserInsights = await getTotalUserInsights();
+  const totalUserThemes = await getTotalUserThemes();
+  const averageUserInsights = await getAverageUserInsights();
+  const userStreak = await getUserStreak();
+
+  /* Team Stats */
+  const totalTeamInsights = await getTotalTeamInsights();
+  const totalTeamThemes = await getTotalTeamThemes();
+  const averageTeamInsights = await getAverageTeamInsights();
+  const teamContributors = await getActiveContributors();
+
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights();
 
@@ -15,20 +38,47 @@ export default async function Home() {
         <Subheading>My Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total insights" value="87" change="+4.5%" />
-        <Stat title="Total themes" value="10" change="-0.5%" />
-        <Stat title="Average insights" value="0.8" change="+4.5%" />
-        {/* 0-1 no flame. 1-3 one flame. 3-5 two flames. 5+ three flames. */}
-        <Stat title="Current streak" value="4" change="🔥🔥🔥" />
+        <Stat
+          title="Total insights"
+          value={totalUserInsights.value}
+          change={totalUserInsights.change}
+        />
+        <Stat
+          title="Total themes"
+          value={totalUserThemes.value}
+          change={totalUserThemes.change}
+        />
+        <Stat
+          title="Average insights"
+          value={`${averageUserInsights.average_including_current.toFixed(2)}`}
+          change={`${averageUserInsights.change_from_excluding_to_including}`}
+        />
+        <Stat title="Current streak" value={`${userStreak.count}`} streak />
       </div>
       <div className="mt-8 flex items-end justify-between">
         <Subheading>Company Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat title="Total insights" value="2,746" change="+4.5%" />
-        <Stat title="Total themes" value="150" change="-0.5%" />
-        <Stat title="Average insights per user" value="2" change="+4.5%" />
-        <Stat title="Active contributors" value="150" change="+21.2%" />
+        <Stat
+          title="Total insights"
+          value={totalTeamInsights.value}
+          change={totalTeamInsights.change}
+        />
+        <Stat
+          title="Total themes"
+          value={totalTeamThemes.value}
+          change={totalTeamThemes.change}
+        />
+        <Stat
+          title="Average insights per user"
+          value={`${averageTeamInsights.average_including_current.toFixed(2)}`}
+          change={`${averageTeamInsights.change_from_excluding_to_including}`}
+        />
+        <Stat
+          title="Active contributors"
+          value={`${teamContributors.this_week_avg}`}
+          change={`${teamContributors.change_percent}`}
+        />
       </div>
       <div className="mt-8 grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
         {recentSummary && <SummaryPreview summary={recentSummary} />}

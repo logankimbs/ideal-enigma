@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { CreateInsightDto } from './dto/create-insight.dto';
+import { GetInsightByIdDto } from './dto/get-insight.dto';
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
 import { Insight } from './insight.entity';
 import { InsightService } from './insight.service';
-import { GetInsightByIdDto } from './dto/get-insight.dto';
 
 @Controller('insights')
 export class InsightController {
