@@ -1,4 +1,4 @@
-import { Heading, Subheading } from '../../components/heading';
+import { Subheading } from '../../components/heading';
 import { RepositoryPreview } from '../../components/repository-preview';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
@@ -33,8 +33,7 @@ export default async function Home() {
 
   return (
     <>
-      <Heading>Good afternoon!</Heading>
-      <div className="mt-8 flex items-end justify-between">
+      <div className="flex items-end justify-between">
         <Subheading>My Weekly Overview</Subheading>
       </div>
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
@@ -80,10 +79,23 @@ export default async function Home() {
           change={`${teamContributors.change_percent}`}
         />
       </div>
-      <div className="mt-8 grid gap-8 sm:grid-cols-1 xl:grid-cols-2">
-        {recentSummary && <SummaryPreview summary={recentSummary} />}
+      <div
+        className={`mt-8 grid gap-8 sm:grid-cols-1 ${
+          recentSummary && recentInsights?.length
+            ? 'xl:grid-cols-2' // both exist -> 2 columns
+            : 'xl:grid-cols-1' // only one exists -> 1 column
+        } items-stretch`}
+      >
+        {recentSummary && (
+          <div className="h-full">
+            <SummaryPreview summary={recentSummary} />
+          </div>
+        )}
+
         {recentInsights && recentInsights.length > 0 && (
-          <RepositoryPreview repository={recentInsights} />
+          <div className="h-full">
+            <RepositoryPreview repository={recentInsights} />
+          </div>
         )}
       </div>
     </>

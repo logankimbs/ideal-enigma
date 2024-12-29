@@ -1,7 +1,7 @@
-import * as Headless from "@headlessui/react";
-import clsx from "clsx";
-import React, { forwardRef } from "react";
-import { TouchTarget } from "./button";
+import * as Headless from '@headlessui/react';
+import clsx from 'clsx';
+import React, { forwardRef } from 'react';
+import { TouchTarget } from './button';
 import { Link } from './link';
 
 type AvatarProps = {
@@ -28,7 +28,7 @@ export function Avatar({
         className,
         // Basic layout
         'inline-grid shrink-0 align-middle [--avatar-radius:20%] [--ring-opacity:20%] *:col-start-1 *:row-start-1',
-        'outline outline-1 -outline-offset-1 outline-black/[--ring-opacity] dark:outline-white/[--ring-opacity]',
+        // 'outline outline-1 -outline-offset-1 outline-black/[--ring-opacity] dark:outline-white/[--ring-opacity]',
         // Add the correct border radius
         square
           ? 'rounded-[--avatar-radius] *:rounded-[--avatar-radius]'
@@ -70,18 +70,18 @@ export const AvatarButton = forwardRef(function AvatarButton(
     ...props
   }: AvatarProps &
     (
-      | Omit<Headless.ButtonProps, "as" | "className">
-      | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">
+      | Omit<Headless.ButtonProps, 'as' | 'className'>
+      | Omit<React.ComponentPropsWithoutRef<typeof Link>, 'className'>
     ),
-  ref: React.ForwardedRef<HTMLElement>,
+  ref: React.ForwardedRef<HTMLElement>
 ) {
   const classes = clsx(
     className,
-    square ? "rounded-[20%]" : "rounded-full",
-    "relative inline-grid focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500",
+    square ? 'rounded-[20%]' : 'rounded-full',
+    'relative inline-grid focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500'
   );
 
-  return "href" in props ? (
+  return 'href' in props ? (
     <Link
       {...props}
       className={classes}

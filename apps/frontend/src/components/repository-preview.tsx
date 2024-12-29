@@ -1,6 +1,6 @@
 import { Insight } from '@ideal-enigma/common';
 import { Avatar } from './avatar';
-import { Heading } from './heading';
+import { Subheading } from './heading';
 import {
   Table,
   TableBody,
@@ -22,7 +22,7 @@ export async function RepositoryPreview({
     <div className="mt-10">
       <div className="overflow-hidden rounded-lg border border-zinc-950/10 dark:border-white/10">
         <div className="px-4 py-5 sm:p-6">
-          <Heading>Recent Insights</Heading>
+          <Subheading>Recent Insights</Subheading>
           <Table
             dense
             className="[--gutter:theme(spacing.6)] sm:[--gutter:theme(spacing.8)]"

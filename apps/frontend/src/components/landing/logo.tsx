@@ -103,9 +103,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_46_74"
@@ -115,9 +115,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_46_74"
@@ -127,9 +127,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_46_74"
@@ -139,9 +139,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint4_linear_46_74"
@@ -151,9 +151,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint5_linear_46_74"
@@ -163,9 +163,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint6_linear_46_74"
@@ -175,9 +175,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint7_linear_46_74"
@@ -187,9 +187,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-30.5195"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
         </defs>
       </svg>
@@ -247,9 +247,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-3.47217"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_46_76"
@@ -259,9 +259,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-3.47217"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_46_76"
@@ -271,9 +271,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-3.47217"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_46_76"
@@ -283,9 +283,9 @@ export function Logo({ className, color = 'black' }: LogoProps) {
             y2="-3.47217"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#B060FF" />
-            <stop offset="0.47" stop-color="#EE87CB" />
-            <stop offset="1" stop-color="#FFF1BE" />
+            <stop stopColor="#B060FF" />
+            <stop offset="0.47" stopColor="#EE87CB" />
+            <stop offset="1" stopColor="#FFF1BE" />
           </linearGradient>
         </defs>
       </svg>
@@ -339,26 +339,79 @@ export function Logo({ className, color = 'black' }: LogoProps) {
 
 export function Mark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 34 34" fill="none" className={className}>
-      <path d="M19.598 18.5C18.7696 19.9349 16.9348 20.4265 15.4999 19.5981C14.065 18.7696 13.5734 16.9349 14.4018 15.5C15.2303 14.0651 17.065 13.5735 18.4999 14.4019C19.9348 15.2303 20.4264 17.0651 19.598 18.5Z" />
-      <path d="M23.232 10.2058C22.6797 11.1623 21.4565 11.4901 20.4999 10.9378C19.5433 10.3855 19.2156 9.16235 19.7679 8.20576C20.3201 7.24918 21.5433 6.92143 22.4999 7.47371C23.4565 8.026 23.7842 9.24918 23.232 10.2058Z" />
-      <path d="M19.7679 25.7944C19.2156 24.8378 19.5433 23.6146 20.4999 23.0623C21.4565 22.51 22.6797 22.8378 23.232 23.7944C23.7843 24.7509 23.4565 25.9741 22.4999 26.5264C21.5433 27.0787 20.3202 26.7509 19.7679 25.7944Z" />
-      <path d="M25.9999 19.0001C24.8953 19.0001 23.9999 18.1047 23.9999 17.0001C23.9999 15.8956 24.8953 15.0001 25.9999 15.0001C27.1045 15.0001 27.9999 15.8956 27.9999 17.0001C27.9999 18.1047 27.1045 19.0001 25.9999 19.0001Z" />
-      <path d="M14.232 25.7942C13.6797 26.7508 12.4565 27.0786 11.4999 26.5263C10.5433 25.974 10.2156 24.7508 10.7679 23.7942C11.3201 22.8376 12.5433 22.5099 13.4999 23.0622C14.4565 23.6145 14.7842 24.8376 14.232 25.7942Z" />
-      <path d="M10.7679 10.2059C10.2157 9.24936 10.5434 8.02618 11.5 7.4739C12.4566 6.92161 13.6798 7.24936 14.232 8.20595C14.7843 9.16253 14.4566 10.3857 13.5 10.938C12.5434 11.4903 11.3202 11.1625 10.7679 10.2059Z" />
-      <path d="M7.99999 19.0002C6.89542 19.0002 5.99999 18.1047 5.99999 17.0002C5.99999 15.8956 6.89542 15.0002 7.99999 15.0002C9.10456 15.0002 9.99999 15.8956 9.99999 17.0002C9.99999 18.1047 9.10456 19.0002 7.99999 19.0002Z" />
-      <path d="M25.8659 3.64359C25.5898 4.12188 24.9782 4.28575 24.4999 4.00961C24.0216 3.73347 23.8577 3.12188 24.1339 2.64359C24.41 2.16529 25.0216 2.00142 25.4999 2.27756C25.9782 2.5537 26.1421 3.16529 25.8659 3.64359Z" />
-      <path d="M33.0001 18.0002C32.4478 18.0002 32.0001 17.5524 32.0001 17.0002C32.0001 16.4479 32.4478 16.0002 33.0001 16.0002C33.5523 16.0002 34.0001 16.4479 34.0001 17.0002C34.0001 17.5524 33.5523 18.0002 33.0001 18.0002Z" />
-      <path d="M31.3561 9.86594C30.8778 10.1421 30.2663 9.97821 29.9901 9.49992C29.714 9.02162 29.8778 8.41003 30.3561 8.13389C30.8344 7.85775 31.446 8.02162 31.7222 8.49992C31.9983 8.97821 31.8344 9.5898 31.3561 9.86594Z" />
-      <path d="M30.3563 25.866C29.878 25.5899 29.7141 24.9783 29.9903 24.5C30.2664 24.0217 30.878 23.8578 31.3563 24.134C31.8346 24.4101 31.9985 25.0217 31.7223 25.5C31.4462 25.9783 30.8346 26.1422 30.3563 25.866Z" />
-      <path d="M16.0001 33.0001C16.0001 32.4478 16.4478 32.0001 17.0001 32.0001C17.5524 32.0001 18.0001 32.4478 18.0001 33.0001C18.0001 33.5524 17.5524 34.0001 17.0001 34.0001C16.4478 34.0001 16.0001 33.5524 16.0001 33.0001Z" />
-      <path d="M24.134 31.3566C23.8579 30.8783 24.0218 30.2667 24.5001 29.9905C24.9784 29.7144 25.59 29.8783 25.8661 30.3566C26.1422 30.8349 25.9784 31.4464 25.5001 31.7226C25.0218 31.9987 24.4102 31.8349 24.134 31.3566Z" />
-      <path d="M9.86593 31.3564C9.58978 31.8347 8.97819 31.9986 8.4999 31.7224C8.02161 31.4463 7.85773 30.8347 8.13388 30.3564C8.41002 29.8781 9.02161 29.7142 9.4999 29.9904C9.97819 30.2665 10.1421 30.8781 9.86593 31.3564Z" />
-      <path d="M1 18.0001C0.447715 18.0001 -3.44684e-08 17.5524 0 17.0001C3.44684e-08 16.4478 0.447715 16.0001 1 16.0001C1.55228 16.0001 2 16.4478 2 17.0001C2 17.5524 1.55228 18.0001 1 18.0001Z" />
-      <path d="M3.64329 25.866C3.16499 26.1422 2.5534 25.9783 2.27726 25.5C2.00112 25.0217 2.16499 24.4101 2.64329 24.134C3.12158 23.8578 3.73317 24.0217 4.00931 24.5C4.28545 24.9783 4.12158 25.5899 3.64329 25.866Z" />
-      <path d="M2.6435 9.86602C2.1652 9.58987 2.00133 8.97828 2.27747 8.49999C2.55361 8.0217 3.1652 7.85782 3.6435 8.13397C4.12179 8.41011 4.28566 9.0217 4.00952 9.49999C3.73338 9.97828 3.12179 10.1422 2.6435 9.86602Z" />
-      <path d="M16.0001 1C16.0001 0.447715 16.4478 -4.87226e-08 17.0001 0C17.5524 4.87226e-08 18.0001 0.447715 18.0001 1C18.0001 1.55228 17.5524 2 17.0001 2C16.4478 2 16.0001 1.55228 16.0001 1Z" />
-      <path d="M8.13398 3.64371C7.85783 3.16542 8.02171 2.55383 8.5 2.27768C8.97829 2.00154 9.58988 2.16542 9.86603 2.64371C10.1422 3.122 9.97829 3.73359 9.5 4.00973C9.02171 4.28588 8.41012 4.122 8.13398 3.64371Z" />
+    <svg
+      width="60"
+      height="36"
+      viewBox="0 0 60 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M24.7049 21.6378C25.5747 22.1034 25.9163 23.1987 25.3003 23.9692C24.4062 25.0875 23.2673 25.9946 21.9631 26.6145C20.12 27.4907 18.0449 27.7463 16.0458 27.3435C14.0467 26.9407 12.23 25.901 10.8652 24.3786C9.50048 22.8561 8.66039 20.9321 8.46957 18.8918C8.27876 16.8516 8.74739 14.8039 9.80594 13.0525C10.8645 11.3011 12.4566 9.93936 14.346 9.1692C16.2354 8.39905 18.3216 8.26156 20.2949 8.77712C21.6905 9.14175 22.9771 9.8193 24.0626 10.7499C24.8119 11.3922 24.6802 12.5323 23.9124 13.1523C23.1393 13.7767 22.0147 13.6229 21.1899 13.0686C20.6441 12.7019 20.0379 12.4269 19.3944 12.2588C18.166 11.9378 16.8674 12.0234 15.6912 12.5028C14.515 12.9823 13.524 13.83 12.865 14.9202C12.2061 16.0104 11.9143 17.2851 12.0331 18.5552C12.1519 19.8252 12.6749 21.0229 13.5244 21.9707C14.374 22.9184 15.5049 23.5656 16.7493 23.8163C17.9938 24.0671 19.2855 23.9079 20.4329 23.3626C21.0353 23.0762 21.5811 22.6914 22.05 22.2274C22.7555 21.5294 23.83 21.1694 24.7049 21.6378Z"
+        fill="url(#paint0_linear_46_126)"
+      />
+      <path
+        d="M30.9436 27.545C31.7403 28.1285 31.9221 29.2532 31.2661 29.9913C28.8077 32.7575 25.5474 34.7046 21.9227 35.5422C17.7173 36.5141 13.3042 35.9272 9.49497 33.8896C5.68576 31.8519 2.73662 28.5005 1.18995 24.4517C-0.356718 20.4029 -0.396908 15.929 1.07677 11.8528C2.55045 7.77656 5.4389 4.37216 9.21088 2.26571C12.9829 0.159264 17.3847 -0.507592 21.6069 0.387792C25.8291 1.28318 29.5877 3.68059 32.1913 7.13911C34.4349 10.1192 35.6909 13.7145 35.8096 17.4205C35.8413 18.4096 34.9775 19.1575 33.9901 19.0905C33.0038 19.0236 32.2698 18.1678 32.2138 17.1807C32.0529 14.3421 31.0579 11.5999 29.335 9.31129C27.252 6.54447 24.2452 4.62654 20.8674 3.91023C17.4897 3.19393 13.9682 3.72741 10.9506 5.41257C7.933 7.09773 5.62224 9.82125 4.4433 13.0822C3.26436 16.3432 3.29651 19.9223 4.53385 23.1614C5.77118 26.4004 8.13049 29.0815 11.1779 30.7117C14.2252 32.3418 17.7557 32.8113 21.1201 32.0338C23.8975 31.3919 26.4075 29.9358 28.3425 27.8696C29.0221 27.1439 30.1415 26.9576 30.9436 27.545Z"
+        fill="url(#paint1_linear_46_126)"
+      />
+      <path
+        d="M34.7616 3.37882C34.3361 2.48448 34.7115 1.40504 35.6426 1.06753C37.2866 0.471637 39.0116 0.119683 40.7632 0.0256363C43.1117 -0.100466 45.462 0.239588 47.6798 1.02638C49.8976 1.81318 51.9395 3.0313 53.6888 4.61121C55.4382 6.19111 56.8609 8.10186 57.8756 10.2344C58.8902 12.3668 59.477 14.6793 59.6025 17.0398C59.728 19.4002 59.3896 21.7623 58.6068 23.9913C57.824 26.2204 56.612 28.2726 55.04 30.0308C53.8706 31.3387 52.5191 32.465 51.0301 33.3758C50.1806 33.8955 49.0974 33.5078 48.6695 32.6084C48.2439 31.7141 48.6295 30.6532 49.4616 30.116C50.5372 29.4217 51.5177 28.5843 52.3757 27.6246C53.6333 26.2181 54.6029 24.5763 55.2292 22.7931C55.8554 21.0099 56.1261 19.1201 56.0257 17.2318C55.9254 15.3435 55.4559 13.4935 54.6442 11.7875C53.8324 10.0815 52.6943 8.55289 51.2948 7.28897C49.8953 6.02504 48.2618 5.05054 46.4875 4.42111C44.7133 3.79167 42.8331 3.51963 40.9542 3.62051C39.6774 3.68907 38.4182 3.92895 37.2095 4.33171C36.2647 4.64656 35.1895 4.27814 34.7616 3.37882Z"
+        fill="url(#paint2_linear_46_126)"
+      />
+      <path
+        d="M34.3496 15.8001C33.4003 15.5167 32.3832 16.06 32.2845 17.0458C32.1231 18.6579 32.3725 20.2953 33.023 21.7992C33.9126 23.856 35.4955 25.5314 37.493 26.5308C39.4906 27.5303 41.7748 27.7896 43.9438 27.2632C46.1129 26.7368 48.0277 25.4584 49.3514 23.653C50.675 21.8475 51.3227 19.6307 51.1805 17.3926C51.0383 15.1545 50.1153 13.0386 48.5738 11.417C47.0324 9.79551 44.9713 8.77233 42.7533 8.52753C41.1309 8.34848 39.5007 8.59425 38.0162 9.22703C37.1068 9.61467 36.8902 10.7439 37.4378 11.5669C37.989 12.3953 39.1095 12.5858 40.0643 12.3056C40.8042 12.0886 41.5849 12.0176 42.3626 12.1034C43.7433 12.2558 45.0263 12.8927 45.9859 13.9021C46.9454 14.9115 47.52 16.2287 47.6086 17.6219C47.6971 19.0151 47.2939 20.3951 46.4699 21.519C45.6459 22.6429 44.4539 23.4387 43.1037 23.7663C41.7535 24.094 40.3315 23.9326 39.0881 23.3105C37.8446 22.6883 36.8593 21.6453 36.3055 20.365C35.9901 19.6358 35.8262 18.8562 35.8166 18.0729C35.8045 17.0861 35.2953 16.0824 34.3496 15.8001Z"
+        fill="url(#paint3_linear_46_126)"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_46_126"
+          x1="53.0158"
+          y1="37.1745"
+          x2="8.33863"
+          y2="-3.47214"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#B060FF" />
+          <stop offset="0.47" stopColor="#EE87CB" />
+          <stop offset="1" stopColor="#FFF1BE" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_46_126"
+          x1="53.0158"
+          y1="37.1745"
+          x2="8.33863"
+          y2="-3.47214"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#B060FF" />
+          <stop offset="0.47" stopColor="#EE87CB" />
+          <stop offset="1" stopColor="#FFF1BE" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_46_126"
+          x1="53.0158"
+          y1="37.1745"
+          x2="8.33863"
+          y2="-3.47214"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#B060FF" />
+          <stop offset="0.47" stopColor="#EE87CB" />
+          <stop offset="1" stopColor="#FFF1BE" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_46_126"
+          x1="53.0158"
+          y1="37.1745"
+          x2="8.33863"
+          y2="-3.47214"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#B060FF" />
+          <stop offset="0.47" stopColor="#EE87CB" />
+          <stop offset="1" stopColor="#FFF1BE" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }

@@ -10,8 +10,9 @@ import {
 import { Avatar } from './avatar';
 import { Button } from './button';
 import { Checkbox } from './checkbox';
-import { Heading } from './heading';
 import { Input, InputGroup } from './input';
+import { GradientBackground } from './landing/gradient';
+import { Mark } from './landing/logo';
 import {
   Table,
   TableBody,
@@ -20,7 +21,6 @@ import {
   TableHeader,
   TableRow,
 } from './table';
-import { Text } from './text';
 
 type OnboardModuleProps = {
   team: User[];
@@ -64,76 +64,79 @@ export default function OnboardModule({ team, user }: OnboardModuleProps) {
   };
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <form
-        method="post"
-        onSubmit={handleSubmit}
-        className="mx-auto flex flex-col justify-center min-h-screen px-4 py-8"
-      >
-        <Heading>Your Slack integration is almost set up.</Heading>
-        <Text>
-          Before exploring your new Loop dashboard, choose which users you would
-          like to opt out of receiving notifications. Simply select them below
-          and click “Save changes” to apply your preferences.
-        </Text>
-        <div className="my-4 flex max-w-xl gap-4">
-          <div className="flex-1">
-            <InputGroup>
-              <MagnifyingGlassIcon />
-              <Input
-                name=""
-                placeholder="Search users&hellip;"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                }}
-              />
-            </InputGroup>
-          </div>
-        </div>
-        <div className="mt-4 mb-10 max-h-80 overflow-y-auto">
-          <Table dense>
-            <TableHead>
-              <TableRow>
-                <TableHeader className="text-center">Opt out</TableHeader>
-                <TableHeader>User</TableHeader>
-                <TableHeader>Role</TableHeader>
-                <TableHeader className="text-right hidden sm:table-cell">
-                  Email
-                </TableHeader>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="text-center">
-                    <Checkbox
-                      onChange={() => handleCheck(user.id)}
-                      checked={checkedIds.has(user.id)}
+    <main className="overflow-hidden dark:text-white">
+      <GradientBackground />
+      <div className="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
+        <div className="w-full max-w-xl rounded-xl bg-white shadow-md ring-1 ring-black/5 bg-white/50 lg:p-10 lg:shadow-sm lg:ring-1 lg:ring-zinc-950/5 dark:bg-zinc-900/50 dark:ring-white/10">
+          <form onSubmit={handleSubmit} method="POST" className="p-7 sm:p-11">
+            <div className="flex items-start">
+              <Mark className="h-9 fill-black" />
+            </div>
+            <h1 className="mt-8 text-base/6 font-medium">
+              Your Slack integration is almost set up.
+            </h1>
+            <p className="mt-1 text-sm/5 text-zinc-500 dark:text-zinc-400">
+              Before exploring your new Loop dashboard, choose which users you
+              would like to opt out of receiving notifications.
+            </p>
+            <div className="mt-8 space-y-3">
+              <div className="my-4 flex max-w-xl gap-4">
+                <div className="flex-1">
+                  <InputGroup>
+                    <MagnifyingGlassIcon />
+                    <Input
+                      name="search"
+                      placeholder="Search users&hellip;"
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                      }}
                     />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    <Avatar
-                      src={user.data.profile.image_72}
-                      className="size-6 ring-2 ring-white dark:ring-zinc-900 mr-2"
-                    />
-                    {user.data.profile.real_name}
-                  </TableCell>
-                  <TableCell>
-                    {user.data.is_admin ? 'Admin' : 'Member'}
-                  </TableCell>
-                  <TableCell className="text-right hidden sm:table-cell">
-                    {user.data.profile.email}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                  </InputGroup>
+                </div>
+              </div>
+              <div className="mt-4 mb-10 max-h-80 overflow-y-auto">
+                <Table dense>
+                  <TableHead>
+                    <TableRow>
+                      <TableHeader className="text-center">Opt out</TableHeader>
+                      <TableHeader>User</TableHeader>
+                      <TableHeader>Role</TableHeader>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {filteredUsers.map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell className="text-center">
+                          <Checkbox
+                            onChange={() => handleCheck(user.id)}
+                            checked={checkedIds.has(user.id)}
+                          />
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          <Avatar
+                            src={user.data.profile.image_72}
+                            className="size-6 ring-2 ring-white dark:ring-zinc-900 mr-2"
+                          />
+                          {user.data.profile.real_name}
+                        </TableCell>
+                        <TableCell>
+                          {user.data.is_admin ? 'Admin' : 'Member'}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+            <div className="mt-8">
+              <Button type="submit" className="w-full">
+                Continue
+              </Button>
+            </div>
+          </form>
         </div>
-        <div className="flex justify-end gap-4">
-          <Button type="submit">Save changes</Button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </main>
   );
 }
