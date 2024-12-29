@@ -3,6 +3,7 @@ import { Insight } from '../insight/insight.entity';
 import { InsightService } from '../insight/insight.service';
 import { Summary } from '../summary/summary.entity';
 import { SummaryService } from '../summary/summary.service';
+import { TagService } from '../tag/tag.service';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { Team } from './team.entity';
@@ -14,7 +15,8 @@ export class TeamController {
     private readonly teamService: TeamService,
     private readonly insightService: InsightService,
     private readonly summaryService: SummaryService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly tagService: TagService
   ) {}
 
   @Get()
@@ -51,5 +53,26 @@ export class TeamController {
     @Param('teamId') teamId: string
   ): Promise<User[]> {
     return this.userService.getUsersWithNotifications(teamId, true);
+  }
+
+  /* Team Stats */
+  @Get(':teamId/insights/total')
+  async getTotalTeamInsights(@Param('teamId') teamId: string) {
+    return await this.insightService.getTotalTeamInsights(teamId);
+  }
+
+  @Get(':teamId/themes/total')
+  async getTotalTeamThemes(@Param('teamId') teamId: string) {
+    return await this.tagService.getTotalTeamThemes(teamId);
+  }
+
+  @Get(':teamId/insights/average')
+  async getAverageTeamInsights(@Param('teamId') teamId: string): Promise<any> {
+    return this.insightService.getAverageTeamInsights(teamId);
+  }
+
+  @Get(':teamId/contributors')
+  async getActiveContributors(@Param('teamId') teamId: string) {
+    return this.insightService.getActiveContributors(teamId);
   }
 }

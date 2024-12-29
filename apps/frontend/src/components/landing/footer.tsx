@@ -13,9 +13,10 @@ function CallToAction() {
         <Subheading>Get started</Subheading>
         <p className="mt-6 text-3xl font-medium tracking-tight text-gray-950 sm:text-5xl">
           Ready to accelerate growth?
-          <br />
-          Start capturing insights today.
         </p>
+        <div className="mx-auto mt-6 max-w-xs text-sm/6 text-gray-500">
+          Start capturing insights today.
+        </div>
       </hgroup>
       <div className="mt-6">
         <SlackInstallButton className={'w-full sm:w-auto'} />
@@ -137,7 +138,7 @@ export function Footer() {
                     <Logo className="h-9" color="mixed" />
                   </PlusGridItem>
                 </div>
-                <div className="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
+                <div className="col-span-2 grid grid-cols-3 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
                   <Sitemap />
                 </div>
               </div>

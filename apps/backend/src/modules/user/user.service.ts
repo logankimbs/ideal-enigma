@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User as Installer } from '@slack/web-api/dist/types/response/UsersInfoResponse';
 import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
 import { Repository } from 'typeorm';
+import { InsightService } from '../insight/insight.service';
+import { TagService } from '../tag/tag.service';
 import { Team } from '../team/team.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,7 +15,9 @@ import { User } from './user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Team) private teamRepository: Repository<Team>
+    @InjectRepository(Team) private teamRepository: Repository<Team>,
+    private readonly tagService: TagService,
+    private readonly insightService: InsightService
   ) {}
 
   findAll(): Promise<User[]> {
@@ -117,5 +121,25 @@ export class UserService {
     return teamUsers.filter((user) => {
       return user.notifications === enabled;
     });
+  }
+
+  async getTotalUserInsights(userId: string) {
+    await this.findOne(userId);
+    return await this.insightService.getTotalUserInsights(userId);
+  }
+
+  async getTotalUserThemes(userId: string) {
+    await this.findOne(userId);
+    return await this.tagService.getTotalUserThemes(userId);
+  }
+
+  async getAverageUserInsights(userId: string) {
+    await this.findOne(userId);
+    return await this.insightService.getAverageUserInsights(userId);
+  }
+
+  async getUserInsightStreak(userId: string) {
+    await this.findOne(userId);
+    return await this.insightService.getUserStreak(userId);
   }
 }
