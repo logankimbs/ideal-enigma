@@ -70,8 +70,8 @@ export default async function Home() {
         />
         <Stat
           title="Average insights per user"
-          value={`${averageTeamInsights.average_including_current.toFixed(2)}`}
-          change={`${averageTeamInsights.change_from_excluding_to_including}`}
+          value={averageTeamInsights.value}
+          change={averageTeamInsights.change}
         />
         <Stat
           title="Active contributors"

@@ -24,3 +24,8 @@ export type Stat = {
 export type UserStreak = {
   count: number;
 };
+
+export type Average = {
+  week_start: Date;
+  insight_count: string;
+};

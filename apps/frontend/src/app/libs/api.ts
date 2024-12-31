@@ -1,6 +1,5 @@
 import {
   ActiveContributors,
-  AverageInsights,
   Insight,
   Stat,
   Summary,
@@ -197,7 +196,7 @@ export async function getTotalTeamThemes(): Promise<Stat> {
   });
 }
 
-export async function getAverageTeamInsights(): Promise<AverageInsights> {
+export async function getAverageTeamInsights(): Promise<Stat> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
