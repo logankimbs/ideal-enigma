@@ -49,8 +49,8 @@ export default async function Home() {
         />
         <Stat
           title="Average insights"
-          value={`${averageUserInsights.average_including_current.toFixed(2)}`}
-          change={`${averageUserInsights.change_from_excluding_to_including}`}
+          value={averageUserInsights.value}
+          change={averageUserInsights.change}
         />
         <Stat title="Current streak" value={`${userStreak.count}`} streak />
       </div>

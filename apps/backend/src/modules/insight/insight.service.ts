@@ -8,6 +8,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { calculateChange } from '../../common/utils';
+import { InstallationService } from '../installation/installation.service';
 import { Tag } from '../tag/tag.entity';
 import { TeamService } from '../team/team.service';
 import { User } from '../user/user.entity';
@@ -22,7 +23,8 @@ export class InsightService {
     @InjectRepository(Insight) private insightRepository: Repository<Insight>,
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private installationService: InstallationService
   ) {}
 
   // Create insight and tags. Tags are passed in as an array of strings i.e., ["tag1", "tag2"]
@@ -221,73 +223,39 @@ export class InsightService {
     return { count: streak };
   }
 
-  async getAverageUserInsights(userId: string): Promise<AverageInsights> {
-    const queryBuilder = this.insightRepository.createQueryBuilder('i');
+  async getAverageUserInsights(userId: string): Promise<Stat> {
+    const sqlQuery = `
+      WITH earliest_installation AS (SELECT MIN(i."createdAt") AS earliest_installation_date
+                                     FROM "installations" i
+                                            JOIN "users" u ON u."teamId" = i.id
+                                     WHERE u.id = $1),
+           weeks AS (SELECT generate_series(
+                              date_trunc('week', (SELECT earliest_installation_date FROM earliest_installation)),
+                              date_trunc('week', CURRENT_DATE),
+                              INTERVAL '1 week'
+                            ) AS week_start),
+           insight_counts AS (SELECT date_trunc('week', "createdAt") AS week_start,
+                                     COUNT(*)                        AS insight_count
+                              FROM "insights"
+                              WHERE "userId" = $1
+                              GROUP BY 1)
+      SELECT w.week_start,
+             COALESCE(ic.insight_count, 0) AS insight_count
+      FROM weeks w
+             LEFT JOIN insight_counts ic ON w.week_start = ic.week_start
+      ORDER BY w.week_start DESC
+    `;
 
-    const userInsightCounts = queryBuilder
-      .select([
-        'i."userId" AS "userId"',
-        `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
-        `COUNT(i."id") AS "weekly_count"`,
-      ])
-      .where('i."userId" = :userId', { userId })
-      .groupBy('i."userId", DATE_TRUNC(\'week\', i."createdAt")');
-
-    const averageAllWeeks = this.insightRepository
-      .createQueryBuilder()
-      .select([
-        `AVG(user_counts."weekly_count") AS "average_including_current"`,
-      ])
-      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
-      .setParameters(userInsightCounts.getParameters());
-
-    const averageExcludingCurrent = this.insightRepository
-      .createQueryBuilder()
-      .select([
-        `AVG(user_counts."weekly_count") AS "average_excluding_current"`,
-      ])
-      .from(`(${userInsightCounts.getQuery()})`, 'user_counts')
-      .where(`user_counts."week_start" < DATE_TRUNC('week', NOW())`)
-      .setParameters(userInsightCounts.getParameters());
-
-    const result = await this.insightRepository
-      .createQueryBuilder()
-      .select([
-        `a_all."average_including_current"`,
-        `a_exc."average_excluding_current"`,
-        `CASE
-       WHEN a_exc."average_excluding_current" = 0 THEN 0
-       ELSE (
-         (a_all."average_including_current" - a_exc."average_excluding_current")
-         * 100.0 / a_exc."average_excluding_current"
-       )
-     END AS "change_from_excluding_to_including"`,
-      ])
-      .from(`(${averageAllWeeks.getQuery()})`, 'a_all')
-      .addFrom(`(${averageExcludingCurrent.getQuery()})`, 'a_exc')
-      .setParameters({
-        ...averageAllWeeks.getParameters(),
-        ...averageExcludingCurrent.getParameters(),
-      })
-      .getRawOne();
-
-    if (!result) {
-      return {
-        average_including_current: 0,
-        average_excluding_current: 0,
-        change_from_excluding_to_including: 0,
-      };
-    }
+    const results = await this.insightRepository.query(sqlQuery, [userId]);
+    const sum = results.reduce((a, r) => a + Number(r.insight_count), 0);
+    const averageInsights = results.length ? sum / results.length : 0;
+    const currentWeekCount = Number(results[0]?.insight_count ?? 0);
+    const previousWeekCount = Number(results[1]?.insight_count ?? 0);
+    const change = calculateChange(currentWeekCount, previousWeekCount);
 
     return {
-      average_including_current:
-        parseFloat(result.average_including_current) || 0,
-      average_excluding_current:
-        parseFloat(result.average_excluding_current) || 0,
-      change_from_excluding_to_including:
-        result.change_from_excluding_to_including !== null
-          ? parseFloat(result.change_from_excluding_to_including)
-          : 0,
+      value: averageInsights.toFixed(2),
+      change: change.toString(),
     };
   }
 

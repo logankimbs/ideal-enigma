@@ -156,7 +156,7 @@ export async function getTotalUserThemes(): Promise<Stat> {
   });
 }
 
-export async function getAverageUserInsights(): Promise<AverageInsights> {
+export async function getAverageUserInsights(): Promise<Stat> {
   const session = await getSession();
   const userId = session.payload.sub;
 
