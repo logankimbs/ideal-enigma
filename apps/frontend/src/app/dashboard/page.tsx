@@ -29,7 +29,7 @@ export default async function Home() {
   const teamContributors = await getActiveContributors();
 
   const recentSummary = await getRecentSummary();
-  const recentInsights = await getRecentInsights();
+  const recentInsights = await getRecentInsights(4);
 
   return (
     <>
@@ -82,8 +82,8 @@ export default async function Home() {
       <div
         className={`mt-8 grid gap-8 sm:grid-cols-1 ${
           recentSummary && recentInsights?.length
-            ? 'xl:grid-cols-2' // both exist -> 2 columns
-            : 'xl:grid-cols-1' // only one exists -> 1 column
+            ? 'xl:grid-cols-2'
+            : 'xl:grid-cols-1'
         } items-stretch`}
       >
         {recentSummary && (
