@@ -3,11 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team as SlackTeam } from '@slack/web-api/dist/types/response/TeamInfoResponse';
 import { Repository } from 'typeorm';
-import {
-  calculateAverage,
-  calculateChange,
-  parseNumber,
-} from '../../common/utils';
+import { calculateChange, parseNumber, sumValues } from '../../common/utils';
 import { Team } from './team.entity';
 import { getTeamStatsQuery, TeamStatsQuery } from './team.queries';
 
@@ -38,48 +34,58 @@ export class TeamService {
       teamId,
     ]);
 
-    console.log('stats', stats);
-
     const current = stats[0] || ({} as TeamStatsQuery);
     const previous = stats[1] || ({} as TeamStatsQuery);
 
     // Calculate total insights and change
     const totalValue = parseNumber(current.insight_count);
     const totalPrev = parseNumber(previous.insight_count);
-    const totalChange = calculateChange(totalValue, totalPrev).toFixed(2);
+    let totalChange = calculateChange(totalValue, totalPrev);
 
     // Calculate total themes and change
     const themesValue = parseNumber(current.tag_count);
     const themesPrev = parseNumber(previous.tag_count);
-    const themesChange = calculateChange(themesValue, themesPrev).toFixed(2);
+    let themesChange = calculateChange(themesValue, themesPrev);
 
-    // Calculate average insights and change
-    const averageValue = calculateAverage(stats);
+    // Calculate average insights per user and change
+    const sumAverage = sumValues(stats, 'avg_insights_per_user');
+    const averageValue = sumAverage / stats.length;
     // Use only the second element onward to approximate "previous" average
-    const averageValuePrevious = calculateAverage(stats.slice(1));
-    const averageChange = calculateChange(
-      averageValue,
-      averageValuePrevious
-    ).toFixed(2);
+    const sumAveragePrev = sumValues(stats.slice(1), 'avg_insights_per_user');
+    const averageValuePrev = sumAveragePrev / (stats.length - 1);
+    let averageChange = calculateChange(averageValue, averageValuePrev);
 
     // Calculate active contributors and change
     const contributorsValue = parseNumber(current.active_contributors);
     const contributorsPrev = parseNumber(previous.active_contributors);
-    const contributorsChange = calculateChange(
+    let contributorsChange = calculateChange(
       contributorsValue,
       contributorsPrev
-    ).toFixed(2);
+    );
+
+    if (stats.length < 2) {
+      totalChange = 0.0;
+      themesChange = 0.0;
+      averageChange = 0.0;
+      contributorsChange = 0.0;
+    }
 
     return {
-      totalInsights: { value: totalValue.toString(), change: totalChange },
-      totalThemes: { value: themesValue.toString(), change: themesChange },
+      totalInsights: {
+        value: totalValue.toString(),
+        change: totalChange.toFixed(2),
+      },
+      totalThemes: {
+        value: themesValue.toString(),
+        change: themesChange.toFixed(2),
+      },
       averageInsights: {
         value: averageValue.toFixed(2),
-        change: averageChange,
+        change: averageChange.toFixed(2),
       },
       activeContributors: {
         value: contributorsValue.toString(),
-        change: contributorsChange,
+        change: contributorsChange.toFixed(2),
       },
     };
   }

@@ -137,29 +137,39 @@ export class UserService {
     // Calculate total insights and change
     const totalValue = parseNumber(current.insight_count);
     const totalPrev = parseNumber(previous.insight_count);
-    const totalChange = calculateChange(totalValue, totalPrev).toFixed(2);
+    let totalChange = calculateChange(totalValue, totalPrev);
 
     // Calculate total themes and change
     const themesValue = parseNumber(current.tag_count);
     const themesPrev = parseNumber(previous.tag_count);
-    const themesChange = calculateChange(themesValue, themesPrev).toFixed(2);
+    let themesChange = calculateChange(themesValue, themesPrev);
 
     // Calculate average insights and change
     const averageValue = calculateAverage(stats);
     // Use only the second element onward to approximate "previous" average
     const averageValuePrevious = calculateAverage(stats.slice(1));
-    const averageChange = calculateChange(
-      averageValue,
-      averageValuePrevious
-    ).toFixed(2);
+    let averageChange = calculateChange(averageValue, averageValuePrevious);
+
     const streak = parseNumber(current.streak, 0);
 
+    if (stats.length < 2) {
+      totalChange = 0.0;
+      themesChange = 0.0;
+      averageChange = 0.0;
+    }
+
     return {
-      totalInsights: { value: totalValue.toString(), change: totalChange },
-      totalThemes: { value: themesValue.toString(), change: themesChange },
+      totalInsights: {
+        value: totalValue.toString(),
+        change: totalChange.toFixed(2),
+      },
+      totalThemes: {
+        value: themesValue.toString(),
+        change: themesChange.toFixed(2),
+      },
       averageInsights: {
         value: averageValue.toFixed(2),
-        change: averageChange,
+        change: averageChange.toFixed(2),
       },
       streak: streak.toString(),
     };

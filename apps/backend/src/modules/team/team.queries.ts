@@ -3,6 +3,7 @@ export type TeamStatsQuery = {
   insight_count: string;
   tag_count: string;
   active_contributors: string;
+  avg_insights_per_user: string;
 };
 
 export function getTeamStatsQuery(): string {
@@ -37,9 +38,16 @@ export function getTeamStatsQuery(): string {
                             from weeks w
                                      left join insight_counts ic on w.week_start = ic.week_start
                                      left join tag_counts tc on w.week_start = tc.week_start
-                            order by w.week_start )
-      select week_start, insight_count, tag_count, active_contributors
-      from weekly_data
-      order by week_start desc;
+                            order by w.week_start ),
+           total_users as ( select count(distinct id) as total_users from users where "teamId" = $1 )
+      select wd.week_start,
+             wd.insight_count,
+             wd.tag_count,
+             wd.active_contributors,
+             (case when tu.total_users > 0 then wd.insight_count::float / tu.total_users
+                   else 0 end) as avg_insights_per_user
+      from weekly_data wd
+               cross join total_users tu
+      order by wd.week_start desc;
   `;
 }
