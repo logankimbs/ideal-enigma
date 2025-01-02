@@ -131,6 +131,8 @@ export class UserService {
       userId,
     ]);
 
+    console.log('stats', stats);
+
     const current = stats[0] || ({} as UserStatsQuery);
     const previous = stats[1] || ({} as UserStatsQuery);
 
