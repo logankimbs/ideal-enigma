@@ -29,3 +29,10 @@ export type Average = {
   week_start: Date;
   insight_count: string;
 };
+
+export type UserStats = {
+  totalInsights: Stat;
+  totalThemes: Stat;
+  averageInsights: Stat;
+  streak: string;
+};

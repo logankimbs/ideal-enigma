@@ -4,7 +4,7 @@ import {
   Stat,
   Summary,
   User,
-  UserStreak,
+  UserStats,
 } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
@@ -134,44 +134,13 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
   });
 }
 
-/* User Stats */
-export async function getTotalUserInsights(): Promise<Stat> {
+export async function getUserStats(): Promise<UserStats> {
   const session = await getSession();
   const userId = session.payload.sub;
 
   return await api({
     method: 'get',
-    endpoint: `users/${userId}/insights/total`,
-  });
-}
-
-export async function getTotalUserThemes(): Promise<Stat> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/themes/total`,
-  });
-}
-
-export async function getAverageUserInsights(): Promise<Stat> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/insights/average`,
-  });
-}
-
-export async function getUserStreak(): Promise<UserStreak> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/streak`,
+    endpoint: `users/${userId}/stats`,
   });
 }
 

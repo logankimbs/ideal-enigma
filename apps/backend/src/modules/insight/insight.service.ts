@@ -1,9 +1,4 @@
-import {
-  ActiveContributors,
-  Average,
-  Stat,
-  UserStreak,
-} from '@ideal-enigma/common';
+import { ActiveContributors, Average, Stat } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -134,34 +129,6 @@ export class InsightService {
     });
   }
 
-  async getTotalUserInsights(userId: string): Promise<Stat> {
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-    const twoWeeksAgo = new Date();
-    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-    const result = await this.insightRepository
-      .createQueryBuilder('i')
-      .select([
-        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
-        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
-      ])
-      .where('i.userId = :userId', { userId })
-      .setParameters({
-        oneWeekAgo,
-        currentDate: new Date(),
-        twoWeeksAgo,
-      })
-      .getRawOne();
-
-    const totalCurrent = Number(result.totalCurrent);
-    const totalPrevious = Number(result.totalPrevious);
-    const change = calculateChange(totalCurrent, totalPrevious).toFixed(2);
-
-    return { value: totalCurrent.toString(), change: change.toString() };
-  }
-
   async getTotalTeamInsights(teamId: string): Promise<Stat> {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -187,70 +154,6 @@ export class InsightService {
     const change = calculateChange(totalCurrent, totalPrevious).toFixed(2);
 
     return { value: totalCurrent.toString(), change: change.toString() };
-  }
-
-  async getUserStreak(userId: string): Promise<UserStreak> {
-    const result = await this.insightRepository
-      .createQueryBuilder('insights')
-      .select(`DATE_TRUNC('week', insights.createdAt)`, 'week_start') // Use "week_start" alias
-      .addSelect(
-        `RANK() OVER (ORDER BY DATE_TRUNC('week', insights.createdAt) ASC)`,
-        'week_rank' // Alias the rank column
-      )
-      .where('insights.userId = :userId', { userId })
-      .groupBy(`DATE_TRUNC('week', insights.createdAt)`)
-      .orderBy(`DATE_TRUNC('week', insights.createdAt)`, 'ASC') // Use the actual expression instead of alias
-      .getRawMany();
-
-    // Process the raw results to calculate the streak
-    let streak = 0;
-    let lastWeek = null;
-
-    for (const row of result) {
-      const currentWeek = new Date(row.week_start).getTime(); // Use the correct alias
-      if (!lastWeek || currentWeek - lastWeek === 7 * 24 * 60 * 60 * 1000) {
-        // Either the first week or consecutive week
-        streak++;
-      } else if (currentWeek - lastWeek > 7 * 24 * 60 * 60 * 1000) {
-        // Break in the streak
-        break;
-      }
-      lastWeek = currentWeek;
-    }
-
-    return { count: streak };
-  }
-
-  async getAverageUserInsights(userId: string): Promise<Stat> {
-    const sqlQuery = `
-      with earliest_installation as ( select min(i."createdAt") as earliest_installation_date
-                                      from "installations" i
-                                             join "users" u on u."teamId" = i.id
-                                      where u.id = $1 ),
-           weeks as ( select generate_series(
-                               date_trunc('week', ( select earliest_installation_date from earliest_installation )),
-                               date_trunc('week', current_date), interval '1 week') as week_start ),
-           insight_counts as ( select date_trunc('week', "createdAt") as week_start, count(*) as insight_count
-                               from "insights"
-                               where "userId" = $1
-                               group by 1 )
-      select w.week_start, coalesce(ic.insight_count, 0) as insight_count
-      from weeks w
-             left join insight_counts ic on w.week_start = ic.week_start
-      order by w.week_start desc
-    `;
-
-    const results = await this.insightRepository.query(sqlQuery, [userId]);
-    const sum = results.reduce((a, r) => a + Number(r.insight_count), 0);
-    const averageInsights = results.length ? sum / results.length : 0;
-    const currentWeekCount = Number(results[0]?.insight_count ?? 0);
-    const previousWeekCount = Number(results[1]?.insight_count ?? 0);
-    const change = calculateChange(currentWeekCount, previousWeekCount);
-
-    return {
-      value: averageInsights.toFixed(2),
-      change: change.toString(),
-    };
   }
 
   async getAverageTeamInsights(teamId: string): Promise<Stat> {

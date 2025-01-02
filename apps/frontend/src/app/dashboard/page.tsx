@@ -5,22 +5,15 @@ import { SummaryPreview } from '../../components/summary-preview';
 import {
   getActiveContributors,
   getAverageTeamInsights,
-  getAverageUserInsights,
   getRecentInsights,
   getRecentSummary,
   getTotalTeamInsights,
   getTotalTeamThemes,
-  getTotalUserInsights,
-  getTotalUserThemes,
-  getUserStreak,
+  getUserStats,
 } from '../libs/api';
 
 export default async function Home() {
-  /* User Stats */
-  const totalUserInsights = await getTotalUserInsights();
-  const totalUserThemes = await getTotalUserThemes();
-  const averageUserInsights = await getAverageUserInsights();
-  const userStreak = await getUserStreak();
+  const userStats = await getUserStats();
 
   /* Team Stats */
   const totalTeamInsights = await getTotalTeamInsights();
@@ -39,20 +32,20 @@ export default async function Home() {
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat
           title="Total insights"
-          value={totalUserInsights.value}
-          change={totalUserInsights.change}
+          value={userStats.totalInsights.value}
+          change={userStats.totalInsights.change}
         />
         <Stat
           title="Total themes"
-          value={totalUserThemes.value}
-          change={totalUserThemes.change}
+          value={userStats.totalThemes.value}
+          change={userStats.totalThemes.change}
         />
         <Stat
           title="Average insights"
-          value={averageUserInsights.value}
-          change={averageUserInsights.change}
+          value={userStats.averageInsights.value}
+          change={userStats.averageInsights.change}
         />
-        <Stat title="Current streak" value={`${userStreak.count}`} streak />
+        <Stat title="Current streak" value={userStats.streak} streak />
       </div>
       <div className="mt-8 flex items-end justify-between">
         <Subheading>Company Weekly Overview</Subheading>
