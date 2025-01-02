@@ -55,24 +55,8 @@ export class TeamController {
     return this.userService.getUsersWithNotifications(teamId, true);
   }
 
-  /* Team Stats */
-  @Get(':teamId/insights/total')
-  async getTotalTeamInsights(@Param('teamId') teamId: string) {
-    return await this.insightService.getTotalTeamInsights(teamId);
-  }
-
-  @Get(':teamId/themes/total')
-  async getTotalTeamThemes(@Param('teamId') teamId: string) {
-    return await this.tagService.getTotalTeamThemes(teamId);
-  }
-
-  @Get(':teamId/insights/average')
-  async getAverageTeamInsights(@Param('teamId') teamId: string): Promise<any> {
-    return this.insightService.getAverageTeamInsights(teamId);
-  }
-
-  @Get(':teamId/contributors')
-  async getActiveContributors(@Param('teamId') teamId: string) {
-    return this.insightService.getActiveContributors(teamId);
+  @Get(':teamId/stats')
+  async getUserStats(@Param('teamId') teamId: string) {
+    return await this.teamService.getTeamStats(teamId);
   }
 }

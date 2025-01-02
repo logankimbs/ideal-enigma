@@ -3,24 +3,15 @@ import { RepositoryPreview } from '../../components/repository-preview';
 import { Stat } from '../../components/stat';
 import { SummaryPreview } from '../../components/summary-preview';
 import {
-  getActiveContributors,
-  getAverageTeamInsights,
   getRecentInsights,
   getRecentSummary,
-  getTotalTeamInsights,
-  getTotalTeamThemes,
+  getTeamStats,
   getUserStats,
 } from '../libs/api';
 
 export default async function Home() {
   const userStats = await getUserStats();
-
-  /* Team Stats */
-  const totalTeamInsights = await getTotalTeamInsights();
-  const totalTeamThemes = await getTotalTeamThemes();
-  const averageTeamInsights = await getAverageTeamInsights();
-  const teamContributors = await getActiveContributors();
-
+  const teamStats = await getTeamStats();
   const recentSummary = await getRecentSummary();
   const recentInsights = await getRecentInsights(4);
 
@@ -53,23 +44,23 @@ export default async function Home() {
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat
           title="Total insights"
-          value={totalTeamInsights.value}
-          change={totalTeamInsights.change}
+          value={teamStats.totalInsights.value}
+          change={teamStats.totalInsights.change}
         />
         <Stat
           title="Total themes"
-          value={totalTeamThemes.value}
-          change={totalTeamThemes.change}
+          value={teamStats.totalThemes.value}
+          change={teamStats.totalThemes.change}
         />
         <Stat
           title="Average insights per user"
-          value={averageTeamInsights.value}
-          change={averageTeamInsights.change}
+          value={teamStats.averageInsights.value}
+          change={teamStats.averageInsights.change}
         />
         <Stat
           title="Active contributors"
-          value={`${teamContributors.this_week_avg}`}
-          change={`${teamContributors.change_percent}`}
+          value={teamStats.activeContributors.value}
+          change={teamStats.activeContributors.change}
         />
       </div>
       <div
@@ -84,7 +75,6 @@ export default async function Home() {
             <SummaryPreview summary={recentSummary} />
           </div>
         )}
-
         {recentInsights && recentInsights.length > 0 && (
           <div className="h-full">
             <RepositoryPreview repository={recentInsights} />

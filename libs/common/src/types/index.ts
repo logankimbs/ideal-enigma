@@ -1,4 +1,3 @@
-/****** ANALYTICS ******/
 export type ActiveContributors = {
   this_week_avg: number;
   change_percent: number;
@@ -35,4 +34,11 @@ export type UserStats = {
   totalThemes: Stat;
   averageInsights: Stat;
   streak: string;
+};
+
+export type TeamStats = {
+  totalInsights: Stat;
+  totalThemes: Stat;
+  averageInsights: Stat;
+  activeContributors: Stat;
 };

@@ -1,8 +1,6 @@
-import { ActiveContributors, Average, Stat } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { calculateChange } from '../../common/utils';
 import { Tag } from '../tag/tag.entity';
 import { TeamService } from '../team/team.service';
 import { User } from '../user/user.entity';
@@ -127,102 +125,5 @@ export class InsightService {
       where: { summary: { id: summaryId } },
       relations: ['summary', 'user', 'tags'],
     });
-  }
-
-  async getTotalTeamInsights(teamId: string): Promise<Stat> {
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-    const twoWeeksAgo = new Date();
-    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-    const team = await this.teamService.find(teamId);
-
-    const result = await this.insightRepository
-      .createQueryBuilder('i')
-      .select([
-        'COUNT(CASE WHEN i."createdAt" >= :oneWeekAgo AND i."createdAt" < :currentDate THEN 1 END) AS "totalCurrent"',
-        'COUNT(CASE WHEN i."createdAt" >= :twoWeeksAgo AND i."createdAt" < :oneWeekAgo THEN 1 END) AS "totalPrevious"',
-      ])
-      .innerJoin('users', 'u', 'u.id = i.userId')
-      .where('u.teamId = :teamId', { teamId: team.id })
-      .setParameters({ oneWeekAgo, currentDate: new Date(), twoWeeksAgo })
-      .getRawOne();
-
-    const totalCurrent = Number(result.totalCurrent);
-    const totalPrevious = Number(result.totalPrevious);
-    const change = calculateChange(totalCurrent, totalPrevious).toFixed(2);
-
-    return { value: totalCurrent.toString(), change: change.toString() };
-  }
-
-  async getAverageTeamInsights(teamId: string): Promise<Stat> {
-    const sqlQuery = `
-      with team_installation_dates as ( select u.id as userId, i.id as teamId, i."createdAt" as installationDate
-                                        from users u
-                                               inner join installations i on i.id = $1 ),
-           weeks as ( select generate_series(
-                               ( select date_trunc('week', min(installationDate)) from team_installation_dates ),
-                               date_trunc('week', current_date), interval '1 week') as week_start ),
-           insight_counts as ( select date_trunc('week', i."createdAt") as week_start,
-                                      count(distinct i.id)              as insight_count
-                               from insights i
-                               where i."userId" in ( select id from users where "teamId" = $1 )
-                               group by 1 )
-      select w.week_start, coalesce(ic.insight_count, 0) as insight_count
-      from weeks w
-             left join insight_counts ic on w.week_start = ic.week_start
-      order by w.week_start desc;
-    `;
-
-    const results: Average[] = await this.insightRepository.query(sqlQuery, [
-      teamId,
-    ]);
-    const sum = results.reduce((a, r) => a + Number(r.insight_count), 0);
-    const averageInsights = results.length ? sum / results.length : 0;
-    const currentWeekCount = Number(results[0]?.insight_count ?? 0);
-    const previousWeekCount = Number(results[1]?.insight_count ?? 0);
-    const change = calculateChange(currentWeekCount, previousWeekCount);
-
-    return {
-      value: averageInsights.toFixed(2),
-      change: change.toString(),
-    };
-  }
-
-  async getActiveContributors(teamId: string): Promise<ActiveContributors> {
-    const weekResults = await this.insightRepository
-      .createQueryBuilder('i')
-      .innerJoin('users', 'u', 'u.id = i.userId')
-      .select([
-        `DATE_TRUNC('week', i."createdAt") AS "week_start"`,
-        `COUNT(DISTINCT i."userId") AS "users_submitted_insights"`,
-      ])
-      .where('u.teamId = :teamId', { teamId })
-      .groupBy(`DATE_TRUNC('week', i."createdAt")`)
-      .orderBy(`DATE_TRUNC('week', i."createdAt")`, 'ASC')
-      .getRawMany();
-
-    if (!weekResults.length) {
-      return { this_week_avg: 0, change_percent: 0 };
-    }
-
-    const this_week = weekResults.at(-1);
-    let change_percent = null;
-
-    if (weekResults.length > 1) {
-      const last_week = weekResults.at(-2);
-
-      change_percent =
-        ((this_week.users_submitted_insights -
-          last_week.users_submitted_insights) /
-          last_week.users_submitted_insights) *
-        100;
-    }
-
-    return {
-      this_week_avg: this_week.users_submitted_insights,
-      change_percent: change_percent || 0,
-    };
   }
 }

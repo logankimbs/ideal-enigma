@@ -1,8 +1,7 @@
 import {
-  ActiveContributors,
   Insight,
-  Stat,
   Summary,
+  TeamStats,
   User,
   UserStats,
 } from '@ideal-enigma/common';
@@ -144,43 +143,12 @@ export async function getUserStats(): Promise<UserStats> {
   });
 }
 
-/* Team Stats */
-export async function getTotalTeamInsights(): Promise<Stat> {
+export async function getTeamStats(): Promise<TeamStats> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
   return await api({
     method: 'get',
-    endpoint: `teams/${teamId}/insights/total`,
-  });
-}
-
-export async function getTotalTeamThemes(): Promise<Stat> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/themes/total`,
-  });
-}
-
-export async function getAverageTeamInsights(): Promise<Stat> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/insights/average`,
-  });
-}
-
-export async function getActiveContributors(): Promise<ActiveContributors> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/contributors`,
+    endpoint: `teams/${teamId}/stats`,
   });
 }
