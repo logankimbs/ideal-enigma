@@ -12,7 +12,6 @@ import { Input, InputGroup } from './input';
 import { Listbox, ListboxLabel, ListboxOption } from './listbox';
 import { Pagination, usePagination } from './pagination';
 import { RepositoryTableV2 } from './repository-table';
-import { Select } from './select';
 
 type View = {
   code: string;
@@ -94,32 +93,26 @@ export default function RepositoryView({ repository }: RepositoryViewProps) {
               </InputGroup>
             </div>
             <div>
-              <Select name="sort_by">
-                <option value="name">Sort by featured</option>
-                <option value="date">Sort by date</option>
-              </Select>
+              <Listbox
+                aria-label="View Filter"
+                name="view_filter"
+                placeholder="View Filter"
+                by="code"
+                value={view}
+                onChange={(view) => {
+                  setView(view);
+                  setCurrentPage(1);
+                }}
+              >
+                {views.map((view) => (
+                  <ListboxOption key={view.code} value={view}>
+                    <Avatar src={view.avatarUrl} />
+                    <ListboxLabel>{view.name}</ListboxLabel>
+                  </ListboxOption>
+                ))}
+              </Listbox>
             </div>
           </div>
-
-          <Listbox
-            aria-label="View Filter"
-            name="view_filter"
-            placeholder="View Filter"
-            by="code"
-            value={view}
-            onChange={(view) => {
-              setView(view);
-              setCurrentPage(1);
-            }}
-            className="mt-4 md:max-w-48"
-          >
-            {views.map((view) => (
-              <ListboxOption key={view.code} value={view}>
-                <Avatar src={view.avatarUrl} />
-                <ListboxLabel>{view.name}</ListboxLabel>
-              </ListboxOption>
-            ))}
-          </Listbox>
         </div>
       </div>
 

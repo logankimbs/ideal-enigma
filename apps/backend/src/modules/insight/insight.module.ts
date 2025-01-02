@@ -1,5 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { InstallationModule } from '../installation/installation.module';
 import { Tag } from '../tag/tag.entity';
 import { TeamModule } from '../team/team.module';
 import { User } from '../user/user.entity';
@@ -11,6 +12,7 @@ import { InsightService } from './insight.service';
   imports: [
     forwardRef(() => TeamModule),
     TypeOrmModule.forFeature([Insight, User, Tag]),
+    InstallationModule,
   ],
   controllers: [InsightController],
   providers: [InsightService],

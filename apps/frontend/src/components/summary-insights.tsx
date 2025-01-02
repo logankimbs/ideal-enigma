@@ -9,7 +9,6 @@ import EmptyRepositoryView from './empty-repository-view';
 import { Input, InputGroup } from './input';
 import { Pagination, usePagination } from './pagination';
 import { RepositoryTableV2 } from './repository-table';
-import { Select } from './select';
 
 type RepositoryViewProps = {
   insights: Insight[];
@@ -65,12 +64,6 @@ export default function SummaryInsights({ insights }: RepositoryViewProps) {
                   }}
                 />
               </InputGroup>
-            </div>
-            <div>
-              <Select name="sort_by">
-                <option value="name">Sort by featured</option>
-                <option value="date">Sort by date</option>
-              </Select>
             </div>
           </div>
         </div>

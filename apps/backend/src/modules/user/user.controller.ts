@@ -52,24 +52,8 @@ export class UserController {
     return await this.usersService.completeOnboarding(userId);
   }
 
-  /* User Stats */
-  @Get(':userId/insights/total')
-  async getTotalUserInsights(@Param('userId') userId: string) {
-    return await this.usersService.getTotalUserInsights(userId);
-  }
-
-  @Get(':userId/themes/total')
-  async getTotalUserThemes(@Param('userId') userId: string) {
-    return await this.usersService.getTotalUserThemes(userId);
-  }
-
-  @Get(':userId/insights/average')
-  async getAverageUserInsights(@Param('userId') userId: string) {
-    return await this.usersService.getAverageUserInsights(userId);
-  }
-
-  @Get(':userId/streak')
-  async getUserInsightStreak(@Param('userId') userId: string) {
-    return await this.usersService.getUserInsightStreak(userId);
+  @Get(':userId/stats')
+  async getUserStats(@Param('userId') userId: string) {
+    return await this.usersService.getUserStats(userId);
   }
 }

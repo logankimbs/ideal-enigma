@@ -1,23 +1,25 @@
-import { SlackUser } from '@ideal-enigma/common';
+import { SlackUser, UserStats } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User as Installer } from '@slack/web-api/dist/types/response/UsersInfoResponse';
 import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
 import { Repository } from 'typeorm';
-import { InsightService } from '../insight/insight.service';
-import { TagService } from '../tag/tag.service';
+import {
+  calculateAverage,
+  calculateChange,
+  parseNumber,
+} from '../../common/utils';
 import { Team } from '../team/team.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
+import { getUserStatsQuery, UserStatsQuery } from './user.queries';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Team) private teamRepository: Repository<Team>,
-    private readonly tagService: TagService,
-    private readonly insightService: InsightService
+    @InjectRepository(Team) private teamRepository: Repository<Team>
   ) {}
 
   findAll(): Promise<User[]> {
@@ -123,23 +125,53 @@ export class UserService {
     });
   }
 
-  async getTotalUserInsights(userId: string) {
-    await this.findOne(userId);
-    return await this.insightService.getTotalUserInsights(userId);
-  }
+  async getUserStats(userId: string): Promise<UserStats> {
+    const query = getUserStatsQuery();
+    const stats: UserStatsQuery[] = await this.userRepository.query(query, [
+      userId,
+    ]);
 
-  async getTotalUserThemes(userId: string) {
-    await this.findOne(userId);
-    return await this.tagService.getTotalUserThemes(userId);
-  }
+    const current = stats[0] || ({} as UserStatsQuery);
+    const previous = stats[1] || ({} as UserStatsQuery);
 
-  async getAverageUserInsights(userId: string) {
-    await this.findOne(userId);
-    return await this.insightService.getAverageUserInsights(userId);
-  }
+    // Calculate total insights and change
+    const totalValue = parseNumber(current.insight_count);
+    const totalPrev = parseNumber(previous.insight_count);
+    let totalChange = calculateChange(totalValue, totalPrev);
 
-  async getUserInsightStreak(userId: string) {
-    await this.findOne(userId);
-    return await this.insightService.getUserStreak(userId);
+    // Calculate total themes and change
+    const themesValue = parseNumber(current.tag_count);
+    const themesPrev = parseNumber(previous.tag_count);
+    let themesChange = calculateChange(themesValue, themesPrev);
+
+    // Calculate average insights and change
+    const averageValue = calculateAverage(stats);
+    // Use only the second element onward to approximate "previous" average
+    const averageValuePrevious = calculateAverage(stats.slice(1));
+    let averageChange = calculateChange(averageValue, averageValuePrevious);
+
+    const streak = parseNumber(current.streak, 0);
+
+    if (stats.length < 2) {
+      totalChange = 0.0;
+      themesChange = 0.0;
+      averageChange = 0.0;
+    }
+
+    return {
+      totalInsights: {
+        value: totalValue.toString(),
+        change: totalChange.toFixed(2),
+      },
+      totalThemes: {
+        value: themesValue.toString(),
+        change: themesChange.toFixed(2),
+      },
+      averageInsights: {
+        value: averageValue.toFixed(2),
+        change: averageChange.toFixed(2),
+      },
+      streak: streak.toString(),
+    };
   }
 }

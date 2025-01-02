@@ -1,11 +1,9 @@
 import {
-  ActiveContributors,
-  AverageInsights,
   Insight,
-  Stat,
   Summary,
+  TeamStats,
   User,
-  UserStreak,
+  UserStats,
 } from '@ideal-enigma/common';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getSession } from './session';
@@ -135,84 +133,22 @@ export async function isOnboardingComplete(userId: string): Promise<boolean> {
   });
 }
 
-/* User Stats */
-export async function getTotalUserInsights(): Promise<Stat> {
+export async function getUserStats(): Promise<UserStats> {
   const session = await getSession();
   const userId = session.payload.sub;
 
   return await api({
     method: 'get',
-    endpoint: `users/${userId}/insights/total`,
+    endpoint: `users/${userId}/stats`,
   });
 }
 
-export async function getTotalUserThemes(): Promise<Stat> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/themes/total`,
-  });
-}
-
-export async function getAverageUserInsights(): Promise<AverageInsights> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/insights/average`,
-  });
-}
-
-export async function getUserStreak(): Promise<UserStreak> {
-  const session = await getSession();
-  const userId = session.payload.sub;
-
-  return await api({
-    method: 'get',
-    endpoint: `users/${userId}/streak`,
-  });
-}
-
-/* Team Stats */
-export async function getTotalTeamInsights(): Promise<Stat> {
+export async function getTeamStats(): Promise<TeamStats> {
   const session = await getSession();
   const teamId = session.payload['https://slack.com/team_id'];
 
   return await api({
     method: 'get',
-    endpoint: `teams/${teamId}/insights/total`,
-  });
-}
-
-export async function getTotalTeamThemes(): Promise<Stat> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/themes/total`,
-  });
-}
-
-export async function getAverageTeamInsights(): Promise<AverageInsights> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/insights/average`,
-  });
-}
-
-export async function getActiveContributors(): Promise<ActiveContributors> {
-  const session = await getSession();
-  const teamId = session.payload['https://slack.com/team_id'];
-
-  return await api({
-    method: 'get',
-    endpoint: `teams/${teamId}/contributors`,
+    endpoint: `teams/${teamId}/stats`,
   });
 }
