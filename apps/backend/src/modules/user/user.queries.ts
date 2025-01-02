@@ -7,12 +7,13 @@ export type UserStatsQuery = {
 
 export function getUserStatsQuery(): string {
   return `
-      with team_installation_dates as ( select u.id as userId, i.id as teamId, i."createdAt" as installationDate
-                                        from users u
-                                                 inner join installations i on u."teamId" = i.id ),
+      with user_installation_date as ( select u.id as userId, i.id as teamId, i."createdAt" as installationDate
+                                       from users u
+                                                inner join installations i on u."teamId" = i.id
+                                       where u.id = $1 ),
            start_week as ( select greatest(date_trunc('week', current_date) - interval '12 weeks',
                                            date_trunc('week', min(installationDate))) as week_start
-                           from team_installation_dates ),
+                           from user_installation_date ),
            weeks as ( select generate_series(( select week_start from start_week ), date_trunc('week', current_date),
                                              interval '1 week') as week_start ),
            insight_counts as ( select date_trunc('week', i."createdAt") as week_start, count(i.id) as insight_count
