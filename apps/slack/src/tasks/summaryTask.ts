@@ -15,7 +15,7 @@ import getNextOccurrence from '../utils/date';
 import logger from '../utils/logger';
 
 /**
- * Runs every Sunday at midnight (12:00 AM)
+ * Runs every Sunday at midnight (11:00 PM)
  *
  * This task schedules summary messages to be sent every Monday at 10:00 AM.
  * The summaries are scheduled based on the user's timezone.

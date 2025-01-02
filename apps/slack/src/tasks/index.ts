@@ -3,10 +3,10 @@ import { reminderTask } from "./reminderTask";
 import { summaryTask } from "./summaryTask";
 
 const schedule = () => {
-  const sundayAtMidnight = "0 0 * * 0";
+  const sundayBeforeMidnight = "0 23 * * 0";
   const mondayAtMidnight = "0 0 * * 1";
 
-  cron.schedule(sundayAtMidnight, async () => await summaryTask());
+  cron.schedule(sundayBeforeMidnight, async () => await summaryTask());
   cron.schedule(mondayAtMidnight, async () => await reminderTask());
 };
 
