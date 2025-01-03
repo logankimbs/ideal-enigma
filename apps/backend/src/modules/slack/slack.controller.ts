@@ -33,6 +33,6 @@ export class SlackController {
 
   @Post('message/welcome')
   async sendWelcomeMessage(@Body('teamId') teamId: string) {
-    return await this.slackService.sendWelcomeMessage(teamId);
+    return await this.slackService.sendWelcomeMessageToTeam(teamId);
   }
 }

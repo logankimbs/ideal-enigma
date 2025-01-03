@@ -27,12 +27,9 @@ export function Avatar({
       className={clsx(
         className,
         // Basic layout
-        'inline-grid shrink-0 align-middle [--avatar-radius:20%] [--ring-opacity:20%] *:col-start-1 *:row-start-1',
-        // 'outline outline-1 -outline-offset-1 outline-black/[--ring-opacity] dark:outline-white/[--ring-opacity]',
+        'inline-grid shrink-0 align-middle [--avatar-radius:50%] [--ring-opacity:20%] *:col-start-1 *:row-start-1',
         // Add the correct border radius
-        square
-          ? 'rounded-[--avatar-radius] *:rounded-[--avatar-radius]'
-          : 'rounded-full *:rounded-full'
+        'rounded-full *:rounded-full'
       )}
     >
       {initials && (
@@ -54,8 +51,14 @@ export function Avatar({
           </text>
         </svg>
       )}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {src && <img className="size-full" src={src} alt={alt} />}
+      {src && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className="size-full rounded-full object-cover aspect-square"
+          src={src}
+          alt={alt}
+        />
+      )}
     </span>
   );
 }

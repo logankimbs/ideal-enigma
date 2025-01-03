@@ -33,7 +33,10 @@ export class UserService {
     });
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  // Called when user joins teams
+  async createAndSendWelcomeMessage(
+    createUserDto: CreateUserDto
+  ): Promise<User> {
     const team = await this.teamRepository.findOneOrFail({
       where: { id: createUserDto.team_id },
     });
@@ -42,8 +45,12 @@ export class UserService {
     user.id = createUserDto.id;
     user.data = createUserDto;
     user.team = team;
+    user.onboardCompletedAt = new Date();
+    // TODO: Need to address this later with settings page on dashboard.
+    user.notifications = true; // Notifications are enabled when a user is added to team after install.
 
-    return this.userRepository.save(user);
+    // TODO: Send welcome message to new user
+    return await this.userRepository.save(user);
   }
 
   async onboardUsers(members: Member[], team: Team): Promise<User[]> {

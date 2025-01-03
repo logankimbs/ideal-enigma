@@ -22,10 +22,11 @@ export class UserController {
     }
   }
 
+  // Called when user joins team after post install.
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      return await this.usersService.create(createUserDto);
+      return await this.usersService.createAndSendWelcomeMessage(createUserDto);
     } catch (error: unknown) {
       return `Unable to create user. ${error}`;
     }
