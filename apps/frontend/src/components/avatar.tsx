@@ -53,11 +53,7 @@ export function Avatar({
       )}
       {src && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          className="size-full rounded-full object-cover aspect-square"
-          src={src}
-          alt={alt}
-        />
+        <img className="size-full aspect-square" src={src} alt={alt} />
       )}
     </span>
   );
