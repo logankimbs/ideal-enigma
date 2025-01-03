@@ -71,7 +71,7 @@ export class SlackService {
     return { url };
   }
 
-  async sendWelcomeMessage(teamId: string) {
+  async sendWelcomeMessageToTeam(teamId: string) {
     const team = await this.teamService.find(teamId);
     const users = team.users.filter((user) => {
       return user.notifications === true;
