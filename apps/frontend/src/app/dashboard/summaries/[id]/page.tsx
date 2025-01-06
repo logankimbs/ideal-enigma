@@ -1,5 +1,6 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import {
+  Insight,
   SummaryActionV2,
   SummaryTextV1,
   SummaryTextV2,
@@ -148,9 +149,22 @@ const getImmediateActionsV2 = (actions: SummaryActionV2[]) => {
   );
 };
 
+function generateThemeMap(insights: Insight[]): Map<string, string> {
+  const themeMap = new Map<string, string>();
+
+  for (const insight of insights) {
+    insight.tags?.forEach((tag) => {
+      themeMap.set(tag.text, tag.id);
+    });
+  }
+
+  return themeMap;
+}
+
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
   const insights = await getInsightsInSummary(props.params.id);
+  const themes = generateThemeMap(insights);
 
   if (!summary) notFound();
   return (
@@ -184,13 +198,9 @@ export default async function Summary(props: SummaryProps) {
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              {insights.map(
-                (insight) =>
-                  insight.tags &&
-                  insight.tags.map((tag) => (
-                    <Badge key={tag.text}>{tag.text}</Badge>
-                  ))
-              )}
+              {Array.from(themes.entries()).map(([key, value]) => (
+                <Badge key={value}>{key}</Badge>
+              ))}
             </div>
           </div>
           <div>
