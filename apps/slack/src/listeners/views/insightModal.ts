@@ -1,102 +1,102 @@
-import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from "@slack/bolt";
-import { ModalView } from "@slack/types";
-import config from "../../config";
-import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from "../../constants";
-import { apiRequest } from "../../utils/apiRequest";
-import logger from "../../utils/logger";
+import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from '@slack/bolt';
+import { ModalView } from '@slack/types';
+import config from '../../config';
+import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from '../../constants';
+import { apiRequest } from '../../utils/apiRequest';
+import logger from '../../utils/logger';
 
 const getModalBlocks = () => [
   {
-    type: "section",
+    type: 'section',
     text: {
-      type: "mrkdwn",
+      type: 'mrkdwn',
       text: INSIGHT_MODAL_TEXTS.DESCRIPTION,
     },
   },
   {
-    type: "input",
-    block_id: "insight",
+    type: 'input',
+    block_id: 'insight',
     element: {
-      type: "plain_text_input",
+      type: 'plain_text_input',
       multiline: true,
-      action_id: "input",
+      action_id: 'input',
       placeholder: {
-        type: "plain_text",
+        type: 'plain_text',
         text: INSIGHT_MODAL_TEXTS.PLACEHOLDER,
       },
     },
     label: {
-      type: "plain_text",
-      text: "Share your insight",
+      type: 'plain_text',
+      text: 'Share your insight',
       emoji: true,
     },
   },
   {
-    type: "context",
+    type: 'context',
     elements: [
       {
-        type: "mrkdwn",
+        type: 'mrkdwn',
         text: INSIGHT_MODAL_TEXTS.HELP_TEXT,
       },
     ],
   },
   {
-    type: "input",
+    type: 'input',
     optional: true,
-    block_id: "tags",
+    block_id: 'tags',
     element: {
-      type: "plain_text_input",
-      action_id: "input",
+      type: 'plain_text_input',
+      action_id: 'input',
       placeholder: {
-        type: "plain_text",
+        type: 'plain_text',
         text: INSIGHT_MODAL_TEXTS.TAGS_PLACEHOLDER,
       },
     },
     label: {
-      type: "plain_text",
-      text: "Tag your insight",
+      type: 'plain_text',
+      text: 'Tag your insight with a theme',
       emoji: true,
     },
   },
   {
-    type: "context",
+    type: 'context',
     elements: [
       {
-        type: "mrkdwn",
+        type: 'mrkdwn',
         text: INSIGHT_MODAL_TEXTS.PRO_TIP,
       },
     ],
   },
   {
-    type: "input",
+    type: 'input',
     optional: true,
-    block_id: "link",
+    block_id: 'link',
     element: {
-      type: "plain_text_input",
-      action_id: "input",
+      type: 'plain_text_input',
+      action_id: 'input',
       placeholder: {
-        type: "plain_text",
+        type: 'plain_text',
         text: INSIGHT_MODAL_TEXTS.LINKS_PLACEHOLDER,
       },
     },
     label: {
-      type: "plain_text",
-      text: "Attach a link",
+      type: 'plain_text',
+      text: 'Attach a link',
       emoji: true,
     },
   },
 ];
 
 export const insightModal: ModalView = {
-  type: "modal",
+  type: 'modal',
   callback_id: SUBMIT_INSIGHT,
   title: {
-    type: "plain_text",
+    type: 'plain_text',
     text: INSIGHT_MODAL_TEXTS.TITLE,
   },
   blocks: getModalBlocks(),
   submit: {
-    type: "plain_text",
+    type: 'plain_text',
     text: INSIGHT_MODAL_TEXTS.SUBMIT_BUTTON,
   },
 };
@@ -111,16 +111,16 @@ const submitInsight = async ({
 
   try {
     const insight = view.state.values.insight.input.value!; // Required
-    const tags = view.state.values.tags.input.value || ""; // Optional
+    const tags = view.state.values.tags.input.value || ''; // Optional
     const link = view.state.values.link.input.value || undefined; // Optional
     const parsedTags = tags
-      .split(",")
+      .split(',')
       .map((tag) => tag.trim())
       .filter((tag) => tag);
 
     logger.info(`Saving insight for user ${body.user.id}`);
     await apiRequest({
-      method: "post",
+      method: 'post',
       url: `${config.apiUrl}/insights`,
       data: {
         userId: body.user.id,

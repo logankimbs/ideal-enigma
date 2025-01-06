@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import {
   SummaryActionV2,
   SummaryTextV1,
@@ -11,7 +10,6 @@ import { notFound } from 'next/navigation';
 import { Avatar } from '../../../../components/avatar';
 import { Badge } from '../../../../components/badge';
 import { Divider } from '../../../../components/divider';
-import { Link } from '../../../../components/link';
 import SummaryInsights from '../../../../components/summary-insights';
 import { getInsightsInSummary, getSummary } from '../../../libs/api';
 
@@ -156,13 +154,13 @@ export default async function Summary(props: SummaryProps) {
   return (
     <>
       <div className="mb-12">
-        <Link
-          href="/dashboard/summaries"
-          className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"
-        >
-          <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />
-          Summaries
-        </Link>
+        {/*<Link*/}
+        {/*  href="/dashboard/summaries"*/}
+        {/*  className="inline-flex items-center gap-2 text-sm/6 text-zinc-500 dark:text-zinc-400"*/}
+        {/*>*/}
+        {/*  <ChevronLeftIcon className="size-4 fill-zinc-400 dark:fill-zinc-500" />*/}
+        {/*  Summaries*/}
+        {/*</Link>*/}
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
           <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
@@ -195,12 +193,11 @@ export default async function Summary(props: SummaryProps) {
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950 dark:text-white">
-              {formatTitle(summary.startDate)} -{' '}
-              {formatTitle(summary.createdAt)}
+              December 16, 2024 - December 20, 2024
             </h1>
 
             <p className="text-base leading-loose mt-6 mb-10 text-zinc-500 dark:text-zinc-400">
-              {getIntro(insights.length)}
+              {getIntro(455)}
             </p>
 
             {summary.version === 1
