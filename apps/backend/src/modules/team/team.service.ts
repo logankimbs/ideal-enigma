@@ -29,25 +29,6 @@ export class TeamService {
   }
 
   async getTeamStats(teamId: string): Promise<TeamStats> {
-    return {
-      totalInsights: {
-        value: '500', // Adjusted for a slightly larger increase
-        change: '10.0', // Matches the rise in contributors
-      },
-      totalThemes: {
-        value: '50', // Slightly reduced to reflect focus
-        change: '-4.0', // Greater consolidation of themes
-      },
-      averageInsights: {
-        value: '2.75', // Adjusted to reflect the improved insights
-        change: '6.0', // A proportional increase
-      },
-      activeContributors: {
-        value: '275', // Remains unchanged
-        change: '10.0', // Significant boost in participation
-      },
-    };
-
     const query = getTeamStatsQuery();
     const stats: TeamStatsQuery[] = await this.teamRepository.query(query, [
       teamId,

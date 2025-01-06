@@ -19,7 +19,7 @@ export default async function RootLayout(props: RootLayoutProps) {
     <html
       lang="en"
       suppressHydrationWarning
-      className="bg-white dark:bg-zinc-900 dark:lg:bg-zinc-950"
+      className="bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
     >
       <head>
         <link
