@@ -9,7 +9,7 @@ export const INSIGHT_MODAL_TEXTS = {
   DESCRIPTION:
     'Your insights are invaluable. Share what you’ve learned to empower your team. Submit an insight and let’s achieve greatness together!',
   PLACEHOLDER:
-    'Try this format: I learned [x] by [doing y], so I suggest we [z], and therefore [e].',
+    'Try this format: I learned [x], by doing [y], therefore we should [z].',
   TAGS_PLACEHOLDER: 'e.g., marketing, launch, feedback',
   LINKS_PLACEHOLDER: 'e.g., https://google.com',
   HELP_TEXT: `💡 Need tips for impactful insights? <${process.env.FRONTEND_URL}/blog/unlocking-growth-the-secret-behind-impactful-insights|Click here>.`,

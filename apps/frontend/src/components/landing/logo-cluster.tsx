@@ -1,17 +1,16 @@
-'use client'
+'use client';
 
-import { clsx } from 'clsx'
-import { motion } from 'framer-motion'
-import { Mark } from './logo'
+import { clsx } from 'clsx';
+import { motion } from 'framer-motion';
 
 function Circle({
   size,
   delay,
   opacity,
 }: {
-  size: number
-  delay: number
-  opacity: string
+  size: number;
+  delay: number;
+  opacity: string;
 }) {
   return (
     <motion.div
@@ -32,11 +31,11 @@ function Circle({
       style={{ '--opacity': opacity } as React.CSSProperties}
       className={clsx(
         'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
-        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,_theme(colors.blue.500)_var(--opacity),transparent)_100%)]',
-        'ring-1 ring-inset ring-blue-500/[8%]',
+        'bg-[radial-gradient(circle,transparent_25%,color-mix(in_srgb,#b060ff_var(--opacity),transparent)_100%)]',
+        'ring-1 ring-inset ring-[#b060ff]/[8%]'
       )}
     />
-  )
+  );
 }
 
 function Circles() {
@@ -48,15 +47,15 @@ function Circles() {
       <Circle size={144} opacity="10%" delay={0} />
       <div className="absolute inset-0 bg-gradient-to-t from-white to-35%" />
     </div>
-  )
+  );
 }
 
 function MainLogo() {
   return (
-    <div className="absolute left-44 top-32 flex size-16 items-center justify-center rounded-full bg-white shadow ring-1 ring-black/5">
-      <Mark className="h-9 fill-black" />
+    <div className="absolute left-44 top-32 flex size-16 items-center justify-center rounded-full bg-white shadow ring-1 ring-[#ee87cb]/5">
+      <img src={'/logo-cluster/loop.svg'} className="fill-black" />
     </div>
-  )
+  );
 }
 
 function Logo({
@@ -65,10 +64,10 @@ function Logo({
   top,
   hover,
 }: {
-  src: string
-  left: number
-  top: number
-  hover: { x: number; y: number; rotate: number; delay: number }
+  src: string;
+  left: number;
+  top: number;
+  hover: { x: number; y: number; rotate: number; delay: number };
 }) {
   return (
     <motion.img
@@ -92,7 +91,7 @@ function Logo({
       style={{ left, top } as React.CSSProperties}
       className="absolute size-16 rounded-full bg-white shadow ring-1 ring-black/5"
     />
-  )
+  );
 }
 
 export function LogoCluster() {
@@ -102,42 +101,42 @@ export function LogoCluster() {
       <div className="absolute left-1/2 h-full w-[26rem] -translate-x-1/2">
         <MainLogo />
         <Logo
-          src="/logo-cluster/career-builder.svg"
+          src="/logo-cluster/elliot-harper.png"
           left={360}
           top={144}
           hover={{ x: 6, y: 1, rotate: 5, delay: 0.38 }}
         />
         <Logo
-          src="/logo-cluster/dribbble.svg"
+          src="/logo-cluster/marcia-corwin.png"
           left={285}
           top={20}
           hover={{ x: 4, y: -5, rotate: 6, delay: 0.3 }}
         />
         <Logo
-          src="/logo-cluster/glassdoor.svg"
+          src="/logo-cluster/lucas-caldwell.png"
           left={255}
           top={210}
           hover={{ x: 3, y: 5, rotate: 7, delay: 0.2 }}
         />
         <Logo
-          src="/logo-cluster/linkedin.svg"
+          src="/logo-cluster/lily-everett.png"
           left={144}
           top={40}
           hover={{ x: -2, y: -5, rotate: -6, delay: 0.15 }}
         />
         <Logo
-          src="/logo-cluster/upwork.svg"
+          src="/logo-cluster/domenic-hahn.png"
           left={36}
           top={56}
           hover={{ x: -4, y: -5, rotate: -6, delay: 0.35 }}
         />
         <Logo
-          src="/logo-cluster/we-work-remotely.svg"
+          src="/logo-cluster/elyssa-zulauf.png"
           left={96}
           top={176}
           hover={{ x: -3, y: 5, rotate: 3, delay: 0.15 }}
         />
       </div>
     </div>
-  )
+  );
 }

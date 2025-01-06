@@ -3,10 +3,8 @@ import { Button } from '../components/landing/button';
 import { Container } from '../components/landing/container';
 import { Footer } from '../components/landing/footer';
 import { Gradient } from '../components/landing/gradient';
-import { Keyboard } from '../components/landing/keyboard';
 import { LogoCloud } from '../components/landing/logo-cloud';
 import { LogoCluster } from '../components/landing/logo-cluster';
-import { Map } from '../components/landing/map';
 import { Navbar } from '../components/landing/navbar';
 import { Screenshot } from '../components/landing/screenshot';
 import { Heading, Subheading } from '../components/landing/text';
@@ -82,7 +80,7 @@ function BentoSection() {
           title="Effortlessly capture employee insights"
           description="Loop seamlessly integrates with your team communication tool, making it easy to capture, organize, and share valuable insights across your team."
           graphic={
-            <div className="h-80 bg-[url(/screenshots/profile.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
+            <div className="h-80 bg-[url(/screenshots/slack-message.png)] bg-[size:1000px_560px] bg-[left_-109px_top_-112px] bg-no-repeat" />
           }
           fade={['bottom']}
           className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
@@ -92,7 +90,7 @@ function BentoSection() {
           title="Valuable information all in one place"
           description="Consolidate your team’s insights into a unified, searchable repository, ensuring knowledge is always at your fingertips."
           graphic={
-            <div className="absolute inset-0 bg-[url(/screenshots/competitors.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
+            <div className="absolute inset-0 bg-[url(/screenshots/repository.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
           }
           fade={['bottom']}
           className="lg:col-span-3 lg:rounded-tr-4xl"
@@ -102,10 +100,9 @@ function BentoSection() {
           title="Create actionable summaries based on employee insights"
           description="Loop leverages AI to transform submitted insights into actionable summaries, tailored for employees at all levels to quickly understand."
           graphic={
-            <div className="flex size-full pl-10 pt-10">
-              <Keyboard highlighted={['LeftCommand', 'LeftShift', 'D']} />
-            </div>
+            <div className="absolute inset-0 bg-[url(/screenshots/summary.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
           }
+          fade={['bottom']}
           className="lg:col-span-2 lg:rounded-bl-4xl"
         />
         <BentoCard
@@ -119,7 +116,10 @@ function BentoSection() {
           eyebrow="Cultivate"
           title="Enable your team to operate with curiosity"
           description="Accelerate your team's growth by inspiring employees to lead with curiosity at the heart of their work."
-          graphic={<Map />}
+          graphic={
+            <div className="absolute inset-0 bg-[url(/screenshots/analytics.png)] bg-[size:1100px_650px] bg-[left_-38px_top_-73px] bg-no-repeat" />
+          }
+          fade={['bottom']}
           className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
         />
       </div>
