@@ -166,10 +166,10 @@ function getUniqueUsers(insights: Insight[]): User[] {
   const userMap = new Map<string, User>();
 
   for (const insight of insights) {
-    userMap.set(insight.user.id, insight.user); // Use `id` as the unique key
+    userMap.set(insight.user.id, insight.user);
   }
 
-  return Array.from(userMap.values()); // Return the unique users
+  return Array.from(userMap.values());
 }
 
 export default async function Summary(props: SummaryProps) {
