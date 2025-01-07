@@ -1,15 +1,12 @@
 import { User } from '@ideal-enigma/common';
-import React from 'react';
 import { Avatar } from './avatar';
 
 interface AvatarGroupProps {
   users: User[];
   max?: number;
-  avatarClassName?: string; // Optional class for individual avatar styling
-  containerClassName?: string; // Optional class for container styling
 }
 
-const AvatarGroup: React.FC<AvatarGroupProps> = ({ users, max = 4 }) => {
+export function AvatarGroup({ users, max = 4 }: AvatarGroupProps) {
   return (
     <div className="flex items-center justify-center -space-x-2">
       {users.slice(0, max).map((user, index) => (
@@ -29,6 +26,4 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({ users, max = 4 }) => {
       )}
     </div>
   );
-};
-
-export default AvatarGroup;
+}

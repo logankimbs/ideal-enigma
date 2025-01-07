@@ -10,7 +10,8 @@ import {
 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import AvatarGroup from '../../../../components/avatar-group';
+
+import { AvatarGroup } from '../../../../components/avatar-group';
 import { BadgeGroup } from '../../../../components/badge-group';
 import { Divider } from '../../../../components/divider';
 import { Link } from '../../../../components/link';
@@ -193,9 +194,7 @@ export default async function Summary(props: SummaryProps) {
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
           <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
             <AvatarGroup users={users} />
-            <div className="flex flex-wrap gap-2">
-              <BadgeGroup values={themes} />
-            </div>
+            <BadgeGroup values={themes} />
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950 dark:text-white">
