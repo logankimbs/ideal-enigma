@@ -36,26 +36,23 @@ export function getUserStatsQuery(): string {
            streak_groups as ( select week_start,
                                      insight_count,
                                      tag_count,
-                                     sum(case when insight_count = 0 then 1 else 0 end)
-                                     over (order by week_start rows between unbounded preceding and current row) as streak_group
+                                     case when insight_count > 0 then 0
+                                          else row_number() over (order by week_start) end as reset_flag
                               from weekly_data ),
+           streak_calculation as ( select week_start,
+                                          insight_count,
+                                          tag_count,
+                                          sum(case when reset_flag > 0 then 1 else 0 end) over (order by week_start) as streak_group
+                                   from streak_groups ),
            streaks as ( select week_start,
                                insight_count,
                                tag_count,
-                               case when week_start = date_trunc('week', current_date) then 0
-                                    when insight_count > 0
-                                        then row_number() over (partition by streak_group order by week_start) - 1
+                               case when insight_count > 0
+                                        then row_number() over (partition by streak_group order by week_start)
                                     else 0 end as streak
-                        from streak_groups ),
-           final_streaks as ( select week_start,
-                                     insight_count,
-                                     tag_count,
-                                     case when streak is null
-                                              then ( select max(streak) from streaks where streak is not null )
-                                          else streak end as streak
-                              from streaks )
+                        from streak_calculation )
       select week_start, insight_count, tag_count, streak
-      from final_streaks
+      from streaks
       order by week_start desc;
   `;
 }
