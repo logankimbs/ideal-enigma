@@ -26,15 +26,20 @@ export class InsightService {
 
     let tags: Tag[] = [];
     if (createInsightDto.tags && createInsightDto.tags.length > 0) {
+      // Convert all tags to lowercase
+      const normalizedTags = createInsightDto.tags.map((tagText) =>
+        tagText.toLowerCase()
+      );
+
       const existingTags = await this.tagRepository.find({
-        where: createInsightDto.tags.map((tagText) => ({ text: tagText })),
+        where: normalizedTags.map((tagText) => ({ text: tagText })),
       });
 
       // Create a Set of existing tag for quick lookup
       const existingTagTexts = new Set(existingTags.map((tag) => tag.text));
 
       // Identify tags that don't exist yet
-      const newTagsData = createInsightDto.tags
+      const newTagsData = normalizedTags
         .filter((tagText) => !existingTagTexts.has(tagText))
         .map((tagText) => this.tagRepository.create({ text: tagText }));
 

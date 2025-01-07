@@ -1,15 +1,17 @@
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
 import {
+  Insight,
   SummaryActionV2,
   SummaryTextV1,
   SummaryTextV2,
   SummaryThemeV1,
   SummaryThemeV2,
+  User,
 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Avatar } from '../../../../components/avatar';
-import { Badge } from '../../../../components/badge';
+import { AvatarGroup } from '../../../../components/avatar-group';
+import { BadgeGroup } from '../../../../components/badge-group';
 import { Divider } from '../../../../components/divider';
 import { Link } from '../../../../components/link';
 import SummaryInsights from '../../../../components/summary-insights';
@@ -148,9 +150,33 @@ const getImmediateActionsV2 = (actions: SummaryActionV2[]) => {
   );
 };
 
+function getUniqueThemeValues(insights: Insight[]): string[] {
+  const themeSet = new Set<string>();
+
+  for (const insight of insights) {
+    insight.tags?.forEach((tag) => {
+      themeSet.add(tag.text);
+    });
+  }
+
+  return Array.from(themeSet);
+}
+
+function getUniqueUsers(insights: Insight[]): User[] {
+  const userMap = new Map<string, User>();
+
+  for (const insight of insights) {
+    userMap.set(insight.user.id, insight.user);
+  }
+
+  return Array.from(userMap.values());
+}
+
 export default async function Summary(props: SummaryProps) {
   const summary = await getSummary(props.params.id);
   const insights = await getInsightsInSummary(props.params.id);
+  const themes = getUniqueThemeValues(insights);
+  const users = getUniqueUsers(insights);
 
   if (!summary) notFound();
   return (
@@ -166,32 +192,8 @@ export default async function Summary(props: SummaryProps) {
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
           <div className="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
-            <div>
-              <div className="flex items-center justify-center -space-x-2">
-                {[
-                  ...new Map(
-                    insights.map((insight) => [insight.user.id, insight])
-                  ).values(),
-                ]
-                  .slice(0, 4)
-                  .map((uniqueInsight, index) => (
-                    <Avatar
-                      key={index}
-                      src={uniqueInsight.user.data.profile.image_72}
-                      className="size-8 ring-2 ring-white dark:ring-zinc-900"
-                    />
-                  ))}
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {insights.map(
-                (insight) =>
-                  insight.tags &&
-                  insight.tags.map((tag) => (
-                    <Badge key={tag.text}>{tag.text}</Badge>
-                  ))
-              )}
-            </div>
+            <AvatarGroup users={users} />
+            <BadgeGroup values={themes} />
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-zinc-950 dark:text-white">

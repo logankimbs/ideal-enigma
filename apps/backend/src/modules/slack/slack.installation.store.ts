@@ -13,7 +13,7 @@ import {
 import { InstallationService } from '../installation/installation.service';
 import { TeamService } from '../team/team.service';
 import { UserService } from '../user/user.service';
-import { hasAdminPrivileges, isMemberBot } from './slack.utils';
+import { hasAdminPrivileges, isBotOrDeletedMember } from './slack.utils';
 
 @Injectable()
 export class SlackInstallationStore implements InstallationStore {
@@ -52,7 +52,9 @@ export class SlackInstallationStore implements InstallationStore {
     // users will be onboarded (won't see onboard module on frontend). Only the
     // installer will see the onboarding module.
     const users = usersList.members.filter((member) => {
-      return !isMemberBot(member) && member.id !== installation.user.id;
+      return (
+        !isBotOrDeletedMember(member) && member.id !== installation.user.id
+      );
     });
 
     await this.installationService.create(installation);
