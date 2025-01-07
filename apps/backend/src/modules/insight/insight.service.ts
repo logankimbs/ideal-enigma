@@ -31,12 +31,11 @@ export class InsightService {
         tagText.toLowerCase()
       );
 
-      // Find existing tags using normalized values
       const existingTags = await this.tagRepository.find({
         where: normalizedTags.map((tagText) => ({ text: tagText })),
       });
 
-      // Create a Set of existing tag texts for quick lookup
+      // Create a Set of existing tag for quick lookup
       const existingTagTexts = new Set(existingTags.map((tag) => tag.text));
 
       // Identify tags that don't exist yet

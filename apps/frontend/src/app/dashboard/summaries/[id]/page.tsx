@@ -10,7 +10,6 @@ import {
 } from '@ideal-enigma/common';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-
 import { AvatarGroup } from '../../../../components/avatar-group';
 import { BadgeGroup } from '../../../../components/badge-group';
 import { Divider } from '../../../../components/divider';
