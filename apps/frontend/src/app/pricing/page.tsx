@@ -159,9 +159,9 @@ function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
             )}
           </div>
           <div className="mt-8">
-            <h3 className="text-sm/6 font-medium text-gray-950">
-              Start selling with:
-            </h3>
+            {/*<h3 className="text-sm/6 font-medium text-gray-950">*/}
+            {/*  Start selling with:*/}
+            {/*</h3>*/}
             <ul className="mt-3 space-y-3">
               {tier.highlights.map((props, featureIndex) => (
                 <FeatureItem key={featureIndex} {...props} />
@@ -547,8 +547,8 @@ export default function Pricing({
       <Container>
         <Navbar
           banner={
-            <div className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
-              Currently testing in beta
+            <div className="flex items-center gap-1 rounded-full bg-[#b060ff] px-3 py-0.5 text-sm/6 font-medium text-white data-[hover]:bg-fuchsia-950/30">
+              Beta
             </div>
           }
         />
