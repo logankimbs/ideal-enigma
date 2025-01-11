@@ -1,3 +1,5 @@
+import { User } from '@ideal-enigma/common';
+
 interface ApiRequestOptions<TBody = unknown> {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   path: string;
@@ -28,10 +30,18 @@ async function gateway<T>(options: ApiRequestOptions): Promise<T> {
 }
 
 export async function validateSlackLoginCode(code: string) {
-  return await gateway({
+  return await gateway<{ url: string }>({
     method: 'POST',
     path: 'slack/login',
     body: { code },
+  });
+}
+
+export async function slackLogin(code: string, state: string) {
+  return await gateway<{ accessToken: string; user: User }>({
+    method: 'POST',
+    path: 'slack/login2',
+    body: { code, state },
   });
 }
 
