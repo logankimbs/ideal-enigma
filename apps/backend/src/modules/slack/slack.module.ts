@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from '../auth/auth.module';
 import { InstallationModule } from '../installation/installation.module';
 import { TeamModule } from '../team/team.module';
 import { UserModule } from '../user/user.module';
@@ -11,6 +12,7 @@ import { SlackService } from './slack.service';
 @Module({
   imports: [
     InstallationModule,
+    AuthModule,
     TeamModule,
     UserModule,
     JwtModule.registerAsync({

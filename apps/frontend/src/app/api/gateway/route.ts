@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 interface GatewayRequest {
@@ -20,21 +19,18 @@ export async function POST(req: Request) {
 
   const cookieStore = cookies();
   const token = cookieStore.get('access_token');
-
-  if (!token) redirect('');
+  const input = `${process.env.BACKEND_URL}/${path}`;
+  const init = {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token.value}` }),
+      ...req.headers,
+    },
+    body: body ? body : undefined,
+  } as RequestInit;
 
   try {
-    const input = `${process.env.BACKEND_URL}/${path}`;
-    const init = {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.value}`,
-        ...req.headers,
-      },
-      body: body ? body : undefined,
-    } as RequestInit;
-
     const response = await fetch(input, init);
     const data = await response.json();
 

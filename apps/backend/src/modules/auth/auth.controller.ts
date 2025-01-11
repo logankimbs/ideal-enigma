@@ -4,22 +4,28 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Query,
   Redirect,
 } from '@nestjs/common';
+import { Public } from '../../common/constants';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
 import { SlackCallbackDto } from './dto/slack-callback.dto';
 import { ValidateTokenDto } from './dto/validate-token.dto';
-import { Public } from '../../common/constants';
 
 const frontend_url = process.env.FRONTEND_URL;
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Get('code/:userId')
+  async generateLoginCode(@Param('userId') userId: string) {
+    return await this.authService.generateLoginCode(userId);
+  }
 
   @Public()
   @HttpCode(HttpStatus.OK)

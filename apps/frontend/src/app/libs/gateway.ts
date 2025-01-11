@@ -7,7 +7,7 @@ interface ApiRequestOptions<TBody = unknown> {
 
 async function gateway<T>(options: ApiRequestOptions): Promise<T> {
   const { method, path, headers, body } = options;
-  const input = '/api/gateway';
+  const input = `${process.env.FRONTEND_URL}/api/gateway`;
   const init: RequestInit = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...headers },
@@ -25,6 +25,14 @@ async function gateway<T>(options: ApiRequestOptions): Promise<T> {
     console.error(`Gateway request failed: ${error}`);
     throw error;
   }
+}
+
+export async function validateSlackLoginCode(code: string) {
+  return await gateway({
+    method: 'POST',
+    path: 'slack/login',
+    body: { code },
+  });
 }
 
 export async function enableNotifications(userIds: string[]) {

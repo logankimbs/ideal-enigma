@@ -1,3 +1,4 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { Config } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
@@ -23,7 +24,14 @@ const Modules = [
 ];
 
 @Module({
-  imports: [Config, DatabaseModule, ...Modules],
+  imports: [
+    Config,
+    DatabaseModule,
+    ...Modules,
+    CacheModule.register({
+      isGlobal: true,
+    }),
+  ],
   providers: [{ provide: 'APP_GUARD', useClass: AuthGuard }],
 })
 export class AppModule {}

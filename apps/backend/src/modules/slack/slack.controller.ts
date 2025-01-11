@@ -16,6 +16,12 @@ export class SlackController {
   constructor(private readonly slackService: SlackService) {}
 
   @Public()
+  @Post('login')
+  async login(@Body('code') code: string) {
+    return await this.slackService.handleLogin(code);
+  }
+
+  @Public()
   @Get('install')
   async install(@Req() req: IncomingMessage, @Res() res: ServerResponse) {
     return await this.slackService.handleInstall(req, res);

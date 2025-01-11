@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CodedError, Installation, InstallProvider } from '@slack/oauth';
 import { WebClient } from '@slack/web-api';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -6,19 +7,28 @@ import {
   EnterpriseInstallError,
   UnauthorizedInstallError,
 } from '../../common/errors';
+import { AuthService } from '../auth/auth.service';
 import { InstallationService } from '../installation/installation.service';
 import { TeamService } from '../team/team.service';
+import { UserService } from '../user/user.service';
 import { createWelcomeMessage } from './messages/globals';
 import { SlackInstallationStore } from './slack.installation.store';
+
+const backend_url = process.env.BACKEND_URL;
+const slack_callback_path = '/auth/slack/callback';
+const redirect_uri = backend_url + slack_callback_path;
 
 @Injectable()
 export class SlackService {
   private installer: InstallProvider;
 
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly slackInstallationStore: SlackInstallationStore,
     private readonly teamService: TeamService,
-    private readonly installationService: InstallationService
+    private readonly installationService: InstallationService,
+    private readonly authService: AuthService,
+    private readonly userService: UserService
   ) {
     this.installer = new InstallProvider({
       clientId: process.env.SLACK_CLIENT_ID,
@@ -32,6 +42,34 @@ export class SlackService {
         redirectUri: `${process.env.BACKEND_URL}/slack/install/callback`,
       },
     });
+  }
+
+  async handleLogin(code: string) {
+    const userId = await this.cacheManager.get<string>(code);
+    if (!userId) return { status: 'fail' };
+
+    return this.getLoginUrl(userId);
+  }
+
+  async getLoginUrl(userId: string) {
+    const user = await this.userService.findOne(userId);
+
+    if (!user) throw new UnauthorizedException();
+
+    const url = new URL('https://slack.com/openid/connect/authorize');
+    const params = new URLSearchParams({
+      response_type: 'code',
+      scope: ['openid', 'profile', 'email'].join(' '),
+      client_id: process.env.SLACK_CLIENT_ID,
+      state: process.env.SLACK_STATE_SECRET,
+      team: user.team.id,
+      nonce: process.env.SLACK_NONCE,
+      redirect_uri: redirect_uri,
+    });
+
+    url.search = params.toString();
+
+    return { url: url.toString() };
   }
 
   async handleInstall(req: IncomingMessage, res: ServerResponse) {
