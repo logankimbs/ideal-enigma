@@ -22,6 +22,12 @@ export class SlackController {
   }
 
   @Public()
+  @Post('login2')
+  async login2(@Body() { code, state }: { code: string; state: string }) {
+    return await this.slackService.handleLogin2(code, state);
+  }
+
+  @Public()
   @Get('install')
   async install(@Req() req: IncomingMessage, @Res() res: ServerResponse) {
     return await this.slackService.handleInstall(req, res);

@@ -14,12 +14,13 @@ import { UserService } from '../user/user.service';
 import { createWelcomeMessage } from './messages/globals';
 import { SlackInstallationStore } from './slack.installation.store';
 
-const backend_url = process.env.BACKEND_URL;
-const slack_callback_path = '/auth/slack/callback';
-const redirect_uri = backend_url + slack_callback_path;
+const slack_callback_path = '/api/auth/callback/slack';
+const frontend_url = process.env.FRONTEND_URL;
+const redirect_uri = frontend_url + slack_callback_path;
 
 @Injectable()
 export class SlackService {
+  private client: WebClient;
   private installer: InstallProvider;
 
   constructor(
@@ -30,6 +31,7 @@ export class SlackService {
     private readonly authService: AuthService,
     private readonly userService: UserService
   ) {
+    this.client = new WebClient();
     this.installer = new InstallProvider({
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
@@ -49,6 +51,36 @@ export class SlackService {
     if (!userId) return { status: 'fail' };
 
     return this.getLoginUrl(userId);
+  }
+
+  async handleLogin2(code: string, state: string) {
+    const token = await this.client.openid.connect.token({
+      client_id: process.env.SLACK_CLIENT_ID,
+      client_secret: process.env.SLACK_CLIENT_SECRET,
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri,
+    });
+
+    let userAccessToken = token.access_token;
+
+    if (token.refresh_token) {
+      const refreshedToken = await this.client.openid.connect.token({
+        client_id: process.env.SLACK_CLIENT_ID,
+        client_secret: process.env.SLACK_CLIENT_SECRET,
+        grant_type: 'refresh_token',
+        refresh_token: token.refresh_token,
+      });
+
+      userAccessToken = refreshedToken.access_token;
+    }
+
+    const tokenWiredClient = new WebClient(userAccessToken);
+    const userInfo = await tokenWiredClient.openid.connect.userInfo();
+    const accessToken = await this.authService.sign(userInfo);
+    const user = await this.userService.findOne(userInfo.sub);
+
+    return { accessToken, user };
   }
 
   async getLoginUrl(userId: string) {
