@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import { Config } from "./types";
+import dotenv from 'dotenv';
+import { Config } from './types';
 
 dotenv.config();
 
@@ -10,6 +10,7 @@ const getConfig = () => {
 
   config = {
     apiUrl: process.env.BACKEND_URL || 'http://localhost:4000',
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
     nodeEnv: process.env.NODE_ENV || 'development',
     isDev: process.env.NODE_ENV === 'development',
     port: process.env.SLACK_PORT || process.env.PORT || '8080',

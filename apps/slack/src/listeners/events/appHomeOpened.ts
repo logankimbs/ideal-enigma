@@ -6,12 +6,15 @@ import {
   OPEN_INSIGHT_MODAL,
   VISIT_DASHBOARD,
 } from '../../constants';
+import { apiRequest } from '../../utils/apiRequest';
 
-const getHomeViewBlocks = (event: any) => {
-  const slackAuthUrl = new URL(`${config.apiUrl}/auth/slack`);
-  const params = { user: event.user };
+const getHomeViewBlocks = (event: any, code: string) => {
+  const slackAuthUrl = new URL(`${config.frontendUrl}/api/login/slack`);
+  const params = { code: code };
 
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
+
+  console.log(slackAuthUrl.toString());
 
   return [
     {
@@ -189,12 +192,23 @@ const appHomeOpened = async ({
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<'app_home_opened'>) => {
   if (event.tab !== 'home') return;
 
+  let code = '1234'; // some bunk code that wont work
+
+  try {
+    code = await apiRequest<string>({
+      method: 'get',
+      url: `${config.apiUrl}/auth/code/${event.user}`,
+    });
+  } catch (error) {
+    console.error('Error getting auth code:', error);
+  }
+
   try {
     await client.views.publish({
       user_id: event.user,
       view: {
         type: 'home',
-        blocks: getHomeViewBlocks(event),
+        blocks: getHomeViewBlocks(event, code),
       },
     });
   } catch (error) {

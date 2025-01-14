@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class LoginSlackUser {
+export class Login {
   @IsNotEmpty()
   @IsString()
   code: string;

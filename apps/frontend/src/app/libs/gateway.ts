@@ -1,3 +1,5 @@
+import { LoginResponse } from '@ideal-enigma/common';
+
 interface ApiRequestOptions<TBody = unknown> {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   path: string;
@@ -7,7 +9,7 @@ interface ApiRequestOptions<TBody = unknown> {
 
 async function gateway<T>(options: ApiRequestOptions): Promise<T> {
   const { method, path, headers, body } = options;
-  const input = '/api/gateway';
+  const input = `${process.env.FRONTEND_URL}/api/gateway`;
   const init: RequestInit = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...headers },
@@ -25,6 +27,21 @@ async function gateway<T>(options: ApiRequestOptions): Promise<T> {
     console.error(`Gateway request failed: ${error}`);
     throw error;
   }
+}
+
+export async function validateCode(code: string) {
+  return await gateway<{ url: string }>({
+    method: 'GET',
+    path: `auth/code/validate/${code}`,
+  });
+}
+
+export async function loginUser(code: string, state: string) {
+  return await gateway<LoginResponse>({
+    method: 'POST',
+    path: 'slack/login',
+    body: { code, state },
+  });
 }
 
 export async function enableNotifications(userIds: string[]) {

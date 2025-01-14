@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Public } from '../../common/constants';
+import { Login } from './dto/login.dto';
 import { SlackService } from './slack.service';
 
 @Controller('slack')
@@ -29,6 +30,12 @@ export class SlackController {
     @Res() res: ServerResponse
   ) {
     return await this.slackService.handleInstallRedirect(req, res);
+  }
+
+  @Public()
+  @Post('login')
+  async login(@Body() { code, state }: Login) {
+    return await this.slackService.handleLogin(code, state);
   }
 
   @Post('message/welcome')

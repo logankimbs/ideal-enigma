@@ -1,4 +1,7 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { Config } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 import { AuthGuard } from './modules/auth/auth.guard';
@@ -23,7 +26,22 @@ const Modules = [
 ];
 
 @Module({
-  imports: [Config, DatabaseModule, ...Modules],
+  imports: [
+    Config,
+    DatabaseModule,
+    CacheModule.register({
+      isGlobal: true,
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('jwtSecret'),
+        signOptions: { expiresIn: '1d' },
+      }),
+    }),
+    ...Modules,
+  ],
   providers: [{ provide: 'APP_GUARD', useClass: AuthGuard }],
 })
 export class AppModule {}

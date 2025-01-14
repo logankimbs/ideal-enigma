@@ -65,6 +65,7 @@ export interface IMessage {
 
 export type Config = {
   apiUrl: string;
+  frontendUrl: string;
   nodeEnv: string;
   isDev: boolean;
   port: string;
