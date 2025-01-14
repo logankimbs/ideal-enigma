@@ -9,23 +9,12 @@ import {
 } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Public } from '../../common/constants';
+import { Login } from './dto/login.dto';
 import { SlackService } from './slack.service';
 
 @Controller('slack')
 export class SlackController {
   constructor(private readonly slackService: SlackService) {}
-
-  @Public()
-  @Post('login')
-  async login(@Body('code') code: string) {
-    return await this.slackService.handleLogin(code);
-  }
-
-  @Public()
-  @Post('login2')
-  async login2(@Body() { code, state }: { code: string; state: string }) {
-    return await this.slackService.handleLogin2(code, state);
-  }
 
   @Public()
   @Get('install')
@@ -41,6 +30,12 @@ export class SlackController {
     @Res() res: ServerResponse
   ) {
     return await this.slackService.handleInstallRedirect(req, res);
+  }
+
+  @Public()
+  @Post('login')
+  async login(@Body() { code, state }: Login) {
+    return await this.slackService.handleLogin(code, state);
   }
 
   @Post('message/welcome')

@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import { GradientBackground } from '../../../components/landing/gradient';
 import { Heading, Lead, Subheading } from '../../../components/landing/text';
-import { validateSlackLoginCode } from '../../libs/gateway';
 
 type SlackLoginProps = {
   searchParams: Promise<{ code: string }>;
@@ -9,10 +8,10 @@ type SlackLoginProps = {
 
 export default async function SlackLogin({ searchParams }: SlackLoginProps) {
   const { code } = await searchParams;
-  if (!code) redirect('/');
 
-  const response = await validateSlackLoginCode(code);
-  console.log('response', response);
+  if (!code) {
+    redirect('/');
+  }
 
   return (
     <main className="overflow-hidden bg-white">

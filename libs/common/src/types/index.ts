@@ -1,3 +1,5 @@
+import { User } from '../entities';
+
 export type Stat = {
   value: string;
   change: string;
@@ -15,4 +17,9 @@ export type TeamStats = {
   totalThemes: Stat;
   averageInsights: Stat;
   activeContributors: Stat;
+};
+
+export type LoginResponse = {
+  token: string;
+  user: User;
 };

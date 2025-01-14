@@ -9,7 +9,7 @@ import {
 import { apiRequest } from '../../utils/apiRequest';
 
 const getHomeViewBlocks = (event: any, code: string) => {
-  const slackAuthUrl = new URL(`${config.frontendUrl}/slack/login`);
+  const slackAuthUrl = new URL(`${config.frontendUrl}/api/login/slack`);
   const params = { code: code };
 
   slackAuthUrl.search = new URLSearchParams({ ...params }).toString();
@@ -192,10 +192,16 @@ const appHomeOpened = async ({
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<'app_home_opened'>) => {
   if (event.tab !== 'home') return;
 
-  const code = await apiRequest<string>({
-    method: 'get',
-    url: `${config.apiUrl}/auth/code/${event.user}`,
-  });
+  let code = '1234'; // some bunk code that wont work
+
+  try {
+    code = await apiRequest<string>({
+      method: 'get',
+      url: `${config.apiUrl}/auth/code/${event.user}`,
+    });
+  } catch (error) {
+    console.error('Error getting auth code:', error);
+  }
 
   try {
     await client.views.publish({
