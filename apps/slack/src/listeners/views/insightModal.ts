@@ -2,6 +2,7 @@ import { AllMiddlewareArgs, SlackViewMiddlewareArgs } from '@slack/bolt';
 import { ModalView } from '@slack/types';
 import config from '../../config';
 import { INSIGHT_MODAL_TEXTS, SUBMIT_INSIGHT } from '../../constants';
+import { insightMessage } from '../../messages/insightMessage';
 import { apiRequest } from '../../utils/apiRequest';
 import logger from '../../utils/logger';
 
@@ -112,11 +113,20 @@ const submitInsight = async ({
   try {
     const insight = view.state.values.insight.input.value!; // Required
     const tags = view.state.values.tags.input.value || ''; // Optional
-    const link = view.state.values.link.input.value || undefined; // Optional
+    let link = view.state.values.link.input.value || undefined; // Optional
     const parsedTags = tags
       .split(',')
-      .map((tag) => tag.trim())
+      .map((tag) => tag.trim().toLowerCase())
       .filter((tag) => tag);
+
+    // validate link
+    if (link) {
+      try {
+        new URL(link);
+      } catch {
+        link = undefined;
+      }
+    }
 
     logger.info(`Saving insight for user ${body.user.id}`);
     await apiRequest({
@@ -135,9 +145,10 @@ const submitInsight = async ({
     await client.chat.postMessage({
       channel: body.user.id,
       text: `${insight}`,
+      blocks: insightMessage(insight, parsedTags, link),
     });
   } catch (error) {
-    logger.error(`Error submiting insight for user ${body.user.id}: ${error}`);
+    logger.error(`Error submitting insight for user ${body.user.id}: ${error}`);
   }
 };
 
