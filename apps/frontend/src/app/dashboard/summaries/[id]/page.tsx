@@ -94,8 +94,8 @@ const getKeyThemesV2 = (themes: SummaryThemeV2[]) => {
           {/*    </strong>*/}
           {/*  </p>*/}
           {/*  <ul className="list-inside mb-10">*/}
-          {/*    {theme.insights.map((insight, index) => (*/}
-          {/*      <li key={index}>{insight.origin.text}</li>*/}
+          {/*    {theme.insights.map((insights, index) => (*/}
+          {/*      <li key={index}>{insights.origin.text}</li>*/}
           {/*    ))}*/}
           {/*  </ul>*/}
           {/*</div>*/}

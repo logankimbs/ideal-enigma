@@ -8,12 +8,12 @@ import {
   Query,
   Redirect,
 } from '@nestjs/common';
+import { Public } from '../../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
 import { SlackCallbackDto } from './dto/slack-callback.dto';
 import { ValidateTokenDto } from './dto/validate-token.dto';
-import { Public } from '../../common/constants';
 
 const frontend_url = process.env.FRONTEND_URL;
 

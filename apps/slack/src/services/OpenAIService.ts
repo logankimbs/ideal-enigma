@@ -11,7 +11,7 @@ const InsightSchema = z.object({
   origin: z.object({
     id: z.string(),
     userId: z.string(),
-    // insight: z.string(),
+    // insights: z.string(),
     text: z.string(),
   }),
   // interpretation: z.string(),
@@ -27,7 +27,7 @@ const ThemeSchema = z.object({
   objective: z.string(),
   themeSummary: z.string(),
   // trend: z.string(),
-  // insight: InsightSchema,
+  // insights: InsightSchema,
   insights: z.array(InsightSchema),
   action: z.string(),
   responsibility: z.string(),
@@ -60,7 +60,7 @@ export class OpenAIService {
       const origins = insights.map((insight) => ({
         id: insight.id,
         userId: insight.user.id,
-        // insight: insight.text,
+        // insights: insights.text,
         text: insight.text,
       }));
 

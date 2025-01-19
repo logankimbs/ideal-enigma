@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createSession } from '../../../libs/session';
 
 export async function GET(request: NextRequest) {
-  console.log('this is comeing from a fresh installation');
+  console.log('this is comeing from a fresh installations');
   const accessToken = request.nextUrl.searchParams.get('access_token');
 
   if (!accessToken) {

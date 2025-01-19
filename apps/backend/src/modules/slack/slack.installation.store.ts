@@ -9,18 +9,21 @@ import {
   EnterpriseInstallError,
   InstallExistsError,
   UnauthorizedInstallError,
-} from '../../common/errors';
-import { InstallationService } from '../installation/installation.service';
-import { TeamService } from '../team/team.service';
-import { UserService } from '../user/user.service';
-import { hasAdminPrivileges, isBotOrDeletedMember } from './slack.utils';
+} from '../../common/exceptions/install.exceptions';
+import {
+  hasAdminPrivileges,
+  isBotOrDeletedMember,
+} from '../../common/utils/slack.utils';
+import { InstallationsService } from '../installations/installations.service';
+import { TeamsService } from '../teams/teams.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class SlackInstallationStore implements InstallationStore {
   constructor(
-    private readonly installationService: InstallationService,
-    private readonly teamService: TeamService,
-    private readonly userService: UserService
+    private readonly installationService: InstallationsService,
+    private readonly teamService: TeamsService,
+    private readonly userService: UsersService
   ) {}
 
   async fetchInstallation(

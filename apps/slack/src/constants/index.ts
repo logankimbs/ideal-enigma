@@ -7,7 +7,7 @@ export const IMPACTFUL_INSIGHTS = 'impactful_insights';
 export const INSIGHT_MODAL_TEXTS = {
   TITLE: 'Submit an Insight',
   DESCRIPTION:
-    'Your insights are invaluable. Share what you’ve learned to empower your team. Submit an insight and let’s achieve greatness together!',
+    'Your insights are invaluable. Share what you’ve learned to empower your team. Submit an insights and let’s achieve greatness together!',
   PLACEHOLDER:
     'Try this format: I learned [x], by doing [y], therefore we should [z].',
   TAGS_PLACEHOLDER: 'e.g., marketing, launch, feedback',

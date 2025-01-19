@@ -8,7 +8,7 @@ import {
   Res,
 } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { Public } from '../../common/constants';
+import { Public } from '../../common/decorators/public.decorator';
 import { SlackService } from './slack.service';
 
 @Controller('slack')

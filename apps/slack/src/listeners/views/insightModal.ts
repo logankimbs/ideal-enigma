@@ -27,7 +27,7 @@ const getModalBlocks = () => [
     },
     label: {
       type: 'plain_text',
-      text: 'Share your insight',
+      text: 'Share your insights',
       emoji: true,
     },
   },
@@ -54,7 +54,7 @@ const getModalBlocks = () => [
     },
     label: {
       type: 'plain_text',
-      text: 'Tag your insight with a theme',
+      text: 'Tag your insights with a theme',
       emoji: true,
     },
   },

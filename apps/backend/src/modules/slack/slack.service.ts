@@ -5,9 +5,9 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import {
   EnterpriseInstallError,
   UnauthorizedInstallError,
-} from '../../common/errors';
-import { InstallationService } from '../installation/installation.service';
-import { TeamService } from '../team/team.service';
+} from '../../common/exceptions/install.exceptions';
+import { InstallationsService } from '../installations/installations.service';
+import { TeamsService } from '../teams/teams.service';
 import { createWelcomeMessage } from './messages/globals';
 import { SlackInstallationStore } from './slack.installation.store';
 
@@ -17,8 +17,8 @@ export class SlackService {
 
   constructor(
     private readonly slackInstallationStore: SlackInstallationStore,
-    private readonly teamService: TeamService,
-    private readonly installationService: InstallationService
+    private readonly teamService: TeamsService,
+    private readonly installationService: InstallationsService
   ) {
     this.installer = new InstallProvider({
       clientId: process.env.SLACK_CLIENT_ID,

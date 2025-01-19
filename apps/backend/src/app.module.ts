@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
+import { AuthGuard } from './common/guards/auth.guard';
 import { Config } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
-import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
-import { InsightModule } from './modules/insight/insight.module';
-import { InstallationModule } from './modules/installation/installation.module';
+import { InsightsModule } from './modules/insights/insights.module';
+import { InstallationsModule } from './modules/installations/installations.module';
 import { SlackModule } from './modules/slack/slack.module';
-import { SummaryModule } from './modules/summary/summary.module';
-import { TagModule } from './modules/tag/tag.module';
-import { TeamModule } from './modules/team/team.module';
-import { UserModule } from './modules/user/user.module';
+import { SummariesModule } from './modules/summaries/summaries.module';
+import { TagsModule } from './modules/tags/tags.module';
+import { TeamsModule } from './modules/teams/teams.module';
+import { UsersModule } from './modules/users/users.module';
 
 const Modules = [
   AuthModule,
-  InsightModule,
-  InstallationModule,
-  TagModule,
-  TeamModule,
-  UserModule,
-  SummaryModule,
+  InsightsModule,
+  InstallationsModule,
+  TagsModule,
+  TeamsModule,
+  UsersModule,
+  SummariesModule,
   SlackModule,
 ];
 

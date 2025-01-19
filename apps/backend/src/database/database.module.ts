@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TlsOptions } from 'tls';
-import { Insight } from '../modules/insight/insight.entity';
-import { Installation } from '../modules/installation/installation.entity';
-import { Summary } from '../modules/summary/summary.entity';
-import { Tag } from '../modules/tag/tag.entity';
-import { Team } from '../modules/team/team.entity';
-import { User } from '../modules/user/user.entity';
+import { Insight } from '../domain/entities/insight.entity';
+import { Installation } from '../domain/entities/installation.entity';
+import { Summary } from '../domain/entities/summary.entity';
+import { Tag } from '../domain/entities/tag.entity';
+import { Team } from '../domain/entities/team.entity';
+import { User } from '../domain/entities/user.entity';
 
 const entities = [Insight, Installation, Tag, Team, User, Summary];
 
@@ -22,7 +21,7 @@ const entities = [Insight, Installation, Tag, Team, User, Summary];
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         synchronize: configService.get<boolean>('database.synchronize'),
-        ssl: configService.get<boolean | TlsOptions>('database.ssl'),
+        ssl: configService.get<boolean>('database.ssl'),
         entities,
       }),
       inject: [ConfigService],

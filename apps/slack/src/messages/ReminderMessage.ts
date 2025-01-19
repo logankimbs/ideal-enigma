@@ -1,13 +1,13 @@
-import { Block, KnownBlock } from "@slack/types";
-import { OPEN_INSIGHT_MODAL } from "../constants";
+import { Block, KnownBlock } from '@slack/types';
+import { OPEN_INSIGHT_MODAL } from '../constants';
 import {
   IMessage,
   Message,
   MessageDay,
   MessageText,
   ReminderMessageOptions,
-} from "../types";
-import { createButton, createTextSection } from "../utils/blocks";
+} from '../types';
+import { createButton, createTextSection } from '../utils/blocks';
 
 class ReminderMessage implements IMessage {
   public getMessage({ day }: ReminderMessageOptions): Message {
@@ -17,7 +17,7 @@ class ReminderMessage implements IMessage {
       createTextSection(greeting),
       createTextSection(body),
       ...(actionHeader ? [createTextSection(actionHeader)] : []),
-      createButton("🚀 Submit an Insight", OPEN_INSIGHT_MODAL),
+      createButton('🚀 Submit an Insight', OPEN_INSIGHT_MODAL),
       // TODO: Route button to blog
       // createButton("🔍 Impactful Insights", "open_modal", "open_modal"),
     ];
@@ -27,28 +27,28 @@ class ReminderMessage implements IMessage {
 
   private getText(day: MessageDay): MessageText {
     switch (day) {
-      case "Monday":
+      case 'Monday':
         return {
-          greeting: "Happy Monday!",
-          body: "We almost have enough insights to give you a Weekly/Monthly digested summary. Remember to submit your insight(s) this week!",
+          greeting: 'Happy Monday!',
+          body: 'We almost have enough insights to give you a Weekly/Monthly digested summary. Remember to submit your insights(s) this week!',
         };
 
-      case "Wednesday":
+      case 'Wednesday':
         return {
           greeting: "Hey there, it's Wednesday! 🐪",
           body: "Your week's halfway through, which means your insights might be shaping up nicely—just a little nudge to keep them in mind. Keep going, you’re doing great!",
         };
 
-      case "Friday":
+      case 'Friday':
         return {
-          greeting: "Happy Friday! 🎉",
-          body: "Time to wrap up the week and share those brilliant insights you’ve gathered. Don’t be shy—hit that submit button and let your team in on the good stuff. Let’s end the week on a high note!",
+          greeting: 'Happy Friday! 🎉',
+          body: 'Time to wrap up the week and share those brilliant insights you’ve gathered. Don’t be shy—hit that submit button and let your team in on the good stuff. Let’s end the week on a high note!',
         };
 
       default:
         return {
-          greeting: "",
-          body: "",
+          greeting: '',
+          body: '',
         };
     }
   }

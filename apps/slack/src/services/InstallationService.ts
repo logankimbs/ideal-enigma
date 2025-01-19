@@ -17,8 +17,8 @@ const installationService: InstallationStore = {
   ): Promise<void> {
     try {
       if (installation.isEnterpriseInstall && installation.enterprise) {
-        logger.warn('Enterprise wide app installation is not yet supported');
-        // TODO: Implement enterprise app installation
+        logger.warn('Enterprise wide app installations is not yet supported');
+        // TODO: Implement enterprise app installations
         return;
       }
 
@@ -29,7 +29,7 @@ const installationService: InstallationStore = {
 
       throw new Error('Installation is missing required information.');
     } catch (error) {
-      logger.error('Failed to save installation:', error);
+      logger.error('Failed to save installations:', error);
     }
   },
 
@@ -67,6 +67,7 @@ const installationService: InstallationStore = {
 };
 
 /*********************/
+
 /* Helper Functions */
 async function handleSingleTeamInstallation(
   installation: SlackInstallation
@@ -116,7 +117,7 @@ async function handleSingleTeamInstallation(
       );
     }
   } catch (error) {
-    console.error('Error handling single team installation:', error);
+    console.error('Error handling single team installations:', error);
     throw new Error(
       `Failed to handle installation for team: ${installation.team?.id}`
     );
