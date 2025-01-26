@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Insight } from '../../domain/entities/insight.entity';
-import { Tag } from '../../domain/entities/tag.entity';
-import { User } from '../../domain/entities/user.entity';
+import { Insight } from '../../infra/database/entities/insight.entity';
+import { Tag } from '../../infra/database/entities/tag.entity';
+import { User } from '../../infra/database/entities/user.entity';
 import { TeamsService } from '../teams/teams.service';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { GetInsightByIdDto } from './dto/get-insight.dto';

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Summary } from '../../domain/entities/summary.entity';
+import { Summary } from '../../infra/database/entities/summary.entity';
 import { CreateSummaryDto } from './dto/create-summary.dto';
 import { SummariesService } from './summaries.service';
 

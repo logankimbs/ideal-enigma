@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Summary } from '../../domain/entities/summary.entity';
+import { Summary } from '../../infra/database/entities/summary.entity';
 import { InsightsService } from '../insights/insights.service';
 import { InstallationsService } from '../installations/installations.service';
 import { TeamsService } from '../teams/teams.service';

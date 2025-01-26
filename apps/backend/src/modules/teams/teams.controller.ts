@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { Insight } from '../../domain/entities/insight.entity';
-import { Summary } from '../../domain/entities/summary.entity';
-import { Team } from '../../domain/entities/team.entity';
-import { User } from '../../domain/entities/user.entity';
+import { Insight } from '../../infra/database/entities/insight.entity';
+import { Summary } from '../../infra/database/entities/summary.entity';
+import { Team } from '../../infra/database/entities/team.entity';
+import { User } from '../../infra/database/entities/user.entity';
 import { InsightsService } from '../insights/insights.service';
 import { SummariesService } from '../summaries/summaries.service';
 import { UsersService } from '../users/users.service';

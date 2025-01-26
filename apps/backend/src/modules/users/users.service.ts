@@ -9,8 +9,8 @@ import {
   calculateChange,
   parseNumber,
 } from '../../common/utils/number.utils';
-import { Team } from '../../domain/entities/team.entity';
-import { User } from '../../domain/entities/user.entity';
+import { Team } from '../../infra/database/entities/team.entity';
+import { User } from '../../infra/database/entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { getUserStatsQuery, UserStatsQuery } from './users.queries';

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Installation } from '../../domain/entities/installation.entity';
+import { Installation } from '../../infra/database/entities/installation.entity';
 import { InstallationsController } from './installations.controller';
 import { InstallationsService } from './installations.service';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Installation as SlackInstallation } from '@slack/oauth';
 import { Repository } from 'typeorm';
-import { Installation } from '../../domain/entities/installation.entity';
+import { Installation } from '../../infra/database/entities/installation.entity';
 
 @Injectable()
 export class InstallationsService {

@@ -1,8 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Insight } from '../../domain/entities/insight.entity';
-import { Tag } from '../../domain/entities/tag.entity';
-import { User } from '../../domain/entities/user.entity';
+import { Insight } from '../../infra/database/entities/insight.entity';
+import { Tag } from '../../infra/database/entities/tag.entity';
+import { User } from '../../infra/database/entities/user.entity';
 import { InstallationsModule } from '../installations/installations.module';
 import { TeamsModule } from '../teams/teams.module';
 import { InsightsController } from './insights.controller';

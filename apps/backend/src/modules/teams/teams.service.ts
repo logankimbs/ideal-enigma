@@ -8,7 +8,7 @@ import {
   parseNumber,
   sumValues,
 } from '../../common/utils/number.utils';
-import { Team } from '../../domain/entities/team.entity';
+import { Team } from '../../infra/database/entities/team.entity';
 import { getTeamStatsQuery, TeamStatsQuery } from './teams.queries';
 
 @Injectable()

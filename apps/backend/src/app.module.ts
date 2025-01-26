@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthGuard } from './common/guards/auth.guard';
-import { Config } from './config/config.module';
-import { DatabaseModule } from './database/database.module';
+import appConfig from './config/app.config';
+import dataSource from './infra/database/data-source';
 import { AuthModule } from './modules/auth/auth.module';
 import { InsightsModule } from './modules/insights/insights.module';
 import { InstallationsModule } from './modules/installations/installations.module';
@@ -23,7 +25,17 @@ const Modules = [
 ];
 
 @Module({
-  imports: [Config, DatabaseModule, ...Modules],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => dataSource(configService),
+    }),
+    ...Modules,
+  ],
   providers: [{ provide: 'APP_GUARD', useClass: AuthGuard }],
 })
 export class AppModule {}

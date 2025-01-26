@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
-import { Insight } from '../../domain/entities/insight.entity';
+import { Insight } from '../../infra/database/entities/insight.entity';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { GetInsightByIdDto } from './dto/get-insight.dto';
 import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';

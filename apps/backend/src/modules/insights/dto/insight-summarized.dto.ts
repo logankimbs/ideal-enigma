@@ -4,8 +4,8 @@ import {
   IsNotEmptyObject,
   IsObject,
 } from 'class-validator';
-import { Insight } from '../../../domain/entities/insight.entity';
-import { Summary } from '../../../domain/entities/summary.entity';
+import { Insight } from '../../../infra/database/entities/insight.entity';
+import { Summary } from '../../../infra/database/entities/summary.entity';
 
 export class MarkInsightSummarizedDto {
   @IsArray()

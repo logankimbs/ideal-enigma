@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Param } from '@nestjs/common';
-import { Installation } from '../../domain/entities/installation.entity';
+import { Installation } from '../../infra/database/entities/installation.entity';
 import { InstallationsService } from './installations.service';
 
 @Controller('installations')
