@@ -23,3 +23,21 @@ export function calculateAverage(results: any[]): number {
 export function calculateAvg(sum: number, count: number): number {
   return count === 0 ? sum / count : 0;
 }
+
+export function createMap<K, V>(
+  items: V[],
+  keyExtractor: (item: V) => K
+): Map<K, V> {
+  const map = new Map<K, V>();
+
+  for (const item of items) {
+    const key = keyExtractor(item); // Extract the key using the callback
+    map.set(key, item);
+  }
+
+  if (!map || map.size === 0) {
+    throw new Error('No items found or map is empty.');
+  }
+
+  return map;
+}

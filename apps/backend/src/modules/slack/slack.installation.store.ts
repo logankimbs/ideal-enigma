@@ -68,6 +68,7 @@ export class SlackInstallationStore implements InstallationStore {
   }
 
   async deleteInstallation(query: InstallationQuery<boolean>): Promise<void> {
+    console.log('delete installation');
     await this.installationService.delete(query.teamId);
   }
 }

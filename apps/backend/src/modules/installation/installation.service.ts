@@ -40,6 +40,10 @@ export class InstallationService {
   async delete(id: string): Promise<void> {
     // Does install exist
     await this.installationRepository.findOneOrFail({ where: { id } });
-    await this.installationRepository.softDelete(id);
+    const deletedInstallation = await this.installationRepository.softDelete(
+      id
+    );
+
+    console.log(deletedInstallation);
   }
 }
