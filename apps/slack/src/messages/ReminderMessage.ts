@@ -30,7 +30,7 @@ class ReminderMessage implements IMessage {
       case 'Monday':
         return {
           greeting: 'Happy Monday!',
-          body: 'We almost have enough insights to give you a Weekly/Monthly digested summary. Remember to submit your insights(s) this week!',
+          body: 'We almost have enough insights to give you a Weekly/Monthly digested summary. Remember to submit your insight(s) this week!',
         };
 
       case 'Wednesday':

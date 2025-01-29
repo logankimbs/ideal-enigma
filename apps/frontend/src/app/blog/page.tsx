@@ -26,7 +26,7 @@ async function FeaturedPosts() {
           {posts.map((post) => (
             <div
               key={
-                'building-a-culture-of-curiosity-how-weekly-insights-reminders-can-transform-your-business'
+                'building-a-culture-of-curiosity-how-weekly-insight-reminders-can-transform-your-business'
               }
               className="relative flex flex-col rounded-3xl bg-white p-2 shadow-md shadow-black/5 ring-1 ring-black/5"
             >

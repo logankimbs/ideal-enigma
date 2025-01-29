@@ -9,10 +9,10 @@ import { TeamsService } from './teams.service';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Team]),
     forwardRef(() => InsightsModule),
     forwardRef(() => SummariesModule),
     forwardRef(() => UsersModule),
-    TypeOrmModule.forFeature([Team]),
   ],
   controllers: [TeamsController],
   providers: [TeamsService],

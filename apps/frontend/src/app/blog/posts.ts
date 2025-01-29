@@ -19,8 +19,8 @@ export const cultureOfCuriosity: Post = {
   title:
     'Building a Culture of Curiosity: How Weekly Insight Reminders Can Transform Your Business',
   excerpt:
-    'Weekly insights reminders encourage curiosity and reflection, empowering teams to uncover valuable ideas, accelerate innovation, and drive sustainable business growth.',
-  slug: 'building-a-culture-of-curiosity-how-weekly-insights-reminders-can-transform-your-business',
+    'Weekly insight reminders encourage curiosity and reflection, empowering teams to uncover valuable ideas, accelerate innovation, and drive sustainable business growth.',
+  slug: 'building-a-culture-of-curiosity-how-weekly-insight-reminders-can-transform-your-business',
   categories: ['Culture', 'Growth'],
 };
 
@@ -34,7 +34,7 @@ export const fromInsightToInnovation: Post = {
     'From Insight to Innovation: The Power of a Data-Driven Startup Culture',
   excerpt:
     'A data-driven culture empowers startups to accelerate innovation, reduce risks, and make informed decisions, fostering critical thinking and problem-solving for long-term success.',
-  slug: 'from-insights-to-innovation-the-power-of-a-data-driven-startup-culture',
+  slug: 'from-insight-to-innovation-the-power-of-a-data-driven-startup-culture',
   categories: ['Growth', 'Innovation'],
 };
 
@@ -47,8 +47,8 @@ export const leveragingAi: Post = {
   title:
     'Leveraging AI to Transform Insight Collection into Actionable Business Strategies',
   excerpt:
-    'AI-powered tools transform insights collection into actionable strategies, enabling startups to drive innovation, optimize operations, and accelerate growth in a competitive landscape.',
-  slug: 'leveraging-ai-to-transform-insights-collection-into-actionable-business-strategies',
+    'AI-powered tools transform insight collection into actionable strategies, enabling startups to drive innovation, optimize operations, and accelerate growth in a competitive landscape.',
+  slug: 'leveraging-ai-to-transform-insight-collection-into-actionable-business-strategies',
   categories: ['Artificial Intelligence', 'Strategy'],
 };
 

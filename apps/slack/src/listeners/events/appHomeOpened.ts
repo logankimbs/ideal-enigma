@@ -84,7 +84,7 @@ const getHomeViewBlocks = (event: any) => {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*What makes an insights impactful?*',
+        text: '*What makes an insight impactful?*',
       },
     },
     {
