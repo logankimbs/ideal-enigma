@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Summary } from '../../infra/database/entities/summary.entity';
-import { CreateSummaryDto } from './dto/create-summary.dto';
+import { CreateSummaryDto } from './dtos/create-summary.dto';
 import { SummariesService } from './summaries.service';
 
 @Controller('summaries')

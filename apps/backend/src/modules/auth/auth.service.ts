@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { WebClient } from '@slack/web-api';
 import { UsersService } from '../users/users.service';
-import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
-import { SlackCallbackDto } from './dto/slack-callback.dto';
+import { SlackAuthorizeDto } from './dtos/slack-authorize.dto';
+import { SlackCallbackDto } from './dtos/slack-callback.dto';
 
 @Injectable()
 export class AuthService {

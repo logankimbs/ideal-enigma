@@ -5,7 +5,7 @@ import { Summary } from '../../infra/database/entities/summary.entity';
 import { InsightsService } from '../insights/insights.service';
 import { InstallationsService } from '../installations/installations.service';
 import { TeamsService } from '../teams/teams.service';
-import { CreateSummaryDto } from './dto/create-summary.dto';
+import { CreateSummaryDto } from './dtos/create-summary.dto';
 
 @Injectable()
 export class SummariesService {
@@ -17,7 +17,6 @@ export class SummariesService {
   ) {}
 
   async create(createSummaryDto: CreateSummaryDto): Promise<Summary> {
-    // Let error message bubble up?
     const team = await this.teamService.find(createSummaryDto.teamId);
     const startDate = await this.getStartDate(team.id);
 
@@ -28,7 +27,7 @@ export class SummariesService {
     summary.startDate = startDate;
     summary.team = team;
 
-    // TODO: Emit summary added event for websockets
+    // Todo: Emit summary added event
 
     return this.summaryRepository.save(summary);
   }

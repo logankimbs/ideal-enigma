@@ -9,10 +9,10 @@ import { SummariesService } from './summaries.service';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Summary]),
     forwardRef(() => TeamsModule),
     forwardRef(() => InsightsModule),
     InstallationsModule,
-    TypeOrmModule.forFeature([Summary]),
   ],
   controllers: [SummariesController],
   providers: [SummariesService],

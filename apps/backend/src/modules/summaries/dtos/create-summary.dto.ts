@@ -6,8 +6,6 @@ export class CreateSummaryDto {
   @IsString()
   teamId: string;
 
-  // IMPORTANT!!!
-  // SummaryData is a union type of all the summary versions we accept
   @IsNotEmpty()
   @IsObject()
   data: SummaryData;

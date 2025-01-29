@@ -2,57 +2,30 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Insight } from '../../infra/database/entities/insight.entity';
-import { Tag } from '../../infra/database/entities/tag.entity';
 import { User } from '../../infra/database/entities/user.entity';
+import { TagsService } from '../tags/tags.service';
 import { TeamsService } from '../teams/teams.service';
-import { CreateInsightDto } from './dto/create-insight.dto';
-import { GetInsightByIdDto } from './dto/get-insight.dto';
-import { MarkInsightSummarizedDto } from './dto/insight-summarized.dto';
+import { CreateInsightDto } from './dtos/create-insight.dto';
+import { GetInsightByIdDto } from './dtos/get-insight.dto';
+import { MarkInsightSummarizedDto } from './dtos/insight-summarized.dto';
 
 @Injectable()
 export class InsightsService {
   constructor(
     @InjectRepository(Insight) private insightRepository: Repository<Insight>,
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Tag) private tagRepository: Repository<Tag>,
-    private teamService: TeamsService
+    private teamService: TeamsService,
+    private tagService: TagsService
   ) {}
 
-  // Create insights and tags. Tags are passed in as an array of strings i.e., ["tag1", "tag2"]
   async create(createInsightDto: CreateInsightDto): Promise<Insight> {
     const user = await this.userRepository.findOneOrFail({
       where: { id: createInsightDto.userId },
     });
 
-    let tags: Tag[] = [];
-    if (createInsightDto.tags && createInsightDto.tags.length > 0) {
-      // Convert all tags to lowercase
-      const normalizedTags = createInsightDto.tags.map((tagText) =>
-        tagText.toLowerCase()
-      );
-
-      const existingTags = await this.tagRepository.find({
-        where: normalizedTags.map((tagText) => ({ text: tagText })),
-      });
-
-      // Create a Set of existing tag for quick lookup
-      const existingTagTexts = new Set(existingTags.map((tag) => tag.text));
-
-      // Identify tags that don't exist yet
-      const newTagsData = normalizedTags
-        .filter((tagText) => !existingTagTexts.has(tagText))
-        .map((tagText) => this.tagRepository.create({ text: tagText }));
-
-      // Save new tags in one batch if there are any
-      if (newTagsData.length > 0) {
-        const newTags = await this.tagRepository.save(newTagsData);
-        tags = [...existingTags, ...newTags];
-      } else {
-        tags = existingTags;
-      }
-    }
-
+    const tags = await this.tagService.create(createInsightDto.tags);
     const insight = new Insight();
+
     insight.user = user;
     insight.text = createInsightDto.text;
     insight.tags = tags;

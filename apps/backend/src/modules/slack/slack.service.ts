@@ -9,7 +9,7 @@ import {
 } from '../../common/exceptions/install.exceptions';
 import { InstallationsService } from '../installations/installations.service';
 import { TeamsService } from '../teams/teams.service';
-import { welcomeMessage } from './messages/welcome-message';
+import { welcomeMessage } from './messages/welcome.message';
 import { SlackInstallationStore } from './slack.installation.store';
 
 @Injectable()
