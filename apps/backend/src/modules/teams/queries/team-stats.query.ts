@@ -6,7 +6,7 @@ export type TeamStatsQuery = {
   avg_insights_per_user: string;
 };
 
-export function getTeamStatsQuery(): string {
+export function teamStatsQuery(): string {
   return `
       with installation_date as ( select i."createdAt" as installationDate
                                   from users u

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { CodedError, Installation, InstallProvider } from '@slack/oauth';
 import { WebClient } from '@slack/web-api';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -8,7 +9,7 @@ import {
 } from '../../common/exceptions/install.exceptions';
 import { InstallationsService } from '../installations/installations.service';
 import { TeamsService } from '../teams/teams.service';
-import { createWelcomeMessage } from './messages/globals';
+import { welcomeMessage } from './messages/welcome-message';
 import { SlackInstallationStore } from './slack.installation.store';
 
 @Injectable()
@@ -18,18 +19,21 @@ export class SlackService {
   constructor(
     private readonly slackInstallationStore: SlackInstallationStore,
     private readonly teamService: TeamsService,
-    private readonly installationService: InstallationsService
+    private readonly installationService: InstallationsService,
+    private configService: ConfigService
   ) {
     this.installer = new InstallProvider({
-      clientId: process.env.SLACK_CLIENT_ID,
-      clientSecret: process.env.SLACK_CLIENT_SECRET,
-      stateSecret: process.env.SLACK_STATE_SECRET,
+      clientId: this.configService.get<string>('slack.clientId'),
+      clientSecret: this.configService.get<string>('slack.clientSecret'),
+      stateSecret: this.configService.get<string>('slack.state'),
       directInstall: true,
       installationStore: this.slackInstallationStore,
       installUrlOptions: {
         scopes: ['chat:write', 'users:read', 'users:read.email', 'team:read'],
         userScopes: ['openid', 'profile', 'email'],
-        redirectUri: `${process.env.BACKEND_URL}/slack/install/callback`,
+        redirectUri: `${this.configService.get<string>(
+          'backendUrl'
+        )}/slack/install/callback`,
       },
     });
   }
@@ -43,11 +47,13 @@ export class SlackService {
 
     const onSuccess = async (installation: Installation) => {
       console.log('Installation successful:', installation);
-      url = `${process.env.BACKEND_URL}/auth/slack?user=${installation.user.id}`;
+      url = `${this.configService.get<string>('backendUrl')}/auth/slack?user=${
+        installation.user.id
+      }`;
     };
 
     const onFailure = (error: CodedError) => {
-      const baseUrl = process.env.FRONTEND_URL || '';
+      const baseUrl = this.configService.get<string>('frontendUrl') || '';
       let path = '/slack/install/error';
 
       if (error.message.includes('cancelled the OAuth')) {
@@ -81,9 +87,7 @@ export class SlackService {
     const client = new WebClient(installation.token);
 
     await Promise.all(
-      users.map((user) =>
-        client.chat.postMessage(createWelcomeMessage(user.id))
-      )
+      users.map((user) => client.chat.postMessage(welcomeMessage(user.id)))
     );
   }
 }

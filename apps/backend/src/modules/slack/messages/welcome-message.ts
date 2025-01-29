@@ -1,4 +1,4 @@
-export function createWelcomeMessage(userId: string) {
+export function welcomeMessage(userId: string) {
   const intro =
     "I'm Loop, your friendly companion for capturing and sharing insights with your team. The more we contribute the faster we can Build, Measure, and Learn. Together, we can drive growth and create something amazing.";
 

@@ -9,7 +9,7 @@ import {
   sumValues,
 } from '../../common/utils/number.utils';
 import { Team } from '../../infra/database/entities/team.entity';
-import { getTeamStatsQuery, TeamStatsQuery } from './teams.queries';
+import { teamStatsQuery, TeamStatsQuery } from './queries/team-stats.query';
 
 @Injectable()
 export class TeamsService {
@@ -33,10 +33,10 @@ export class TeamsService {
   }
 
   async getTeamStats(teamId: string): Promise<TeamStats> {
-    const query = getTeamStatsQuery();
-    const stats: TeamStatsQuery[] = await this.teamRepository.query(query, [
-      teamId,
-    ]);
+    const stats: TeamStatsQuery[] = await this.teamRepository.query(
+      teamStatsQuery(),
+      [teamId]
+    );
 
     const current = stats[0] || ({} as TeamStatsQuery);
     const previous = stats[1] || ({} as TeamStatsQuery);

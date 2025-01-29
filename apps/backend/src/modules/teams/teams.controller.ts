@@ -40,7 +40,6 @@ export class TeamsController {
     return this.summaryService.getRecentSummary(teamId);
   }
 
-  // This endpoint gets all users for a given team.
   @Get(':teamId/users')
   async getTeamUsers(@Param('teamId') teamId: string): Promise<User[]> {
     return this.userService.getUsers(teamId);

@@ -9,8 +9,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
   const origin = [
-    configService.get<string>('origin.frontend'),
-    configService.get<string>('origin.slack'),
+    configService.get<string>('frontendUrl'),
+    configService.get<string>('slackUrl'),
   ];
 
   app.enableCors({ origin, credentials: true });
@@ -18,8 +18,6 @@ async function bootstrap() {
   app.use(logger);
 
   await app.listen(port);
-
-  console.log(`Application is running on port ${port}`);
 }
 
 bootstrap();

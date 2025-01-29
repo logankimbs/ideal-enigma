@@ -13,7 +13,7 @@ import { Team } from '../../infra/database/entities/team.entity';
 import { User } from '../../infra/database/entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { getUserStatsQuery, UserStatsQuery } from './users.queries';
+import { userStatsQuery, UserStatsQuery } from './queries/user-stats.query';
 
 @Injectable()
 export class UsersService {
@@ -133,10 +133,10 @@ export class UsersService {
   }
 
   async getUserStats(userId: string): Promise<UserStats> {
-    const query = getUserStatsQuery();
-    const stats: UserStatsQuery[] = await this.userRepository.query(query, [
-      userId,
-    ]);
+    const stats: UserStatsQuery[] = await this.userRepository.query(
+      userStatsQuery(),
+      [userId]
+    );
 
     const current = stats[0] || ({} as UserStatsQuery);
     const previous = stats[1] || ({} as UserStatsQuery);

@@ -3,19 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { WebClient } from '@slack/web-api';
 import { UsersService } from '../users/users.service';
-import { LoginDto } from './dto/login.dto';
 import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
 import { SlackCallbackDto } from './dto/slack-callback.dto';
-import { ValidateTokenDto } from './dto/validate-token.dto';
-
-type AuthPayload = {
-  access_token: string;
-};
-
-const backend_url = process.env.BACKEND_URL;
-const slack_callback_path = '/auth/slack/callback';
-const redirect_uri = backend_url + slack_callback_path;
-const frontend_url = process.env.FRONTEND_URL;
 
 @Injectable()
 export class AuthService {
@@ -24,6 +13,7 @@ export class AuthService {
   client_secret: string;
   state_secret: string;
   nonce_secret: string;
+  redirect_uri: string;
 
   constructor(
     private userService: UsersService,
@@ -32,40 +22,13 @@ export class AuthService {
   ) {
     this.client = new WebClient();
 
-    // Why does this seem weird?
-    this.client_id = this.configService.get<string>('slack.clientId')!;
-    this.client_secret = this.configService.get<string>('slack.clientSecret')!;
-    this.state_secret = this.configService.get<string>('slack.openId.state')!;
-    this.nonce_secret = this.configService.get<string>('slack.openId.nonce')!;
-  }
-
-  async login(loginDto: LoginDto): Promise<AuthPayload> {
-    const user = await this.userService.findOne(loginDto.id);
-
-    if (!user) throw new UnauthorizedException();
-
-    const payload = { sub: user.id };
-    return { access_token: await this.jwtService.signAsync(payload) };
-  }
-
-  async validateToken(validateTokenDto: ValidateTokenDto) {
-    try {
-      const payload = this.jwtService.verify(validateTokenDto.token);
-      const user = await this.userService.findOne(payload.sub);
-
-      if (!user) throw new UnauthorizedException('User not found');
-
-      // Generate a new token for the session
-      const authToken = this.jwtService.sign(
-        { sub: user.id, email: user.data.profile.email },
-        { expiresIn: '1h' }
-      );
-
-      return { authToken };
-    } catch (error: unknown) {
-      console.log('Error:', error);
-      throw new UnauthorizedException('Invalid or expired token');
-    }
+    this.client_id = this.configService.get<string>('slack.clientId');
+    this.client_secret = this.configService.get<string>('slack.clientSecret');
+    this.state_secret = this.configService.get<string>('slack.state');
+    this.nonce_secret = this.configService.get<string>('slack.nonce');
+    this.redirect_uri = `${this.configService.get<string>(
+      'backendUrl'
+    )}/auth/slack/callback`;
   }
 
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
@@ -81,7 +44,7 @@ export class AuthService {
       state: this.state_secret,
       team: user.team.id,
       nonce: this.nonce_secret,
-      redirect_uri: redirect_uri,
+      redirect_uri: this.redirect_uri,
     });
 
     url.search = params.toString();
@@ -95,15 +58,12 @@ export class AuthService {
       client_secret: this.client_secret,
       grant_type: 'authorization_code',
       code: slackCallbackDto.code,
-      redirect_uri,
+      redirect_uri: this.redirect_uri,
     });
 
     let userAccessToken = token.access_token;
 
     if (token.refresh_token) {
-      // token.refresh_token can exist if the token rotation is enabled.
-      // The following lines of code demonstrate how to refresh the token.
-      // If you don't enable token rotation, you can safely remove this part.
       const refreshedToken = await this.client.openid.connect.token({
         client_id: this.client_id,
         client_secret: this.client_secret,
@@ -117,7 +77,8 @@ export class AuthService {
     const tokenWiredClient = new WebClient(userAccessToken);
     const userInfo = await tokenWiredClient.openid.connect.userInfo();
     const accessToken = await this.jwtService.signAsync(userInfo);
+    const frontendUrl = this.configService.get<string>('frontendUrl');
 
-    return { url: `${frontend_url}/api/slack?access_token=${accessToken}` };
+    return { url: `${frontendUrl}/api/slack?access_token=${accessToken}` };
   }
 }

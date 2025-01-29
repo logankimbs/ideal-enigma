@@ -5,7 +5,7 @@ export type UserStatsQuery = {
   streak: string;
 };
 
-export function getUserStatsQuery(): string {
+export function userStatsQuery(): string {
   return `
       with user_installation_date as ( select u.id as userId, i.id as teamId, i."createdAt" as installationDate
                                        from users u

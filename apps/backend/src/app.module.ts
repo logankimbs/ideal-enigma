@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthGuard } from './common/guards/auth.guard';
 import appConfig from './config/app.config';
@@ -33,6 +34,14 @@ const Modules = [
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => dataSource(configService),
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('jwtSecret'),
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
     ...Modules,
   ],
