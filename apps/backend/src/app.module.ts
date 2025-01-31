@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthGuard } from './common/guards/auth.guard';
 import appConfig from './config/app.config';
 import dataSource from './infra/database/data-source';
+import { OpenAIModule } from './infra/openai/openai.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InsightsModule } from './modules/insights/insights.module';
 import { InstallationsModule } from './modules/installations/installations.module';
@@ -23,6 +25,7 @@ const Modules = [
   UsersModule,
   SummariesModule,
   SlackModule,
+  OpenAIModule,
 ];
 
 @Module({
@@ -43,6 +46,7 @@ const Modules = [
         signOptions: { expiresIn: '1d' },
       }),
     }),
+    ScheduleModule.forRoot(),
     ...Modules,
   ],
   providers: [{ provide: 'APP_GUARD', useClass: AuthGuard }],
