@@ -7,15 +7,17 @@ import { AuthGuard } from './common/guards/auth.guard';
 import appConfig from './config/app.config';
 import dataSource from './infra/database/data-source';
 import { OpenAIModule } from './infra/openai/openai.module';
+import { SlackModule } from './infra/slack/slack.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { InsightsModule } from './modules/insights/insights.module';
 import { InstallationsModule } from './modules/installations/installations.module';
-import { SlackModule } from './modules/slack/slack.module';
 import { SummariesModule } from './modules/summaries/summaries.module';
+import { GenerateSummariesTaskModule } from './modules/summaries/tasks/generate-summaries.task.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { TeamsModule } from './modules/teams/teams.module';
 import { UsersModule } from './modules/users/users.module';
 
+const TaskModules = [GenerateSummariesTaskModule];
 const Modules = [
   AuthModule,
   InsightsModule,
@@ -26,6 +28,7 @@ const Modules = [
   SummariesModule,
   SlackModule,
   OpenAIModule,
+  ...TaskModules,
 ];
 
 @Module({
