@@ -48,6 +48,7 @@
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.0",
     "sharp": "^0.33.5",
+    "slack-block-builder": "^2.8.0",
     "typeorm": "^0.3.20",
     "winston": "^3.15.0",
     "zod": "^3.23.8"
