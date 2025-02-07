@@ -6,11 +6,6 @@ import { InstallationsService } from './installations.service';
 export class InstallationsController {
   constructor(private readonly installationService: InstallationsService) {}
 
-  @Get()
-  async findAll(): Promise<Installation[]> {
-    return await this.installationService.findAll();
-  }
-
   @Get(':id')
   async findOne(@Param() params: { id: string }): Promise<Installation> {
     return await this.installationService.findOne(params.id);
