@@ -2,24 +2,24 @@ import { Injectable } from '@nestjs/common';
 import {
   Installation,
   InstallationQuery,
-  InstallationStore,
+  InstallationStore as InstallStore,
 } from '@slack/oauth';
 import { WebClient } from '@slack/web-api';
 import {
   EnterpriseInstallError,
   InstallExistsError,
   UnauthorizedInstallError,
-} from '../../common/exceptions/install.exceptions';
+} from '../../../common/exceptions/install.exceptions';
 import {
   hasAdminPrivileges,
   isBotOrDeletedMember,
-} from '../../common/utils/slack.utils';
-import { InstallationsService } from '../installations/installations.service';
-import { TeamsService } from '../teams/teams.service';
-import { UsersService } from '../users/users.service';
+} from '../../../common/utils/slack.utils';
+import { InstallationsService } from '../../../modules/installations/installations.service';
+import { TeamsService } from '../../../modules/teams/teams.service';
+import { UsersService } from '../../../modules/users/users.service';
 
 @Injectable()
-export class SlackInstallationStore implements InstallationStore {
+export class InstallationStore implements InstallStore {
   constructor(
     private readonly installationService: InstallationsService,
     private readonly teamService: TeamsService,
