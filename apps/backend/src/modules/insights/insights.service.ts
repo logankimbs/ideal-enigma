@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Insight } from '../../infra/database/entities/insight.entity';
 import { User } from '../../infra/database/entities/user.entity';
 import { TagsService } from '../tags/tags.service';
@@ -72,6 +72,13 @@ export class InsightsService {
       .getMany();
   }
 
+  async getAllUnsummarizedInsights() {
+    return await this.insightRepository.find({
+      relations: ['user', 'user.team'],
+      where: { summary: IsNull() },
+    });
+  }
+
   async getInsightsToSummarize(teamId: string): Promise<Insight[]> {
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
@@ -90,7 +97,7 @@ export class InsightsService {
     markInsightSummarizedDto: MarkInsightSummarizedDto
   ): Promise<void> {
     markInsightSummarizedDto.insights.forEach((insight) => {
-      // TODO: Remove 'isSummarized' column. summaryId can take its place.
+      // Todo: remove 'isSummarized' column. summaryId can take its place.
       insight.isSummarized = true;
       insight.summary = markInsightSummarizedDto.summary;
     });
