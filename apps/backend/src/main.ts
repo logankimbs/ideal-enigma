@@ -4,7 +4,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Todo: add raw body middleware for slack endpoints only
+  const app = await NestFactory.create(AppModule, { rawBody: true });
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
   const origin = [
