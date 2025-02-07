@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Installation as SlackInstallation } from '@slack/oauth';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Installation } from '../../infra/database/entities/installation.entity';
 
 @Injectable()
@@ -23,9 +23,9 @@ export class InstallationsService {
     });
   }
 
-  findAll(): Promise<Installation[]> {
-    return this.installationRepository.find({
-      where: { deletedAt: undefined },
+  async getAllInstallations(): Promise<Installation[]> {
+    return await this.installationRepository.find({
+      where: { deletedAt: IsNull() },
     });
   }
 
