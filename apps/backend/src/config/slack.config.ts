@@ -1,9 +1,12 @@
+import * as process from 'node:process';
+
 export type SlackConfig = {
   clientId: string;
   clientSecret: string;
   state: string;
   nonce: string;
   secretKey: string;
+  signingSecret: string;
 };
 
 export default (): SlackConfig => ({
@@ -12,4 +15,5 @@ export default (): SlackConfig => ({
   state: process.env.SLACK_STATE_SECRET,
   nonce: process.env.SLACK_NONCE,
   secretKey: process.env.SLACK_SECRET_KEY,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
