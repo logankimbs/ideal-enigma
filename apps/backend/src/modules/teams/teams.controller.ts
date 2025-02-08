@@ -17,11 +17,6 @@ export class TeamsController {
     private readonly userService: UsersService
   ) {}
 
-  @Get()
-  findAll(): Promise<Team[]> {
-    return this.teamService.findAll();
-  }
-
   @Get(':id')
   find(@Param() params: { id: string }): Promise<Team> {
     return this.teamService.find(params.id);
