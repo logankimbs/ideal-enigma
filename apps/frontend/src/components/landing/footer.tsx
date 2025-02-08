@@ -58,7 +58,7 @@ function Sitemap() {
         <SitemapLinks>
           <SitemapLink href="/blog">Blog</SitemapLink>
           <SitemapLink href="">Terms of service</SitemapLink>
-          <SitemapLink href="">Privacy policy</SitemapLink>
+          <SitemapLink href="/privacy-policy">Privacy policy</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
