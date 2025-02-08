@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User as Installer } from '@slack/web-api/dist/types/response/UsersInfoResponse';
 import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import {
   calculateAverage,
   calculateChange,
@@ -11,6 +11,7 @@ import {
 } from '../../common/utils/number.utils';
 import { Team } from '../../infra/database/entities/team.entity';
 import { User } from '../../infra/database/entities/user.entity';
+import { TeamsService } from '../teams/teams.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { userStatsQuery, UserStatsQuery } from './queries/user-stats.query';
@@ -19,38 +20,25 @@ import { userStatsQuery, UserStatsQuery } from './queries/user-stats.query';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Team) private teamRepository: Repository<Team>
+    private readonly teamService: TeamsService
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
-  findOne(id: string): Promise<User> {
+  findUserById(id: string): Promise<User> {
     return this.userRepository.findOneOrFail({
       where: { id },
       relations: ['team'],
     });
   }
 
-  // Called when user joins teams
-  async createAndSendWelcomeMessage(
-    createUserDto: CreateUserDto
-  ): Promise<User> {
-    const team = await this.teamRepository.findOneOrFail({
-      where: { id: createUserDto.team_id },
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const team = await this.teamService.find(createUserDto.team_id);
+
+    return await this.userRepository.save({
+      id: createUserDto.id,
+      data: createUserDto,
+      onboardCompletedAt: new Date(),
+      team,
     });
-
-    const user = new User();
-    user.id = createUserDto.id;
-    user.data = createUserDto;
-    user.team = team;
-    user.onboardCompletedAt = new Date();
-    // TODO: Need to address this later with settings page on dashboard.
-    user.notifications = true; // Notifications are enabled when a user is added to team after install.
-
-    // TODO: Send welcome message to new user
-    return await this.userRepository.save(user);
   }
 
   async onboardUsers(members: Member[], team: Team): Promise<User[]> {
@@ -119,6 +107,13 @@ export class UsersService {
     user.onboardCompletedAt = new Date();
 
     return await this.userRepository.save(user);
+  }
+
+  async getAllUsersNotifications(enabled = true): Promise<User[]> {
+    return this.userRepository.find({
+      where: { deletedAt: IsNull(), notifications: enabled },
+      relations: ['team'],
+    });
   }
 
   async getUsersWithNotifications(

@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   async slackAuthorize(slackAuthorizeDto: SlackAuthorizeDto) {
-    const user = await this.userService.findOne(slackAuthorizeDto.user);
+    const user = await this.userService.findUserById(slackAuthorizeDto.user);
 
     if (!user) throw new UnauthorizedException();
 

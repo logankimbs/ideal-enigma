@@ -1,23 +1,13 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { User } from '../../infra/database/entities/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
-  async findAll() {
-    return await this.usersService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param() params: { id: string }): Promise<User> {
-    try {
-      return await this.usersService.findOne(params.id);
-    } catch (error: unknown) {
-      throw Error(`User does not exist. ${error}`);
-    }
+  @Get(':userId')
+  async findUserById(@Param('userId') userId: string) {
+    return await this.usersService.findUserById(userId);
   }
 
   @Get(':userId/isOnboardingComplete')
@@ -25,6 +15,7 @@ export class UsersController {
     return await this.usersService.isOnboardingComplete(userId);
   }
 
+  // Todo: move to team controller
   @Post('enableNotifications')
   async batchEnableNotifications(@Body('userIds') userIds: string[]) {
     await this.usersService.batchEnableNotifications(userIds);
