@@ -1,7 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { User } from '../../infra/database/entities/user.entity';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -20,21 +18,6 @@ export class UsersController {
     } catch (error: unknown) {
       throw Error(`User does not exist. ${error}`);
     }
-  }
-
-  // Called when user joins team after post install.
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      return await this.usersService.createAndSendWelcomeMessage(createUserDto);
-    } catch (error: unknown) {
-      return `Unable to create user. ${error}`;
-    }
-  }
-
-  @Put()
-  async update(@Body() updateUserDto: UpdateUserDto) {
-    return await this.usersService.update(updateUserDto);
   }
 
   @Get(':userId/isOnboardingComplete')
