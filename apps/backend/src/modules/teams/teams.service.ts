@@ -2,7 +2,7 @@ import { TeamStats } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team as SlackTeam } from '@slack/web-api/dist/types/response/TeamInfoResponse';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import {
   calculateChange,
   parseNumber,
@@ -21,8 +21,11 @@ export class TeamsService {
     return await this.teamRepository.save({ id: team.id, data: team });
   }
 
-  findAll(): Promise<Team[]> {
-    return this.teamRepository.find();
+  async getAllTeams(): Promise<Team[]> {
+    return await this.teamRepository.find({
+      where: { deletedAt: IsNull() },
+      relations: ['users'],
+    });
   }
 
   async find(id: string): Promise<Team> {
