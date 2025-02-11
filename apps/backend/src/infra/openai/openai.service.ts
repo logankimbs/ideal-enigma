@@ -1,10 +1,16 @@
+import { SummaryTextV3 } from '@ideal-enigma/common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { readFile } from '../../common/utils/file.utils';
+import { summarySchema } from '../../modules/summaries/schemas/summary.schema';
 import { Insight } from '../database/entities/insight.entity';
-import { SummarySchema } from './schemas/summary.schema';
+
+export type GenerateSummaryResponse = {
+  data: SummaryTextV3;
+  version: number;
+};
 
 @Injectable()
 export class OpenAIService {
@@ -15,8 +21,8 @@ export class OpenAIService {
     this.openai = new OpenAI({ apiKey });
   }
 
-  async generateSummary(insights: Insight[]) {
-    const content = this.sanitizeInsights(insights);
+  async generateSummary(insights: Insight[]): Promise<GenerateSummaryResponse> {
+    const sanitizedInsights = this.sanitizeInsights(insights);
 
     try {
       const prompt = await readFile('../../assets/summary-prompt.txt');
@@ -24,19 +30,20 @@ export class OpenAIService {
         model: 'gpt-4o-2024-08-06',
         messages: [
           { role: 'system', content: prompt },
-          { role: 'user', content },
+          { role: 'user', content: sanitizedInsights },
         ],
-        response_format: zodResponseFormat(SummarySchema, 'summary'),
+        response_format: zodResponseFormat(summarySchema, 'summary'),
       });
 
-      return (
-        response.choices[0]?.message?.content || 'No response from OpenAI.'
-      );
+      const summary = response.choices[0]?.message?.content;
+
+      return { data: JSON.parse(summary) as SummaryTextV3, version: 3 };
     } catch (error) {
       console.error(error);
     }
   }
 
+  // Todo: move to insights service
   private sanitizeInsights(insights: Insight[]) {
     return JSON.stringify({
       insights: insights.map((insight) => ({
