@@ -6,9 +6,9 @@
   "scripts": {
     "heroku-postbuild": "npm add -g nx && npm run build",
     "build": "npx nx run-many -t build",
-    "backend:build": "npx nx build backend",
+    "backend:build": "npx nx build backend --with-deps",
     "backend": "npx nx run backend:serve:development",
-    "backend:prod": "node dist/apps/backend",
+    "backend:prod": "npx nx run backend:serve:production",
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
     "frontend:prod": "next start apps/frontend",
