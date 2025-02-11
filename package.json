@@ -12,9 +12,6 @@
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
     "frontend:prod": "next start apps/frontend",
-    "slack:build": "npx nx build slack",
-    "slack": "npx nx run slack:serve:development",
-    "slack:prod": "node dist/apps/slack/apps/slack/src/main.js",
     "ngrok": "dotenv -e .env -- ngrok start --config=ngrok.yaml --all --authtoken=$NGROK_AUTHTOKEN"
   },
   "dependencies": {
@@ -25,6 +22,7 @@
     "@nestjs/core": "^10.0.2",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/schedule": "^5.0.1",
     "@nestjs/typeorm": "^10.0.2",
     "@slack/bolt": "^4.0.0-rc.1",
     "@slack/oauth": "^3.0.2",
@@ -47,6 +45,7 @@
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.0",
     "sharp": "^0.33.5",
+    "slack-block-builder": "^2.8.0",
     "typeorm": "^0.3.20",
     "winston": "^3.15.0",
     "zod": "^3.23.8"

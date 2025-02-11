@@ -6,6 +6,3 @@ tunnels:
   frontend:
     addr: 3000
     proto: http
-  slack:
-    addr: 8080
-    proto: http

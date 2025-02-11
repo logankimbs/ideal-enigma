@@ -11,9 +11,9 @@ export interface Summary extends Timestamp {
   insights: Insight[];
 }
 
-// IMPORTANT!!!
+// SummaryData is a union type of all the summary versions we accept
 // As new versions are released, append the new version using a union.
-export type SummaryData = SummaryTextV1 | SummaryTextV2;
+export type SummaryData = SummaryTextV1 | SummaryTextV2 | SummaryTextV3;
 
 /* ~~~~~ Version 1 ~~~~~ */
 export interface SummaryTextV1 {
@@ -37,8 +37,6 @@ export interface SummaryInsightV1 {
   };
   interpretation: string;
 }
-
-/* ~~~~~~~~~~~~~~~~~~~~~ */
 
 /* ~~~~~ Version 2 ~~~~~ */
 export interface SummaryTextV2 {
@@ -70,4 +68,21 @@ export interface SummaryActionV2 {
   responsibility: string;
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~ Version 3 ~~~~~ */
+export interface SummaryTextV3 {
+  themes: SummaryThemeV3[];
+  conclusion: string;
+}
+
+export interface SummaryThemeV3 {
+  title: string;
+  objective: string;
+  insightIds: string[];
+  action: SummaryActionV3;
+  summary: string;
+}
+
+export interface SummaryActionV3 {
+  description: string;
+  owners: string[];
+}

@@ -1,39 +1,14 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Query,
-  Redirect,
-} from '@nestjs/common';
+import { Controller, Get, Query, Redirect } from '@nestjs/common';
+import { Public } from '../../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { SlackAuthorizeDto } from './dto/slack-authorize.dto';
-import { SlackCallbackDto } from './dto/slack-callback.dto';
-import { ValidateTokenDto } from './dto/validate-token.dto';
-import { Public } from '../../common/constants';
+import { SlackAuthorizeDto } from './dtos/slack-authorize.dto';
+import { SlackCallbackDto } from './dtos/slack-callback.dto';
 
 const frontend_url = process.env.FRONTEND_URL;
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-
-  @Public()
-  @HttpCode(HttpStatus.OK)
-  @Post('slack-login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
-  }
-
-  @Public() // Should this be public?
-  @HttpCode(HttpStatus.OK)
-  @Post('validate-token')
-  validateToken(@Body() validateTokenDto: ValidateTokenDto) {
-    return this.authService.validateToken(validateTokenDto);
-  }
 
   @Public()
   @Get('slack')
