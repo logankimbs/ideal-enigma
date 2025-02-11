@@ -29,17 +29,23 @@ export class InstallationsService {
     });
   }
 
-  findOne(id: string): Promise<Installation> {
-    return this.installationRepository.findOneByOrFail({ id });
+  async findOne(id: string): Promise<Installation> {
+    return await this.installationRepository.findOneByOrFail({ id });
   }
 
-  exists(id: string): Promise<boolean> {
-    return this.installationRepository.exists({ where: { id } });
+  async exists(id: string): Promise<boolean> {
+    return await this.installationRepository.exists({ where: { id } });
   }
 
   async delete(id: string): Promise<void> {
-    // Does install exist
     await this.installationRepository.findOneOrFail({ where: { id } });
     await this.installationRepository.softDelete(id);
+  }
+
+  static toMap(installations: Installation[]): Map<string, Installation> {
+    return installations.reduce((map, installation) => {
+      map.set(installation.id, installation);
+      return map;
+    }, new Map<string, Installation>());
   }
 }
