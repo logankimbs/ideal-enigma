@@ -29,8 +29,8 @@ jobs:
         run: npm run backend:build
 
       # Step 5: Deploy to Heroku using the heroku-deploy action
-      - name: Deploy Backend to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Deploy to Heroku
+        uses: AkhileshNS/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'ideal-enigma-api'
