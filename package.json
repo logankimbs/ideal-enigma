@@ -4,11 +4,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "heroku-postbuild": "npm add -g nx && npm run build",
+    "heroku-postbuild": "npm add -g nx && npx nx run common:build && npm run build",
     "build": "npx nx run-many -t build",
     "backend:build": "npx nx build backend",
     "backend": "npx nx run backend:serve:development",
-    "backend:prod": "npx nx run backend:serve:production",
+    "backend:prod": "node dist/apps/backend/src/main.js",
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
     "frontend:prod": "next start apps/frontend",
