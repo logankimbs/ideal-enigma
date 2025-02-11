@@ -6,7 +6,7 @@
   "scripts": {
     "heroku-postbuild": "npm add -g nx && npx nx run common:build && npm run build",
     "build": "npx nx run-many -t build",
-    "backend:build": "npx nx build backend",
+    "backend:build": "tsc --project apps/backend/tsconfig.app.json",
     "backend": "npx nx run backend:serve:development",
     "backend:prod": "node dist/apps/backend/src/main.js",
     "frontend:build": "npx nx build frontend",
