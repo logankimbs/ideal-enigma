@@ -22,11 +22,11 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Build your project
       - name: Build Backend
-        run: npm run build:backend
+        run: npm run backend:build
 
       # Step 5: Deploy to Heroku using the heroku-deploy action
       - name: Deploy Backend to Heroku
