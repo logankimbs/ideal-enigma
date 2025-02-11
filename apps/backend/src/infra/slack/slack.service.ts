@@ -13,7 +13,6 @@ import {
 import getNextOccurrence from '../../common/utils/date.utils';
 import { InstallationsService } from '../../modules/installations/installations.service';
 import { TeamsService } from '../../modules/teams/teams.service';
-import { Summary } from '../database/entities/summary.entity';
 import { User } from '../database/entities/user.entity';
 import {
   actionRegistry,
@@ -84,9 +83,13 @@ export class SlackService implements OnModuleInit {
   async onModuleInit() {
     this.registerListeners();
 
-    const httpAdapter = this.httpAdapterHost.httpAdapter;
-    const expressInstance = httpAdapter.getInstance();
+    const httpAdapter = this.httpAdapterHost?.httpAdapter;
+    if (!httpAdapter) {
+      console.info('HTTP adapter not available. Skipping initialization.');
+      return;
+    }
 
+    const expressInstance = httpAdapter.getInstance();
     expressInstance.use(this.expressReceiver.router);
   }
 
@@ -144,9 +147,13 @@ export class SlackService implements OnModuleInit {
     );
   }
 
-  async sendSummaryMessage(token: string, users: User[], summary: Summary) {
+  async sendSummaryMessage(
+    token: string,
+    users: User[],
+    summary: SummaryTextV3
+  ) {
     const client = new WebClient(token);
-    const message = summaryMessage(summary.data as SummaryTextV3);
+    const message = summaryMessage(summary);
 
     for (const user of users) {
       if (user.data.deleted) {
