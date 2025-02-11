@@ -34,7 +34,7 @@ export async function SummaryPreview({ summary }: SummaryPreviewProps) {
         {/*    })}*/}
         {/*  </Strong>*/}
         {/*</Text>*/}
-        {Array.isArray(summary.data.actions) && (
+        {Array.isArray(summary.data.themes) && (
           <div className="flex flex-wrap gap-2 mt-4">
             {summary.data.themes.map((theme, index) => (
               <Badge key={index}>{theme.title}</Badge>
