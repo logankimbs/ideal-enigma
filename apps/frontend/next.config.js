@@ -7,9 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 /** @type {import('next').NextConfig} */
 module.exports = (phase, { defaultConfig }) => {
-  const nextConfig = {
-    distDir: '../../dist/apps/frontend/.next',
-  };
+  const nextConfig = {};
 
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     // Only load @nx/next in development
