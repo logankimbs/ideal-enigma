@@ -6,36 +6,16 @@ on:
       - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '23.3.0'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Install Nx
-        run: npm add -g nx
-
-      - name: Build Backend
-        run: npm run backend:build
-
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
+      - uses: actions/checkout@v2
 
       - name: Deploy to Heroku
-        uses: AkhileshNS/heroku-deploy@v3.13.15
+        uses: akhileshns/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'ideal-enigma-backend'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          dontautocreate: true
-          appdir: 'dist'
