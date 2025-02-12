@@ -3,37 +3,31 @@ name: Deploy Backend
 on:
   push:
     branches:
-      - main  # This workflow runs when code is pushed to the main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js environment.
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Specify your Node.js version
+          node-version: '23.3.0'
 
-      # Step 3: Install dependencies
       - name: Install Dependencies
         run: npm ci
 
-      # Step 4: Build your project
       - name: Build Backend
         run: npm run backend:build
 
-      # Step 5: Install Heroku CLI
       - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
-      # Step 6: Deploy to Heroku using the heroku-deploy action
       - name: Deploy to Heroku
         uses: AkhileshNS/heroku-deploy@v3.13.15
         with:
