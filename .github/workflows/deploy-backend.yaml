@@ -21,18 +21,15 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Build Backend
         run: npm run backend:build
 
-      - name: Add /dist Folder
+      - name: Add Build Artifact
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git add dist -f
-          git commit -m "Include dist for Heroku" || echo "No changes to commit"
+          git commit -m "Added build artifact"
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
