@@ -1,4 +1,4 @@
-name: Deploy Backend
+name: Deploy Production
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-22.04
 
     steps:
@@ -21,8 +21,8 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build Backend
-        run: npm run backend:build
+      - name: Build Application
+        run: npx nx run-many -t build
 
       - name: Add Build Artifact
         run: |
@@ -31,9 +31,16 @@ jobs:
           git add dist -f
           git commit -m "Added build artifact"
 
-      - name: Deploy to Heroku
+      - name: Deploy Backend
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'ideal-enigma-backend'
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+
+      - name: Deploy Frontend
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: 'ideal-enigma-frontend'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
