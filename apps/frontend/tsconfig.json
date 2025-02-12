@@ -32,7 +32,9 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "../../dist/apps/frontend/types/**/*.ts",
-    "../../.next/types/**/*.ts"
+    "../../.next/types/**/*.ts",
+    "dist/apps/frontend/.next/types/**/*.ts",
+    "../..dist/apps/frontend/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
