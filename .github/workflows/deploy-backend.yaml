@@ -38,3 +38,4 @@ jobs:
           heroku_app_name: 'ideal-enigma-backend'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           dontautocreate: true
+          appdir: 'dist'
