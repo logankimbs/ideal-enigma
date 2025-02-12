@@ -6,7 +6,7 @@
   "scripts": {
     "backend:build": "npx nx build backend",
     "backend": "npx nx run backend:serve:development",
-    "backend:prod": "node dist/apps/backend/src/main.js",
+    "backend:prod": "node dist/apps/backend",
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
     "frontend:prod": "next start apps/frontend",
