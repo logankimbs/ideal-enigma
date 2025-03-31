@@ -5,6 +5,7 @@ import { Insight } from '../../infra/database/entities/insight.entity';
 import { User } from '../../infra/database/entities/user.entity';
 import { TagsService } from '../tags/tags.service';
 import { TeamsService } from '../teams/teams.service';
+import { UsersService } from '../users/users.service';
 import { CreateInsightDto } from './dtos/create-insight.dto';
 import { GetInsightByIdDto } from './dtos/get-insight.dto';
 import { MarkInsightSummarizedDto } from './dtos/insight-summarized.dto';
@@ -14,6 +15,7 @@ export class InsightsService {
   constructor(
     @InjectRepository(Insight) private insightRepository: Repository<Insight>,
     @InjectRepository(User) private userRepository: Repository<User>,
+    private userService: UsersService,
     private teamService: TeamsService,
     private tagService: TagsService
   ) {}

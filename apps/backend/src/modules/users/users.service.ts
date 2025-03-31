@@ -1,5 +1,5 @@
 import { SlackUser, UserStats } from '@ideal-enigma/common';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User as Installer } from '@slack/web-api/dist/types/response/UsersInfoResponse';
 import { Member } from '@slack/web-api/dist/types/response/UsersListResponse';
@@ -18,16 +18,26 @@ import { userStatsQuery, UserStatsQuery } from './queries/user-stats.query';
 
 @Injectable()
 export class UsersService {
+  private logger = new Logger(UsersService.name);
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly teamService: TeamsService
   ) {}
 
-  findUserById(id: string): Promise<User> {
-    return this.userRepository.findOneOrFail({
+  async findUserById(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({
       where: { id },
       relations: ['team'],
     });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
+  }
+
+  async doesUserExist(id: string): Promise<boolean> {
+    return await this.userRepository.exists({ where: { id } });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -128,6 +138,12 @@ export class UsersService {
   }
 
   async getUserStats(userId: string): Promise<UserStats> {
+    const doesUserExist = await this.userRepository.exists({
+      where: { id: userId },
+    });
+
+    if (!doesUserExist) throw new NotFoundException('User not found');
+
     const stats: UserStatsQuery[] = await this.userRepository.query(
       userStatsQuery(),
       [userId]

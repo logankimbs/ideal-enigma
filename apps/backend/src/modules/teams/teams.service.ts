@@ -1,5 +1,5 @@
 import { TeamStats } from '@ideal-enigma/common';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team as SlackTeam } from '@slack/web-api/dist/types/response/TeamInfoResponse';
 import { IsNull, Repository } from 'typeorm';
@@ -36,6 +36,12 @@ export class TeamsService {
   }
 
   async getTeamStats(teamId: string): Promise<TeamStats> {
+    const doesTeamExist = await this.teamRepository.exists({
+      where: { id: teamId },
+    });
+
+    if (!doesTeamExist) throw new NotFoundException('Team not found');
+
     const stats: TeamStatsQuery[] = await this.teamRepository.query(
       teamStatsQuery(),
       [teamId]
