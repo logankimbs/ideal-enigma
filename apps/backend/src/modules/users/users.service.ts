@@ -36,6 +36,10 @@ export class UsersService {
     return user;
   }
 
+  async doesUserExist(id: string): Promise<boolean> {
+    return await this.userRepository.exists({ where: { id } });
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const team = await this.teamService.find(createUserDto.team_id);
 
@@ -134,6 +138,12 @@ export class UsersService {
   }
 
   async getUserStats(userId: string): Promise<UserStats> {
+    const doesUserExist = await this.userRepository.exists({
+      where: { id: userId },
+    });
+
+    if (!doesUserExist) throw new NotFoundException('User not found');
+
     const stats: UserStatsQuery[] = await this.userRepository.query(
       userStatsQuery(),
       [userId]
