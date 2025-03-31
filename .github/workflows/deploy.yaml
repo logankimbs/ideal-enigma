@@ -28,13 +28,13 @@ jobs:
       - name: Build Application
         run: npx nx run-many -t build
 
-      - name: Add Build Artifact
-        run: |
-          cp -R apps/frontend/public dist/apps/frontend/public
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git add dist -f
-          git commit -m "Added build artifact"
+      # - name: Add Build Artifact
+      #   run: |
+      #     cp -R apps/frontend/public dist/apps/frontend/public
+      #     git config user.email "actions@github.com"
+      #     git config user.name "GitHub Actions"
+      #     git add dist -f
+      #     git commit -m "Added build artifact"
 
       - name: Deploy Backend
         uses: akhileshns/heroku-deploy@v3.14.15
