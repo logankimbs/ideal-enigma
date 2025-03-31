@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: '23.3.0'
 
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh 
+
       - name: Install Dependencies
         run: npm ci
 
@@ -38,8 +42,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'ideal-enigma-backend'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: false
-          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
 
       - name: Deploy Frontend
         uses: akhileshns/heroku-deploy@v3.13.15
@@ -47,5 +49,3 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'ideal-enigma-frontend'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: false
-          buildpack: https://github.com/heroku/heroku-buildpack-nodejs
