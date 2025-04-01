@@ -3,7 +3,6 @@ import { Button } from './landing/button';
 
 type Props = {
   logo?: boolean;
-  
   className?: string;
 };
 
