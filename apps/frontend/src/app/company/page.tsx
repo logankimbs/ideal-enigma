@@ -30,8 +30,8 @@ function Header() {
             capture and share knowledge. Our mission is to provide our customers
             with a competitive advantage by unlocking the power of their
             collective insights through seamless collaboration and innovation.
-            We'll stop at nothing to help you harness your team's full potential
-            and drive meaningful growth.
+            We&#39;ll stop at nothing to help you harness your team&#39;s full
+            potential and drive meaningful growth.
           </p>
           <p className="mt-8 text-sm/6 text-gray-600">
             We’re customer-obsessed—investing time to build intuitive solutions
@@ -39,8 +39,8 @@ function Header() {
             to know your business as well as you do, so we can tailor our
             platform to meet your unique needs. We believe that when everyone
             shares their best ideas, we all succeed together. In our history as
-            a company, we've never lost sight of our commitment to fostering a
-            culture of continuous learning and collaboration.
+            a company, we&#39;ve never lost sight of our commitment to fostering
+            a culture of continuous learning and collaboration.
           </p>
         </div>
         <div className="pt-20 lg:row-span-2 lg:-mr-16 xl:mr-auto">
@@ -149,7 +149,7 @@ function Team() {
             individual teams, hindering innovation and leading to repeated
             mistakes. They understood that in fast-paced environments, the lack
             of effective knowledge sharing could slow down progress and impact a
-            company's competitive edge. This realization sparked a visionary
+            company&#39;s competitive edge. This realization sparked a visionary
             idea: what if there was a seamless way to capture and share critical
             insights across the entire organization?
           </p>
