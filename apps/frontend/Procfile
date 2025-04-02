@@ -1,1 +1,1 @@
-web: npx nx run-many -t build && next start dist/apps/frontend
+web: npm run frontend:prod
