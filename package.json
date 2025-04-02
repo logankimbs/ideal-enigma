@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "heroku-postbuild": "npm add -g nx",
+    "heroku-postbuild": "npm add -g nx && npm run build",
     "build": "npx nx run-many -t build",
     "backend:build": "npx nx build backend",
     "backend": "npx nx run backend:serve:development",
