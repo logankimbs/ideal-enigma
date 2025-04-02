@@ -1,1 +1,1 @@
-web: npx nx run-many -t build && node dist/apps/backend
+web: npm run backend:prod
