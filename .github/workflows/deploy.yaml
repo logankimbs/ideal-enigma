@@ -24,6 +24,7 @@ jobs:
 
       - name: Add Build Artifact
         run: |
+          mkdir -p dist/apps/frontend/public
           cp -R apps/frontend/public dist/apps/frontend/public
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
