@@ -11,7 +11,7 @@
     "backend:prod": "node dist/apps/backend",
     "frontend:build": "npx nx build frontend",
     "frontend": "npx nx dev frontend",
-    "frontend:prod": "next start dist/apps/frontend",
+    "frontend:prod": "next start apps/frontend",
     "ngrok": "dotenv -e .env -- ngrok start --config=ngrok.yaml --all --authtoken=$NGROK_AUTHTOKEN"
   },
   "dependencies": {
